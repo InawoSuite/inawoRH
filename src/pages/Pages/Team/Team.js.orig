@@ -1,0 +1,1274 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import { Button, Card, CardBody, Col, Container, Dropdown, DropdownItem, DropdownMenu, DropdownToggle, Form, Input, Label, Modal, ModalBody, ModalHeader,Offcanvas, OffcanvasBody, Row, UncontrolledDropdown, FormFeedback } from 'reactstrap';
+import BreadCrumb from '../../../Components/Common/BreadCrumb';
+import DeleteModal from "../../../Components/Common/DeleteModal";
+import { ToastContainer } from 'react-toastify';
+import { Progress } from "reactstrap";
+import classnames from "classnames";
+import { Tooltip } from 'reactstrap';
+//redux
+import { useSelector, useDispatch } from 'react-redux';
+
+//import action
+import {
+    getTeamData as onGetTeamData,
+    deleteTeamData as onDeleteTeamData,
+    addTeamData as onAddTeamData,
+    updateTeamData as onUpdateTeamData
+} from "../../../slices/thunks";
+
+
+import {
+
+    Nav,
+    NavItem,
+    NavLink,
+    TabContent,
+    TabPane,
+
+
+} from "reactstrap";
+// Formik
+import dummyUser from "../../../assets/images/users/user-dummy-img.jpg";
+import * as Yup from "yup";
+import { useFormik } from "formik";
+import { createSelector } from 'reselect';
+import usflag from '../../../assets/images/flags/us.svg'
+import SimpleBar from "simplebar-react";
+import { country } from "../../../common/data";
+import axios from 'axios';
+
+
+
+const Team = () => {
+    document.title = "Team | Velzon - React Admin & Dashboard Template";
+
+      //  Ajout des états de chargement et d'erreur
+      const [isLoading, setIsLoading] = useState(true);
+      const [error, setError] = useState(null);
+
+    // 2. Modification de l'initialisation de userData
+
+    // Création d'une instance axios avec la configuration de base
+        const axiosInstance = axios.create({
+            baseURL: 'http://inawoapiv3.inawo.pro',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // Ajout de l'intercepteur pour le token
+        axiosInstance.interceptors.request.use((config) => {
+            const token = localStorage.getItem('token');
+            if (token) {
+                config.headers.Authorization = `Bearer ${token}`;
+            }
+            return config;
+        });
+
+
+    const [userData, setUserData] = useState(() => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                setError('Pas de token trouvé');
+                return null;
+            }
+
+            const savedData = localStorage.getItem('userData');
+            if (!savedData) {
+                setError('Données utilisateur non trouvées');
+                return null;
+            }
+
+            const parsedData = JSON.parse(savedData);
+            if (!parsedData.magasins?.length) {
+                setError('Aucun magasin disponible');
+                return null;
+            }
+
+            return parsedData;
+        } catch (error) {
+            console.error('Erreur d\'initialisation:', error);
+            setError(error.message);
+            return null;
+        } finally {
+            setIsLoading(false);
+        }
+    });
+    const permissions = [
+        {
+            id: 'contact',
+            label: 'Contact',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos contacts'
+        },
+        {
+            id: 'catalogue',
+            label: 'Catalogue',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos catalogues'
+        },
+        {
+            id: 'agenda',
+            label: 'Agenda',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos agendas'
+        },
+        {
+            id: 'facturation',
+            label: 'Facturation',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos factures'
+        },
+        {
+            id: 'opportunites',
+            label: 'Opportunités',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos opportunités '
+        },
+        {
+            id: 'taches',
+            label: 'Taches',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos tâches'
+        },
+        {
+            id: 'reception',
+            label: 'Bon de réception',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos bons de réception'
+        },
+        {
+            id: 'normalise',
+            label: 'Facture normalisé',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos factures normalisées'
+        },
+        {
+            id: 'stock',
+            label: 'Stock',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos stocks'
+        },
+        {
+            id: 'stockIntegral',
+            label: 'Stock intégral',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos stocks intégraux'
+        },
+        {
+            id: 'livraison',
+            label: 'Bon de livraison',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos bons de livraison'
+        },
+        {
+            id: 'avoir',
+            label: "Bon d'avoir",
+            description: "Votre collaborateur pourra ajouter ou modifier vos bons d'avoir"
+        },
+        {
+            id: 'sortie',
+            label: 'Bon de sortie',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos bons de sortie'
+        },
+        {
+            id: 'approvisionnement',
+            label: 'Approvisionnement',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos approvisionnements'
+        },
+        {
+            id: 'transfert',
+            label: 'Bon de transfert',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos transferts de stock'
+        },
+        {
+            id: 'vente',
+            label: 'Vente',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos ventes'
+        },
+        {
+            id: 'commande',
+            label: 'Bon de commande',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos bons de commande'
+        },
+        {
+            id: 'depenses',
+            label: 'Dépenses',
+            description: 'Votre collaborateur pourra ajouter ou modifier vos dépenses'
+        }
+    ];
+
+
+    // 1. Redux
+    const dispatch = useDispatch();
+    const selectteamData = createSelector(
+        (state) => state.Team,
+        (teamData) => teamData.teamData
+    );
+    const teamData = useSelector(selectteamData);
+
+   
+
+    // 2. États
+    // 2.1 États principaux
+    
+    const [teamList, setTeamList] = useState([]);
+
+    const fetchUsers = useCallback(async () => {
+        try {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                throw new Error('Token non trouvé');
+            }
+    
+            const response = await fetch('http://inawoapiv3.inawo.pro/utilisateurs/list', {
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            });
+    
+            if (!response.ok) {
+                throw new Error(`Erreur HTTP: ${response.status}`);
+            }
+    
+            const data = await response.json();
+            setTeamList(data);
+        } catch (error) {
+            console.error("Erreur lors de la récupération des utilisateurs:", error);
+            setError(error.message);
+        }
+    }, []); 
+
+    // 3. useEffect pour appeler fetchUsers
+    useEffect(() => {
+        fetchUsers();
+    }, [fetchUsers]); // Ajouter fetchUsers comme dépendance
+
+
+
+    const [searchTerm, setSearchTerm] = useState('');
+
+    // 2.2 États pour les modals et édition
+    const [modal, setModal] = useState(false);
+    const [isEdit, setIsEdit] = useState(false);
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [team, setTeam] = useState(null);
+    const [teamMem, setTeamMem] = useState(null);
+
+    // 2.3 États pour les dropdowns
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+    const [dropdownOpen2, setDropdownOpen2] = useState(false);
+    const [dropdownOpen4, setDropdownOpen4] = useState(false);
+
+    // 2.4 États pour les tabs
+    const [activeTab, setactiveTab] = useState(1);
+    const [progressbarvalue, setprogressbarvalue] = useState(0);
+    const [passedSteps, setPassedSteps] = useState([1]);
+
+    // 2.5 États pour les pays
+    const [seletedCountry1, setseletedCountry1] = useState({});
+    const [seletedCountry3, setseletedCountry3] = useState({
+        id: 240,
+        flagImg: usflag,
+        countryName: "United States of America",
+        countryCode: "+1"
+    });
+
+    // 2.6 États pour les tooltips
+    const [tooltips, setTooltips] = useState(() => {
+        const initial = {};
+        permissions.forEach(permission => {
+            initial[permission.id] = false;
+        });
+        return initial;
+    });
+
+    // 3. Fonctions de toggle
+    const toggle = useCallback(() => {
+        if (modal) {
+            setModal(false);
+            setTeamMem(null);
+        } else {
+            setModal(true);
+        }
+    }, [modal]);
+
+    const toggle2 = () => setDropdownOpen2(prevState => !prevState);
+    const toggle4 = () => setDropdownOpen4(prevState => !prevState);
+    const toggledropDown = () => setDropdownOpen(!dropdownOpen);
+    const toggleTooltip = useCallback((id) => {
+        if (!id) return;
+        setTooltips(prev => ({
+            ...prev,
+            [id]: !prev[id]
+        }));
+    }, []);
+
+    // 4. Handlers
+    const handleSearch = (value) => setSearchTerm(value);
+    const handleTeamClicks = () => {
+        setTeamMem("");
+        setModal(!modal);
+        setIsEdit(false);
+        toggle();
+    };
+
+    // 5. useEffects
+    useEffect(() => {
+        dispatch(onGetTeamData());
+    }, [dispatch]);
+
+    useEffect(() => {
+        const fetchUsers = useCallback(async () => {
+            try {
+                const token = localStorage.getItem('token');
+                if (!token) {
+                    throw new Error('Token non trouvé');
+                }
+        
+                const response = await fetch('http://inawoapiv3.inawo.pro/utilisateurs/list', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    }
+                });
+        
+                if (!response.ok) {
+                    throw new Error(`Erreur HTTP: ${response.status}`);
+                }
+        
+                const data = await response.json();
+                setTeamList(data);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des utilisateurs:", error);
+                setError(error.message);
+            }
+        }, []);
+        fetchUsers();
+    }, []);
+    
+    
+
+    
+    const [isOpen, setIsOpen] = useState(false);
+    const [sideBar, setSideBar] = useState([]);
+
+    // 2. États pour les dropdowns
+    
+    const [dropdownOpen5, setDropdownOpen5] = useState(false);
+
+    // 3. États pour les pays sélectionnés
+    
+    const [seletedCountry4, setseletedCountry4] = useState({
+        id: 240,
+        flagImg: usflag,
+        countryName: "United States of America",
+        countryCode: "+1"
+    });
+
+    const handleSubmit = async (values) => {
+        try {
+            // Récupérer les données du localStorage
+            // const userData = JSON.parse(localStorage.getItem('userData')); // Ajustez la clé selon votre stockage
+            
+            const formData = new FormData();
+            formData.append('nom', values.nom);
+            formData.append('prenom', values.prenom);
+            formData.append('email', values.email);
+            formData.append('telephone', values.telephone);
+            formData.append('adresse', values.adresse);
+            formData.append('ville', values.ville);
+            formData.append('pays', values.pays);
+            formData.append('password', 'mdp123'); // Vous devriez ajouter un champ pour le mot de passe
+            formData.append('type_utilisateur', 'Collaborateur');
+            formData.append('langue', 'Fr');
+            formData.append('succursale', values.succursale.toString());  // Utilisez directement la valeur du formulaire
+            formData.append('magasin', values.magasin.toString());
+            formData.append('permission', ''); // À adapter selon vos besoins
+    
+            const response = await axios({
+                method: 'post',
+                url: 'https://inawoapiv3.inawo.pro/utilisateurs/inscription/',
+                headers: { 
+                    'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                    'Cookie': 'csrftoken=LbrzaCMaKSJLSCGKq5obthQDWkfyW2uP'
+                },
+                data: formData
+            });
+    
+            console.log('Utilisateur créé avec succès:', response.data);
+            toggle();
+            // Rafraîchir la liste des utilisateurs
+            fetchUsers();
+            
+        } catch (error) {
+            console.error('Erreur lors de la création de l\'utilisateur:', error);
+        }
+    };
+
+
+    
+
+    // 7. Configuration Formik
+    const validation = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            nom: '',
+            prenom: '',
+            email: '',
+            telephone: '',
+            adresse: '',
+            ville: '',
+            pays: '',
+            fonction: '',
+            succursale: '',
+            magasin: ''
+        },
+        validationSchema: Yup.object({
+            nom: Yup.string().required('Le nom est requis'),
+            prenom: Yup.string().required('Le prénom est requis'),
+            email: Yup.string().email('Email invalide').required('L\'email est requis'),
+            fonction: Yup.string().required('La fonction est requise'),
+            succursale: Yup.string().required('La succursale est requise'),
+            magasin: Yup.string().required('Le magasin est requis')
+        }),
+        onSubmit: handleSubmit
+    });
+    // 8. Configuration du Tooltip
+    const TOOLTIP_CONFIG = {
+        placement: "top",
+        fade: true,
+        delay: { show: 200, hide: 100 },
+        modifiers: [
+            {
+                name: 'offset',
+                options: {
+                    offset: [0, 8]
+                }
+            }
+        ]
+    };
+
+
+    
+    const toggle5 = () => setDropdownOpen5((prevState) => !prevState);
+   
+    function toggleTab(tab, value) {
+        if (activeTab !== tab) {
+            var modifiedSteps = [...passedSteps, tab];
+
+            if (tab >= 1 && tab <= 4) {
+                setactiveTab(tab);
+                setPassedSteps(modifiedSteps);
+            }
+        }
+        setprogressbarvalue(value);
+    }
+
+
+    useEffect(() => {
+        dispatch(onGetTeamData());
+    }, [dispatch]);
+
+    useEffect(() => {
+        setTeam(teamData);
+        // setTeamlist(teamData);
+    }, [teamData]);
+
+    
+
+    // Update To do
+    const handleTeamClick = useCallback((arg) => {
+        const teamMem = arg;
+        setTeamMem({
+            id: teamMem.id,
+            name: teamMem.name,
+            designation: teamMem.designation,
+            projectCount: teamMem.projectCount,
+            taskCount: teamMem.taskCount,
+        });
+
+        setIsEdit(true);
+        toggle();
+    }, [toggle]);
+
+    // Add To do
+    
+
+    // delete
+    const onClickData = (team) => {
+        setTeam(team);
+        setDeleteModal(true);
+    };
+
+    const handleDeleteTeamData = () => {
+        if (team) {
+            dispatch(onDeleteTeamData(team.id));
+            setDeleteModal(false);
+        }
+    };
+
+    useEffect(() => {
+        const list = document.querySelectorAll(".team-list");
+        const buttonGroups = document.querySelectorAll('.filter-button');
+        for (let i = 0; i < buttonGroups.length; i++) {
+            buttonGroups[i].addEventListener('click', onButtonGroupClick);
+        }
+
+        function onButtonGroupClick(event) {
+            if (event.target.id === 'list-view-button' || event.target.parentElement.id === 'list-view-button') {
+                document.getElementById("list-view-button").classList.add("active");
+                document.getElementById("grid-view-button").classList.remove("active");
+                list.forEach(function (el) {
+                    el.classList.add("list-view-filter");
+                    el.classList.remove("grid-view-filter");
+                });
+
+            } else {
+                document.getElementById("grid-view-button").classList.add("active");
+                document.getElementById("list-view-button").classList.remove("active");
+                list.forEach(function (el) {
+                    el.classList.remove("list-view-filter");
+                    el.classList.add("grid-view-filter");
+                });
+            }
+        }
+    }, []);
+
+    const favouriteBtn = (ele) => {
+        if (ele.closest("button").classList.contains("active")) {
+            ele.closest("button").classList.remove("active");
+        } else {
+            ele.closest("button").classList.add("active");
+        }
+    };
+
+    // Modifier la fonction searchList pour utiliser setTeamList au lieu de setTeamlist
+    const searchList = (e) => {
+    let inputVal = e.toLowerCase();
+
+    const filterItems = (arr, query) => {
+        return arr.filter((el) => {
+            return el.name.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+        });
+    };
+
+    let filterData = filterItems(teamList, inputVal);
+    setTeamList(filterData); // Utiliser setTeamList au lieu de setTeamlist
+
+    if (filterData.length === 0) {
+        document.getElementById("noresult").style.display = "block";
+        document.getElementById("teamlist").style.display = "none";
+    } else {
+        document.getElementById("noresult").style.display = "none";
+        document.getElementById("teamlist").style.display = "block";
+        }
+    };
+    
+
+    
+    
+    // Récupération des utilisateurs au chargement
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch('http://inawoapiv3.inawo.pro/utilisateurs/list', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Accept': 'application/json'
+                    }
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+    
+                const data = await response.json();
+                setTeamList(data);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des utilisateurs:", error);
+                setError(error.message);
+            }
+        };
+    
+        fetchUsers();
+    }, []);
+
+
+   
+
+        
+
+        // 3. Ajout d'un useEffect pour charger les données
+        useEffect(() => {
+            const loadUserData = () => {
+                try {
+                    const savedData = localStorage.getItem('userData');
+                    console.log('Données brutes:', savedData);
+                    
+                    if (!savedData) {
+                        throw new Error('Aucune donnée utilisateur trouvée');
+                    }
+                    
+                    const parsedData = JSON.parse(savedData);
+                    console.log('Données parsées:', parsedData);
+                    
+                    if (!parsedData.magasins || !parsedData.magasins.length) {
+                        throw new Error('Données de magasin manquantes');
+                    }
+                    
+                    setUserData(parsedData);
+                } catch (err) {
+                    console.error('Erreur de chargement:', err);
+                    setError(err.message);
+                } finally {
+                    setIsLoading(false);
+                }
+            };
+            
+            loadUserData();
+        }, []);
+
+    
+    
+    // Filtrer les utilisateurs en fonction de la recherche
+    const filteredUsers = teamList.filter(user => 
+        user.nom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.prenom?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.fonction?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        user.email?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    
+
+    
+    // 1. D'abord, ajoutons un useEffect pour déboguer les données
+        useEffect(() => {
+            console.log('userData complet:', userData);
+            console.log('magasins:', userData?.magasins);
+            console.log('groupe_id:', userData?.magasins?.[0]?.groupe_id);
+        }, [userData]);
+
+    
+
+    return (
+        <React.Fragment>
+            <ToastContainer closeButton={false} />
+            <DeleteModal
+                show={deleteModal}
+                onDeleteClick={() => handleDeleteTeamData()}
+                onCloseClick={() => setDeleteModal(false)}
+            />
+            <div className="page-content">
+                <Container fluid>
+                    <BreadCrumb title="Utilisateurs" pageTitle="Dashboard > > " />
+                    <Card  style={{ borderRadius: '20px'}}>
+                        <CardBody >
+                            <Row className="g-2" >
+                                <Col sm={4}>
+                                    <div className="search-box">
+                                        <Input type="text" className="form-control" 
+                                        placeholder="Search for name or designation..." 
+                                        onChange={(e) => searchList(e.target.value)}
+                                        style={{borderRadius:"20px"}}
+                                        />
+                                        <i className="ri-search-line search-icon"></i>
+                                    </div>
+                                </Col>
+                                <Col className="col-sm-auto ms-auto">
+                                    <div className="list-grid-nav hstack gap-1" style={{borderRadius:"20px"}}>
+
+                                        <Button color="info" id="grid-view-button" className="btn btn-soft-info nav-link btn-icon fs-14 active filter-button"
+                                        style={{borderRadius:"20px"}}><i className="ri-grid-fill"></i></Button>
+                                        <Button color="info" id="list-view-button" className="btn btn-soft-info nav-link  btn-icon fs-14 filter-button"
+                                        style={{borderRadius:"20px"}}><i className="ri-list-unordered"></i></Button>
+                                        <Dropdown
+                                            isOpen={dropdownOpen}
+                                            toggle={toggledropDown}>
+                                            <DropdownToggle type="button" className="btn btn-soft-info btn-icon fs-14" style={{borderRadius:"20px"}}>
+                                                <i className="ri-more-2-fill"></i>
+                                            </DropdownToggle>
+                                            <DropdownMenu>
+                                                <li><Link className="dropdown-item" to="#">All</Link></li>
+                                                <li><Link className="dropdown-item" to="#">Last Week</Link></li>
+                                                <li><Link className="dropdown-item" to="#">Last Month</Link></li>
+                                                <li><Link className="dropdown-item" to="#">Last Year</Link></li>
+                                            </DropdownMenu>
+                                        </Dropdown>
+                                        <Button color="success" onClick={() => handleTeamClicks()} style={{borderRadius:"20px"}}>
+                                        <i class="ri-file-add-line me-1  align-bottom"></i>Ajouter un utilisateur</Button>
+                                    </div>
+                                </Col>
+                            </Row>
+                        </CardBody>
+                    </Card>
+
+                    <Row>
+                        <Col lg={12}>
+                            <div id="teamlist">
+                                <Row className="team-list grid-view-filter">
+                                    {filteredUsers.map((user, index) => (
+                                        <Col key={index} lg={4}>
+                                            <Card className="team-box">
+                                                <CardBody className="p-4">
+                                                    <Row className="align-items-center">
+                                                        <Col className="col-auto">
+                                                            <div className="avatar-lg">
+                                                                <img 
+                                                                    src={`http://inawoapiv3.inawo.pro/utilisateurs/getuser/${user.id}`}
+                                                                    alt={`${user.nom} ${user.prenom}`}
+                                                                    className="img-fluid rounded-circle"
+                                                                    onError={(e) => {
+                                                                        e.target.onerror = null;
+                                                                        e.target.src = "/utilisateur.png";
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                        </Col>
+                                                        <Col>
+                                                            <h5 className="fs-16 mb-1">
+                                                                {user.nom} {user.prenom}
+                                                            </h5>
+                                                            <p className="text-muted mb-2">{user.fonction}</p>
+                                                            <div className="d-flex gap-2">
+                                                                <div>
+                                                                    <i className="ri-mail-line me-1"></i>
+                                                                    {user.email}
+                                                                </div>
+                                                                <div>
+                                                                    <i className="ri-phone-line me-1"></i>
+                                                                    {user.telephone}
+                                                                </div>
+                                                            </div>
+                                                        </Col>
+                                                        <Col xs="auto">
+                                                            <UncontrolledDropdown>
+                                                                <DropdownToggle tag="button" className="btn btn-light btn-icon">
+                                                                    <i className="ri-more-fill fs-16"></i>
+                                                                </DropdownToggle>
+                                                                <DropdownMenu end>
+                                                                    <DropdownItem onClick={() => handleTeamClick(user)}>
+                                                                        <i className="ri-eye-line me-2 align-middle text-muted"></i>
+                                                                        Voir
+                                                                    </DropdownItem>
+                                                                    <DropdownItem onClick={() => handleTeamClick(user)}>
+                                                                        <i className="ri-pencil-line me-2 align-middle text-muted"></i>
+                                                                        Permissions
+                                                                    </DropdownItem>
+                                                                    <DropdownItem divider />
+                                                                    <DropdownItem onClick={() => onClickData(user)}>
+                                                                        <i className="ri-delete-bin-line me-2 align-middle text-muted"></i>
+                                                                        Réhabiliter
+                                                                    </DropdownItem>
+                                                                </DropdownMenu>
+                                                            </UncontrolledDropdown>
+                                                        </Col>
+                                                    </Row>
+                                                </CardBody>
+                                            </Card>
+                                        </Col>
+                                    ))}
+                                </Row>
+
+                                <div className="modal fade" id="addmembers" tabIndex="-1" aria-hidden="true" >
+                                    <div className="modal-dialog modal-dialog-centered ">
+                                        <div class="modal-content">
+                                            <Modal 
+                                                isOpen={modal} 
+                                                toggle={toggle} 
+                                                centered
+                                                size="lg"
+                                                className="rounded-4"
+                                                modalClassName="border-0" 
+                                                contentClassName="rounded-4"
+                                                >
+                                                                                 
+                                                <ModalHeader className="bg-info-subtle p-3 rounded-top-4" toggle={ toggle }>
+                                                    { !!isEdit ? "Edit Order" : "Ajouter un utilisateur" }
+                                                </ModalHeader>
+                                                
+                                                <Form onSubmit={validation.handleSubmit}>
+                                                    <TabContent activeTab={activeTab} >
+
+                                                            <TabPane tabId={1}>
+
+                                                                <div className="ms-3 me-3 mt-3 mb-3" >
+                                                                
+                                                                <Row>
+                                                                    <Col lg={6}>
+                                                                        <div className="mb-3">
+                                                                            <Label className="form-label">Nom*</Label>
+                                                                            <Input
+                                                                                type="text"
+                                                                                name="nom"
+                                                                                className="form-control"
+                                                                                placeholder="Saisissez le nom"
+                                                                                style={{borderRadius:"20px"}}
+                                                                                value={validation.values.nom || ''}
+                                                                                onChange={validation.handleChange}
+                                                                                onBlur={validation.handleBlur}
+                                                                                // invalid={validation.touched.nom && validation.errors.nom}
+                                                                                invalid={!!(validation.touched.nom && validation.errors.nom)}
+                                                                            />
+                                                                            {validation.touched.nom && validation.errors.nom && (
+                                                                                <FormFeedback>{validation.errors.nom}</FormFeedback>
+                                                                            )}
+                                                                        </div>
+                                                                    </Col>
+                                                                    <Col lg={6}>
+                                                                        <div className="mb-3">
+                                                                            <Label className="form-label">Prénom(s)*</Label>
+                                                                            <Input
+                                                                                type="text"
+                                                                                name="prenom"
+                                                                                className="form-control"
+                                                                                placeholder="Saisissez prénom(s)"
+                                                                                style={{borderRadius:"20px"}}
+                                                                                value={validation.values.prenom || ''}
+                                                                                onChange={validation.handleChange}
+                                                                                onBlur={validation.handleBlur}
+                                                                                invalid={!!(validation.touched.prenom && validation.errors.prenom)}
+                                                                            />
+                                                                            {validation.touched.prenom && validation.errors.prenom && (
+                                                                                <FormFeedback>{validation.errors.prenom}</FormFeedback>
+                                                                            )}
+                                                                        </div>
+                                                                    </Col>          
+                                                                </Row>
+
+                                                                <Row>
+                                                                    <Col lg={6}>
+                                                                        <div className="mb-3">
+                                                                            <Label className="form-label">Email*</Label>
+                                                                            <Input
+                                                                                type="email"
+                                                                                name="email"
+                                                                                className="form-control"
+                                                                                placeholder="Saisissez adresse email"
+                                                                                style={{borderRadius:"20px"}}
+                                                                                value={validation.values.email || ''}
+                                                                                onChange={validation.handleChange}
+                                                                                onBlur={validation.handleBlur}
+                                                                                invalid={!!(validation.touched.email && validation.errors.email)}
+                                                                            />
+                                                                            {validation.touched.email && validation.errors.email && (
+                                                                                <FormFeedback>{validation.errors.email}</FormFeedback>
+                                                                            )}
+                                                                        </div>
+                                                                    </Col>
+                                                                    <Col lg={6}>
+                                                                        <div className="mb-3">
+                                                                            <Label className="form-label">Fonction*</Label>
+                                                                            <Input
+                                                                                type="text"
+                                                                                name="fonction"
+                                                                                className="form-control"
+                                                                                placeholder="Saisissez fonction"
+                                                                                style={{borderRadius:"20px"}}
+                                                                                value={validation.values.fonction || ''}
+                                                                                onChange={validation.handleChange}
+                                                                                onBlur={validation.handleBlur}
+                                                                                invalid={!!(validation.touched.fonction && validation.errors.fonction)}
+                                                                            />
+                                                                            {validation.touched.fonction && validation.errors.fonction && (
+                                                                                <FormFeedback>{validation.errors.fonction}</FormFeedback>
+                                                                            )}
+                                                                        </div>
+                                                                    </Col>
+                                                                </Row>
+
+                                                                <Row>
+                                                                    <Col lg={6}>
+                                                                        <div className="mb-3">
+                                                                            <Label className="form-label">Adresse</Label>
+                                                                            <Input
+                                                                                type="text"
+                                                                                name="adresse"
+                                                                                className="form-control"
+                                                                                placeholder="Saisissez adresse"
+                                                                                style={{borderRadius:"20px"}}
+                                                                                value={validation.values.adresse || ''}
+                                                                                onChange={validation.handleChange}
+                                                                                onBlur={validation.handleBlur}
+                                                                                invalid={!!(validation.touched.adresse && validation.errors.adresse)}
+                                                                            />
+                                                                            {validation.touched.adresse && validation.errors.adresse && (
+                                                                                <FormFeedback>{validation.errors.adresse}</FormFeedback>
+                                                                            )}
+                                                                        </div>
+                                                                    </Col>
+                                                                    <Col lg={6}>
+                                                                        <div className="mb-3">
+                                                                            <Label className="form-label">Succursale</Label>
+                                                                            {isLoading ? (
+                                                                                <div className="text-center">
+                                                                                    <div className="spinner-border text-primary" role="status">
+                                                                                        <span className="visually-hidden">Chargement...</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                            ) : error ? (
+                                                                                <div className="alert alert-danger">{error}</div>
+                                                                            ) : (
+                                                                                <>
+                                                                                    {userData && userData.magasins && userData.magasins.length > 0 ? (
+                                                                                        <Input
+                                                                                            type="select"
+                                                                                            name="succursale"
+                                                                                            className="form-control"
+                                                                                            style={{borderRadius:"20px"}}
+                                                                                            value={validation.values.succursale || ''}
+                                                                                            onChange={validation.handleChange}
+                                                                                            onBlur={validation.handleBlur}
+                                                                                            invalid={!!(validation.touched.succursale && validation.errors.succursale)}
+                                                                                        >
+                                                                                            <option value="">Sélectionnez une succursale</option>
+                                                                                            {userData.magasins.map(magasin => (
+                                                                                                <option key={magasin.groupe_id} value={magasin.groupe_id}>
+                                                                                                    {magasin.nom}
+                                                                                                </option>
+                                                                                            ))}
+                                                                                        </Input>
+                                                                                    ) : (
+                                                                                        <div className="alert alert-warning">
+                                                                                            Aucune succursale disponible
+                                                                                        </div>
+                                                                                    )}
+
+
+                                                                                    {validation.touched.succursale && validation.errors.succursale && (
+                                                                                        <FormFeedback>{validation.errors.succursale}</FormFeedback>
+                                                                                    )}
+                                                                                </>
+                                                                            )}
+                                                                        </div>
+                                                                    </Col>
+                                                                </Row>
+
+                                                                <Row>
+                                                                    <Col lg={6}>
+                                                                        <div className="mb-3">
+                                                                            <Label className="form-label">Téléphone</Label>
+                                                                            <div className="input-group">
+                                                                                <Dropdown isOpen={dropdownOpen4} toggle={toggle4}>
+                                                                                    <DropdownToggle 
+                                                                                        tag="button" 
+                                                                                        className="btn btn-light" 
+                                                                                        style={{borderTopLeftRadius: "20px", borderBottomLeftRadius: "20px"}}
+                                                                                    >
+                                                                                        <img src={seletedCountry3.flagImg} alt="country flag" className="options-flagimg" height="20" />
+                                                                                        <span className="countrylist-codeno text-muted">{seletedCountry3.countryCode}</span>
+                                                                                    </DropdownToggle>
+                                                                                    <DropdownMenu className="dropdown-menu-list">
+                                                                                    <SimpleBar style={{ maxHeight: "220px" }} className="px-3">
+                                                                                        {(country || []).map((item, key) => (
+                                                                                            <DropdownItem as='li' onClick={() => setseletedCountry3(item)} key={key} className="dropdown-item d-flex">
+                                                                                                <div className="flex-shrink-0 me-2">
+                                                                                                    <img src={item.flagImg} alt="country flag" className="options-flagimg" height="20" />
+                                                                                                </div>
+                                                                                                <div className="flex-grow-1">
+                                                                                                    <div className="d-flex">
+                                                                                                        <div className="country-name me-1">{item.countryName}</div>
+                                                                                                        <span className="countrylist-codeno text-muted">{item.countryCode}</span>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </DropdownItem>
+                                                                                        ))}
+                                                                                    </SimpleBar>
+                                                                                </DropdownMenu>
+                                                                                </Dropdown>
+                                                                                <Input
+                                                                                    type="text"
+                                                                                    name="telephone"
+                                                                                    className="form-control"
+                                                                                    placeholder="Entrer le numéro"
+                                                                                    style={{borderTopRightRadius: "20px", borderBottomRightRadius: "20px"}}
+                                                                                    value={validation.values.telephone || ''}
+                                                                                    onChange={validation.handleChange}
+                                                                                    onBlur={validation.handleBlur}
+                                                                                    invalid={!!(validation.touched.telephone && validation.errors.telephone)}
+                                                                                />
+                                                                                {validation.touched.telephone && validation.errors.telephone && (
+                                                                                    <FormFeedback>{validation.errors.telephone}</FormFeedback>
+                                                                                )}
+                                                                            </div>
+                                                                        </div>
+                                                                    </Col>
+                                                                    <Col lg={6}>
+                                                                        <div className="mb-3">
+                                                                            <Label className="form-label">Pays*</Label>
+                                                                            <div className="input-group w-100">
+                                                                                <Dropdown isOpen={dropdownOpen2} toggle={toggle2} className="w-100">
+                                                                                    <DropdownToggle
+                                                                                        tag="button"
+                                                                                        caret={false} 
+                                                                                        type="text" 
+                                                                                        style={{
+                                                                                            backgroundImage: `url(${seletedCountry1.flagImg})`,
+                                                                                            borderRadius: "20px",
+                                                                                            width: "100%",
+                                                                                            height: "38px",
+                                                                                            backgroundColor: "#fff",
+                                                                                            border: "1px solid #ced4da"
+                                                                                        }}
+                                                                                        className="form-control d-flex align-items-center"
+                                                                                    >
+                                                                                        <div className="d-flex align-items-center w-100">
+                                                                                            {seletedCountry1.flagImg && (
+                                                                                                <img 
+                                                                                                    src={seletedCountry1.flagImg} 
+                                                                                                    alt="country flag" 
+                                                                                                    className="options-flagimg me-2" 
+                                                                                                    height="20" 
+                                                                                                />
+                                                                                            )}
+                                                                                            <span className="flex-grow-1 text-start">
+                                                                                                {seletedCountry1.countryName || 'Choisissez pays'}
+                                                                                            </span>
+                                                                                        </div>
+                                                                                    </DropdownToggle>
+                                                                                    <DropdownMenu 
+                                                                                        as='ul' 
+                                                                                        className="list-unstyled w-100 dropdown-menu-list mb-0" 
+                                                                                        style={{
+                                                                                            borderRadius: "20px",
+                                                                                            width: "100%"
+                                                                                        }}
+                                                                                    >
+                                                                                        <SimpleBar style={{ maxHeight: "220px" }} className="px-3">
+                                                                                            {(country || []).map((item, key) => (
+                                                                                                <DropdownItem 
+                                                                                                    as='li' 
+                                                                                                    onClick={() => {
+                                                                                                        setseletedCountry1(item);
+                                                                                                        validation.setFieldValue('pays', item.countryName);
+                                                                                                    }} 
+                                                                                                    key={key} 
+                                                                                                    className="dropdown-item d-flex"
+                                                                                                >
+                                                                                                    <div className="flex-shrink-0 me-2">
+                                                                                                        <img 
+                                                                                                            src={item.flagImg} 
+                                                                                                            alt="country flag" 
+                                                                                                            className="options-flagimg" 
+                                                                                                            height="20" 
+                                                                                                        />
+                                                                                                    </div>
+                                                                                                    <div className="flex-grow-1">
+                                                                                                        <div className="d-flex">
+                                                                                                            <div className="country-name me-1">
+                                                                                                                {item.countryName}
+                                                                                                            </div>
+                                                                                                            <span className="countrylist-codeno text-muted">
+                                                                                                                {item.countryCode}
+                                                                                                            </span>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </DropdownItem>
+                                                                                            ))}
+                                                                                        </SimpleBar>
+                                                                                    </DropdownMenu>
+                                                                                </Dropdown>
+                                                                            </div>
+                                                                            {validation.touched.pays && validation.errors.pays && (
+                                                                                <FormFeedback style={{display: 'block'}}>
+                                                                                    {validation.errors.pays}
+                                                                                </FormFeedback>
+                                                                            )}
+                                                                        </div>
+                                                                    </Col>
+                                                                </Row>
+
+                                                                <Row>
+                                                                    <Col lg={6}>
+                                                                        <div className="mb-3">
+                                                                            <Label className="form-label">Magasin</Label>
+                                                                            <Input
+                                                                                type="select"
+                                                                                name="magasin"
+                                                                                className="form-control"
+                                                                                style={{borderRadius:"20px"}}
+                                                                                value={validation.values.magasin || ''}
+                                                                                onChange={validation.handleChange}
+                                                                                onBlur={validation.handleBlur}
+                                                                            >
+                                                                                <option value="">Sélectionnez un magasin</option>
+                                                                                {userData?.magasins?.map(magasin => (
+                                                                                    <option key={magasin.id} value={magasin.id}>
+                                                                                        {magasin.nom}
+                                                                                    </option>
+                                                                                ))}
+                                                                            </Input>
+
+                                                                        </div>
+                                                                    </Col>
+                                                                </Row>
+
+                                                                    <div className="d-flex align-items-start gap-3 mt-4">
+                                                                        <button
+                                                                            type="button"
+                                                                            className="btn btn-success btn-label right ms-auto nexttab nexttab"
+                                                                            onClick={() => {
+                                                                                toggleTab(activeTab + 1, 50);
+                                                                            }}
+                                                                            style={{borderRadius:"20px"}}
+                                                                        >
+                                                                            <i className="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
+                                                                            Suivant
+                                                                        </button>
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </TabPane>
+
+                                                            <TabPane tabId={2}>
+                                                                
+
+                                                                <div className="bg-light p-3">
+                                                                    <h6>Attribuer des permissioons</h6>
+                                                                </div>
+                                                                
+                                                                <div className="ms-3 me-3 mt-3 mb-3">
+                                                                    {permissions.map((permission, index) => (
+                                                                        index % 2 === 0 && (
+                                                                            <Row className="justify-content-between" key={permission.id}>
+                                                                                <Col lg={5} className="ms-4">
+                                                                                    <div className="mb-3">
+                                                                                        <div 
+                                                                                            className="form-check form-switch" 
+                                                                                            id={`tooltip-${permission.id}`}
+                                                                                            onMouseEnter={() => toggleTooltip(permission.id)}
+                                                                                            onMouseLeave={() => toggleTooltip(permission.id)}
+                                                                                        >
+                                                                                            <Input 
+                                                                                                className="form-check-input" 
+                                                                                                type="checkbox" 
+                                                                                                role="switch" 
+                                                                                                id={`switch-${permission.id}`} 
+                                                                                            />
+                                                                                            <span>{permission.label}</span>
+                                                                                        </div>
+                                                                                        <Tooltip
+                                                                                           {...TOOLTIP_CONFIG}
+                                                                                           isOpen={tooltips[permission.id]}
+                                                                                           target={`tooltip-${permission.id}`}
+                                                                                           toggle={() => toggleTooltip(permission.id)}
+                                                                                            // isOpen={tooltips[permission.id]}
+                                                                                            // target={`tooltip-${permission.id}`}
+                                                                                            // placement="top"
+                                                                                            // fade={true}
+                                                                                            // delay={{ show: 200, hide: 100 }}
+                                                                                            transition={{ timeout: 200 }}  
+
+                                                                                        >
+                                                                                            {permission.description}
+                                                                                        </Tooltip>
+                                                                                    </div>
+                                                                                </Col>
+                                                                                {permissions[index + 1] && (
+                                                                                    <Col lg={6}>
+                                                                                        <div className="mb-3">
+                                                                                            <div 
+                                                                                                className="form-check form-switch mb-2" 
+                                                                                                id={`tooltip-${permissions[index + 1].id}`}
+                                                                                                onMouseEnter={() => toggleTooltip(permissions[index + 1].id)}
+                                                                                                onMouseLeave={() => toggleTooltip(permissions[index + 1].id)}
+                                                                                            >
+                                                                                                <Input 
+                                                                                                    className="form-check-input" 
+                                                                                                    type="checkbox" 
+                                                                                                    role="switch" 
+                                                                                                    id={`switch-${permissions[index + 1].id}`} 
+                                                                                                />
+                                                                                                <span>{permissions[index + 1].label}</span>
+                                                                                            </div>
+                                                                                            <Tooltip
+                                                                                                {...TOOLTIP_CONFIG}
+                                                                                                isOpen={tooltips[permissions[index + 1].id]}
+                                                                                                target={`tooltip-${permissions[index + 1].id}`}
+                                                                                                toggle={() => toggleTooltip(permissions[index + 1].id)}
+                                                                                                // isOpen={tooltips[permissions[index + 1].id]}
+                                                                                                // target={`tooltip-${permissions[index + 1].id}`}
+                                                                                                // placement="top"
+                                                                                                // fade={true}
+                                                                                                // delay={{ show: 200, hide: 100 }}
+                                                                                                transition={{ timeout: 200 }}  // Ajouter cette ligne
+
+                                                                                            >
+                                                                                                {permissions[index + 1].description}
+                                                                                            </Tooltip>
+                                                                                        </div>
+                                                                                    </Col>
+                                                                                )}
+                                                                            </Row>
+                                                                        )
+                                                                    ))}
+
+                                                                <Row className="justify-content-between">
+                                                                    <div className="d-flex align-items-center gap-3 mt-4 w-100 justify-content-between">
+                                                                        <button
+                                                                            type="button"
+                                                                            className="btn btn-link text-decoration-none btn-label previestab"
+                                                                            onClick={() => toggleTab(activeTab - 1, 0)}
+                                                                            style={{borderRadius:"20px"}}
+                                                                        >
+                                                                            <i className="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>
+                                                                            Précédent
+                                                                        </button>
+                                                                        {/* <button
+                                                                            type="submit"
+                                                                            className="btn btn-success btn-label "
+                                                                            onClick={() => toggleTab(activeTab + 1, 100)}
+                                                                            style={{borderRadius:"20px"}}
+                                                                        >
+                                                                            Ajouter utilisateur
+                                                                            <i className="ri-arrow-right-line label-icon align-middle fs-16 ms-2"></i>
+                                                                        </button> */}
+                                                                        <Button color="success" onClick={() => handleTeamClicks()} style={{borderRadius:"20px"}}>
+                                                                            <i className="ri-file-add-line me-1 align-bottom"></i>
+                                                                            Ajouter un utilisateur
+                                                                        </Button>
+                                                                    </div>
+                                                                </Row>
+                                                                </div>
+                                                            </TabPane>
+
+                                                            <TabPane tabId={3}>
+                                                                <div className="ms-3 me-3 mt-3 mb-3">
+                                                                    <div className="text-center">
+                                                                        <div className="mb-3">
+                                                                            <lord-icon
+                                                                                src="https://cdn.lordicon.com/lupuorrc.json"
+                                                                                trigger="loop"
+                                                                                colors="primary:#0ab39c,secondary:#405189"
+                                                                                style={{ width: "120px", height: "120px" }}
+                                                                            ></lord-icon>
+                                                                        </div>
+                                                                        <h5>Félicitations !</h5>
+                                                                        <p className="text-muted">
+                                                                            Vous venez d'ajouter un utilisateur.
+                                                                            Demandez lui de consulter son mail.
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </TabPane>
+                                                    </TabContent>
+                                                </Form>
+                                            
+    
+                                            </Modal>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div className="py-4 mt-4 text-center" id="noresult" style={{ display: "none" }}>
+                                <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="loop" colors="primary:#405189,secondary:#0ab39c" style={{ width: "72px", height: "72px" }}></lord-icon>
+                                <h5 className="mt-4">Sorry! No Result Found</h5>
+                            </div>
+                        </Col>
+                    </Row>
+                </Container>
+                
+            </div>
+        </React.Fragment>
+    );
+};
+
+export default Team;

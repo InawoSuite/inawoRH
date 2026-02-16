@@ -1,0 +1,92 @@
+import React, { useState, useEffect } from 'react';
+import { Dropdown, DropdownItem, DropdownMenu, DropdownToggle } from 'reactstrap';
+import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router-dom";
+import PropTypes from "prop-types";
+import { isEmpty } from 'lodash';
+import userdummy from "../../assets/images/users/user-dummy-img.jpg";
+
+const ProfileDropdown = () => {
+    const { t } = useTranslation();
+    const location = useLocation();
+    const navigate = useNavigate();
+    const [isProfileDropdown, setIsProfileDropdown] = useState(false);
+    
+    // Récupération des données utilisateur du localStorage
+    const user = JSON.parse(localStorage.getItem('user')) || {};
+    const abonnement = JSON.parse(localStorage.getItem('abonnement')) || {};
+    
+    const toggleProfileDropdown = () => {
+        setIsProfileDropdown(!isProfileDropdown);
+    };
+
+    const [profileImage, setProfileImage] = useState(userdummy);
+
+    useEffect(() => {
+      // Récupérer la photo de profil si l'utilisateur a un ID
+      if (user && user.id) {
+          const imageUrl = `http://inawoapiv3.inawo.pro/utilisateurs/getuser/${user.id}`;
+          setProfileImage(imageUrl);
+      }
+    }, [user.id]);
+
+    return (
+        <Dropdown isOpen={isProfileDropdown} toggle={toggleProfileDropdown} className="ms-sm-3 header-item topbar-user">
+            
+            <DropdownToggle tag="button" type="button" className="btn">
+                <span className="d-flex align-items-center">
+                    <img 
+                        className="rounded-circle header-profile-user" 
+                        src={profileImage}
+                        alt="Photo de profil"
+                        onError={(e) => {
+                            e.target.onerror = null; // Éviter les boucles infinies
+                            e.target.src = userdummy; // Fallback sur l'image par défaut
+                        }}
+                    />
+                    <span className="text-start ms-xl-2">
+                        <div>
+                            <span className="d-none d-xl-inline-block ms-1 fw-medium user-name-text">
+                                {user.nom} {user.prenom}
+                            </span>
+                            <span className="d-none d-xl-block ms-1 fs-12 text-muted user-name-sub-text">
+                                {user.type_utilisateur}
+                            </span>
+                        </div>
+                    </span>
+                </span>
+            </DropdownToggle>
+            {/* <DropdownMenu className="dropdown-menu-end">
+                <h6 className="dropdown-header">
+                    {t("Bienvenue")} {user.prenom}!
+                </h6>
+
+                <DropdownItem onClick={() => navigate('/pages-profile')}>
+                    <i className="mdi mdi-account-circle text-muted fs-16 align-middle me-1" />
+                    <span className="align-middle">{t("Profil")}</span>
+                </DropdownItem>
+
+                {user.type_utilisateur !== "Abonne" && (
+                    <DropdownItem onClick={() => navigate(`/pages-profile/${user.id}/`)}>
+                        <i className="mdi mdi-cog-outline text-muted fs-16 align-middle me-1" />
+                        <span className="align-middle">{t("Paramètres")}</span>
+                    </DropdownItem>
+                )}
+
+                {abonnement && (
+                    <DropdownItem onClick={() => navigate('/apps-crm-abonnements')}>
+                        <i className="ri-secure-payment-line text-muted fs-16 align-middle me-1" />
+                        <span className="align-middle">{t("Abonnement")}</span>
+                    </DropdownItem>
+                )}
+
+                <DropdownItem onClick={() => navigate('/logout')}>
+                    <i className="mdi mdi-logout text-muted fs-16 align-middle me-1" />
+                    <span className="align-middle">{t("Déconnexion")}</span>
+                </DropdownItem>
+            </DropdownMenu> */}
+        </Dropdown>
+    );
+};
+
+export default ProfileDropdown;

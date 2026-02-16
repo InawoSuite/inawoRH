@@ -1,0 +1,177 @@
+//
+// _authentication.scss
+//
+
+
+.auth-page-wrapper{
+    .auth-page-content{
+        padding-bottom: $footer-height;
+        position: relative;
+        z-index: 2;
+        width: 100%;
+    }
+    .footer{
+        left: 0;
+        // background-color: transparent;
+        color: $body-color;
+    }
+}
+
+.auth-one-bg-position{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 380px;
+    
+    @media (max-width: 575.98px) {
+        height: 280px;
+    }
+}
+
+.auth-one-bg{
+    background-image: url("../../images/auth-one-bg.jpg");
+    background-size: cover;
+    position: absolute; // ou fixed si elle est censée couvrir tout
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh; // ou 100%
+   
+    
+//   background-position: center;
+
+    .bg-overlay{
+        background: linear-gradient(to right, darken(#7298ab, 6%), #8b8bb0);
+        opacity: 0.9;
+    }
+
+    .shape{
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        z-index: 1;
+        pointer-events: none;
+        >svg {
+            width: 100%;
+            height: auto;
+            fill: var(--#{$variable-prefix}body-bg);
+        }
+    }
+}
+
+// auth-pass-inputgroup
+
+.auth-pass-inputgroup{
+    input[type="text"] + .btn .ri-eye-fill{
+        &:before{
+            content: "\ecb6";
+        }
+    }
+}
+
+.particles-js-canvas-el{
+    position: relative;
+}
+
+// signin card title
+
+.signin-other-title{
+    position: relative;
+    &:after{
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 1px;
+        left: 0;
+        right: 0;
+        border-top: 1px dashed $border-color;
+        top: 10px;
+    }
+
+    .title{
+        display: inline-block;
+        position: relative;
+        z-index: 9;
+        // background-color: $card-bg;
+        padding: 2px 16px;
+    }
+}
+
+Auth cover
+
+.auth-bg-cover{
+    background: linear-gradient(-45deg, $primary 50%, $success);
+
+    > .bg-overlay{
+         background-image: url("../../images/cover-pattern.png");
+        background-position: center;
+        background-size: cover;
+        opacity: 1;
+        background-color: transparent;
+    }
+
+    .footer{
+        color: rgba($white, .5);
+    }
+}
+
+//passowrd validations 
+#password-contain {
+    display: none;
+
+    p {
+        padding-left: 13px;
+
+        &.valid {
+            color: $success;
+
+            &::before {
+                position: relative;
+                left: -8px;
+                content: "✔";
+            }
+        }
+
+        &.invalid {
+            color: $danger;
+
+            &::before {
+                position: relative;
+                left: -8px;
+                content: "✖";
+            }
+        }
+    }
+}
+  
+  /* Loading animation styles */
+  .loading {
+    cursor: not-allowed; /* Change cursor when loading */
+  }
+  
+  .loader {
+    border: 4px solid rgba(0, 0, 0, 0.1);
+    // border-left: 4px solid #ffffff;
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    z-index: 10;
+    top: 23%; /* Center vertically */
+    left: 47%; /* Center horizontally */
+    transform: translate(-50%, -50%); /* Center adjustment */
+  }
+
+//   @keyframes spin {
+//     0% {
+//       transform: translate(-50%, -50%) rotate(0deg);
+//     }
+//     100% {
+//       transform: translate(-50%, -50%) rotate(360deg);
+//     }
+  //   }
+  

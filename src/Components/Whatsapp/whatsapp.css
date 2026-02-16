@@ -1,0 +1,31 @@
+/* Effet de pulsation pour WhatsApp */
+@keyframes whatsapp-pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(37, 211, 102, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);
+  }
+}
+
+.whatsapp-pulse {
+  animation: whatsapp-pulse 2s infinite;
+}
+
+/* Suppression de l'outline au focus */
+.whatsapp-pulse:focus,
+.whatsapp-pulse:focus-visible {
+  outline: none !important;
+  box-shadow: 0 6px 16px rgba(37, 211, 102, 0.6) !important;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .whatsapp-button-container {
+    bottom: 15px !important;
+    right: 15px !important;
+  }
+}

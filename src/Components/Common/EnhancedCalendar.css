@@ -1,0 +1,68 @@
+/* SimpleModernCalendar.css */
+.simple-calendar-container {
+  position: relative;
+  width: 100%;
+}
+
+.simple-calendar-input-wrapper {
+  position: relative;
+  width: 100%;
+  cursor: pointer;
+}
+
+.simple-calendar-input-wrapper.disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.simple-calendar-display {
+  width: 100%;
+  padding: 12px 45px 12px 15px;
+  border: 2px solid #e1e5e9;
+  border-radius: 12px;
+  background-color: white;
+  font-size: 15px;
+  font-weight: 500;
+  color: #2d3748;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.simple-calendar-display:focus {
+  border-color: #405189;
+  box-shadow: 0 0 0 4px rgba(64, 81, 137, 0.15);
+  outline: none;
+}
+
+.simple-calendar-input-wrapper:hover:not(.disabled) .simple-calendar-display {
+  border-color: #405189;
+  box-shadow: 0 2px 8px rgba(64, 81, 137, 0.15);
+}
+
+.calendar-icon {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #405189;
+  pointer-events: none;
+}
+
+.simple-calendar-native {
+  z-index: 1;
+}
+
+/* Pour améliorer l'apparence du datepicker natif sur certains navigateurs */
+.simple-calendar-native::-webkit-calendar-picker-indicator {
+  background: transparent;
+  bottom: 0;
+  color: transparent;
+  cursor: pointer;
+  height: auto;
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: auto;
+}

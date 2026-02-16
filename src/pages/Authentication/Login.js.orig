@@ -1,0 +1,360 @@
+import React, { useEffect, useState } from "react";
+
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  Input,
+  Label,
+  Row,
+  Button,
+  Form,
+  Alert,
+  Spinner,
+} from "reactstrap";
+import { useSelector, useDispatch } from "react-redux";
+import { useNavigate, Link, useLocation } from "react-router-dom";
+import ParticlesAuth from "../AuthenticationInner/ParticlesAuth";
+import axios from "axios";
+import logoInwo from "../../assets/images/logo_inwo.png";
+import { setAuthorization } from "../../helpers/api_helper";
+import { loginSuccess } from '../../slices/auth/login/reducer';
+import { saveAuthData, getAuthData } from '../../utils/authUtils';
+
+
+const Login = () => {
+  const dispatch = useDispatch();
+  const auth = useSelector(state => state.auth || {});
+  const { user = null, token = null } = auth;
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [passwordShow, setPasswordShow] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
+  const currentYear = new Date().getFullYear();
+
+  // const { user, token } = useSelector(state => state.auth);
+  
+  const location = useLocation();
+
+  const initializeAuth = () => {
+    const authData = getAuthData();
+    if (authData.access_token && authData.user) {
+        dispatch(loginSuccess({
+            user: authData.user,
+            token: authData.access_token,
+            refreshToken: authData.refresh_token
+        }));
+        setAuthorization(authData.access_token);
+        return true;
+    }
+    return false;
+};
+
+
+
+  const validateForm = () => {
+    // Validation de l'email
+    if (!email || !email.trim()) {
+      setError("L'email est requis");
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      setError("Format d'email invalide");
+      return false;
+    }
+
+    // Validation du mot de passe
+    if (!password || !password.trim()) {
+      setError("Le mot de passe est requis");
+      return false;
+    }
+
+    // Si tout est valide
+    return true;
+  };
+
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (!validateForm()) {
+      return;
+    }
+  
+    setLoading(true);
+    setError(null);
+  
+    try {
+      console.log("🔄 Envoi de la requête...");
+      const response = await axios.post(
+        "https://inawoapiv3.inawo.pro/utilisateurs/connexion/",
+        {
+          email: email.trim(),
+          password: password.trim(),
+        }
+      );
+      
+      // Extraire data immédiatement pour éviter les problèmes d'accès
+      const responseData = response;
+      console.log("✅ Réponse reçue:", responseData);
+      
+      // Vérifier que les données existent
+      if (responseData) {
+        // Extraire correctement les tokens et les infos utilisateur
+        const { 
+          access_token, 
+          refresh_token, 
+          message,
+          ...userData 
+        } = response;
+        
+        console.log("📦 Données extraites:", { 
+          access_token: access_token ? "✅" : "❌",
+          refresh_token: refresh_token ? "✅" : "❌", 
+          message
+        });
+    
+        // Vérifier que la connexion est réussie
+        if (message && message.includes("Connexion réussie")) {
+          // Utiliser saveAuthData au lieu du stockage manuel
+          console.log("💾 Sauvegarde des données d'authentification...");
+          saveAuthData({
+            access_token,
+            refresh_token,
+            user: userData // Tous les champs utilisateur (id, nom, prenom, etc.)
+          }, rememberMe);
+          
+          console.log("🔄 Configuration d'axios...");
+          setAuthorization(access_token);
+    
+          console.log("🔄 Mise à jour du state Redux...");
+          dispatch(loginSuccess({
+            user: userData,
+            token: access_token,
+            refreshToken: refresh_token
+          }));
+    
+          console.log("✅ Configuration terminée, tentative de redirection...");
+          
+          // Arrêt du loader AVANT navigation
+          setLoading(false);
+          
+          // Navigation avec timeout de sécurité
+          try {
+            navigate('/dashboard', { replace: true });
+            
+            // Filet de sécurité si navigate() ne fonctionne pas correctement
+            setTimeout(() => {
+              if (window.location.pathname.includes("login")) {
+                console.log("⚠ Navigation React Router ne fonctionne pas, utilisation de window.location");
+                window.location.href = "/dashboard";
+              }
+            }, 1000);
+          } catch (navError) {
+            console.error("❌ Erreur lors de la navigation:", navError);
+            window.location.href = "/dashboard";
+          }
+        } else {
+          setError("Erreur d'authentification : " + (message || "Raison inconnue"));
+          setLoading(false);
+        }
+      } else {
+        throw new Error("Réponse invalide du serveur");
+      }
+    } catch (error) {
+      console.error("❌ Erreur:", error);
+      setError(error.message || "Une erreur est survenue");
+      setLoading(false);
+    }
+    
+  };
+
+
+  useEffect(() => {
+    const isAuthenticated = initializeAuth();
+    if (isAuthenticated) {
+        console.log("Utilisateur authentifié, redirection...");
+        navigate("/dashboard", { replace: true });
+    }
+}, [navigate]);
+
+  
+  document.title = "Connexion | Inawo";
+
+  return (
+    <React.Fragment>
+      <ParticlesAuth>
+        <div className="mt-4">
+          <div className="auth-page-content">
+            <div className="auth-one-bg">
+              <Container className="mb-3">
+                <Row
+                  className="justify-content-center"
+                  style={{ marginTop: "5%" }}
+                >
+                  <div className="text-center mt-4">
+                    <Link to="/" className="d-inline-block auth-logo">
+                      <img src={logoInwo} width="30%" alt="Logo Inawo" />
+                    </Link>
+                  </div>
+
+                  <Col md={8} lg={6} xl={5}>
+                    <Card className="mt-4" style={{ borderRadius: 20 }}>
+                      <CardBody className="p-4">
+                        <div className="text-center mt-2">
+                          <h5 className="text-primary">
+                            Bienvenue sur Inawo !
+                          </h5>
+                          <p className="text-muted mt-2">
+                            Connectez-vous pour continuer.
+                          </p>
+                        </div>
+
+
+
+                        <div className="p-2 mt-4">
+                          <Form onSubmit={handleFormSubmit}>
+                            <div className="mb-3">
+                              <Label htmlFor="email">Email</Label>
+                              <Input
+                                id="email"
+                                name="email"
+                                type="email"
+                                placeholder="Entrez votre email"
+                                className="form-control rounded-pill"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                              />
+                            </div>
+
+                            <div className="mb-3">
+                              <div className="float-end">
+                                <Link
+                                  to="/forgot-password"
+                                  className="text-muted"
+                                >
+                                  Mot de passe oublié ?
+                                </Link>
+                              </div>
+                              <Label htmlFor="password">Mot de passe</Label>
+                              <div className="position-relative auth-pass-inputgroup mb-3">
+                                <Input
+                                  id="password"
+                                  name="password"
+                                  type={passwordShow ? "text" : "password"}
+                                  placeholder="Entrez votre mot de passe"
+                                  className="form-control rounded-pill"
+                                  value={password}
+                                  onChange={(e) => setPassword(e.target.value)}
+                                  required
+                                />
+                                <button
+                                  type="button"
+                                  className="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted"
+                                  onClick={() => setPasswordShow(!passwordShow)}
+                                >
+                                  <i className="ri-eye-fill align-middle"></i>
+                                </button>
+                              </div>
+                            </div>
+
+                            <div className="form-check">
+                              <Input
+                                className="form-check-input"
+                                type="checkbox"
+                                id="auth-remember-check"
+                                checked={rememberMe}
+                                onChange={(e) =>
+                                  setRememberMe(e.target.checked)
+                                }
+                              />
+                              <Label
+                                className="form-check-label"
+                                htmlFor="auth-remember-check"
+                              >
+                                Se souvenir de moi
+                              </Label>
+                            </div>
+
+
+
+                            <div className="mt-4">
+                              {error && (
+                                <p style={{ color: 'black', textAlign: 'center', marginBottom: '2px' }}>
+                                  {error}
+                                </p>
+                              )}
+
+
+                              <Button
+                                type="submit"
+                                className="form-control rounded-pill btn w-100 text-white"
+                                style={{
+                                  backgroundColor: "#014a92",
+                                  borderColor: "#014a92",
+                                }}
+                                disabled={loading}
+                                onMouseEnter={(e) => {
+                                  e.target.style.backgroundColor = "#007bff";
+                                  e.target.style.borderColor = "#007bff";
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.target.style.backgroundColor = "#014a92";
+                                  e.target.style.borderColor = "#014a92";
+                                }}
+                              >
+                                {loading ? (
+                                  <>
+                                    <Spinner size="sm" className="me-2" />
+
+                                  </>
+                                ) : (
+                                  "Se connecter"
+                                )}
+                              </Button>
+                            </div>
+
+                            <div className="mt-4 text-center">
+                              <span>Vous n'avez pas de compte ? </span>
+                              <Link
+                                to="/register"
+                                className="fw-semibold text-decoration-underline"
+                                style={{ color: "#014a92" }}
+                              >
+                                S'inscrire maintenant
+                              </Link>
+                            </div>
+                          </Form>
+                        </div>
+                      </CardBody>
+                    </Card>
+                  </Col>
+                </Row>
+              </Container>
+              <div
+                className="text-center"
+                style={{
+                  position: "absolute",
+                  bottom: "20px",
+                  width: "100%",
+                  color: "#fff",
+                }}
+              >
+                <p>&copy; {currentYear} Inawo. Tous droits réservés.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ParticlesAuth>
+    </React.Fragment>
+  );
+};
+
+export default Login;

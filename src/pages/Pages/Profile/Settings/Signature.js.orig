@@ -1,0 +1,544 @@
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Col,
+  Container,
+  Form,
+  Input,
+  Label,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+  TabContent,
+  TabPane,
+  Util,
+} from "reactstrap";
+import classnames from "classnames";
+import Flatpickr from "react-flatpickr";
+
+//import images
+import progileBg from "../../../../assets/images/profile-bg.jpg";
+import avatar1 from "../../../../assets/images/users/avatar-1.jpg";
+import signature from "../../../../assets/images/signature .png";
+
+const Signature = () => {
+  console.log("Unit");
+  const [activeTab, setActiveTab] = useState("1");
+
+  const tabChange = (tab) => {
+    if (activeTab !== tab) setActiveTab(tab);
+  };
+
+  document.title =
+    "Signature Settings | Velzon - React Admin & Dashboard Template";
+
+  return (
+    <React.Fragment>
+      <div className="main-content" style={{ margin: "0" }}>
+        <div className="page-content">
+          <div className="container-fluid">
+            <div className="row">
+              <div className="col-12">
+                <div className="page-title-box d-sm-flex align-items-center justify-content-between">
+                  <h4 className="mb-sm-0" style={{color: 'rgb(98,116,142)'}}>Signature</h4>
+                  <div className="page-title-right">
+                    <ol className="breadcrumb m-0">
+                      <li className="breadcrumb-item">
+                        <a href="#" className="text-decoration-none d-flex">  <span style={{padding: "0 "}}>Inawo</span>  <span style={{padding: "0 3%"}}>&gt;</span>   </a>
+                      </li>
+                      <li className="breadcrumb-item active" style={{padding: "0 3%"}}>Signature</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card">
+                <div class="card-header">
+                  <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <div class="col-md-4">
+                      <div class="search-box">
+                        <input
+                          type="text"
+                          class="form-control search"
+                          placeholder="Chercher un signature . . ."
+                          style={{borderRadius: "20px"}}
+                        />
+                        <i class="ri-search-line search-icon"></i>
+                      </div>
+                    </div>
+
+                    <div class="flex-shrink-0">
+                      <div class="hstack text-nowrap gap-2">
+                        <div class="flex-grow-1">
+                          <button
+                            class="btn btn-info add-btn"
+                            data-bs-toggle="modal"
+                            data-bs-target="#showModal"
+                            style={{borderRadius: '20px'}}
+                          >
+                            <i class="ri-file-add-line me-1  align-bottom"></i>
+                            
+                            Ajouter une signature
+                          </button>
+                        </div>
+
+                        <button
+                          class="btn btn-success add-btn"
+                          data-bs-toggle=""
+                          data-bs-target="#showModal"
+                          style={{borderRadius: '20px'}}
+
+                        >
+                          <i class="ri-file-upload-line me-1 align-bottom"></i>{" "}
+                          Exporter{" "}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div >
+              <div class="card" id="contactList">
+                <div class="card-body">
+                  <div>
+                    <div class="table-responsive table-card mb-3">
+                      <table
+                        class="table align-middle table-nowrap mb-0"
+                        id="customerTable"
+                      >
+                        <thead class="table-light">
+                          <tr>
+                            <th scope="col" style={{ width: "50px" }}>
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  id="checkAll"
+                                  value="option"
+                                />
+                              </div>
+                            </th>
+                            <th class="sort" data-sort="name" scope="col">
+                              Nom
+                            </th>
+                            <th
+                              class="sort"
+                              data-sort="company_name"
+                              scope="col"
+                            >
+                              Signature
+                            </th>
+                            <th
+                              class="sort"
+                              data-sort="company_name"
+                              scope="col"
+                            >
+                              Statut
+                            </th>
+                            <th scope="col">Action</th>
+                          </tr>
+                        </thead>
+                        <tbody class="list form-check-all">
+                          <tr>
+                            <th scope="row">
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  name="chk_child"
+                                  value="option1"
+                                />
+                              </div>
+                            </th>
+                            <td class="id" style={{ display: "none" }}>
+                              <a
+                                href="javascript:void(0);"
+                                class="fw-medium link-primary"
+                              >
+                                #VZ001
+                              </a>
+                            </td>
+                            <td class="name">
+                              <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0"></div>
+                                <div class="flex-grow-1 ms-2 name">Jeff Bretel</div>
+                              </div>
+                            </td>
+                            <td class="tags">
+                              <img src={signature} />
+                            </td>
+
+                            <td class="tags">
+                              <div class="form-check form-switch fs-4">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  id="rating_1"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="rating_1"
+                                ></label>
+                              </div>
+                            </td>
+
+                            <td>
+                              <ul class="list-inline hstack gap-2 mb-0">
+                                <li class="list-inline-item">
+                                  <div class="dropdown">
+                                    <button
+                                      class="btn btn-soft-secondary btn-sm dropdown"
+                                      type="button"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    >
+                                      <i class="ri-edit-line"></i>
+                                    </button>
+                                  </div>
+                                </li>
+                                <li class="list-inline-item">
+                                  <div class="dropdown">
+                                    <button
+                                      class="btn btn-soft-secondary btn-sm dropdown"
+                                      type="button"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    >
+                                      <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                  </div>
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <th scope="row">
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  name="chk_child"
+                                  value="option1"
+                                />
+                              </div>
+                            </th>
+                            <td class="id" style={{ display: "none" }}>
+                              <a
+                                href="javascript:void(0);"
+                                class="fw-medium link-primary"
+                              >
+                                #VZ001
+                              </a>
+                            </td>
+                            <td class="name">
+                              <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0"></div>
+                                <div class="flex-grow-1 ms-2 name">
+                                  Alice Bourdi
+                                </div>
+                              </div>
+                            </td>
+                            <td class="tags">
+                              <img src={signature} />
+                            </td>
+
+                            <td class="tags">
+                              <div class="form-check form-switch fs-4">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  id="rating_1"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="rating_1"
+                                ></label>
+                              </div>
+                            </td>
+
+                            <td>
+                              <ul class="list-inline hstack gap-2 mb-0">
+                                <li class="list-inline-item">
+                                  <div class="dropdown">
+                                    <button
+                                      class="btn btn-soft-secondary btn-sm dropdown"
+                                      type="button"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    >
+                                      <i class="ri-edit-line"></i>
+                                    </button>
+                                  </div>
+                                </li>
+                                <li class="list-inline-item">
+                                  <div class="dropdown">
+                                    <button
+                                      class="btn btn-soft-secondary btn-sm dropdown"
+                                      type="button"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    >
+                                      <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                  </div>
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
+
+                          <tr>
+                            <th scope="row">
+                              <div class="form-check">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  name="chk_child"
+                                  value="option1"
+                                />
+                              </div>
+                            </th>
+                            <td class="id" style={{ display: "none" }}>
+                              <a
+                                href="javascript:void(0);"
+                                class="fw-medium link-primary"
+                              >
+                                #VZ001
+                              </a>
+                            </td>
+                            <td class="name">
+                              <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                               
+                                </div>
+                                <div class="flex-grow-1 ms-2 name">
+                                  Louis Luna
+                                </div>
+                              </div>
+                            </td>
+                            <td class="tags">
+                              <img src={signature} />
+                            </td>
+
+                            <td class="tags">
+                              <div class="form-check form-switch fs-4">
+                                <input
+                                  class="form-check-input"
+                                  type="checkbox"
+                                  id="rating_1"
+                                />
+                                <label
+                                  class="form-check-label"
+                                  for="rating_1"
+                                ></label>
+                              </div>
+                            </td>
+
+                            <td>
+                              <ul class="list-inline hstack gap-2 mb-0">
+                                <li class="list-inline-item">
+                                  <div class="dropdown">
+                                    <button
+                                      class="btn btn-soft-secondary btn-sm dropdown"
+                                      type="button"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    >
+                                      <i class="ri-edit-line"></i>
+                                    </button>
+                                  </div>
+                                </li>
+                                <li class="list-inline-item">
+                                  <div class="dropdown">
+                                    <button
+                                      class="btn btn-soft-secondary btn-sm dropdown"
+                                      type="button"
+                                      data-bs-toggle="dropdown"
+                                      aria-expanded="false"
+                                    >
+                                      <i class="ri-delete-bin-6-line"></i>
+                                    </button>
+                                  </div>
+                                </li>
+                              </ul>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+
+                      <div class="noresult" style={{ display: "none" }}>
+                        <div class="text-center">
+                          <lord-icon
+                            src="https://cdn.lordicon.com/msoeawqm.json"
+                            trigger="loop"
+                            colors="primary:#121331,secondary:#08a88a"
+                            style={{ width: "75px", height: "75px" }}
+                          ></lord-icon>
+                          <h5 class="mt-2">Sorry! No Result Found</h5>
+                          <p class="text-muted mb-0">
+                            We've searched more than 150+ contacts We did not
+                            find any contacts for you search.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="d-flex justify-content-end mt-3">
+                      <div class="pagination-wrap hstack gap-1">
+                        <a class="page-item pagination-next" href="#"  style={{borderRadius: '50px'}}>
+                          Précédant
+                        </a>
+                        <ul class="pagination listjs-pagination mb-0 active"></ul>
+                        <a class="page-item bg-primary text-white pagination-next" href="#"  style={{borderRadius: '50px'}}>
+                          1
+                        </a>
+                        <ul class="pagination listjs-pagination mb-0"></ul>
+                        <a class="page-item pagination-next" href="#"  style={{borderRadius: '50px'}}>
+                          2
+                        </a>
+                        <ul class="pagination listjs-pagination mb-0"></ul>
+                        <a class="page-item pagination-next" href="#"  style={{borderRadius: '50px'}}>
+                          suivant
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="modal fade"
+                    id="showModal"
+                    tabindex="-1"
+                    aria-labelledby="exampleModalLabel"
+                    aria-hidden="true"
+                    >
+                    <div class="modal-dialog modal-dialog-centered ">
+                      <div class="modal-content border-0  rounded-4">
+                        <div class="modal-header bg-info-subtle p-3 rounded-top-4">
+                          <h5 class="modal-title" id="exampleModalLabel">
+                            Ajouter une signature
+                          </h5>
+                          <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            id="close-modal"
+                          ></button>
+                        </div>
+                        <form class="tablelist-form" autocomplete="off">
+                          <div class="modal-body">
+                            <input type="hidden" id="id-field" />
+                            <div class="row g-3">
+                              <div class="col-lg-12">
+                                <div>
+                                  <label for="name-field" class="form-label">
+                                    Nom
+                                  </label>
+                                  <input
+                                    type="text"
+                                    id="customername-field"
+                                    class="form-control"
+                                    placeholder="Enter name"
+                                    required
+                                    style={{borderRadius: "20px"}}
+                                  />
+                                </div>
+                              </div>
+                              <div class="col-lg-12">
+                                <div>
+                                  <div class="mb-3">
+                                    <label for="pdf-upload" class="form-label">
+                                      Signature
+                                    </label>
+                                    <div class="d-flex justify-content-center align-items-center border border-primary border-dashed rounded-3 p-4 text-center">
+                                      <i class="ri-cloud-upload-line me-2 fs-4"></i>
+                                      <span>
+                                        Selectionner ou déposer un fichier
+                                      </span>
+
+                                      <input
+                                        type="file"
+                                        id="pdf-file"
+                                        class="form-control position-absolute opacity-0"
+                                        accept=".pdf"
+                                        onchange="this.nextElementSibling.innerHTML = this.files[0].name"
+
+                                      />
+                                    </div>
+                                    <div class="mt-2">
+                                      <span id="file-name" class="text-muted">
+                                        Le fichier doit etre pdf
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <div class="hstack gap-2 justify-content-end">
+                              <button
+                                type="button"
+                                class="btn btn-light"
+                                data-bs-dismiss="modal"
+                                style={{borderRadius: " 20px "}}
+
+                              >
+                                Fermer
+                              </button>
+                              <button
+                                type="submit"
+                                class="btn btn-success"
+                                id="add-btn"
+                                style={{borderRadius: "20px"}}
+                              >
+                                Ajouter la signature
+                              </button>
+                            </div>
+                          </div>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div
+                    class="modal fade zoomIn"
+                    id="deleteRecordModal"
+                    tabindex="-1"
+                    aria-hidden="true"
+                  >
+                    <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button
+                            type="button"
+                            class="btn-close"
+                            id="deleteRecord-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                            className="btn-close"
+                          ></button>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
+  );
+};
+
+export default Signature;

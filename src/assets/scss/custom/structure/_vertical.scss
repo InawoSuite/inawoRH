@@ -1,0 +1,69 @@
+// Custom vertical menu styling
+
+// Reset all list styles
+*[class*="nav-"],
+*[class*="navbar-"],
+*[class*="menu-"] {
+  list-style: none !important;
+  list-style-type: none !important;
+  -webkit-padding-start: 0 !important;
+  padding-inline-start: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+// Basic menu styling
+.navbar-menu {
+  .navbar-nav {
+    .nav-link {
+      padding-top: 0.3rem !important;
+      padding-bottom: 0.3rem !important;
+      font-weight: 200 !important; // Encore plus fin
+    }
+
+    .nav-sm {
+      .nav-link {
+        padding-top: 0.25rem !important;
+        padding-bottom: 0.25rem !important;
+        font-weight: 200 !important; // Encore plus fin
+      }
+    }
+  }
+}
+
+// Force remove list styles
+#navbar-nav,
+.navbar-nav,
+.nav-item,
+.menu-title,
+.nav-link {
+  &, & > li {
+    list-style: none !important;
+    list-style-type: none !important;
+    -webkit-padding-start: 0 !important;
+    padding-inline-start: 0 !important;
+    margin: 0 !important;
+    padding-left: 0 !important;
+    font-weight: 200 !important; // Encore plus fin
+  }
+
+  &::marker,
+  &::before,
+  &::after,
+  & > li::marker,
+  & > li::before,
+  & > li::after {
+    display: none !important;
+    content: none !important;
+  }
+}
+
+// Additional overrides for specific elements
+.menu-title,
+.nav-item {
+  display: block;
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style-position: inside !important;
+  font-weight: 200 !important; // Encore plus fin
+}

@@ -1,0 +1,19 @@
+
+#abn 
+{
+    width: 40%;
+}
+
+
+@media screen and (max-width: 991px) {
+  #abn {
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+  }
+
+  #b_abon
+  {
+    justify-content: start;
+  }
+}

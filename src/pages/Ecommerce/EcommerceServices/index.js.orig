@@ -1,0 +1,177 @@
+import React, { useState } from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Card,
+  CardHeader,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  Form,
+  Input,
+  Label,
+  ButtonGroup,
+  Button
+} from "reactstrap";
+import BreadCrumb from "../../../Components/Common/BreadCrumb";
+import { Link } from "react-router-dom";
+
+// Données statiques
+const staticData = [
+  {
+    id: 1,
+    nom: "Ordinateur portable HP",
+    categorie: "Informatique",
+    type: "Équipement",
+    unite: "Pièce",
+    prixVente: 850000,
+    dateCreation: "2024-04-23"
+  },
+  {
+    id: 2,
+    nom: "Imprimante Canon",
+    categorie: "Informatique",
+    type: "Équipement", 
+    unite: "Pièce",
+    prixVente: 250000,
+    dateCreation: "2024-04-22"
+  }
+];
+
+const EcommerceProducts = () => {
+  // États
+  const [modal, setModal] = useState(false);
+  const [search, setSearch] = useState("");
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [activeTab, setActiveTab] = useState("all");
+  const [formData, setFormData] = useState({
+    nom: "",
+    categorie: "",
+    type: "",
+    unite: "",
+    prixVente: ""
+  });
+
+  // Gestion des sélections
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelectedItems(filteredData.map(item => item.id));
+    } else {
+      setSelectedItems([]);
+    }
+  };
+
+  const handleSelectItem = (itemId) => {
+    if (selectedItems.includes(itemId)) {
+      setSelectedItems(selectedItems.filter(id => id !== itemId));
+    } else {
+      setSelectedItems([...selectedItems, itemId]);
+    }
+  };
+
+  // Filtrage des données
+  const filteredData = staticData.filter(item => {
+    const matchesSearch = Object.values(item).some(
+      value => value.toString().toLowerCase().includes(search.toLowerCase())
+    );
+    const matchesTab = activeTab === "all" || item.status === activeTab;
+    return matchesSearch && matchesTab;
+  });
+
+  // Toggle modal
+  const toggle = () => setModal(!modal);
+
+  return (
+    <div className="page-content">
+      <Container fluid>
+        <BreadCrumb title="Produits" pageTitle="Stock" />
+
+        <Row>
+          <Col lg={12}>
+            <Card>
+              <CardHeader className="d-flex align-items-center">
+                <h5 className="card-title mb-0 flex-grow-1">Liste des produits</h5>
+                <div className="d-flex gap-2">
+                  
+                 
+                <Link to="/apps-ecommerce-add-product" className="btn btn-success">
+                  <i className="ri-add-line align-bottom me-1"></i>
+                  Nouveau produit
+                </Link>
+                  <button type="button" className="btn btn-info" onClick={ () => setIsExportCSV( true ) }>
+                          <i className="ri-file-download-line align-bottom me-1"></i>{ " " }
+                          Export
+                  </button>
+                </div>
+              </CardHeader>
+              <div className="card-body">
+                <div className="table-responsive">
+                  <table className="table table-hover align-middle">
+                    <thead className="table-light">
+                      <tr>
+                        <th style={{width: "40px"}}>
+                          <div className="form-check">
+                            <Input
+                              type="checkbox"
+                              className="form-check-input"
+                              checked={selectedItems.length === filteredData.length}
+                              onChange={handleSelectAll}
+                            />
+                          </div>
+                        </th>
+                        <th>Nom</th>
+                        <th>Catégorie</th>
+                        <th>Type</th>
+                        <th>Unité</th>
+                        <th>Prix de vente</th>
+                        <th>Date de création</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {filteredData.map((item) => (
+                        <tr key={item.id}>
+                          <td>
+                            <div className="form-check">
+                              <Input
+                                type="checkbox"
+                                className="form-check-input"
+                                checked={selectedItems.includes(item.id)}
+                                onChange={() => handleSelectItem(item.id)}
+                              />
+                            </div>
+                          </td>
+                          <td>{item.nom}</td>
+                          <td>{item.categorie}</td>
+                          <td>{item.type}</td>
+                          <td>{item.unite}</td>
+                          <td>{item.prixVente.toLocaleString()} </td>
+                          <td>{item.dateCreation}</td>
+                          <td>
+                            <ButtonGroup>
+                              <Button color="primary" size="sm" className="btn-soft-primary">
+                                <i className="ri-pencil-fill"></i>
+                              </Button>
+                              <Button color="danger" size="sm" className="btn-soft-danger">
+                                <i className="ri-delete-bin-line"></i>
+                              </Button>
+                            </ButtonGroup>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </Card>
+          </Col>
+        </Row>
+
+       
+      </Container>
+    </div>
+  );
+};
+
+export default EcommerceProducts;

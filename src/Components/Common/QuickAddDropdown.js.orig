@@ -1,0 +1,152 @@
+import React, { useEffect, useState } from "react";
+import { Dropdown, DropdownMenu, DropdownToggle } from "reactstrap";
+
+const QuickAddDropdown = () =>
+{
+  const [ isOpen, setIsOpen ] = useState( false );
+  const [ theme, setTheme ] = useState(
+    document.documentElement.getAttribute( "data-bs-theme" ) || "light"
+  );
+  const toggle = () =>
+  {
+    setIsOpen( !isOpen );
+  };
+
+  const quickAddItems = [
+    {
+      id: "contact",
+      label: "Contact",
+      icon: "ri-user-add-line",
+      link: "/#",
+    },
+    {
+      id: "product",
+      label: "Produit",
+      icon: "ri-shopping-basket-line",
+      link: "/#",
+    },
+    {
+      id: "service",
+      label: "Service",
+      icon: "ri-service-line",
+      link: "/#",
+    },
+    {
+      id: "category",
+      label: "Catégorie",
+      icon: "ri-folder-add-line",
+      link: "/#",
+    },
+    {
+      id: "commercial",
+      label: "Commercial",
+      icon: "ri-user-star-line",
+      link: "/#",
+    },
+    {
+      id: "user",
+      label: "Utilisateur",
+      icon: "ri-user-add-line",
+      link: "/#",
+    },
+    {
+      id: "branch",
+      label: "Succursale",
+      icon: "ri-building-line",
+      link: "/#",
+    },
+    {
+      id: "store",
+      label: "Magasin",
+      icon: "ri-store-2-line",
+      link: "/#",
+    },
+    {
+      id: "invoice",
+      label: "Facture",
+      icon: "ri-bill-line",
+      link: "/#",
+    },
+    {
+      id: "quote",
+      label: "Devis",
+      icon: "ri-file-list-3-line",
+      link: "/#",
+    },
+  ];
+  useEffect( () =>
+  {
+
+
+    // Mettre à jour le thème quand l'attribut data-bs-theme change
+    const observer = new MutationObserver( ( mutations ) =>
+    {
+      mutations.forEach( ( mutation ) =>
+      {
+        if ( mutation.attributeName === "data-bs-theme" )
+        {
+          setTheme( document.documentElement.getAttribute( "data-bs-theme" ) );
+        }
+      } );
+    } );
+
+    observer.observe( document.documentElement, {
+      attributes: true,
+      attributeFilter: [ "data-bs-theme" ],
+    } );
+
+    return () => observer.disconnect();
+  }, [] );
+  return (
+    <React.Fragment>
+      <Dropdown isOpen={ isOpen } toggle={ toggle } className="topbar-head-dropdown ms-1 header-item">
+        {/* <DropdownToggle
+          tag="button"
+          type="button"
+          className="btn p-0"
+          style={{ background: "none", border: "none" }}
+        >
+          <i className="ri-add-box-line box-line-code"></i>
+        </DropdownToggle> */}
+        <DropdownToggle tag="button" type="button" className="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle">
+          <i className="ri-add-box-line fs-22"
+            style={ {
+              color: theme === "dark" ? "white" : "black",
+              color: theme === "light" ? "#62748e" : "#fff",
+            } }
+          ></i>
+        </DropdownToggle>
+        <DropdownMenu className="dropdown-menu-lg dropdown-menu-start p-0">
+          <div
+            className="p-0"
+            style={ {
+              display: "grid",
+              gridTemplateColumns: "1fr 1fr",
+              gap: "0px",
+            } }
+            >
+            { quickAddItems.map( ( item, key ) => (
+              <a
+                key={ key }
+                className="dropdown-item d-flex align-items-center gap-0"
+                href={ item.link }
+                style={ {
+                  display: "flex",
+                  alignItems: "center",
+                  fontSize: "11px",
+                  padding: "1%"
+                } }
+              >
+                <i className={ item.icon + " fs-4" } style={ { color: theme === "light" ? "black" : "white",color: theme === "light" ? "#62748e" : "#fff", } }></i>
+                <span style={{color: theme === "light" ? "#62748e" : "#fff",}}>{ item.label }</span>
+              </a>
+            ) ) }
+          </div>
+        </DropdownMenu>
+      </Dropdown>
+    </React.Fragment>
+
+  );
+};
+
+export default QuickAddDropdown;

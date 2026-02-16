@@ -1,0 +1,275 @@
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { Dropdown, DropdownMenu, DropdownToggle, Form } from "reactstrap";
+
+//import images
+import logoSm from "../assets/images/logo-sm.png";
+import logoDark from "../assets/images/logo-dark.png";
+import logoLight from "../assets/images/logo-light.png";
+
+//import Components
+import SearchOption from "../Components/Common/SearchOption";
+import LanguageDropdown from "../Components/Common/LanguageDropdown";
+import WebAppsDropdown from "../Components/Common/WebAppsDropdown";
+import MyCartDropdown from "../Components/Common/MyCartDropdown";
+import FullScreenDropdown from "../Components/Common/FullScreenDropdown";
+import NotificationDropdown from "../Components/Common/NotificationDropdown";
+import ProfileDropdown from "../Components/Common/ProfileDropdown";
+import LightDark from "../Components/Common/LightDark";
+import QuickAddDropdown from "../Components/Common/QuickAddDropdown";
+
+import { changeSidebarVisibility } from "../slices/thunks";
+import { useSelector, useDispatch } from "react-redux";
+import { createSelector } from "reselect";
+import NewChat from "../Components/Common/NewChat";
+
+const Header = ( { onChangeLayoutMode, layoutModeType, headerClass } ) =>
+{
+  const dispatch = useDispatch();
+
+  const selectDashboardData = createSelector(
+    ( state ) => state.Layout,
+    ( state ) => ( {
+      sidebarVisibilitytype: state.sidebarVisibilitytype,
+    } )
+  );
+  // Inside your component
+  const { sidebarVisibilitytype } = useSelector( selectDashboardData );
+
+  const [ search, setSearch ] = useState( false );
+  const [ theme, setTheme ] = useState(
+  document.documentElement.getAttribute( "data-bs-theme" ) || "light"
+  );
+
+  const toogleSearch = () =>
+  {
+    setSearch( !search );
+  };
+
+  const toogleMenuBtn = () =>
+  {
+    var windowSize = document.documentElement.clientWidth;
+    dispatch( changeSidebarVisibility( "show" ) );
+
+    if ( windowSize > 767 )
+      document.querySelector( ".hamburger-icon" ).classList.toggle( "open" );
+
+    //For collapse horizontal menu
+    if ( document.documentElement.getAttribute( "data-layout" ) === "horizontal" )
+    {
+      document.body.classList.contains( "menu" )
+        ? document.body.classList.remove( "menu" )
+        : document.body.classList.add( "menu" );
+    }
+
+    //For collapse vertical and semibox menu
+    if (
+      sidebarVisibilitytype === "show" &&
+      ( document.documentElement.getAttribute( "data-layout" ) === "vertical" ||
+        document.documentElement.getAttribute( "data-layout" ) === "semibox" )
+    )
+    {
+      if ( windowSize < 1025 && windowSize > 767 )
+      {
+        document.body.classList.remove( "vertical-sidebar-enable" );
+        document.documentElement.getAttribute( "data-sidebar-size" ) === "sm"
+          ? document.documentElement.setAttribute( "data-sidebar-size", "" )
+          : document.documentElement.setAttribute( "data-sidebar-size", "sm" );
+      } else if ( windowSize > 1025 )
+      {
+        document.body.classList.remove( "vertical-sidebar-enable" );
+        document.documentElement.getAttribute( "data-sidebar-size" ) === "lg"
+          ? document.documentElement.setAttribute( "data-sidebar-size", "sm" )
+          : document.documentElement.setAttribute( "data-sidebar-size", "lg" );
+      } else if ( windowSize <= 767 )
+      {
+        document.body.classList.add( "vertical-sidebar-enable" );
+        document.documentElement.setAttribute( "data-sidebar-size", "lg" );
+      }
+    }
+
+    //Two column menu
+    if ( document.documentElement.getAttribute( "data-layout" ) === "twocolumn" )
+    {
+      document.body.classList.contains( "twocolumn-panel" )
+        ? document.body.classList.remove( "twocolumn-panel" )
+        : document.body.classList.add( "twocolumn-panel" );
+    }
+  };
+
+  useEffect( () =>
+  {
+    dispatch( changeSidebarVisibility( "show" ) );
+    document.body.classList.add( "twocolumn-panel" );
+
+    // Mettre à jour le thème quand l'attribut data-bs-theme change
+    const observer = new MutationObserver( ( mutations ) =>
+    {
+      mutations.forEach( ( mutation ) =>
+      {
+        if ( mutation.attributeName === "data-bs-theme" )
+        {
+          setTheme( document.documentElement.getAttribute( "data-bs-theme" ) );
+        }
+      } );
+    } );
+
+    observer.observe( document.documentElement, {
+      attributes: true,
+      attributeFilter: [ "data-bs-theme" ],
+    } );
+
+    return () => observer.disconnect();
+  }, [ dispatch ] );
+
+  return (
+    <React.Fragment>
+      <header
+        id="page-topbar"
+        className={ headerClass }
+        // style={ { backgroundColor: "var(--vz-body-bg)" } }
+        style={ {
+          backgroundColor: theme === "light" ? "#FFF" : "#292e32",
+          borderBottom: theme === "dark" ? "none" : undefined, // Suppression de la bordure inférieure en mode dark
+        } }
+      >
+        <div className="layout-width">
+          <div className="navbar-header">
+            <div className="d-flex">
+              <button
+                onClick={ toogleMenuBtn }
+                type="button"
+                className="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger"
+                id="topnav-hamburger-icon"
+                style={{opacity: "0"}}
+              >
+                <span className="hamburger-icon">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </span>
+              </button>
+
+              {/* <SearchOption /> */ }
+            </div>
+
+            <div className="d-flex align-items-center">
+              {/* <Dropdown
+                isOpen={search}
+                toggle={toogleSearch}
+                className="d-md-none topbar-head-dropdown header-item"
+              >
+                <DropdownToggle
+                  type="button"
+                  tag="button"
+                  className="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
+                >
+                  <i className="bx bx-search fs-22"></i>
+                </DropdownToggle>
+                <DropdownMenu className="dropdown-menu-lg dropdown-menu-end p-0">
+                  <Form className="p-3">
+                    <div className="form-group m-0">
+                      <div className="input-group">
+                        <input
+                          type="text"
+                          className="form-control"
+                          placeholder="Search ..."
+                          aria-label="Recipient's username"
+                        />
+                        <button className="btn btn-primary" type="submit">
+                          <i className="mdi mdi-magnify"></i>
+                        </button>
+                      </div>
+                    </div>
+                  </Form>
+                </DropdownMenu>
+              </Dropdown> */}
+
+              {/* LanguageDropdown */ }
+              <div className="header-item">
+                <LanguageDropdown />
+              </div>
+
+              {/* WebAppsDropdown */ }
+              <div className="header-item">
+                <WebAppsDropdown />
+              </div>
+
+              {/* FullScreenDropdown */ }
+              <div className="header-item">
+                <FullScreenDropdown />
+              </div>
+
+              {/* QuickAdd Dropdown */ }
+              <div className="header-item">
+                <div className="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle">
+                  <QuickAddDropdown className="logstyleok" />
+                </div>
+              </div>
+
+              {/* Chat Icon */ }
+
+              <div className="header-item">
+                <NewChat />
+              </div>
+
+              {/* Dark/Light Mode set */ }
+              <div className="header-item">
+                <div className="d-flex align-items-center justify-content-center">
+                  <LightDark
+                    layoutMode={ layoutModeType }
+                    onChangeLayoutMode={ onChangeLayoutMode }
+                    className="logstyleok"
+                  />
+                </div>
+              </div>
+
+              {/* NotificationDropdown */ }
+              <div className="header-item">
+                <NotificationDropdown />
+              </div>
+
+              {/* ProfileDropdown */ }
+              <div className="header-item">
+                <ProfileDropdown />
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <style>
+        { `
+          .header-item i {
+            color: ${ theme === "light" ? "white" : "white" } ;
+          }
+          .header-item  {
+            color: ${ theme === "light" ? "white" : "black" } !important;
+          }
+
+          .dropdown-menu {
+            background-color: ${ theme === "light" ? "white" : "#212529"
+          } !important; // Ajout de la couleur de base pour le mode dark
+          }
+
+          .dropdown-item {
+            color: ${ theme === "light" ? "black" : "white" } !important;
+          }
+
+          .dropdown-item:hover {
+            background-color: ${ theme === "light"
+            ? "var(--vz-body-bg)"
+            : "rgba(255, 255, 255, 0.1)"
+          } !important;
+          } 
+
+          .header-item {
+            color: ${ theme === "light" ? "black" : "white" } !important;
+          }
+        `}
+      </style>
+    </React.Fragment>
+  );
+};
+
+export default Header;

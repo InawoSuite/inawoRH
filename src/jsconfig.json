@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": ["Components/*"],
+      "@pages/*": ["pages/*"],
+      "@utils/*": ["utils/*"],
+      "@hooks/*": ["Components/Hooks/*"],
+      "@assets/*": ["assets/*"]
+    },
+    "target": "ES6",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "jsx": "react-jsx"
+  },
+  "include": ["./**/*"],
+  "exclude": ["../node_modules", "../build", "../dist"]
+}

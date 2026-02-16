@@ -1,0 +1,1264 @@
+import React, { useEffect, useState, useMemo, useCallback } from "react";
+import {
+  Card,
+  CardBody,
+  Col,
+  Container,
+  CardHeader,
+  Nav,
+  NavItem,
+  NavLink,
+  Row,
+  Modal,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownToggle,
+  ModalHeader,
+  Form,
+  ModalBody,
+  ModalFooter,
+  Label,
+  Input,
+  FormFeedback
+} from "reactstrap";
+import * as moment from "moment";
+import { Link } from "react-router-dom";
+import classnames from "classnames";
+import Flatpickr from "react-flatpickr";
+import BreadCrumb from "../../../Components/Common/BreadCrumb";
+import TableContainer from "../../../Components/Common/TableContainer";
+import DeleteModal from "../../../Components/Common/DeleteModal";
+import { isEmpty } from "lodash";
+import SimpleBar from "simplebar-react";
+import { country } from "../../../common/data";
+
+// Formik
+import * as Yup from "yup";
+import { useFormik } from "formik";
+
+//redux
+import { useSelector, useDispatch } from "react-redux";
+
+//Import actions
+import {
+  getOrders as onGetOrders,
+  addNewOrder as onAddNewOrder,
+  updateOrder as onUpdateOrder,
+  deleteOrder as onDeleteOrder,
+} from "../../../slices/thunks";
+
+import usflag from '../../../assets/images/flags/us.svg'
+// import country from '../../../assets/data/country.json';
+
+import dummyImg from "../../../assets/images/users/user-dummy-img.jpg";
+
+import Loader from "../../../Components/Common/Loader";
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import ExportCSVModal from "../../../Components/Common/ExportCSVModal";
+import { createSelector } from "reselect";
+
+import { useTranslation } from 'react-i18next';
+
+const CrmLeads = () => {
+  const { t } = useTranslation();
+  const [modal, setModal] = useState(false);
+  const [activeTab, setActiveTab] = useState("1");
+
+  const dispatch = useDispatch();
+
+  const selectLayoutState = (state) => state.Ecommerce;
+  const selectLayoutProperties = createSelector(
+    selectLayoutState,
+    (ecom) => ({
+      orders: ecom.orders,
+      isOrderSuccess: ecom.isOrderSuccess,
+      error: ecom.error,
+    })
+  );
+
+  const [sortBy, setsortBy] = useState("Owner");
+      // const [modal, setModal] = useState(false);
+    
+      const handlesortBy = (sortBy) => {
+        setsortBy(sortBy);
+      };
+
+  // Inside your component
+  const {
+    orders, isOrderSuccess, error
+  } = useSelector(selectLayoutProperties)
+
+  const [category, setCategory] = useState("");
+
+
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+    validation.setFieldValue("category", e.target.value);
+  };
+
+  const [orderList, setOrderList] = useState([]);
+  const [order, setOrder] = useState([]);
+  const [isExportCSV, setIsExportCSV] = useState(false);
+
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [dropdownOpen2, setDropdownOpen2] = useState(false);
+  const [dropdownOpen3, setDropdownOpen3] = useState(false);
+  const [dropdownOpen4, setDropdownOpen4] = useState(false);
+  const [dropdownOpen5, setDropdownOpen5] = useState(false);
+
+
+  const toggle8 = () => setDropdownOpen((prevState) => !prevState);
+  const toggle2 = () => setDropdownOpen2((prevState) => !prevState);
+  const toggle3 = () => setDropdownOpen3((prevState) => !prevState);
+  const toggle4 = () => setDropdownOpen4((prevState) => !prevState);
+  const toggle5 = () => setDropdownOpen5((prevState) => !prevState);
+
+  const orderstatus = [
+    {
+      options: [
+        { label: "Status", value: "Status" },
+        { label: "All", value: "All" },
+        { label: "Pending", value: "Pending" },
+        { label: "Inprogress", value: "Inprogress" },
+        { label: "Partenaires", value: "Partenaires" },
+        { label: "Fournisseurs", value: "Fournisseurs" },
+        { label: "Commercials", value: "Commercials" },
+        { label: "Clients", value: "Clients" },
+      ],
+    },
+  ];
+
+  const orderpayement = [
+    {
+      options: [
+        { label: "Select Payment", value: "Select Payment" },
+        { label: "All", value: "All" },
+        { label: "Mastercard", value: "Mastercard" },
+        { label: "Paypal", value: "Paypal" },
+        { label: "Visa", value: "Visa" },
+        { label: "COD", value: "COD" },
+      ],
+    },
+  ];
+
+  const productname = [
+    {
+      options: [
+        { label: "Product", value: "Product" },
+        { label: "Puma Tshirt", value: "Puma Tshirt" },
+        { label: "Adidas Sneakers", value: "Adidas Sneakers" },
+        {
+          label: "350 ml Glass Grocery Container",
+          value: "350 ml Glass Grocery Container",
+        },
+        {
+          label: "American egale outfitters Shirt",
+          value: "American egale outfitters Shirt",
+        },
+        { label: "Galaxy Watch4", value: "Galaxy Watch4" },
+        { label: "Apple iPhone 12", value: "Apple iPhone 12" },
+        { label: "Funky Prints T-shirt", value: "Funky Prints T-shirt" },
+        {
+          label: "USB Flash Drive Personalized with 3D Print",
+          value: "USB Flash Drive Personalized with 3D Print",
+        },
+        {
+          label: "Oxford Button-Down Shirt",
+          value: "Oxford Button-Down Shirt",
+        },
+        {
+          label: "Classic Short Sleeve Shirt",
+          value: "Classic Short Sleeve Shirt",
+        },
+        {
+          label: "Half Sleeve T-Shirts (Blue)",
+          value: "Half Sleeve T-Shirts (Blue)",
+        },
+        { label: "Noise Evolve Smartwatch", value: "Noise Evolve Smartwatch" },
+      ],
+    },
+  ];
+
+
+
+    const [seletedCountry3, setseletedCountry3] = useState({
+      id: 240,
+      flagImg: usflag,
+      countryName: "United States of America",
+      countryCode: "+1"
+    });
+  
+    const [seletedCountry4, setseletedCountry4] = useState({
+      id: 240,
+      flagImg: usflag,
+      countryName: "United States of America",
+      countryCode: "+1"
+    });
+  
+
+  const [isEdit, setIsEdit] = useState(false);
+
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [deleteModalMulti, setDeleteModalMulti] = useState(false);
+
+  const onClickDelete = (order) => {
+    setOrder(order);
+    setDeleteModal(true);
+  };
+
+  const handleDeleteOrder = () => {
+    if (order) {
+      dispatch(onDeleteOrder(order._id));
+      setDeleteModal(false);
+    }
+  };
+
+  useEffect(() => {
+    setOrderList(orders);
+  }, [orders]);
+
+  useEffect(() => {
+    if (!isEmpty(orders)) setOrderList(orders);
+  }, [orders]);
+
+  const toggleTab = (tab, type) => {
+    if (activeTab !== tab) {
+      setActiveTab(tab);
+      let filteredOrders = orders;
+      if (type !== "all") {
+        filteredOrders = orders.filter((order) => order.status === type);
+      }
+      setOrderList(filteredOrders);
+    }
+  };
+
+  // validation
+  
+
+ const validation = useFormik({
+    enableReinitialize: true,
+    initialValues: {
+      name: (orders && orders.name) || '',
+      company: (orders && orders.company) || '',
+      score: (orders && orders.score) || '',
+      phone: (orders && orders.phone) || '',
+      location: (orders && orders.location) || '',
+      date: (orders && orders.date) || '',
+      tags: (orders && orders.tags) || '',
+      type_contact: (orders && orders.contactType) || '', // Ajoutez le type de contact ici
+    },
+    validationSchema: Yup.object({
+      name: Yup.string().required("Please Enter Name"),
+      company: Yup.string().required("Please Enter Company"),
+      score: Yup.string().required("Please Enter Score"),
+      phone: Yup.string().required("Please Enter Phone"),
+      location: Yup.string().required("Please Enter Location"),
+    }),
+    onSubmit: (values) => {
+      if (isEdit) {
+        const updateorders = {
+          _id: orders ? orders._id : 0,
+          name: values.name,
+          company: values.company,
+          score: values.score,
+          phone: values.phone,
+          location: values.location,
+          date: date,
+          tags: assignTag,
+          contactType: values.type_contact, // Ajoutez le type de contact ici
+        };
+        dispatch(onUpdateorders(updateorders));
+        validation.resetForm();
+      } else {
+        const neworders = {
+          _id: (Math.floor(Math.random() * (30 - 20)) + 20).toString(),
+          name: values["name"],
+          company: values["company"],
+          score: values["score"],
+          phone: values["phone"],
+          location: values["location"],
+          date: date,
+          tags: assignTag,
+          contactType: values["type_contact"], // Ajoutez le type de contact ici
+        };
+        dispatch(onAddNeworders(neworders));
+        setContacts([...contacts, neworders]); // Ajoutez le nouveau contact à la liste des contacts
+        setFilteredContacts([...contacts, neworders]); // Mettez à jour les contacts filtrés
+        validation.resetForm();
+      }
+      toggle();
+    },
+  });
+
+  useEffect(() => {
+    if (orders && !orders.length) {
+      dispatch(onGetOrders());
+    }
+  }, [dispatch, orders]);
+
+  useEffect(() => {
+    setOrder(orders);
+  }, [orders]);
+
+  useEffect(() => {
+    if (!isEmpty(orders)) {
+      setOrder(orders);
+      setIsEdit(false);
+    }
+  }, [orders]);
+
+
+  const toggle = useCallback(() => {
+    if (modal) {
+      setModal(false);
+      setOrder(null);
+    } else {
+      setModal(true);
+      setDate(defaultdate());
+    }
+  }, [modal]);
+
+  const handleOrderClicks = () => {
+    setOrder("");
+    setIsEdit(false);
+    toggle();
+  };
+
+  const handleOrderClick = useCallback((arg) => {
+    const order = arg;
+    setOrder({
+      _id: order._id,
+      orderId: order.orderId,
+      customer: order.customer,
+      product: order.product,
+      orderDate: order.orderDate,
+      ordertime: order.ordertime,
+      amount: order.amount,
+      payment: order.payment,
+      status: order.status
+    });
+
+    setIsEdit(true);
+    toggle();
+  }, [toggle]);
+
+  // Node API 
+  // useEffect(() => {
+  //   if (isOrderCreated) {
+  //     setOrder(null);
+  //     dispatch(onGetOrders());
+  //   }
+  // }, [
+  //   dispatch,
+  //   isOrderCreated,
+  // ]);
+
+
+  // Checked All
+  const checkedAll = useCallback(() => {
+    const checkall = document.getElementById("checkBoxAll");
+    const ele = document.querySelectorAll(".orderCheckBox");
+
+    if (checkall.checked) {
+      ele.forEach((ele) => {
+        ele.checked = true;
+      });
+    } else {
+      ele.forEach((ele) => {
+        ele.checked = false;
+      });
+    }
+    deleteCheckbox();
+  }, []);
+
+  // Delete Multiple
+  const [selectedCheckBoxDelete, setSelectedCheckBoxDelete] = useState([]);
+  const [isMultiDeleteButton, setIsMultiDeleteButton] = useState(false);
+
+  const deleteMultiple = () => {
+    const checkall = document.getElementById("checkBoxAll");
+    selectedCheckBoxDelete.forEach((element) => {
+      dispatch(onDeleteOrder(element.value));
+      setTimeout(() => { toast.clearWaitingQueue(); }, 3000);
+    });
+    checkall.checked = false;
+    setIsMultiDeleteButton(false);
+  };
+
+  const deleteCheckbox = () => {
+    const ele = document.querySelectorAll(".orderCheckBox:checked");
+    ele.length > 0 ? setIsMultiDeleteButton(true) : setIsMultiDeleteButton(false);
+    setSelectedCheckBoxDelete(ele);
+  };
+
+  // Column
+  const columns = useMemo(
+    () => [
+      {
+        header: <input type="checkbox" id="checkBoxAll" className="form-check-input" onClick={() => checkedAll()} />,
+        cell: (cell) => {
+          return <input type="checkbox" className="orderCheckBox form-check-input" value={cell.getValue()} onChange={() => deleteCheckbox()} />;
+        },
+        id: '#',
+        accessorKey: 'id',
+        enableColumnFilter: false,
+        enableSorting: false,
+      },
+      {
+            header: "Image",
+            accessorKey: "image",
+            enableColumnFilter: false,
+            cell: (cell) => (
+              <div className="d-flex align-items-center">
+                <div className="flex-shrink-0">
+                  <img
+                    src={dummyImg}
+                    alt=""
+                    className="avatar-xxs rounded-circle"
+                  />
+                </div>
+              </div>
+            ),
+          },
+           {
+             header: "Nom",
+             accessorKey: "name",
+             enableColumnFilter: false,
+           },
+           {
+             header: "Type de contact",
+             accessorKey: "contactType",
+             enableColumnFilter: false,
+           },
+           
+           {
+             header: "Téléphone",
+             accessorKey: "phone",
+             enableColumnFilter: false,
+           },
+      // {
+      //   header: "Order Date",
+      //   accessorKey: "orderDate",
+      //   enableColumnFilter: false,
+      //   cell: (cell) => (
+      //     <>
+      //       {handleValidDate(cell.getValue())},
+      //       <small className="text-muted"> {handleValidTime(cell.getValue())}</small>
+      //     </>
+      //   ),
+      // },
+      {
+        header: "Email",
+        accessorKey: "email",
+        enableColumnFilter: false,
+      },
+      {
+        header: "Adresse",
+        accessorKey: "address",
+        enableColumnFilter: false,
+      },
+      // {
+      //   header: 'Delivery Status',
+      //   accessorKey: 'status',
+      //   enableColumnFilter: false,
+      //   cell: (cell) => {
+      //     switch (cell.getValue()) {
+      //       case "Pending":
+      //         return <span className="badge text-uppercase bg-warning-subtle text-warning"> {cell.getValue()} </span>;
+      //       case "Partenaires":
+      //         return <span className="badge text-uppercase bg-danger-subtle text-danger"> {cell.getValue()} </span>;
+      //       case "Inprogress":
+      //         return <span className="badge text-uppercase bg-secondary-subtle text-secondary"> {cell.getValue()} </span>;
+      //       case "Fournisseurs":
+      //         return <span className="badge text-uppercase bg-info-subtle text-info"> {cell.getValue()} </span>;
+      //       case "Commercials":
+      //         return <span className="badge text-uppercase bg-primary-subtle text-primary"> {cell.getValue()} </span>;
+      //       case "Clients":
+      //         return <span className="badge text-uppercase bg-success-subtle text-success"> {cell.getValue()} </span>;
+      //       default:
+      //         return <span className="badge text-uppercase bg-warning-subtle text-warning"> {cell.getValue()} </span>;
+      //     }
+      //   }
+      // },
+
+      {
+        header: "Action",
+        cell: (cellProps) => {
+          return (
+            <ul className="list-inline hstack gap-2 mb-0">
+              <li className="list-inline-item">
+                <Link
+                  to="/apps-ecommerce-seller-details"
+                  className="text-primary d-inline-block"
+                >
+                  <i className="ri-eye-fill fs-16"></i>
+                </Link>
+              </li>
+              <li className="list-inline-item edit">
+                <Link
+                  to="#"
+                  className="text-primary d-inline-block edit-item-btn"
+                  onClick={() => {
+                    const orderData = cellProps.row.original;
+                    handleOrderClick(orderData);
+                  }}
+                >
+                  <i className="ri-pencil-fill fs-16"></i>
+                </Link>
+              </li>
+              <li className="list-inline-item">
+                <Link
+                  to="#"
+                  className="text-danger d-inline-block remove-item-btn"
+                  onClick={() => {
+                    const orderData = cellProps.row.original;
+                    onClickDelete(orderData);
+                  }}
+                >
+                  <i className="ri-delete-bin-5-fill fs-16"></i>
+                </Link>
+              </li>
+            </ul>
+          );
+        },
+      },
+    ],
+    [handleOrderClick, checkedAll]
+  );
+
+  const defaultdate = () => {
+    let d = new Date(),
+      months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    let h = (d.getHours() % 12) || 12;
+    let ampm = d.getHours() < 12 ? "AM" : "PM";
+    return ((d.getDate() + ' ' + months[d.getMonth()] + ', ' + d.getFullYear() + ", " + h + ":" + d.getMinutes() + " " + ampm).toString());
+  };
+
+
+  const [date, setDate] = useState(defaultdate());
+
+  const dateformate = (e) => {
+    const dateString = e.toString().split(" ");
+
+    let time = dateString[4];
+    let H = +time.substr(0, 2);
+    let h = (H % 12) || 12;
+    h = (h <= 9) ? h = ("0" + h) : h;
+    let ampm = H < 12 ? "AM" : "PM";
+    time = h + time.substr(2, 3) + " " + ampm;
+
+    const date = dateString[2] + " " + dateString[1] + ", " + dateString[3];
+    const orderDate = (date + ", " + time).toString();
+    setDate(orderDate);
+
+  };
+
+  const handleValidDate = date => {
+    const date1 = moment(new Date(date)).format("DD MMM Y");
+    return date1;
+  };
+
+  const handleValidTime = (time) => {
+    const time1 = new Date(time);
+    const getHour = time1.getUTCHours();
+    const getMin = time1.getUTCMinutes();
+    const getTime = `${getHour}:${getMin}`;
+    var meridiem = "";
+    if (getHour >= 12) {
+      meridiem = "PM";
+    } else {
+      meridiem = "AM";
+    }
+    const updateTime = moment(getTime, 'hh:mm').format('hh:mm') + " " + meridiem;
+    return updateTime;
+  };
+
+  document.title = "Orders | Velzon - React Admin & Dashboard Template";
+  return (
+    <div className="page-content">
+      <ExportCSVModal
+        show={isExportCSV}
+        onCloseClick={() => setIsExportCSV(false)}
+        data={orderList}
+      />
+      <DeleteModal
+        show={deleteModal}
+        onDeleteClick={handleDeleteOrder}
+        onCloseClick={() => setDeleteModal(false)}
+      />
+      <DeleteModal
+        show={deleteModalMulti}
+        onDeleteClick={() => {
+          deleteMultiple();
+          setDeleteModalMulti(false);
+        }}
+        onCloseClick={() => setDeleteModalMulti(false)}
+      />
+      <Container fluid>
+
+        <BreadCrumb title="Contacts" pageTitle="INAWO" />
+        <Row>
+          <Col lg={12}>
+            <Card id="orderList">
+              <CardHeader className="border-0">
+                <Row className="align-items-center gy-3">
+                  <div className="col-sm">
+                    <h5 className="card-title mb-0">Contacts</h5>
+                  </div>
+                  <div className="col-sm-auto">
+                    <div className="d-flex gap-1 flex-wrap">
+
+                      
+                      <button
+                        type="button"
+                        className="btn btn-success add-btn"
+                        id="create-btn"
+                        onClick={() => { setIsEdit(false); toggle(); }}
+                      >
+                        <i className="ri-add-line align-bottom me-1"></i> Ajouter Contacts
+                      </button>{" "}
+                      <button type="button" className="btn btn-info" onClick={() => setIsExportCSV(true)}>
+                        <i className="ri-file-download-line align-bottom me-1"></i>{" "}
+                        Export
+                      </button>
+                      {" "}
+                      {isMultiDeleteButton && <button className="btn btn-soft-danger"
+                        onClick={() => setDeleteModalMulti(true)}
+                      ><i
+                        className="ri-delete-bin-2-line"></i></button>}
+                    </div>
+                  </div>
+                </Row>
+              </CardHeader>
+              <CardBody className="pt-0">
+                <div>
+                  <Nav
+                    className="nav-tabs nav-tabs-custom nav-success py-4"
+                    role="tablist">
+                    <NavItem>
+                      <NavLink
+                        className={classnames(
+                          { active: activeTab === "1" },
+                          "fw-semibold"
+                        )}
+                        onClick={() => {
+                          toggleTab("1", "all");
+                        }}
+                        href="#"
+                      >
+                        <i className="ri-store-2-fill me-1 align-bottom"></i>{" "}
+                        Tous les contacts
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames(
+                          { active: activeTab === "2" },
+                          "fw-semibold"
+                        )}
+                        onClick={() => {
+                          toggleTab("2", "Clients");
+                        }}
+                        href="#"
+                      >
+                        <i className="ri-checkbox-circle-line me-1 align-bottom"></i>{" "}
+                       Clients
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames(
+                          { active: activeTab === "3" },
+                          "fw-semibold"
+                        )}
+                        onClick={() => {
+                          toggleTab("3", "Fournisseurs");
+                        }}
+                        href="#"
+                      >
+                        <i className="ri-truck-line me-1 align-bottom"></i>{" "}
+                        Fournisseurs{" "}
+                        <span className="badge bg-danger align-middle ms-1">
+                          2
+                        </span>
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames(
+                          { active: activeTab === "4" },
+                          "fw-semibold"
+                        )}
+                        onClick={() => {
+                          toggleTab("4", "Commercials");
+                        }}
+                        href="#"
+                      >
+                        <i className="ri-arrow-left-right-fill me-1 align-bottom"></i>{" "}
+                        Commercials
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames(
+                          { active: activeTab === "5" },
+                          "fw-semibold"
+                        )}
+                        onClick={() => {
+                          toggleTab("5", "Partenaires");
+                        }}
+                        href="#"
+                      >
+                        <i className="ri-close-circle-line me-1 align-bottom"></i>{" "}
+                        Partenaires
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+                      <NavLink
+                        className={classnames(
+                          { active: activeTab === "6" },
+                          "fw-semibold"
+                        )}
+                        onClick={() => {
+                          toggleTab("6", "Prospects");
+                        }}
+                        href="#"
+                      >
+                        <i className="ri-close-circle-line me-1 align-bottom"></i>{" "}
+                        Prospects
+                      </NavLink>
+                    </NavItem>
+                  </Nav>
+                  {isOrderSuccess && orderList.length ? (
+                    <TableContainer
+                      columns={columns}
+                      data={(orderList || [])}
+                      // isGlobalFilter={true}
+                      isAddUserList={false}
+                      customPageSize={8}
+                      divClass="table-responsive table-card mb-1"
+                      tableClass="align-middle table-nowrap"
+                      theadClass="table-light text-muted"
+                      handleOrderClick={handleOrderClicks}
+                      isOrderFilter={true}
+                      // SearchPlaceholder='Search for order ID, customer, order status or something...'
+                    />
+                  ) : (<Loader error={error} />)
+                  }
+                </div>
+                <Modal id="showModal" isOpen={modal} toggle={toggle} centered>
+                      <ModalHeader className="bg-light p-3" toggle={toggle}>
+                        {!!isEdit ? t("Edit Lead") : t("Ajouter un contact")}
+                      </ModalHeader>
+                      <Form className="tablelist-form" onSubmit={(e) => {
+                        e.preventDefault();
+                        validation.handleSubmit();
+                        return false;
+                      }}>
+                        <ModalBody>
+                          <Input type="hidden" id="id-field" />
+                          <Row className="g-3">
+                            <Col lg={12}>
+                              <div className="text-center">
+                                <div className="position-relative d-inline-block">
+                                  <div className="position-absolute bottom-0 end-0">
+                                    <Label htmlFor="lead-image-input" className="mb-0">
+                                      <div className="avatar-xs cursor-pointer">
+                                        <div className="avatar-title bg-light border rounded-circle text-muted">
+                                          <i className="ri-image-fill"></i>
+                                        </div>
+                                      </div>
+                                    </Label>
+                                    <Input className="form-control d-none" id="lead-image-input" type="file"
+                                      accept="image/png, image/gif, image/jpeg"
+                                      onChange={validation.handleChange}
+                                      onBlur={validation.handleBlur}
+                                      value={validation.values.img || ""}
+                                      invalid={
+                                        validation.touched.img && validation.errors.img ? true : false
+                                      }
+                                    />
+                                  </div>
+                                  <div className="avatar-lg p-1">
+                                    <div className="avatar-title bg-light rounded-circle">
+                                      <img src={dummyImg} alt="dummyImg" id="lead-img" className="avatar-md rounded-circle object-fit-cover" />
+                                    </div>
+                                  </div>
+                                </div>
+                                <h5 className="fs-13 mt-3">Image du contact</h5>
+                              </div>
+                            </Col>
+                            <Col lg={6}>
+                              <div>
+                                <Label htmlFor="type_contact" className="form-label font-size-13">
+                                  {t("Type contact")} <span style={{ color: "red" }}>*</span>
+                                </Label>
+                                <Input
+                                  className="form-select"
+                                  type="select"
+                                  id="type_contact"
+                                  name="type_contact"
+                                  value={validation.values.type_contact}
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  invalid={validation.touched.type_contact && validation.errors.type_contact ? true : false}
+                                >
+                                  <option value="">{t("Sélectionner")}</option>
+                                  <option value="Client">{t("Client")}</option>
+                                  <option value="Prospect">{t("Prospect")}</option>
+                                  <option value="Fournisseur">{t("Fournisseur")}</option>
+                                  <option value="Partenaire">{t("Partenaire")}</option>
+                                </Input>
+                                {validation.touched.type_contact && validation.errors.type_contact ? (
+                                  <FormFeedback type="invalid">{t(validation.errors.type_contact)}</FormFeedback>
+                                ) : null}
+                              </div>
+                            </Col>
+                            <Col lg={6}>
+                              <div>
+                                <Label htmlFor="categoryinput-choices" className="form-label font-size-13">
+                                  {t("Catégorie")} <span style={{ color: "red" }}>*</span>
+                                </Label>
+                                <Input
+                                  className="form-select"
+                                  type="select"
+                                  id="category"
+                                  value={validation.values.category}
+                                  onChange={handleCategoryChange}
+                                  onBlur={validation.handleBlur}
+                                  invalid={validation.touched.category && validation.errors.category ? true : false}
+                                >
+                                  <option value="">{t("Sélectionner")}</option>
+                                  <option value="Particulier">{t("Particulier")}</option>
+                                  <option value="Société">{t("Société")}</option>
+                                  <option value="Entreprise">{t("Entreprise")}</option>
+                                  <option value="Institution">{t("Institution")}</option>
+                                  <option value="Association">{t("Association")}</option>
+                                  <option value="Administration">{t("Administration")}</option>
+                                  <option value="ONG">{t("ONG")}</option>
+                                </Input>
+                                {validation.touched.category && validation.errors.category ? (
+                                  <FormFeedback type="invalid">{t(validation.errors.category)}</FormFeedback>
+                                ) : null}
+                              </div>
+                            </Col>
+                                  
+                            <Col lg={6}>
+                              <div>
+                              <Label htmlFor="name-field" className="form-label">
+                                Nom <span style={{ color: "red" }}>*</span>
+                              </Label>
+                              <Input
+                                name="name"
+                                id="name-field"
+                                className="form-control"
+                                placeholder="Entrez votre nom"
+                                type="text"
+                                onChange={validation.handleChange}
+                                onBlur={validation.handleBlur}
+                                value={validation.values.name || ""}
+                                invalid={
+                                  validation.touched.name && validation.errors.name ? true : false
+                                }
+                              />
+                              {validation.touched.name && validation.errors.name ? (
+                                <FormFeedback type="invalid">{validation.errors.name}</FormFeedback>
+                              ) : null}
+                            </div>
+                          </Col>
+                          <Col lg={6}>
+                            <div>
+                              <Label htmlFor="company-field" className="form-label">
+                                Nom de l'entreprise
+                              </Label>
+                              <Input
+                                name="company"
+                                id="company-field"
+                                className="form-control"
+                                placeholder="Ex: Inawo"
+                                type="text"
+                                onChange={validation.handleChange}
+                                onBlur={validation.handleBlur}
+                                value={validation.values.company || ""}
+                                invalid={
+                                  validation.touched.company && validation.errors.company ? true : false
+                                }
+                              />
+                              {validation.touched.company && validation.errors.company ? (
+                                <FormFeedback type="invalid">{validation.errors.company}</FormFeedback>
+                              ) : null}
+                            </div>
+                          </Col>
+                            <Col lg={6}>
+                            <div>
+                              {/* <Label>Select input with buttons & Flag with number</Label> */}
+                              <Label htmlFor="phone2-field" className="form-label">
+                                Téléphone
+                              </Label>
+                              <Dropdown className='input-group' isOpen={dropdownOpen4} toggle={toggle4}>
+                                <DropdownToggle as="button" className="btn btn-light border arrow-none">
+                                  <img src={seletedCountry3.flagImg} alt="country flag" className="options-flagimg" height="20" />
+                                  <span className="countrylist-codeno text-muted">{seletedCountry3.countryCode}</span>
+                                </DropdownToggle>
+                                <input type="number" className="form-control rounded-end flag-input" placeholder="Enter number" />
+                                <DropdownMenu as='ul' className="list-unstyled w-100 dropdown-menu-list mb-0">
+                                  <SimpleBar style={{ maxHeight: "220px" }} className="px-3">
+                                    {(country || []).map((item, key) => (
+                                      <DropdownItem as='li' onClick={() => setseletedCountry3(item)} key={key} className="dropdown-item d-flex">
+                                        <div className="flex-shrink-0 me-2">
+                                          <img src={item.flagImg} alt="country flag" className="options-flagimg" height="20" />
+                                        </div>
+                                        <div className="flex-grow-1">
+                                          <div className="d-flex">
+                                            <div className="country-name me-1">{item.countryName}</div>
+                                            <span className="countrylist-codeno text-muted">{item.countryCode}</span>
+                                          </div>
+                                        </div>
+                                      </DropdownItem>
+                                    ))}
+                                  </SimpleBar>
+                                </DropdownMenu>
+                              </Dropdown>
+      
+                              <div className="dropdown-menu w-100">
+                                <div className="p-2 pt-1 searchlist-input">
+                                  <label type="text" className="form-control-sm border search-countryList" placeholder="Search country name or country code..." />
+                                </div>
+                                <ul className="list-unstyled dropdown-menu-list mb-0"></ul>
+                              </div>
+                            </div>
+                          </Col>
+                          <Col lg={6}>
+                          <div>
+                              {/* <Label>Select input with buttons & Flag with number</Label> */}
+                              <Label htmlFor="phone2-field" className="form-label">
+                                Téléphone 2
+                              </Label>
+                              <Dropdown className='input-group' isOpen={dropdownOpen4} toggle={toggle4}>
+                                <DropdownToggle as="button" className="btn btn-light border arrow-none">
+                                  <img src={seletedCountry4.flagImg} alt="country flag" className="options-flagimg" height="20" />
+                                  <span className="countrylist-codeno text-muted">{seletedCountry4.countryCode}</span>
+                                </DropdownToggle>
+                                <input type="number" className="form-control rounded-end flag-input" placeholder="Enter number" />
+                                <DropdownMenu as='ul' className="list-unstyled w-100 dropdown-menu-list mb-0">
+                                  <SimpleBar style={{ maxHeight: "220px" }} className="px-3">
+                                    {(country || []).map((item, key) => (
+                                      <DropdownItem as='li' onClick={() => setseletedCountry4(item)} key={key} className="dropdown-item d-flex">
+                                        <div className="flex-shrink-0 me-2">
+                                          <img src={item.flagImg} alt="country flag" className="options-flagimg" height="20" />
+                                        </div>
+                                        <div className="flex-grow-1">
+                                          <div className="d-flex">
+                                            <div className="country-name me-1">{item.countryName}</div>
+                                            <span className="countrylist-codeno text-muted">{item.countryCode}</span>
+                                          </div>
+                                        </div>
+                                      </DropdownItem>
+                                    ))}
+                                  </SimpleBar>
+                                </DropdownMenu>
+                              </Dropdown>
+      
+                              <div className="dropdown-menu w-100">
+                                <div className="p-2 pt-1 searchlist-input">
+                                  <label type="text" className="form-control-sm border search-countryList" placeholder="Search country name or country code..." />
+                                </div>
+                                <ul className="list-unstyled dropdown-menu-list mb-0"></ul>
+                              </div>
+                            </div>
+                          </Col>
+                                            <Col lg={6}>
+                              <div>
+                                <Label htmlFor="email-field" className="form-label">
+                                  Email
+                                </Label>
+                                <Input
+                                  name="email"
+                                  id="email-field"
+                                  className="form-control"
+                                  placeholder="Entrez votre email"
+                                  type="text"
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.email || ""}
+                                  invalid={
+                                    validation.touched.email && validation.errors.email ? true : false
+                                  }
+                                />
+                                {validation.touched.email && validation.errors.email ? (
+                                  <FormFeedback type="invalid">{validation.errors.email}</FormFeedback>
+                                ) : null}
+                              </div>
+                            </Col>                    
+                            <Col lg={6}>
+                              <div>
+                                <Label htmlFor="address-field" className="form-label">
+                                  Adresse (Ville/Pays)
+                                </Label>
+                                <Input
+                                  name="address"
+                                  id="address-field"
+                                  className="form-control"
+                                  placeholder="Entrez votre adresse"
+                                  type="text"
+                                  onChange={validation.handleChange}
+                                  onBlur={validation.handleBlur}
+                                  value={validation.values.address || ""}
+                                  invalid={
+                                    validation.touched.address && validation.errors.address ? true : false
+                                  }
+                                />
+                                {validation.touched.address && validation.errors.address ? (
+                                  <FormFeedback type="invalid">{validation.errors.address}</FormFeedback>
+                                ) : null}
+                              </div>
+                            </Col>
+                            <Col lg={6}>
+                                <div>
+                                  <Label htmlFor="revenue-field" className="form-label font-size-13">
+                                    {t("Revenue")}
+                                  </Label>
+                                  <Input
+                                    className="form-select"
+                                    type="select"
+                                    id="revenue-field"
+                                    name="revenue" // Ajoutez le nom ici
+                                    value={validation.values.revenue || ""}
+                                    onChange={validation.handleChange}
+                                    onBlur={validation.handleBlur}
+                                    invalid={validation.touched.revenue && validation.errors.revenue ? true : false}
+                                  >
+                                    <option value="">{t("Sélectionner")}</option>
+                                    <option value="0-100000">{t("0 - 100000")}</option>
+                                    <option value="100000-250000">{t("100000 - 250000")}</option>
+                                    <option value="250000-500000">{t("250000 - 500000")}</option>
+                                    <option value="500000-1000000">{t("500000 - 1000000")}</option>
+                                    <option value="1000000-10000000">{t("1000000 - 10000000")}</option>
+                                  </Input>
+                                  {validation.touched.revenue && validation.errors.revenue ? (
+                                    <FormFeedback type="invalid">{t(validation.errors.revenue)}</FormFeedback>
+                                  ) : null}
+                                </div>
+                              </Col>
+  
+                            {/* Conditional Fields */}
+                            {category === "Particulier" && (
+                                    <Col lg={6}>
+                                      <div>
+                                        <Label htmlFor="date-field" className="form-label">
+                                          {t("Date")}
+                                        </Label>
+                                        <Flatpickr
+                                          className="form-control"
+                                          id="date-field"
+                                          value={validation.values.date}
+                                          onChange={(date) => setDate(date)}
+                                          options={{
+                                            dateFormat: "d M, Y",
+                                          }}
+                                        />
+                                      </div>
+                                    </Col>
+                                  )}
+                  
+                                  {["Société", "Entreprise"].includes(category) && (
+                                    <>
+                                      <Col lg={6}>
+                                        <div>
+                                          <Label htmlFor="date-field" className="form-label">
+                                            {t("Date")}
+                                          </Label>
+                                          <Flatpickr
+                                            className="form-control"
+                                            id="date-field"
+                                            value={validation.values.date}
+                                            onChange={(date) => setDate(date)}
+                                            options={{
+                                              dateFormat: "d M, Y",
+                                            }}
+                                          />
+                                        </div>
+                                      </Col>
+                                      <Col lg={6}>
+                                        <div>
+                                          <Label htmlFor="legal-form-field" className="form-label">
+                                            {t("Forme juridique")}
+                                          </Label>
+                                          <Input
+                                            className="form-select"
+                                            type="select"
+                                            id="legal-form-field"
+                                            value={validation.values.legal_form}
+                                            onChange={validation.handleChange}
+                                            onBlur={validation.handleBlur}
+                                            invalid={validation.touched.legal_form && validation.errors.legal_form ? true : false}
+                                          >
+                                            <option value="">{t("Sélectionner")}</option>
+                                            <option value="Entreprise Individuelle">{t("Entreprise Individuelle")}</option>
+                                            <option value="Entreprise Industrielle">{t("Entreprise Industrielle")}</option>
+                                          </Input>
+                                          {validation.touched.legal_form && validation.errors.legal_form ? (
+                                            <FormFeedback type="invalid">{t(validation.errors.legal_form)}</FormFeedback>
+                                          ) : null}
+                                        </div>
+                                      </Col>
+                                      <Col lg={6}>
+                                        <div>
+                                          <Label htmlFor="website-field" className="form-label">
+                                            {t("Site web")}
+                                          </Label>
+                                          <Input
+                                            type="url"
+                                            id="website-field"
+                                            className="form-control"
+                                            placeholder="https://example.com"
+                                            value={validation.values.website}
+                                            onChange={validation.handleChange}
+                                            onBlur={validation.handleBlur}
+                                            invalid={validation.touched.website && validation.errors.website ? true : false}
+                                          />
+                                          {validation.touched.website && validation.errors.website ? (
+                                            <FormFeedback type="invalid">{t(validation.errors.website)}</FormFeedback>
+                                          ) : null}
+                                        </div>
+                                      </Col>
+                                      <Col lg={6}>
+                                        <div>
+                                          <Label htmlFor="capital-field" className="form-label">
+                                            {t("Capital social")}
+                                          </Label>
+                                          <Input
+                                            type="number"
+                                            id="capital-field"
+                                            className="form-control"
+                                            placeholder="Capital social"
+                                            value={validation.values.capital}
+                                            onChange={validation.handleChange}
+                                            onBlur={validation.handleBlur}
+                                            invalid={validation.touched.capital && validation.errors.capital ? true : false}
+                                          />
+                                          {validation.touched.capital && validation.errors.capital ? (
+                                            <FormFeedback type="invalid">{t(validation.errors.capital)}</FormFeedback>
+                                          ) : null}
+                                        </div>
+                                      </Col>
+                                      <Col lg={6}>
+                                        <div>
+                                          <Label htmlFor="legal-number-field" className="form-label">
+                                            {t("Numéro légal")}
+                                          </Label>
+                                          <Input
+                                            type="text"
+                                            id="legal-number-field"
+                                            className="form-control"
+                                            placeholder="Numéro légal"
+                                            value={validation.values.legal_number}
+                                            onChange={validation.handleChange}
+                                            onBlur={validation.handleBlur}
+                                            invalid={validation.touched.legal_number && validation.errors.legal_number ? true : false}
+                                          />
+                                          {validation.touched.legal_number && validation.errors.legal_number ? (
+                                            <FormFeedback type="invalid">{t(validation.errors.legal_number)}</FormFeedback>
+                                          ) : null}
+                                        </div>
+                                      </Col>
+                                    </>
+                                  )} 
+  
+                                  {["Institution", "Association", "Administration", "ONG"].includes(category) && (
+                                    <>
+                                      <Col lg={6}>
+                                        <div>
+                                          <Label htmlFor="date-field" className="form-label">
+                                            {t("Date")}
+                                          </Label>
+                                          <Flatpickr
+                                            className="form-control"
+                                            id="date-field"
+                                            value={validation.values.date}
+                                            onChange={(date) => setDate(date)}
+                                            options={{
+                                              dateFormat: "d M, Y",
+                                            }}
+                                          />
+                                        </div>
+                                      </Col>
+                                      <Col lg={6}>
+                                        <div>
+                                          <Label htmlFor="website-field" className="form-label">
+                                            {t("Site web")}
+                                          </Label>
+                                          <Input
+                                            type="url"
+                                            id="website-field"
+                                            className="form-control"
+                                            placeholder="https://example.com"
+                                            value={validation.values.website}
+                                            onChange={validation.handleChange}
+                                            onBlur={validation.handleBlur}
+                                            invalid={validation.touched.website && validation.errors.website ? true : false}
+                                          />
+                                          {validation.touched.website && validation.errors.website ? (
+                                            <FormFeedback type="invalid">{t(validation.errors.website)}</FormFeedback>
+                                          ) : null}
+                                        </div>
+                                      </Col>
+                                      <Col lg={6}>
+                                        <div>
+                                          <Label htmlFor="legal-number-field" className="form-label">
+                                            {t("Numéro légal")}
+                                          </Label>
+                                          <Input
+                                            type="text"
+                                            id="legal-number-field"
+                                            className="form-control"
+                                            placeholder="Numéro légal"
+                                            value={validation.values.legal_number}
+                                            onChange={validation.handleChange}
+                                            onBlur={validation.handleBlur}
+                                            invalid={validation.touched.legal_number && validation.errors.legal_number ? true : false}
+                                          />
+                                          {validation.touched.legal_number && validation.errors.legal_number ? (
+                                            <FormFeedback type="invalid">{t(validation.errors.legal_number)}</FormFeedback>
+                                          ) : null}
+                                        </div>
+                                      </Col>
+                                    </>
+                                  )} 
+                          <Col lg={6}>
+                            <div className="mb-3">
+                              <label htmlFor="contactDescription" className="form-label">Description</label>
+                              <textarea className="form-control" id="contactDescription" rows="1"
+                                placeholder="Enter description" required></textarea>
+                              <div className="invalid-feedback">
+                                Please add a description.
+                              </div>
+                            </div>
+                            </Col>
+                            </Row>
+                      </ModalBody>
+                      <ModalFooter>
+                        <div className="hstack gap-2 justify-content-end">
+                          <button type="button" className="btn btn-light" onClick={() => { setModal(false); }} > Fermer </button>
+                          <button type="submit" className="btn btn-success" id="add-btn"> {!!isEdit ? "Update" : "Ajouter un contact"} </button>
+                        </div>
+                      </ModalFooter>
+                    </Form>
+                  </Modal>
+                <ToastContainer closeButton={false} limit={1} />
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+      </Container>
+    </div>
+  );
+};
+
+
+export default CrmLeads;
+
+

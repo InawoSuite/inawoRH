@@ -1,0 +1,320 @@
+/**
+ * Styles d'optimisation de performance
+ * Améliore le rendu et l'expérience utilisateur
+ */
+
+/* ========================================
+   OPTIMISATIONS GPU ET ANIMATIONS
+   ======================================== */
+
+/* Activer l'accélération GPU pour les éléments animés */
+.gpu-accelerated {
+  transform: translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+/* Animation de fade-in fluide */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+/* Animation pour les cartes */
+.card-animated {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-animated:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* ========================================
+   OPTIMISATIONS DES IMAGES
+   ======================================== */
+
+/* Lazy loading natif */
+img[loading="lazy"] {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+img[loading="lazy"].loaded,
+img[loading="lazy"]:not([data-src]) {
+  opacity: 1;
+}
+
+/* Placeholder pour les images en chargement */
+.img-placeholder {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* ========================================
+   OPTIMISATIONS DES SCROLLS
+   ======================================== */
+
+/* Scroll fluide */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Désactiver le scroll fluide pour les préférences réduites */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Améliorer le scroll sur mobile */
+.scroll-container {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ========================================
+   OPTIMISATIONS DES INTERACTIONS
+   ======================================== */
+
+/* Réponse tactile rapide */
+.touch-action {
+  touch-action: manipulation;
+}
+
+/* Désactiver le highlight sur mobile */
+.no-tap-highlight {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Curseur pour les éléments interactifs */
+.interactive {
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ========================================
+   OPTIMISATIONS DES FORMULAIRES
+   ======================================== */
+
+/* Input avec transition fluide */
+.form-control-optimized {
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  will-change: border-color, box-shadow;
+}
+
+/* Désactiver l'autofill jaune de Chrome */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0px 1000px white inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* ========================================
+   OPTIMISATIONS DES TABLES
+   ======================================== */
+
+/* Table virtualisée */
+.virtual-table {
+  position: relative;
+  overflow: auto;
+}
+
+.virtual-table tbody {
+  position: relative;
+}
+
+/* ========================================
+   OPTIMISATIONS DES MODALS
+   ======================================== */
+
+/* Modal avec animation GPU */
+.modal.fade .modal-dialog {
+  transform: translate(0, -50px);
+  transition: transform 0.2s ease-out;
+}
+
+.modal.show .modal-dialog {
+  transform: translate(0, 0);
+}
+
+/* ========================================
+   OPTIMISATIONS DU CHARGEMENT
+   ======================================== */
+
+/* Skeleton loader */
+.skeleton-loader {
+  background: linear-gradient(
+    90deg,
+    #f0f0f0 0px,
+    #e8e8e8 40px,
+    #f0f0f0 80px
+  );
+  background-size: 200px 100%;
+  animation: skeleton-loading 1.2s ease-in-out infinite;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+/* ========================================
+   OPTIMISATIONS DU TEXTE
+   ======================================== */
+
+/* Améliorer le rendu du texte */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Empêcher le FOUT (Flash of Unstyled Text) */
+.fonts-loading {
+  visibility: hidden;
+}
+
+.fonts-loaded {
+  visibility: visible;
+}
+
+/* ========================================
+   OPTIMISATIONS DES LISTES
+   ======================================== */
+
+/* Liste virtualisée */
+.virtualized-list {
+  contain: strict;
+  overflow-anchor: none;
+}
+
+/* Items de liste optimisés */
+.list-item-optimized {
+  contain: layout style;
+  content-visibility: auto;
+  contain-intrinsic-size: auto 80px;
+}
+
+/* ========================================
+   OPTIMISATIONS DES CARDS UTILISATEUR
+   ======================================== */
+
+/* Card utilisateur avec hover */
+.user-card-link {
+  transition: color 0.2s ease;
+}
+
+.user-card-link:hover {
+  color: #014a92 !important;
+}
+
+/* Team box avec animation */
+.team-box {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  contain: layout style paint;
+}
+
+.team-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+
+/* ========================================
+   OPTIMISATIONS DES BOUTONS
+   ======================================== */
+
+/* Boutons avec feedback visuel rapide */
+.btn {
+  transition: all 0.15s ease-in-out;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+/* ========================================
+   OPTIMISATIONS DES DROPDOWNS
+   ======================================== */
+
+/* Dropdown avec animation rapide */
+.dropdown-menu {
+  transition: opacity 0.15s ease, transform 0.15s ease;
+  transform-origin: top;
+}
+
+.dropdown-menu.show {
+  animation: dropdownShow 0.15s ease;
+}
+
+@keyframes dropdownShow {
+  from {
+    opacity: 0;
+    transform: scaleY(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+/* ========================================
+   UTILITIES
+   ======================================== */
+
+/* Conteneur pour éviter le reflow */
+.contain-strict {
+  contain: strict;
+}
+
+.contain-layout {
+  contain: layout;
+}
+
+.contain-paint {
+  contain: paint;
+}
+
+/* Content visibility pour le lazy rendering */
+.content-visibility-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 500px;
+}

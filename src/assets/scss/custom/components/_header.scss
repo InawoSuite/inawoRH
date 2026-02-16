@@ -1,0 +1,146 @@
+.header-item {
+  height: $header-height;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.15rem; 
+  margin: 0; 
+  
+  i, .box-line-code {
+    font-size: 22px;
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+  }
+
+  .nav-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+
+    i, .box-line-code {
+      font-size: 22px;
+      margin: 0;
+      padding: 0;
+    }
+  }
+
+  .dropdown-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  & + .header-item {
+    margin-left: 0;
+  }
+
+  // &:hover
+  // {
+
+  // }
+}
+
+// Ensure all dropdown buttons are aligned
+.header-item .btn-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  padding: 0;
+  margin: 0;
+}
+
+// Language dropdown specific
+.language-switch {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  
+  i, .box-line-code {
+    font-size: 22px;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.logstyleok:hover {
+  // background-color: var(--vz-header-item-bg);
+  color: var(--vz-primary);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 22px;
+  color: #014a92; 
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+// Style pour l'icône d'ajout rapide
+.ri-add-box-line:hover {
+  // background-color: var(--vz-header-item-bg);
+  // color: var(--vz-primary);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 22px;
+  // color: #014a92;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+// Style pour le bouton View All Apps
+.btn-soft-info {
+  padding: 0;
+  font-size: 0.75rem;
+  height: 28px;
+  width: 108px;
+  position: relative;
+  
+  div {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  
+  span {
+    line-height: 1;
+    font-weight: 500;
+  }
+  
+  i {
+    font-size: 0.8rem;
+    line-height: 1;
+  }
+}
+
+.navbar-header {
+  .d-flex {
+    gap: 0.15rem; 
+    margin: 0; 
+  }
+}

@@ -1,0 +1,43 @@
+/*
+Template Name: Velzon - Admin & Dashboard Template
+Author: Themesbrand
+Version: 4.1.0
+Website: https://Themesbrand.com/
+Contact: Themesbrand@gmail.com
+File: Custom Bootstrap Css File
+*/
+
+
+//Core files
+@import "./node_modules/bootstrap/scss/functions";
+@import "./node_modules/bootstrap/scss/variables";
+
+// Override default variables
+@import "variables";
+@import "variables-dark";
+@import "variables-custom";
+
+// Import Bootstrap source files
+@import "./node_modules/bootstrap/scss/bootstrap";
+
+// Custom styles to override Bootstrap defaults
+ul, ol, li,
+.list-unstyled,
+.nav,
+.navbar-nav,
+.dropdown-menu {
+  list-style: none !important;
+  list-style-type: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  -webkit-padding-start: 0 !important;
+  padding-inline-start: 0 !important;
+}
+
+// Remove any markers or bullets
+li::marker,
+li::before,
+li::after {
+  display: none !important;
+  content: none !important;
+}

@@ -1,0 +1,1529 @@
+// import React, { useCallback, useEffect, useState } from "react";
+// import App from "../../App";
+// import { Link, useLocation } from "react-router-dom";
+// import PropTypes from "prop-types";
+// import { Collapse, Container } from "reactstrap";
+// import withRouter from "../../Components/Common/withRouter";
+// import { useSelector } from "react-redux";
+// import logoDark from "../../assets/images/iCone (01) Inawo.png";
+// import logoLight from "../../assets/images/iCone (02) Inawo.png";
+// import { withTranslation } from "react-i18next";
+// import menuItems from "../LayoutMenuData";
+// import Simplebar from "simplebar-react";
+// import { changeSidebarVisibility } from "../../slices/thunks";
+// import { useDispatch } from "react-redux";
+// import { getAuthData } from "../../utils/authUtils";
+// import { useNavigate } from "react-router-dom";
+// import { useTranslation } from 'react-i18next';
+// import { useMenuData } from "../LayoutMenuData";
+
+// const TwoColumnLayout = (props) => {
+//   const { t } = useTranslation();
+//   const navigate = useNavigate();
+// const { menuItems } = useMenuData();
+//   // const [activeTab, setActiveTab] = useState("1");
+  
+//   // const menuItems = getMenuItems(t, activeMenu, setActiveMenu, navigate, setActiveTab);
+//   const [hoveredItem, setHoveredItem] = useState(null);
+//   const [hoveredSubItem, setHoveredSubItem] = useState(null);
+//   const dispatch = useDispatch();
+//   const location = useLocation();
+//   const allMenus = menuItems;
+//   const navData = useMenuData().props.children;
+//   const [theme, setTheme] = useState(
+//     document.documentElement.getAttribute("data-bs-theme") || "light"
+//   );
+//   // const [activeMenu, setActiveMenu] = useState("Tableau de bord");
+//   const [activeMenuIcon, setActiveMenuIcon] = useState("ri-dashboard-line");
+//   const [selectedMainMenu, setSelectedMainMenu] = useState("Dashboard");
+//   const [openDropdowns, setOpenDropdowns] = useState({});
+//   const [activeSubMenu, setActiveSubMenu] = useState(null);
+//   const [lastOpenedMenu, setLastOpenedMenu] = useState(null);
+
+//   const handleMouseEnter = (itemLabel) => {
+//     if (activeMenu !== itemLabel) {
+//       setHoveredItem(itemLabel);
+//     }
+//   };
+
+//   const handleMouseLeave = () => {
+//     setHoveredItem(null);
+//   };
+
+//   const handleSubMouseEnter = (subItemLink) => {
+//     if (activeSubMenu !== subItemLink) {
+//       setHoveredSubItem(subItemLink);
+//     }
+//   };
+
+//   const handleSubMouseLeave = () => {
+//     setHoveredSubItem(null);
+//   };
+
+//    const handleMainMenuClick = (menuId, menuLabel, menuIcon) => {
+//     setSelectedMainMenu(menuId);
+//     setActiveMenu(menuLabel);
+//     setActiveMenuIcon(menuIcon);
+//     setOpenDropdowns({}); // Réinitialiser les menus ouverts
+//   };
+
+
+//   // Écouter les changements de thème
+//   useEffect(() => {
+//     const observer = new MutationObserver((mutations) => {
+//       mutations.forEach((mutation) => {
+//         if (
+//           mutation.type === "attributes" &&
+//           mutation.attributeName === "data-bs-theme"
+//         ) {
+//           const newTheme =
+//             document.documentElement.getAttribute("data-bs-theme") || "light";
+//           setTheme(newTheme);
+//         }
+//       });
+//     });
+
+//     observer.observe(document.documentElement, {
+//       attributes: true,
+//       attributeFilter: ["data-bs-theme"],
+//     });
+
+//     return () => observer.disconnect();
+//   }, []);
+
+//   // Gestion des menus ouverts/fermés - ferme le précédent quand on ouvre un nouveau
+//   const toggleDropdown = (menuId) => {
+//     setOpenDropdowns((prev) => {
+//       const newState = { ...prev };
+
+//       // Fermer le menu précédemment ouvert
+//       if (lastOpenedMenu && lastOpenedMenu !== menuId) {
+//         newState[lastOpenedMenu] = false;
+//       }
+
+//       // Basculer l'état du menu actuel
+//       newState[menuId] = !prev[menuId];
+
+//       // Mettre à jour le dernier menu ouvert
+//       if (newState[menuId]) {
+//         setLastOpenedMenu(menuId);
+//       } else {
+//         setLastOpenedMenu(null);
+//       }
+
+//       return newState;
+//     });
+//   };
+
+//   // Styles dynamiques mis à jour
+
+//   const hoverMenuItemStyle = {
+//     backgroundColor: theme === "dark" ? "#374151" : "#f8f9fa",
+//     transition: "background-color 0.2s ease",
+//   };
+
+//   const hoverSubMenuItemStyle = {
+//     backgroundColor: theme === "dark" ? "#4b5563" : "#f1f5f9",
+//     transition: "background-color 0.2s ease",
+//   };
+
+//   const activeMenuIconStyle = {
+//     marginRight: "12px",
+//     width: "24px",
+//     textAlign: "center",
+//     color: "white", // Icône blanche quand le menu est actif
+//   };
+
+//   const sidebarStyle = {
+//     background: theme === "dark" ? "#212529" : "white",
+//     color: theme === "dark" ? "white" : "#212529",
+//     transition: "all 0.3s ease",
+//     boxShadow:
+//       theme === "dark"
+//         ? "4px 0 6px -4px rgba(255, 255, 255, 0.1)"
+//         : "4px 0 6px -4px rgba(0, 0, 0, 0.2)",
+//   };
+
+//   const simplebarStyle = {
+//     background: theme === "dark" ? "#292e32" : "white",
+//     color: theme === "dark" ? "white" : "#212529",
+//     transition: "all 0.3s ease",
+//   };
+
+//   const iconStyle = {
+//     color: theme === "light" ? "#62748e" : "#fff",
+//     transition: "all 0.3s ease",
+//     fontSize: "24px",
+//   };
+
+//   const activeMenuItemStyle = {
+//     backgroundColor: "#014a92",
+//     color: "white",
+//     height: "40px",
+//   };
+
+//   const activeSubMenuItemStyle = {
+//     backgroundColor: theme === "dark" ? "#374151" : "#f3f6f9",
+//     color: theme === "dark" ? "#e5e7eb" : "slategray",
+//   };
+
+//   // Styles pour l'en-tête mis à jour
+//   const headerStyle = {
+//     display: "flex",
+//     alignItems: "center",
+//     padding: "17px 15px",
+//     gap: "10px",
+//     // borderBottom: theme === "dark" ? "1px solid #374151" : "1px solid #e5e7eb",
+//   };
+
+//   const iconContainerStyle = {
+//     display: "flex",
+//     backgroundColor: theme === "dark" ? "#374151" : "#f3f6f9",
+//     borderRadius: "50%",
+//     width: "35px",
+//     height: "35px",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   };
+
+//   const activeIconStyle = {
+//     color: theme === "dark" ? "#e5e7eb" : "slategray",
+//     fontSize: "21px",
+//     fontWeight: "normal",
+//   };
+
+//   const titleStyle = {
+//     color: theme === "dark" ? "#e5e7eb" : "slategray",
+//     margin: 0,
+//     fontSize: "15px",
+//   };
+
+//   const listItemStyle = {
+//     listStyle: "none",
+//     paddingLeft: 0,
+//     margin: 0,
+//   };
+
+//   const menuLinkStyle = {
+//     display: "flex",
+//     alignItems: "center",
+//     padding: "12px 20px",
+//     color: theme === "dark" ? "#e5e7eb" : "#495057",
+//     textDecoration: "none",
+//     transition: "all 0.2s",
+//   };
+
+//   const menuIconStyle = {
+//     marginRight: "12px",
+//     width: "24px",
+//     textAlign: "center",
+//     color: theme === "dark" ? "#e5e7eb" : "#495057",
+//   };
+
+//   const subMenuListStyle = {
+//     listStyle: "none",
+//     paddingLeft: "30px",
+//     margin: 0,
+//   };
+
+//   const subListItemStyle = {
+//     listStyle: "none",
+//     paddingLeft: 0,
+//     margin: 0,
+//   };
+
+//   const subMenuLinkStyle = {
+//     display: "flex",
+//     alignItems: "center",
+//     padding: "10px 20px",
+//     color: theme === "dark" ? "#d1d5db" : "#495057",
+//     textDecoration: "none",
+//     transition: "all 0.2s",
+//   };
+
+//   const subMenuIconStyle = {
+//     marginRight: "12px",
+//     width: "20px",
+//     textAlign: "center",
+//     color: theme === "dark" ? "#d1d5db" : "#495057",
+//   };
+
+//   // Initialisation des menus
+//  useEffect(() => {
+//   const currentPath = location.pathname;
+//   let foundActiveMenu = false;
+
+//   // Vérifie d'abord dans filteredMenu (menus classiques)
+//   filteredMenu.forEach((menu) => {
+//     if (menu.subItems) {
+//       menu.subItems.forEach((subItem) => {
+//         if (subItem.link === currentPath) {
+//           setActiveMenu(menu.label);
+//           setActiveMenuIcon(menu.icon);
+//           setActiveSubMenu(subItem.link);
+//           setOpenDropdowns((prev) => ({ ...prev, [menu.id]: true }));
+//           setLastOpenedMenu(menu.id);
+//           setSelectedMainMenu("Dashboard");
+//           foundActiveMenu = true;
+//         }
+//       });
+//     }
+//   });
+
+//   // Vérifie dans Recrutement et Paramètres si pas trouvé
+//   if (!foundActiveMenu) {
+//     const specialMenus = ["Recrutement", "Paramètres"];
+//    const allMenus = menuItems;
+//     for (let menuName of specialMenus) {
+//       const menu = allMenus.find((m) => m.label === menuName);
+//       if (menu && menu.subItems) {
+//         for (let subItem of menu.subItems) {
+//           if (subItem.link === currentPath) {
+//             setActiveMenu(menu.label);
+//             setActiveMenuIcon(menu.icon);
+//             setActiveSubMenu(subItem.link);
+//             setSelectedMainMenu(menuName);
+//             foundActiveMenu = true;
+//             break;
+//           }
+//         }
+//       }
+//       if (foundActiveMenu) break;
+//     }
+//   }
+
+//   // Si toujours pas trouvé, remet sur Dashboard
+//   if (!foundActiveMenu) {
+//     setActiveMenu("Tableau de bord");
+//     setActiveMenuIcon("ri-dashboard-line");
+//     setSelectedMainMenu("Dashboard");
+//   }
+// }, [location.pathname]);
+
+//   const activateParentDropdown = useCallback((item) => {
+//     item.classList.add("active");
+//     let parentCollapseDiv = item.closest(".collapse.menu-dropdown");
+//     if (parentCollapseDiv) {
+//       parentCollapseDiv.classList.add("show");
+//       parentCollapseDiv.parentElement.children[0].classList.add("active");
+//       parentCollapseDiv.parentElement.children[0].setAttribute(
+//         "aria-expanded",
+//         "true"
+//       );
+//       if (parentCollapseDiv.parentElement.closest(".collapse.menu-dropdown")) {
+//         parentCollapseDiv.parentElement
+//           .closest(".collapse")
+//           .classList.add("show");
+//         const parentParentCollapse =
+//           parentCollapseDiv.parentElement.closest(
+//             ".collapse"
+//           ).previousElementSibling;
+//         if (parentParentCollapse) {
+//           parentParentCollapse.classList.add("active");
+//           if (parentParentCollapse.closest(".collapse.menu-dropdown")) {
+//             parentParentCollapse
+//               .closest(".collapse.menu-dropdown")
+//               .classList.add("show");
+//           }
+//         }
+//       }
+//       return false;
+//     }
+//     return false;
+//   }, []);
+
+//   const path = props.router.location.pathname;
+
+//   function findSubItemByLink(linkText) {
+//     if (!navData) return null;
+
+//     for (const item of navData) {
+//       if (item.subItems) {
+//         for (const subItem of item.subItems) {
+//           if (subItem.link === linkText) {
+//             return item;
+//           }
+//         }
+//       }
+//     }
+//     return null;
+//   }
+
+//   const initMenu = useCallback(() => {
+//     const pathName = process.env.PUBLIC_URL + path;
+//     const ul = document.getElementById("navbar-nav");
+//     const items = ul.getElementsByTagName("a");
+//     let itemsArray = [...items];
+//     removeActivation(itemsArray);
+//     let matchingMenuItem = itemsArray.find((x) => {
+//       return x.pathname === pathName;
+//     });
+
+//     const foundSubItem = findSubItemByLink(pathName);
+//     if (foundSubItem) {
+//       setActiveMenu(foundSubItem.label);
+//       setActiveMenuIcon(foundSubItem.icon);
+//       foundSubItem.click({ preventDefault: () => {} });
+//     }
+
+//     if (matchingMenuItem) {
+//       activateParentDropdown(matchingMenuItem);
+//     }
+//   }, [path, activateParentDropdown]);
+
+//   useEffect(() => {
+//     window.scrollTo({ top: 0, behavior: "smooth" });
+//     initMenu();
+//   }, [path, initMenu]);
+
+//   function activateIconSidebarActive(id) {
+//     var menu = document.querySelector(
+//       "#two-column-menu .simplebar-content-wrapper a[subitems='" +
+//         id +
+//         "'].nav-icon"
+//     );
+//     if (menu !== null) {
+//       menu.classList.add("active");
+//     }
+//   }
+
+//   const removeActivation = (items) => {
+//     let activeItems = items.filter((x) => x.classList.contains("active"));
+//     activeItems.forEach((item) => {
+//       if (item.classList.contains("menu-link")) {
+//         if (!item.classList.contains("active")) {
+//           item.setAttribute("aria-expanded", false);
+//         }
+//         item.nextElementSibling.classList.remove("show");
+//       }
+//       if (item.classList.contains("nav-link")) {
+//         if (item.nextElementSibling) {
+//           item.nextElementSibling.classList.remove("show");
+//         }
+//         item.setAttribute("aria-expanded", false);
+//       }
+//       item.classList.remove("active");
+//     });
+
+//     const ul = document.getElementById("two-column-menu");
+//     const iconItems = ul.getElementsByTagName("a");
+//     let itemsArray = [...iconItems];
+//     let activeIconItems = itemsArray.filter((x) =>
+//       x.classList.contains("active")
+//     );
+//     activeIconItems.forEach((item) => {
+//       item.classList.remove("active");
+//       var id = item.getAttribute("subitems");
+//       if (document.getElementById(id))
+//         document.getElementById(id).classList.remove("show");
+//     });
+//   };
+
+//   // Resize sidebar
+//   const [isMenu, setIsMenu] = useState("twocolumn");
+//   const windowResizeHover = () => {
+//     initMenu();
+//     var windowSize = document.documentElement.clientWidth;
+//     if (windowSize < 767) {
+//       document.documentElement.setAttribute("data-layout", "vertical");
+//       setIsMenu("vertical");
+//     } else {
+//       document.documentElement.setAttribute("data-layout", "twocolumn");
+//       setIsMenu("twocolumn");
+//     }
+//   };
+
+//   useEffect(() => {
+//     if (props.layoutType === "twocolumn") {
+//       window.addEventListener("resize", windowResizeHover);
+//       return () => {
+//         window.removeEventListener("resize", windowResizeHover);
+//       };
+//     }
+//   });
+
+//   // Filtrage des menus selon le module utilisateur
+//   // Initialisation des menus
+//   useEffect(() => {
+//     const currentPath = location.pathname;
+//     let foundActiveMenu = false;
+
+//     filteredMenu.forEach((menu) => {
+//       if (menu.subItems) {
+//         menu.subItems.forEach((subItem) => {
+//           if (subItem.link === currentPath) {
+//             setActiveMenu(menu.label);
+//             setActiveMenuIcon(menu.icon);
+//             setActiveSubMenu(subItem.link);
+//             setOpenDropdowns((prev) => ({ ...prev, [menu.id]: true }));
+//             foundActiveMenu = true;
+//           }
+//         });
+//       }
+//     });
+
+//     if (!foundActiveMenu) {
+//       setActiveMenu("Tableau de bord");
+//       setActiveMenuIcon("ri-dashboard-line");
+//       setSelectedMainMenu("Dashboard");
+//     }
+//   }, [location.pathname]);
+
+//   // Filtrage des menus selon le module utilisateur
+//   const auth = useSelector((state) => state.auth || {});
+//   const users = auth.users || getAuthData().user;
+//   //  const allMenus = menuItems;
+//   const userModule = String(users?.abonnement?.module || "INOWOGLOBAL")
+//     .toUpperCase()
+//     .replace(/\s+/g, "");
+
+//   // Filtre les menus à exclure (Recrutement et Paramètres)
+//   const filteredMenu = allMenus
+//     .filter((menu) => {
+//       // Exclure explicitement Recrutement et Paramètres
+//       if (menu.label === "Recrutement" || menu.label === "Paramètres") {
+//         return false;
+//       }
+//       return !menu.modules || menu.modules.includes(userModule);
+//     })
+//     .map((menu) => ({
+//       ...menu,
+//       subItems: menu.subItems?.filter(
+//         (sub) => !sub.modules || sub.modules.includes(userModule)
+//       ),
+//     }));
+
+//   // Menus principaux de la première colonne
+//   const mainMenus = [
+//     { id: "Dashboard", label: "Tableau de bord", icon: "ri-dashboard-line" },
+//     { id: "Recrutement", label: "Recrutement", icon: "ri-projector-line" },
+//     { id: "Paramètres", label: "Paramètres", icon: "ri-settings-5-line" },
+//   ];
+
+//   // Récupération des sous-menus spécifiques
+//   const getSubMenusForMainMenu = (menuId) => {
+//     if (menuId === "Recrutement") {
+//       return (
+//         allMenus.find((menu) => menu.label === "Recrutement")?.subItems || []
+//       );
+//     } else if (menuId === "Paramètres") {
+//       return (
+//         allMenus.find((menu) => menu.label === "Paramètres")?.subItems || []
+//       );
+//     }
+//     return [];
+//   };
+
+//   return (
+//     <div style={{}}>
+//       {isMenu === "twocolumn" ? (
+//         <div id="scrollbar" style={{ ...sidebarStyle }}>
+//           <Container fluid>
+//             {/* Première colonne */}
+//             <div id="two-column-menu" style={{ ...sidebarStyle }}>
+//               <Simplebar
+//                 className="twocolumn-iconview"
+//                 style={{ ...simplebarStyle }}
+//               >
+//                 <Link to="#" className="logo">
+//                   <div style={logoContainerStyle}>
+//                     <img
+//                       src={theme === "dark" ? logoLight : logoDark}
+//                       alt="Logo Inawo"
+//                       height="35"
+//                       style={logoImageStyle}
+//                     />
+//                   </div>
+//                 </Link>
+
+//                 {mainMenus.map((item) => (
+//                   <div key={item.id} style={{ margin: "15px 0" }}>
+//                     <Link
+//                       onClick={(e) => {
+//                         e.preventDefault();
+//                         setSelectedMainMenu(item.id);
+//                         setActiveMenu(item.label);
+//                         setActiveMenuIcon(item.icon);
+//                         // Réinitialiser les menus ouverts quand on change de menu principal
+//                         setOpenDropdowns({});
+//                         setLastOpenedMenu(null);
+//                       }}
+//                       to="#"
+//                       className={`nav-icon ${
+//                         selectedMainMenu === item.id ? "active" : ""
+//                       }`}
+//                       data-bs-toggle="tooltip"
+//                       data-bs-placement="right"
+//                       data-bs-title={item.label}
+//                     >
+//                       <i className={item.icon} style={iconStyle}></i>
+//                     </Link>
+//                   </div>
+//                 ))}
+
+//                 {/* Profil en bas */}
+//                 <div
+//                   style={{
+//                     position: "absolute",
+//                     bottom: "20px",
+//                     left: "50%",
+//                     transform: "translateX(-50%)",
+//                     width: "40px",
+//                     height: "40px",
+//                     borderRadius: "50%",
+//                     backgroundColor: theme === "dark" ? "#374151" : "#f0f0f0",
+//                     display: "flex",
+//                     alignItems: "center",
+//                     justifyContent: "center",
+//                   }}
+//                 >
+//                   <i
+//                     className="ri-user-line"
+//                     style={{
+//                       fontSize: "20px",
+//                       color: theme === "dark" ? "#e5e7eb" : "#666",
+//                     }}
+//                   ></i>
+//                 </div>
+//               </Simplebar>
+//             </div>
+
+//             {/* Seconde colonne */}
+//             <Simplebar
+//               id="navbar-nav"
+//               className="navbar-nav"
+//               style={{ ...simplebarStyle }}
+//             >
+//               {/* En-tête avec icône et titre */}
+//               <div style={headerStyle}>
+//                 <div style={iconContainerStyle}>
+//                   <i className={activeMenuIcon} style={activeIconStyle}></i>
+//                 </div>
+//                 <h5 style={titleStyle}>{activeMenu}</h5>
+//               </div>
+
+//               {selectedMainMenu === "Dashboard"
+//                 ? // Affichage de tous les menus pour Dashboard (sans Recrutement et Paramètres)
+//                   (filteredMenu || []).map((item) => {
+//                     if (item.isHeader) return null;
+
+//                     return (
+//                       <li key={item.id} style={listItemStyle}>
+//                         <Link
+//                           to={item.link || "#"}
+//                           style={{
+//                             ...menuLinkStyle,
+//                             ...(hoveredItem === item.label
+//                               ? hoverMenuItemStyle
+//                               : {}),
+//                             ...(activeMenu === item.label
+//                               ? activeMenuItemStyle
+//                               : {}),
+//                             fontSize: "13px",
+//                           }}
+//                           onMouseEnter={() => handleMouseEnter(item.label)}
+//                           onMouseLeave={handleMouseLeave}
+//                           onClick={(e) => {
+//                             if (item.subItems) {
+//                               e.preventDefault();
+//                               setActiveMenu(item.label);
+//                               setActiveMenuIcon(item.icon);
+//                               toggleDropdown(item.id);
+//                             }
+//                           }}
+//                         >
+//                           <i
+//                             className={item.icon}
+//                             style={{
+//                               ...(activeMenu === item.label
+//                                 ? activeMenuIconStyle
+//                                 : menuIconStyle),
+//                               fontSize: "17px",
+//                             }}
+//                           ></i>
+//                           {props.t(item.label)}
+//                         </Link>
+
+//                         {/* Sous-menus */}
+//                         {item.subItems && (
+//                           <Collapse isOpen={openDropdowns[item.id]}>
+//                             <ul style={subMenuListStyle}>
+//                               {item.subItems.map((subItem) => (
+//                                 <li key={subItem.id} style={subListItemStyle}>
+//                                   <Link
+//                                     to={subItem.link || "/#"}
+//                                     className={`nav-link ${
+//                                       item.subItems ? "" : "sub-nav-link"
+//                                     }`}
+//                                     style={{
+//                                       ...subMenuLinkStyle,
+//                                       ...(activeSubMenu === subItem.link
+//                                         ? activeSubMenuItemStyle
+//                                         : {}),
+//                                       ...(hoveredSubItem === subItem.link
+//                                         ? hoverSubMenuItemStyle
+//                                         : {}),
+//                                       fontSize: "13px",
+//                                       paddingLeft: "40px",
+//                                     }}
+//                                     onMouseEnter={() =>
+//                                       handleSubMouseEnter(subItem.link)
+//                                     }
+//                                     onMouseLeave={handleSubMouseLeave}
+//                                     onClick={() =>
+//                                       setActiveSubMenu(subItem.link)
+//                                     }
+//                                   >
+//                                     <i
+//                                       className={subItem.icon}
+//                                       style={{
+//                                         ...subMenuIconStyle,
+//                                         fontSize: "16px",
+//                                       }}
+//                                     ></i>
+//                                     {props.t(subItem.label)}
+//                                   </Link>
+//                                 </li>
+//                               ))}
+//                             </ul>
+//                           </Collapse>
+//                         )}
+//                       </li>
+//                     );
+//                   })
+//                 : // Affichage des sous-menus pour Recrutement/Paramètres
+//                   getSubMenusForMainMenu(selectedMainMenu).map((subItem) => (
+//                     <li key={subItem.id} style={subListItemStyle}>
+//                       <Link
+//                         to={subItem.link || "/#"}
+//                       className="nav-link sub-nav-link"
+//                         style={{
+//                           ...subMenuLinkStyle,
+//                           ...(activeSubMenu === subItem.link
+//                             ? activeSubMenuItemStyle
+//                             : {}),
+//                           ...(hoveredSubItem === subItem.link
+//                             ? hoverSubMenuItemStyle
+//                             : {}),
+//                           fontSize: "13px",
+//                           paddingLeft: "40px",
+//                         }}
+//                         onMouseEnter={() => handleSubMouseEnter(subItem.link)}
+//                         onMouseLeave={handleSubMouseLeave}
+//                         onClick={() => setActiveSubMenu(subItem.link)}
+//                       >
+//                         <i
+//                           className={subItem.icon}
+//                           style={{
+//                             ...subMenuIconStyle,
+//                             fontSize: "18px",
+//                           }}
+//                         ></i>
+//                         {props.t(subItem.label)}
+//                       </Link>
+//                     </li>
+//                   ))}
+//             </Simplebar>
+//           </Container>
+//         </div>
+//       ) : (
+//         // Version mobile/tablette
+//         <Simplebar
+//           id="scrollbar"
+//           className="h-100"
+//           style={{
+//             background: theme === "dark" ? "#212529" : "white",
+//             color: theme === "dark" ? "white" : "black",
+//           }}
+//         >
+//           <Container fluid>
+//             <div id="two-column-menu"></div>
+//             <ul className="navbar-nav" id="navbar-nav">
+//               <VerticalLayout />
+//             </ul>
+//           </Container>
+//         </Simplebar>
+//       )}
+//     </div>
+//   );
+// };
+
+// // Styles détaillés
+
+// const logoContainerStyle = {
+//   padding: "8px",
+//   display: "flex",
+//   justifyContent: "center",
+//   alignItems: "center",
+//   position: "relative",
+//   margin: "10px 0",
+// };
+
+// const logoImageStyle = {
+//   maxWidth: "100%",
+//   objectFit: "contain",
+//   transition: "all 0.3s ease",
+// };
+
+// TwoColumnLayout.propTypes = {
+//   location: PropTypes.object,
+//   t: PropTypes.any,
+// };
+
+// export default withRouter(withTranslation()(TwoColumnLayout));
+
+
+
+import React, { useCallback, useEffect, useState } from "react";
+import { Link, useLocation } from "react-router-dom";
+import { Collapse, Container } from "reactstrap";
+import withRouter from "../../Components/Common/withRouter";
+import { useSelector } from "react-redux";
+import logoDark from "../../assets/images/iCone (01) Inawo.png";
+import logoLight from "../../assets/images/iCone (02) Inawo.png";
+import { withTranslation } from "react-i18next";
+import Simplebar from "simplebar-react";
+import { useDispatch } from "react-redux";
+import { getAuthData } from "../../utils/authUtils";
+import { useNavigate } from "react-router-dom";
+import { useMenuData } from "../LayoutMenuData";
+import { useTranslation } from 'react-i18next';
+
+const TwoColumnLayout = (props) => {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { menuItems } = useMenuData();
+
+  // États
+  const [hoveredItem, setHoveredItem] = useState(null);
+  const [hoveredSubItem, setHoveredSubItem] = useState(null);
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const [theme, setTheme] = useState(
+    document.documentElement.getAttribute("data-bs-theme") || "light"
+  );
+  const [activeMenu, setActiveMenu] = useState("Tableau de bord");
+  const [activeMenuIcon, setActiveMenuIcon] = useState("ri-dashboard-line");
+  const [selectedMainMenu, setSelectedMainMenu] = useState("Dashboard");
+  const [openDropdowns, setOpenDropdowns] = useState({});
+  const [activeSubMenu, setActiveSubMenu] = useState(null);
+  const [lastOpenedMenu, setLastOpenedMenu] = useState(null);
+
+  const handleMouseEnter = (itemLabel) => {
+    if (activeMenu !== itemLabel) {
+      setHoveredItem(itemLabel);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setHoveredItem(null);
+  };
+
+  const handleSubMouseEnter = (subItemLink) => {
+    if (activeSubMenu !== subItemLink) {
+      setHoveredSubItem(subItemLink);
+    }
+  };
+
+  const handleSubMouseLeave = () => {
+    setHoveredSubItem(null);
+  };
+
+  // Écouter les changements de thème
+  useEffect(() => {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (
+          mutation.type === "attributes" &&
+          mutation.attributeName === "data-bs-theme"
+        ) {
+          const newTheme =
+            document.documentElement.getAttribute("data-bs-theme") || "light";
+          setTheme(newTheme);
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-bs-theme"],
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  // Gestion des menus ouverts/fermés - ferme le précédent quand on ouvre un nouveau
+ const toggleDropdown = (menuId) => {
+  setOpenDropdowns(prev => {
+    // Fermer tous les autres menus d'abord
+    const newState = Object.keys(prev).reduce((acc, key) => {
+      acc[key] = false;
+      return acc;
+    }, {});
+
+    // Ouvrir le menu cliqué s'il n'était pas déjà ouvert
+    newState[menuId] = !prev[menuId];
+    
+    return newState;
+  });
+  
+  // Mettre à jour le dernier menu ouvert
+  setLastOpenedMenu(menuId);
+};
+
+  // Styles dynamiques mis à jour
+
+  const hoverMenuItemStyle = {
+    backgroundColor: theme === "dark" ? "#374151" : "#f8f9fa",
+    transition: "background-color 0.2s ease",
+  };
+
+  const hoverSubMenuItemStyle = {
+    backgroundColor: theme === "dark" ? "#4b5563" : "#f1f5f9",
+    transition: "background-color 0.2s ease",
+  };
+
+  const activeMenuIconStyle = {
+    marginRight: "12px",
+    width: "24px",
+    textAlign: "center",
+    color: "white", // Icône blanche quand le menu est actif
+  };
+
+  const sidebarStyle = {
+    background: theme === "dark" ? "#212529" : "white",
+    color: theme === "dark" ? "white" : "#212529",
+    transition: "all 0.3s ease",
+    boxShadow:
+      theme === "dark"
+        ? "4px 0 6px -4px rgba(255, 255, 255, 0.1)"
+        : "4px 0 6px -4px rgba(0, 0, 0, 0.2)",
+  };
+
+  const simplebarStyle = {
+    background: theme === "dark" ? "#292e32" : "white",
+    color: theme === "dark" ? "white" : "#212529",
+    transition: "all 0.3s ease",
+  };
+
+  const iconStyle = {
+    color: theme === "light" ? "#62748e" : "#fff",
+    transition: "all 0.3s ease",
+    fontSize: "24px",
+  };
+
+  const activeMenuItemStyle = {
+    backgroundColor: "#014a92",
+    color: "white",
+    height: "40px",
+  };
+
+  const activeSubMenuItemStyle = {
+    backgroundColor: theme === "dark" ? "#374151" : "#f3f6f9",
+    color: theme === "dark" ? "#e5e7eb" : "slategray",
+  };
+
+  // Styles pour l'en-tête mis à jour
+  const headerStyle = {
+    display: "flex",
+    alignItems: "center",
+    padding: "17px 15px",
+    gap: "10px",
+    // borderBottom: theme === "dark" ? "1px solid #374151" : "1px solid #e5e7eb",
+  };
+
+  const iconContainerStyle = {
+    display: "flex",
+    backgroundColor: theme === "dark" ? "#374151" : "#f3f6f9",
+    borderRadius: "50%",
+    width: "35px",
+    height: "35px",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const activeIconStyle = {
+    color: theme === "dark" ? "#e5e7eb" : "slategray",
+    fontSize: "21px",
+    fontWeight: "normal",
+  };
+
+  const titleStyle = {
+    color: theme === "dark" ? "#e5e7eb" : "slategray",
+    margin: 0,
+    fontSize: "15px",
+  };
+
+  const listItemStyle = {
+    listStyle: "none",
+    paddingLeft: 0,
+    margin: 0,
+  };
+
+  const menuLinkStyle = {
+    display: "flex",
+    alignItems: "center",
+    padding: "12px 20px",
+    color: theme === "dark" ? "#e5e7eb" : "#495057",
+    textDecoration: "none",
+    transition: "all 0.2s",
+  };
+
+  const menuIconStyle = {
+    marginRight: "12px",
+    width: "24px",
+    textAlign: "center",
+    color: theme === "dark" ? "#e5e7eb" : "#495057",
+  };
+
+  const subMenuListStyle = {
+    listStyle: "none",
+    paddingLeft: "30px",
+    margin: 0,
+  };
+
+  const subListItemStyle = {
+    listStyle: "none",
+    paddingLeft: 0,
+    margin: 0,
+  };
+
+  const subMenuLinkStyle = {
+    display: "flex",
+    alignItems: "center",
+    padding: "10px 20px",
+    color: theme === "dark" ? "#d1d5db" : "#495057",
+    textDecoration: "none",
+    transition: "all 0.2s",
+  };
+
+  const subMenuIconStyle = {
+    marginRight: "12px",
+    width: "20px",
+    textAlign: "center",
+    color: theme === "dark" ? "#d1d5db" : "#495057",
+  };
+
+  // Initialisation des menus
+  useEffect(() => {
+    const currentPath = location.pathname;
+    let foundActiveMenu = false;
+
+    // Vérifie d'abord dans filteredMenu (menus classiques)
+    filteredMenu.forEach((menu) => {
+      if (menu.subItems) {
+        menu.subItems.forEach((subItem) => {
+          if (subItem.link === currentPath) {
+            setActiveMenu(menu.label);
+            setActiveMenuIcon(menu.icon);
+            setActiveSubMenu(subItem.link);
+            setOpenDropdowns((prev) => ({ ...prev, [menu.id]: true }));
+            setLastOpenedMenu(menu.id);
+            setSelectedMainMenu("Dashboard");
+            foundActiveMenu = true;
+          }
+        });
+      }
+    });
+
+    // Vérifie dans Recrutement et Paramètres si pas trouvé
+    if (!foundActiveMenu) {
+      const specialMenus = ["Recrutement", "Paramètres"];
+      const allMenus = menuItems;
+      for (let menuName of specialMenus) {
+        const menu = allMenus.find((m) => m.label === menuName);
+        if (menu && menu.subItems) {
+          for (let subItem of menu.subItems) {
+            if (subItem.link === currentPath) {
+              setActiveMenu(menu.label);
+              setActiveMenuIcon(menu.icon);
+              setActiveSubMenu(subItem.link);
+              setSelectedMainMenu(menuName);
+              foundActiveMenu = true;
+              break;
+            }
+          }
+        }
+        if (foundActiveMenu) break;
+      }
+    }
+
+    // Si toujours pas trouvé, remet sur Dashboard
+    if (!foundActiveMenu) {
+      setActiveMenu("Tableau de bord");
+      setActiveMenuIcon("ri-dashboard-line");
+      setSelectedMainMenu("Dashboard");
+    }
+  }, [location.pathname]);
+
+  const activateParentDropdown = useCallback((item) => {
+    item.classList.add("active");
+    let parentCollapseDiv = item.closest(".collapse.menu-dropdown");
+    if (parentCollapseDiv) {
+      parentCollapseDiv.classList.add("show");
+      parentCollapseDiv.parentElement.children[0].classList.add("active");
+      parentCollapseDiv.parentElement.children[0].setAttribute(
+        "aria-expanded",
+        "true"
+      );
+      if (parentCollapseDiv.parentElement.closest(".collapse.menu-dropdown")) {
+        parentCollapseDiv.parentElement
+          .closest(".collapse")
+          .classList.add("show");
+        const parentParentCollapse =
+          parentCollapseDiv.parentElement.closest(
+            ".collapse"
+          ).previousElementSibling;
+        if (parentParentCollapse) {
+          parentParentCollapse.classList.add("active");
+          if (parentParentCollapse.closest(".collapse.menu-dropdown")) {
+            parentParentCollapse
+              .closest(".collapse.menu-dropdown")
+              .classList.add("show");
+          }
+        }
+      }
+      return false;
+    }
+    return false;
+  }, []);
+
+  const path = props.router.location.pathname;
+
+function findSubItemByLink(linkText) {
+  if (!menuItems) return null;
+
+  for (const item of menuItems) {
+    if (item.subItems) {
+      const subItem = item.subItems.find(sub => sub.link === linkText);
+      if (subItem) {
+        return { ...subItem, parentItem: item };
+      }
+    }
+  }
+  return null;
+}
+const initMenu = useCallback(() => {
+  const pathName = process.env.PUBLIC_URL + path;
+  const ul = document.getElementById("navbar-nav");
+  const items = ul.getElementsByTagName("a");
+  let itemsArray = [...items];
+  removeActivation(itemsArray);
+  
+  let matchingMenuItem = itemsArray.find((x) => {
+    return x.pathname === pathName;
+  });
+
+  const foundSubItem = findSubItemByLink(pathName);
+  if (foundSubItem) {
+    setActiveMenu(foundSubItem.parentItem.label);
+    setActiveMenuIcon(foundSubItem.parentItem.icon);
+    setActiveSubMenu(foundSubItem.link);
+    
+    // Ouvrir le dropdown parent si nécessaire
+    const parentItem = menuItems.find(item => 
+      item.subItems?.some(sub => sub.link === pathName)
+    );
+    if (parentItem) {
+      setOpenDropdowns(prev => ({ ...prev, [parentItem.id]: true }));
+    }
+  }
+
+  if (matchingMenuItem) {
+    activateParentDropdown(matchingMenuItem);
+  }
+}, [path, activateParentDropdown, menuItems]);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    initMenu();
+  }, [path, initMenu]);
+
+  function activateIconSidebarActive(id) {
+    var menu = document.querySelector(
+      "#two-column-menu .simplebar-content-wrapper a[subitems='" +
+        id +
+        "'].nav-icon"
+    );
+    if (menu !== null) {
+      menu.classList.add("active");
+    }
+  }
+
+  const removeActivation = (items) => {
+    let activeItems = items.filter((x) => x.classList.contains("active"));
+    activeItems.forEach((item) => {
+      if (item.classList.contains("menu-link")) {
+        if (!item.classList.contains("active")) {
+          item.setAttribute("aria-expanded", false);
+        }
+        item.nextElementSibling.classList.remove("show");
+      }
+      if (item.classList.contains("nav-link")) {
+        if (item.nextElementSibling) {
+          item.nextElementSibling.classList.remove("show");
+        }
+        item.setAttribute("aria-expanded", false);
+      }
+      item.classList.remove("active");
+    });
+
+    const ul = document.getElementById("two-column-menu");
+    const iconItems = ul.getElementsByTagName("a");
+    let itemsArray = [...iconItems];
+    let activeIconItems = itemsArray.filter((x) =>
+      x.classList.contains("active")
+    );
+    activeIconItems.forEach((item) => {
+      item.classList.remove("active");
+      var id = item.getAttribute("subitems");
+      if (document.getElementById(id))
+        document.getElementById(id).classList.remove("show");
+    });
+  };
+
+  // Resize sidebar
+  const [isMenu, setIsMenu] = useState("twocolumn");
+  const windowResizeHover = () => {
+    initMenu();
+    var windowSize = document.documentElement.clientWidth;
+    if (windowSize < 767) {
+      document.documentElement.setAttribute("data-layout", "vertical");
+      setIsMenu("vertical");
+    } else {
+      document.documentElement.setAttribute("data-layout", "twocolumn");
+      setIsMenu("twocolumn");
+    }
+  };
+
+  useEffect(() => {
+    if (props.layoutType === "twocolumn") {
+      window.addEventListener("resize", windowResizeHover);
+      return () => {
+        window.removeEventListener("resize", windowResizeHover);
+      };
+    }
+  });
+
+  // Filtrage des menus selon le module utilisateur
+  // Initialisation des menus
+useEffect(() => {
+  const currentPath = location.pathname;
+  
+  // Vérifier d'abord dans les menus spéciaux
+  const specialMenu = mainMenus.find(menu => 
+    menuItems.find(m => m.id === menu.id)?.subItems?.some(sub => sub.link === currentPath)
+  );
+
+  if (specialMenu) {
+    handleMainMenuClick(specialMenu.id, specialMenu.label, specialMenu.icon);
+    return;
+  }
+
+  // Vérifier dans le Dashboard
+  const dashboardItem = filteredMenu.find(menu => 
+    menu.subItems?.some(sub => sub.link === currentPath)
+  );
+
+  if (dashboardItem) {
+    setSelectedMainMenu("Dashboard");
+    setActiveMenu(dashboardItem.label);
+    setActiveMenuIcon(dashboardItem.icon);
+    setOpenDropdowns({ [dashboardItem.id]: true });
+    setActiveSubMenu(currentPath);
+  } else {
+    // Valeurs par défaut
+    setSelectedMainMenu("Dashboard");
+    setActiveMenu("Tableau de bord");
+    setActiveMenuIcon("ri-dashboard-line");
+    setOpenDropdowns({});
+  }
+}, [location.pathname, menuItems]);
+
+  // Filtrage des menus selon le module utilisateur
+  const auth = useSelector((state) => state.auth || {});
+  const users = auth.users || getAuthData().user;
+  const userModule = String(users?.abonnement?.module || "INOWOGLOBAL")
+    .toUpperCase()
+    .replace(/\s+/g, "");
+
+  const filteredMenu = menuItems
+    .filter((menu) => !menu.modules || menu.modules.includes(userModule))
+    .map((menu) => ({
+      ...menu,
+      subItems: menu.subItems?.filter(
+        (sub) => !sub.modules || sub.modules.includes(userModule)
+      ),
+    }));
+
+  const mainMenus = [
+    { id: "Dashboard", label: "Tableau de bord", icon: "ri-dashboard-line" },
+    { id: "Recrutement", label: "Recrutement", icon: "ri-projector-line" },
+    { id: "Paramètres", label: "Paramètres", icon: "ri-settings-5-line" },
+  ];
+
+  // Gestion des clics sur les menus principaux
+const handleMainMenuClick = (menuId, menuLabel, menuIcon) => {
+  if (selectedMainMenu === menuId) {
+    // Fermer le menu si on clique dessus à nouveau
+    setSelectedMainMenu(null);
+    setActiveMenu("Tableau de bord");
+    setActiveMenuIcon("ri-dashboard-line");
+    setOpenDropdowns({});
+    setLastOpenedMenu(null);
+  } else {
+    // Ouvrir le nouveau menu et fermer les autres
+    setSelectedMainMenu(menuId);
+    setActiveMenu(menuLabel);
+    setActiveMenuIcon(menuIcon);
+    setOpenDropdowns({});
+    setLastOpenedMenu(null);
+    
+    // Si c'est le Dashboard, ouvrir automatiquement le premier sous-menu
+    if (menuId === "Dashboard") {
+      const firstItemWithSubs = filteredMenu.find(item => item.subItems);
+      if (firstItemWithSubs) {
+        setOpenDropdowns({ [firstItemWithSubs.id]: true });
+      }
+    }
+  }
+};
+
+  // Récupération des sous-menus
+  const getSubMenusForMainMenu = (menuId) => {
+    const menu = menuItems.find((m) => m.id === menuId);
+    return menu?.subItems || [];
+  };
+
+  // ... (conservez vos styles et autres fonctions utilitaires)
+
+  return (
+    <div style={{}}>
+      {isMenu === "twocolumn" ? (
+        <div id="scrollbar" style={{ ...sidebarStyle }}>
+          <Container fluid>
+            {/* Première colonne */}
+            <div id="two-column-menu" style={{ ...sidebarStyle }}>
+              <Simplebar
+                className="twocolumn-iconview"
+                style={{ ...simplebarStyle }}
+              >
+                {/* ... logo et menus principaux ... */}
+                <Link to="#" className="logo">
+                  <div style={logoContainerStyle}>
+                    <img
+                      src={theme === "dark" ? logoLight : logoDark}
+                      alt="Logo Inawo"
+                      height="35"
+                      style={logoImageStyle}
+                    />
+                  </div>
+                </Link>
+                {mainMenus.map((item) => (
+                  <div key={item.id} style={{ margin: "15px 0" }}>
+                    <Link
+                      onClick={(e) =>
+                        handleMainMenuClick(item.id, item.label, item.icon)
+                      }
+                      to="#"
+                      className={`nav-icon ${
+                        selectedMainMenu === item.id ? "active" : ""
+                      }`}
+                    >
+                      <i className={item.icon} style={iconStyle}></i>
+                    </Link>
+                  </div>
+                ))}
+
+                {/* Profil en bas */}
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "20px",
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: "40px",
+                    height: "40px",
+                    borderRadius: "50%",
+                    backgroundColor: theme === "dark" ? "#374151" : "#f0f0f0",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <i
+                    className="ri-user-line"
+                    style={{
+                      fontSize: "20px",
+                      color: theme === "dark" ? "#e5e7eb" : "#666",
+                    }}
+                  ></i>
+                </div>
+              </Simplebar>
+            </div>
+
+            {/* Seconde colonne */}
+            <Simplebar
+              id="navbar-nav"
+              className="navbar-nav"
+              style={{ ...simplebarStyle }}
+            >
+              <div style={headerStyle}>
+                <div style={iconContainerStyle}>
+                  <i className={activeMenuIcon} style={activeIconStyle}></i>
+                </div>
+                <h5 style={titleStyle}>{activeMenu}</h5>
+              </div>
+
+              {selectedMainMenu === "Dashboard" ? (
+  filteredMenu.map((item) => (
+    <li key={item.id} style={listItemStyle}>
+      <Link
+        to={item.link || "#"}
+        style={{
+          ...menuLinkStyle,
+          ...(hoveredItem === item.label ? hoverMenuItemStyle : {}),
+          ...(activeMenu === item.label ? activeMenuItemStyle : {}),
+        }}
+        onMouseEnter={() => handleMouseEnter(item.label)}
+       onMouseLeave={handleMouseLeave}
+        onClick={(e) => {
+          if (item.subItems) {
+            e.preventDefault();
+            setActiveMenu(item.label);
+            setActiveMenuIcon(item.icon);
+            toggleDropdown(item.id);
+          } else if (item.link) {
+            navigate(item.link);
+          }
+        }}
+      >
+                      <i
+                        className={item.icon}
+                        style={{
+                          ...(activeMenu === item.label
+                            ? activeMenuIconStyle
+                            : menuIconStyle),
+                          fontSize: "17px",
+                        }}
+                      ></i>
+                      {props.t(item.label)}
+                    </Link>
+
+                    {/* Sous-menus */}
+                    {item.subItems && (
+                      <Collapse isOpen={openDropdowns[item.id]}>
+                        <ul style={subMenuListStyle}>
+                          {item.subItems.map((subItem) => (
+                            <li key={subItem.id} style={subListItemStyle}>
+                              <Link
+                                to={subItem.link || "/#"}
+                                className={`nav-link ${
+                                  item.subItems ? "" : "sub-nav-link"
+                                }`}
+                                style={{
+                                  ...subMenuLinkStyle,
+                                  ...(activeSubMenu === subItem.link
+                                    ? activeSubMenuItemStyle
+                                    : {}),
+                                  ...(hoveredSubItem === subItem.link
+                                    ? hoverSubMenuItemStyle
+                                    : {}),
+                                  fontSize: "13px",
+                                  paddingLeft: "40px",
+                                }}
+                                onMouseEnter={() =>
+                                  handleSubMouseEnter(subItem.link)
+                                }
+                                onMouseLeave={handleSubMouseLeave}
+                                onClick={() => setActiveSubMenu(subItem.link)}
+                              >
+                                <i
+                                  className={subItem.icon}
+                                  style={{
+                                    ...subMenuIconStyle,
+                                    fontSize: "16px",
+                                  }}
+                                ></i>
+                                {props.t(subItem.label)}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </Collapse>
+                    )}
+                  </li>
+                ))
+              ) :  selectedMainMenu ? (
+  <ul style={subMenuListStyle}>
+    {getSubMenusForMainMenu(selectedMainMenu).map((subItem) => (
+                    <li key={subItem.id} style={subListItemStyle}>
+                      <Link
+                        to={subItem.link}
+                        className="nav-link sub-nav-link"
+                        style={{
+                          ...subMenuLinkStyle,
+                          ...(activeSubMenu === subItem.link
+                            ? activeSubMenuItemStyle
+                            : {}),
+                        }}
+                        onClick={() => setActiveSubMenu(subItem.link)}
+                      >
+                        <i
+                          className={subItem.icon}
+                          style={subMenuIconStyle}
+                        ></i>
+                        {t(subItem.label)}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+                ) : (
+  // Afficher quelque chose quand aucun menu n'est sélectionné
+  <div style={{ padding: "20px", textAlign: "center" }}>
+    Sélectionnez un menu
+  </div>
+)}
+            </Simplebar>
+          </Container>
+        </div>
+      ) : (
+        <Simplebar
+          id="scrollbar"
+          className="h-100"
+          style={{
+            background: theme === "dark" ? "#212529" : "white",
+            color: theme === "dark" ? "white" : "black",
+          }}
+        >
+          <Container fluid>
+            <div id="two-column-menu"></div>
+            <ul className="navbar-nav" id="navbar-nav">
+              <VerticalLayout />
+            </ul>
+          </Container>
+        </Simplebar>
+      )}
+    </div>
+  );
+};
+
+
+// Styles détaillés
+
+const logoContainerStyle = {
+  padding: "8px",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  position: "relative",
+  margin: "10px 0",
+};
+
+const logoImageStyle = {
+  maxWidth: "100%",
+  objectFit: "contain",
+  transition: "all 0.3s ease",
+};
+
+export default withRouter(withTranslation()(TwoColumnLayout));

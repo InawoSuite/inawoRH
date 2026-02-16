@@ -1,0 +1,297 @@
+/*
+Template Name: Velzon - Admin & Dashboard Template
+Author: Themesbrand
+Version: 4.1.0
+Website: https://themesbrand.com/
+Contact: support@themesbrand.com
+File: Main Css File
+*/
+
+//Fonts
+@import "../../fonts/fonts";
+
+//Core files
+@import "./node_modules/bootstrap/scss/functions";
+@import "./node_modules/bootstrap/scss/variables";
+@import "variables";
+@import "variables-custom";
+@import "variables-dark";
+@import "./node_modules/bootstrap/scss/mixins";
+
+// Structure
+@import "../../structure/topbar";
+@import "../../structure/page-head";
+@import "../../structure/footer";
+@import "../../structure/vertical";
+@import "../../structure/horizontal";
+@import "../../structure/two-column";
+@import "../../structure/layouts";
+
+// Custom Components
+@import "../../custom/components/header";
+
+// Components
+@import "../../components/waves";
+@import "../../components/avatar";
+@import "../../components/accordion";
+@import "../../components/helper";
+@import "../../components/preloader";
+@import "../../components/forms";
+@import "../../components/widgets";
+@import "../../components/demos";
+@import "../../components/print";
+@import "../../components/ribbons";
+@import "../../components/toast";
+@import "../../components/scrollspy";
+
+// Bootstrap components
+@import "../../components/root";
+@import "../../components/reboot";
+@import "../../components/alerts";
+@import "../../components/badge";
+@import "../../components/buttons";
+@import "../../components/breadcrumb";
+@import "../../components/card";
+@import "../../components/dropdown";
+@import "../../components/nav";
+@import "../../components/table";
+@import "../../components/modal";
+@import "../../components/pagination";
+@import "../../components/progress";
+@import "../../components/popover";
+@import "../../components/type";
+@import "../../components/form-check";
+@import "../../components/form-control";
+@import "../../components/list-group";
+
+// Plugins
+@import "../../plugins/custom-scrollbar";
+@import "../../plugins/prismjs";
+@import "../../plugins/sweetalert2";
+@import "../../plugins/dropzone";
+@import "../../plugins/range-slider";
+@import "../../plugins/sortablejs";
+@import "../../plugins/tour";
+@import "../../plugins/swiper";
+@import "../../plugins/multijs";
+@import "../../plugins/colorpicker";
+@import "../../plugins/filepond";
+@import "../../plugins/form-input-spin";
+@import "../../plugins/ckeditor";
+@import "../../plugins/quilljs";
+@import "../../plugins/gridjs";
+@import "../../plugins/listjs";
+@import "../../plugins/apexcharts";
+@import "../../plugins/chartjs";
+@import "../../plugins/echarts";
+@import "../../plugins/google-map";
+@import "../../plugins/autocomplete";
+@import "../../plugins/vector-maps";
+@import "../../plugins/leaflet-maps";
+@import "../../plugins/fullcalendar";
+@import "../../plugins/emoji-picker";
+@import "../../plugins/datatables";
+@import "../../plugins/select2";
+
+// Plugins
+@import "../../plugins/toastify";
+@import "../../plugins/choices";
+@import "../../plugins/flatpicker";
+@import "../../plugins/flag-input";
+
+// Pages
+@import "../../pages/authentication";
+@import "../../pages/blog";
+@import "../../pages/dashboard";
+@import "../../pages/timeline";
+@import "../../pages/gallery";
+@import "../../pages/errors";
+@import "../../pages/profile";
+@import "../../pages/sitemap";
+@import "../../pages/team";
+@import "../../pages/coming-soon";
+@import "../../pages/search-results";
+@import "../../pages/ecommerce";
+@import "../../pages/invoice";
+@import "../../pages/chat";
+@import "../../pages/email";
+@import "../../pages/kanban";
+@import "../../pages/landing";
+@import "../../pages/nft-landing";
+@import "../../pages/file-manager";
+@import "../../pages/to-do";
+@import "../../pages/jobs";
+@import "../../pages/job-landing";
+
+// Reset all list styles globally
+ul,
+ol,
+li {
+  list-style: none !important;
+  list-style-type: none !important;
+  -webkit-padding-start: 0 !important;
+  padding-inline-start: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+// Bootstrap overrides
+.nav,
+.navbar-nav,
+.nav-item,
+.dropdown-menu {
+  list-style: none !important;
+  padding-left: 0 !important;
+  margin: 0 !important;
+}
+
+
+
+// Specific navigation styles
+#two-column-menu,
+.navbar-menu,
+.twocolumn-iconview,
+.nav-sm {
+  * {
+    list-style: none !important;
+    list-style-type: none !important;
+  }
+
+  ul,
+  ol,
+  li {
+    &::marker,
+    &::before,
+    &::after {
+      content: none !important;
+      display: none !important;
+    }
+  }
+}
+
+// Force override any other styles
+[class*="nav-"] li,
+[class*="menu-"] li {
+  list-style: none !important;
+  list-style-type: none !important;
+}
+
+// Global styles to remove list markers
+#two-column-menu,
+.navbar-menu,
+.twocolumn-iconview,
+.nav,
+.nav-sm,
+.nav-item,
+[class*="nav-"],
+.menu-link,
+.menu-dropdown {
+  ul,
+  ol,
+  li {
+    list-style: none !important;
+    list-style-type: none !important;
+    -webkit-padding-start: 0 !important;
+    padding-inline-start: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    &::marker,
+    &::before,
+    &::after {
+      display: none !important;
+      content: none !important;
+    }
+  }
+}
+
+// Override any Bootstrap list styles
+.nav {
+  --bs-nav-link-padding-x: 0;
+  --bs-nav-link-padding-y: 0;
+  list-style: none !important;
+  padding-left: 0 !important;
+}
+
+.hov-mylink:hover {
+  color: black;
+}
+
+.hov-mylink {
+  display: block;
+}
+.nav-item {
+  list-style-type: none !important; // Assurez-vous que les tirets sont supprimés
+  padding-left: 0 !important; // Enlève le retrait à gauche
+  margin-left: 0 !important; // Enlève la marge à gauche
+}
+ul li:hover,
+ol li:hover {
+  list-style-type: none !important; // Assurez-vous que les tirets sont supprimés en état de survol
+}
+
+ul,
+ol {
+  text-decoration: none;
+  list-style: none !important; // Ajoutez !important pour forcer l'application du style
+  padding-left: 0 !important; // Ajoutez !important pour forcer l'application du style
+  margin-left: 0 !important; // Ajoutez !important pour forcer l'application du style
+}
+
+.box-line-code {
+  font-size: 24px;
+  border: 1px solid rgba(0, 0, 0, 0);
+  border-radius: 50%;
+  position: relative;
+  font-weight: 400;
+  line-height: 19.5px;
+  color: rgb(135, 138, 153);
+}
+
+/* Assurez-vous que le tooltip peut dépasser la barre latérale */
+[aria-describedby^="tooltip-"] {
+  z-index: 9999; /* Assurez-vous que le tooltip s'affiche au-dessus des autres éléments */
+}
+
+/* Ajustez la position du tooltip pour qu'il s'affiche correctement à droite du logo */
+#tooltip-logo {
+  transform: translateX(
+    10px
+  ); /* Ajustez cette valeur en fonction de vos besoins */
+}
+
+// .nav-icon.active, .nav-link.active 
+// {
+//   background-color: var(--vz-body-bg);
+//   color: #014a92 !important;
+// }
+
+// .nav-icon.active i,.nav-link.active i {
+//   color: #014a92 !important ; /* Couleur de l'icône active */
+
+
+// }
+ 
+
+/* Menu principal */
+.menu-item-hover:hover {
+  background-color: #e5e7eb !important;
+  color: #014a92 !important;
+}
+
+/* Sous-menu */
+.submenu-item-hover:hover {
+  background-color: #e5e7eb !important;
+  color: #014a92 !important;
+}
+
+/* Version sombre */
+[data-bs-theme="dark"] .menu-item-hover:hover {
+  background-color: #0e104d !important;
+  color: #014a92 !important;
+}
+
+[data-bs-theme="dark"] .submenu-item-hover:hover {
+  background-color: #374151 !important;
+  color: #014a92 !important;
+}
