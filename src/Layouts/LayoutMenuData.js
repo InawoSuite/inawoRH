@@ -292,140 +292,33 @@ const Navdata = () => {
         },
       ],
     },
+  
+    // Documents
     // {
-    //   id: "Compte",
-    //   label: "Compte",
-    //   icon: "ri-account-circle-line",
-    //   link: "/#",
-    //   click: handleMenuClick(    function (e) {
+    //   id: "documents",
+    //   label: "Documents",
+    //   icon: "ri-folder-open-line",
+    //   img: "param_img.svg",
+    //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+    //   click: function (e) {
     //     e.preventDefault();
-    //     // setIsCompte( !isCompte );
-    //     setIsCompte(true);
-    //     setIscurrentState("Compte");
+    //     setIsDocument(true);
+    //     setIscurrentState("Document");
     //     updateIconSidebar(e);
-    //   }),
-    //   stateVariables: isCompte,
+    //   },
+    //   stateVariables: IsDocument,
     //   subItems: [
     //     {
-    //       id: "profile",
-    //       label: "Profil",
-    //       icon: "ri-user-settings-line",
-    //       link: generatePath("/profil"),
-    //       parentId: "Compte",
+    //       id: "Piece",
+    //       label: "Picèces comptable",
+    //       icon: "ri-file-pdf-2-line",
+    //       link: generatePath("/piece"),
+    //       parentId: "Documents",
     //       modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
     //       utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
-    //       onClick: handleMobileMenuClose,
-    //     },
-    //     {
-    //       id: "company",
-    //       label: "Entreprise",
-    //       icon: "ri-bank-line",
-    //       link: generatePath("/entreprise"),
-    //       parentId: "Compte",
-    //       modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-    //       onClick: handleMobileMenuClose,
     //     },
     //   ],
     // },
-    // Compta
-    {
-      id: "Compta",
-      label: "Compta",
-      icon: "ri-calculator-line",
-      img: "param_img.svg",
-      modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-      click: function (e) {
-        e.preventDefault();
-        setIsCompta(true);
-        setIscurrentState("Compta");
-        updateIconSidebar(e);
-      },
-      stateVariables: IsCompta,
-      subItems: [
-        {
-          id: "Journaux",
-          label: "Journaux",
-          icon: "ri-file-text-line",
-          link: generatePath("/journaux"),
-          parentId: "Compta",
-          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-          utilisateur: ["Administrateur", "Collaborateur", "Comptable", "stagiaire_comptable"],
-        },
-        {
-          id: "Opérations",
-          label: "Opérations",
-          icon: "ri-flow-chart",
-          link: generatePath("/operations"),
-          parentId: "Compta",
-          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-          utilisateur: ["Administrateur", "Comptable", "stagiaire_comptable"],
-        },
-
-        {
-          id: "Immobilisations",
-          label: "Immobilisations",
-          icon: "ri-key-2-line",
-          link: generatePath("/immobilisations"),
-          parentId: "Compta",
-          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-          utilisateur: ["Administrateur", "Collaborateur", "Comptable", "stagiaire_comptable"],
-        },
-        {
-          id: "Livre",
-          label: "Grand livre",
-          icon: "ri-book-open-line",
-          link: generatePath("/livre"),
-          parentId: "Compta",
-          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-          utilisateur: ["Administrateur", "Collaborateur", "Comptable", "stagiaire_comptable"],
-        },
-        {
-          id: "Balance",
-          label: "Balance",
-          icon: "ri-scales-line",
-          link: generatePath("/balance"),
-          parentId: "Compta",
-          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-          utilisateur: ["Administrateur", "Collaborateur", "Comptable", "stagiaire_comptable"],
-        },
-        {
-          id: "etat",
-          label: "Etats financiers",
-          icon: "ri-money-euro-box-line",
-          link: generatePath("/etats"),
-          parentId: "Compta",
-          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-          utilisateur: ["Administrateur", "Collaborateur", "Comptable", "stagiaire_comptable"],
-        },
-      ],
-    },
-
-    // Documents
-    {
-      id: "documents",
-      label: "Documents",
-      icon: "ri-folder-open-line",
-      img: "param_img.svg",
-      modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-      click: function (e) {
-        e.preventDefault();
-        setIsDocument(true);
-        setIscurrentState("Document");
-        updateIconSidebar(e);
-      },
-      stateVariables: IsDocument,
-      subItems: [
-        {
-          id: "Piece",
-          label: "Picèces comptable",
-          icon: "ri-file-pdf-2-line",
-          link: generatePath("/piece"),
-          parentId: "Documents",
-          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-          utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
-        },
-      ],
-    },
   ];
   return <React.Fragment>{menuItems}</React.Fragment>;
 };
