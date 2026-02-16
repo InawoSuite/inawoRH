@@ -26,7 +26,7 @@ import P5 from "../../assets/images/profils/P5.jpg";
 
 const TwoColumnLayout = (props) => {
   const dispatch = useDispatch();
-  const navData = navdata().props.children;
+  const navData = navdata();
   const [theme, setTheme] = useState(
     document.documentElement.getAttribute("data-bs-theme") || "light"
   );
@@ -66,7 +66,7 @@ const TwoColumnLayout = (props) => {
   // Récupère le type d'utilisateur (ex: "Administrateur", "Collaborateur", "Observateur")
   const userType = users?.type_utilisateur || "Collaborateur";
 
-  const allMenus = navdata().props.children;
+  const allMenus = navdata();
 
   // FILTRE LES MENUS SELON LES AUTORISATIONS UTILISATEUR (MODULE + TYPE) - AJOUTÉ DE L'ANCIENNE VERSION
   const filteredMenu = allMenus

@@ -237,6 +237,9 @@ import JobLanding from "../pages/Job_Landing/Job";
 
 // User Profile
 import UserProfile from "../pages/Authentication/user-profile";
+import Collaborateurs from "../pages/Pages/Rh/Collaborateurs";
+import CollaborateurAdd from "../pages/Pages/Rh/CollaborateurAdd";
+
 
 import Settings from "../pages/Pages/Profile/Settings/Profile/Settings";
 import FileManager from "../pages/FileManager";
@@ -315,6 +318,22 @@ const authProtectedRoutes = [
     component: (
       <RouteWrapper>
         <ProfileEdit />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/collaborateurs",
+    component: (
+      <RouteWrapper>
+        <Collaborateurs />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/collaborateur-add",
+    component: (
+      <RouteWrapper>
+        <CollaborateurAdd />
       </RouteWrapper>
     ),
   },

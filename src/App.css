@@ -1,3 +1,20 @@
+.collaborateur-form .form-control,
+.collaborateur-form .form-select {
+  border-radius: 999px;
+}
+
+.collaborateur-modal .modal-content,
+.collaborateur-modal .modal-header,
+.collaborateur-modal .modal-body,
+.collaborateur-modal .modal-footer {
+  border-radius: 20px;
+}
+
+.collaborateur-modal .form-control,
+.collaborateur-modal .form-select,
+.collaborateur-modal textarea {
+  border-radius: 999px;
+}
 .badge {
   display: inline-block;
   padding: 0.25em 0.5em; /* Réduit la taille du badge */
