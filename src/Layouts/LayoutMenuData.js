@@ -62,6 +62,7 @@ const Navdata = () => {
   const [isStockManage, setIsStockManage] = useState(false);
   const [isOpportunities, setIsOpportunities] = useState(false);
   const [isProjectManagement, setIsProjectManagement] = useState(false);
+  const [isHumanResources, setIsHumanResources] = useState(false);
   const [IsCompta, setIsCompta] = useState(false);
   const [IsDocument, setIsDocument] = useState(false);
 
@@ -179,6 +180,9 @@ const Navdata = () => {
     if (iscurrentState !== "ProjectManagement") {
       setIsProjectManagement(false);
     }
+    if (iscurrentState !== "HumanResources") {
+      setIsHumanResources(false);
+    }
 
     if (iscurrentState !== "Compta") {
       setIsCompta(false);
@@ -292,6 +296,34 @@ const Navdata = () => {
         },
       ],
     },
+    {
+      id: "HumanResources",
+      label: "Ressources humaines",
+      icon: "ri-briefcase-4-line",
+      link: "/#",
+      img: "param_img.svg",
+      modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+      stateVariables: isHumanResources,
+      click: handleMenuClick(function (e) {
+        e.preventDefault();
+        setIsHumanResources(true);
+        setIscurrentState("HumanResources");
+        updateIconSidebar(e);
+      }),
+      subItems: [
+        {
+          id: "collaborateur",
+          icon: "ri-team-line",
+          label: "Collaborateur",
+          link: generatePath("/collaborateurs"),
+          parentId: "HumanResources",
+          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+          utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+          onClick: handleMobileMenuClose,
+        },
+      ],
+    },
+    
   
     // Documents
     // {
@@ -320,7 +352,7 @@ const Navdata = () => {
     //   ],
     // },
   ];
-  return <React.Fragment>{menuItems}</React.Fragment>;
+  return menuItems;
 };
 
 export default Navdata;

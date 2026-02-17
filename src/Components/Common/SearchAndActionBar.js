@@ -117,37 +117,10 @@ const SearchAndActionBar = ({
     return hasPermission(requiredPermission);
   };
 
-  // Afficher un indicateur de chargement
-  if (permissionsLoading) {
-    return (
-      <div className={`card ${className}`} style={style}>
-        <div className="card-body p-3">
-          <div className="row align-items-center">
-            {showSearch && (
-              <div className="col-md-4">
-                <div className="search-box">
-                  <input
-                    type="text"
-                    className="form-control search"
-                    placeholder={searchPlaceholder}
-                    style={inputStyle}
-                    disabled
-                  />
-                  <i className="ri-search-line search-icon"></i>
-                </div>
-              </div>
-            )}
-            <div className="col text-center">
-              <div className="text-muted">
-                <i className="ri-loader-4-line spin me-2"></i>
-                Chargement des permissions...
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Indicateur de chargement supprimé pour éviter le flash de chargement
+  // if (permissionsLoading) {
+  //   return (...);
+  // }
 
   return (
     <div className={`card ${className}`} style={style}>
