@@ -40,7 +40,7 @@ const Collaborateurs = () => {
       ville: "Porto-Novo",
       poste: "Responsable RH",
       departement: "Ressources humaines",
-      statut: "actif",
+      statut: "inactif",
       typecontrat: "CDD"
     },
     {
@@ -102,46 +102,60 @@ const Collaborateurs = () => {
     () => [
       {
         key: "1",
-        label: "Info personnelles",
+        label: "Tous les collaborateurs",
         icon: "ri-user-line",
-        filterType: "all",
+        filterType: "actif",
       },
-      {
+      // {
+      //   key: "2",
+      //   label: "Info contrat",
+      //   icon: "ri-file-text-line",
+      //   filterType: "all",
+      // },
+      { 
         key: "2",
-        label: "Info contrat",
-        icon: "ri-file-text-line",
-        filterType: "all",
+        label: "Actifs",
+        icon: "ri-user-follow-line",
+        filterType: "actif",
       },
+
+      // {
+      //   key: "3",
+      //   label: "Expérience",
+      //   icon: "ri-briefcase-line",
+      //   filterType: "all",
+      // },
       {
         key: "3",
-        label: "Expérience",
-        icon: "ri-briefcase-line",
-        filterType: "all",
+        label: "Inactifs",
+        icon: "ri-user-unfollow-line",
+        filterType: "inactif",
       },
-      {
-        key: "4",
-        label: "Affectation",
-        icon: "ri-building-line",
-        filterType: "all",
-      },
-      {
-        key: "5",
-        label: "Historique",
-        icon: "ri-history-line",
-        filterType: "all",
-      },
-      {
-        key: "6",
-        label: "Fiche de paie",
-        icon: "ri-money-dollar-circle-line",
-        filterType: "all",
-      },
-      {
-        key: "7",
-        label: "Présences",
-        icon: "ri-calendar-check-line",
-        filterType: "all",
-      },
+
+      // {
+      //   key: "4",
+      //   label: "Affectation",
+      //   icon: "ri-building-line",
+      //   filterType: "all",
+      // },
+      // {
+      //   key: "5",
+      //   label: "Historique",
+      //   icon: "ri-history-line",
+      //   filterType: "all",
+      // },
+      // {
+      //   key: "6",
+      //   label: "Fiche de paie",
+      //   icon: "ri-money-dollar-circle-line",
+      //   filterType: "all",
+      // },
+      // {
+      //   key: "7",
+      //   label: "Présences",
+      //   icon: "ri-calendar-check-line",
+      //   filterType: "all",
+      // },
     ],
     []
   );
@@ -208,11 +222,61 @@ const Collaborateurs = () => {
           enableColumnFilter: false,
         },
         {
-          header: "Ville",
-          accessorKey: "ville",
-          enableColumnFilter: false,
-          cell: (cell) => cell.getValue() || "Non défini",
+         header: "Poste",
+        accessorKey: "poste",
+        enableColumnFilter: false,
+        cell: (cell) => cell.getValue() || "Non défini",
         },
+           {
+        header: "Statut",
+        accessorKey: "statut",
+        enableColumnFilter: false,
+        cell: (cell) => {
+          const status = cell.getValue();
+          const badgeClass =
+            status === "actif" ? "badge bg-success" : "badge bg-secondary";
+          return <span className={badgeClass}>{status || "Inconnu"}</span>;
+        },
+      },
+      {
+        header: "Actions",
+        enableColumnFilter: false,
+        cell: (cellProps) => {
+          const collab = cellProps.row.original;
+
+          return (
+            <div className="gap-1">
+              <Link
+                to={`/:entreprise/collaborateur-details/${collab.id}`}
+                className="text-primary p-2"
+                title="Voir détails"
+              >
+                <i className="ri-eye-fill fs-16"></i>
+              </Link>
+              <Link
+                to={`/:entreprise/collaborateur-edit/${collab.id}`}
+                className="text-warning p-2"
+                title="Modifier"
+              >
+                <i className="ri-pencil-fill fs-16"></i>
+              </Link>
+              <Link
+                to="#"
+                className="text-danger p-2"
+                title="Supprimer"
+                onClick={() => {
+                  if (window.confirm("Confirmer la suppression ?")) {
+                    toast.info("Suppression non implémentée");
+                  }
+                }}
+              >
+                <i className="ri-delete-bin-5-fill fs-16"></i>
+              </Link>
+            </div>
+          );
+        },
+      },
+
       ];
     }
     if (activeTab === "2") {
