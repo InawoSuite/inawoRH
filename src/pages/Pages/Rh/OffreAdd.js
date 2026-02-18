@@ -20,6 +20,12 @@ const OffreAdd = () => {
 
     const navigate = useNavigate();
 
+    const cardStyle = {
+      borderRadius: "20px",
+      background: "#fff",
+      boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
+    };
+    document.title = "Ajouter une offre d'emploi";
     const NewJobs = () => {
     
       return (
@@ -27,24 +33,25 @@ const OffreAdd = () => {
             <Container fluid className="container-fluid">
               <Row className="row">
                 <Col className="col-lg-12">
-                  <Card className="card">
-                    <Form action="#">
-                      <CardHeader className="card-header">
-                        <h5 className="card-title mb-0">Ajouter une offre d'emploi</h5>
-                      </CardHeader>
-                      <CardBody className="card-body">
+                  <Card style={cardStyle}>
+                    <Form action="#">                      
+                      <CardBody className="p-4">
+                        <Row className="mb-3">
+                                                <Col>
+                                                  <h6 className="text-uppercase text-muted mb-3">Ajouter une offre d'emploi</h6>
+                                                </Col>
+                                              </Row>
                         <Row className="row g-4">
                           <Col className="col-lg-6">
                             <div>
                               <Label
                                 htmlFor="job-title-Input"
-                                className="form-label"
                               >
                                 Job Title <span className="text-danger">*</span>
                               </Label>
                               <Input
+                                className="rounded-4"
                                 type="text"
-                                className="form-control"
                                 id="job-title-Input"
                                 placeholder="Enter job title"
                                 required
@@ -55,13 +62,12 @@ const OffreAdd = () => {
                             <div>
                               <Label
                                 htmlFor="job-position-Input"
-                                className="form-label"
                               >
                                 Job Position <span className="text-danger">*</span>
                               </Label>
                               <Input
+                                className="rounded-4"
                                 type="text"
-                                className="form-control"
                                 id="job-position-Input"
                                 placeholder="Enter job position"
                                 required
@@ -72,16 +78,10 @@ const OffreAdd = () => {
                             <div>
                               <Label
                                 htmlFor="job-category-Input"
-                                className="form-label"
                               >
                                 Job Category <span className="text-danger">*</span>
                               </Label>
-                              <select
-                                className="form-control"
-                                data-choices
-                                name="job-category-Input"
-                                required
-                              >
+                              <Input className="rounded-4" id="job-category-Input" name="job-category-Input" type="select" required>
                                 <option value="">Select Category</option>
                                 <option value="Accounting & Finance">
                                   Accounting & Finance
@@ -107,29 +107,23 @@ const OffreAdd = () => {
                                 <option value="Government Jobs">
                                   Government Jobs
                                 </option>
-                              </select>
+                              </Input>
                             </div>
                           </Col>
                           <Col className="col-lg-6">
                             <div>
                               <Label
                                 htmlFor="job-type-Input"
-                                className="form-label"
                               >
                                 Job Type <span className="text-danger">*</span>
                               </Label>
-                              <select
-                                className="form-control"
-                                data-choices
-                                name="job-type-Input"
-                                required
-                              >
+                              <Input className="rounded-4" id="job-type-Input" name="job-type-Input" type="select" required>
                                 <option value="">Select job type</option>
                                 <option value="Full Time">Full Time</option>
                                 <option value="Part Time">Part Time</option>
                                 <option value="Freelance">Freelance</option>
                                 <option value="Intership">Intership</option>
-                              </select>
+                              </Input>
                             </div>
                           </Col>
     
@@ -137,17 +131,17 @@ const OffreAdd = () => {
                             <div>
                               <Label
                                 htmlFor="description-field"
-                                className="form-label"
                               >
                                 Description <span className="text-danger">*</span>
                               </Label>
-                              <textarea
-                                className="form-control"
-                                id="description-field"
-                                rows="3"
-                                placeholder="Enter description"
-                                required
-                              ></textarea>
+                              <Input
+                                className="rounded-4"
+                                id="description-field" 
+                                name="description-field" 
+                                type="textarea" 
+                                rows="3" 
+                                placeholder="Description"
+                                required />
                             </div>
                           </Col>
     
@@ -155,14 +149,13 @@ const OffreAdd = () => {
                             <div>
                               <Label
                                 htmlFor="vancancy-Input"
-                                className="form-label"
                               >
                                 No. of Vancancy{" "}
                                 <span className="text-danger">*</span>
                               </Label>
                               <Input
+                                className="rounded-4"
                                 type="number"
-                                className="form-control"
                                 id="vancancy-Input"
                                 placeholder="No. of vancancy"
                                 required
@@ -173,22 +166,17 @@ const OffreAdd = () => {
                             <div>
                               <Label
                                 htmlFor="experience-Input"
-                                className="form-label"
                               >
                                 Experience <span className="text-danger">*</span>
                               </Label>
-                              <select
-                                className="form-control"
-                                data-choices
-                                name="experience-Input"
-                              >
+                              <Input className="rounded-4" id="experience-Input" name="experience-Input" type="select" required>
                                 <option value="">Select Experience</option>
                                 <option value="0 Year">0 Year</option>
-                                <option value="2 Yeasr">2 Years</option>
+                                <option value="2 Years">2 Years</option>
                                 <option value="3 Years">3 Years</option>
                                 <option value="4 Years">4 Years</option>
                                 <option value="5 Years">5 Years</option>
-                              </select>
+                              </Input>
                             </div>
                           </Col>
     
@@ -196,13 +184,12 @@ const OffreAdd = () => {
                             <div>
                               <Label
                                 htmlFor="last-apply-date-Input"
-                                className="form-label"
                               >
                                 Last Date of Apply{" "}
                                 <span className="text-danger">*</span>
                               </Label>
                               <Flatpickr
-                                className="form-control"
+                                className="rounded-4"
                                 id="datepicker-publish-input"
                                 placeholder="Select a date"
                                 options={{
@@ -219,12 +206,11 @@ const OffreAdd = () => {
                             <div>
                               <Label
                                 htmlFor="close-date-Input"
-                                className="form-label"
                               >
                                 Close Date <span className="text-danger">*</span>
                               </Label>
                               <Flatpickr
-                                className="form-control"
+                                className="rounded-4"
                                 id="datepicker-publish-input"
                                 placeholder="Select a date"
                                 options={{
@@ -241,13 +227,12 @@ const OffreAdd = () => {
                             <div>
                               <Label
                                 htmlFor="start-salary-Input"
-                                className="form-label"
                               >
                                 Start Salary
                               </Label>
                               <Input
+                                className="rounded-4"
                                 type="number"
-                                className="form-control"
                                 id="start-salary-Input"
                                 placeholder="Enter start salary"
                                 required
@@ -259,13 +244,12 @@ const OffreAdd = () => {
                             <div>
                               <Label
                                 htmlFor="last-salary-Input"
-                                className="form-label"
                               >
                                 Last Salary
                               </Label>
                               <Input
+                                className="rounded-4"
                                 type="number"
-                                className="form-control"
                                 id="last-salary-Input"
                                 placeholder="Enter end salary"
                                 required
@@ -275,12 +259,12 @@ const OffreAdd = () => {
     
                           <Col className="col-md-6">
                             <div>
-                              <Label htmlFor="country-Input" className="form-label">
+                              <Label htmlFor="country-Input">
                                 Country <span className="text-danger">*</span>
                               </Label>
                               <Input
+                                className="rounded-4"
                                 type="text"
-                                className="form-control"
                                 id="country-Input"
                                 placeholder="Enter country"
                                 required
@@ -290,12 +274,12 @@ const OffreAdd = () => {
     
                           <Col className="col-md-6">
                             <div>
-                              <Label htmlFor="city-Input" className="form-label">
+                              <Label htmlFor="city-Input">
                                 State <span className="text-danger">*</span>
                               </Label>
                               <Input
+                                className="rounded-4"
                                 type="text"
-                                className="form-control"
                                 id="city-Input"
                                 placeholder="Enter city"
                                 required
@@ -305,11 +289,11 @@ const OffreAdd = () => {
     
                           <Col className="col-lg-12">
                             <div>
-                              <Label htmlFor="website-field" className="form-label">
+                              <Label htmlFor="website-field">
                                 Tags
                               </Label>
                               <Input
-                                className="form-control"
+                                className="rounded-4"
                                 id="choices-text-unique-values"
                                 data-choices
                                 data-choices-text-unique-true
@@ -329,8 +313,12 @@ const OffreAdd = () => {
                                 <i className="ri-close-line align-bottom"></i>{" "}
                                 Cancel
                               </button>
-                              <button type="submit" className="btn btn-secondary">
-                                Add Job
+                              <button
+                                style={{ borderRadius: "20px" }}
+                                type="submit" 
+                                className="btn btn-secondary"
+                              >
+                                Ajouter l'offre d'emploi
                               </button>
                             </div>
                           </Col>

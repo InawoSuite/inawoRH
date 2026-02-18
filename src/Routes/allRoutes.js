@@ -243,6 +243,7 @@ import Recrutements from "../pages/Pages/Rh/Recrutements";
 import OffreAdd from "../pages/Pages/Rh/OffreAdd";
 import DetailsOffre from "../pages/Pages/Rh/DetailsOffre";
 import DetailsCandidature from "../pages/Pages/Rh/DetailsCandidature";
+import EditProfile from "../pages/Pages/Rh/EditProfile";
 
 
 import Settings from "../pages/Pages/Profile/Settings/Profile/Settings";
@@ -693,6 +694,14 @@ const authProtectedRoutes = [
     component: (
       <RouteWrapper>
         <DetailsCandidature />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/edit-profile",
+    component: (
+      <RouteWrapper>
+        <EditProfile />
       </RouteWrapper>
     ),
   },
