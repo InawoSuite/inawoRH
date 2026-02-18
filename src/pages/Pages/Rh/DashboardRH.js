@@ -1,24 +1,16 @@
 import React, { useState } from "react";
-import { Col, Container, Row, Card, CardBody } from "reactstrap";
-import Widget from "../DashboardEcommerce/Widgets";
-import BestSellingProducts from "./BestSellingProducts";
-import RecentActivity from "./RecentActivity";
-import RecentOrders from "./RecentOrders";
-import Revenue from "./Revenue";
-import SalesByLocations from "./SalesByLocations";
-import Section from "../DashboardEcommerce/Section";
-import StatsDashboard from "../DashboardEcommerce/StatsDashboard";
-import StoreVisits from "./StoreVisits";
-import TopSellers from "./TopSellers";
+import { Col, Container, Row } from "reactstrap";
+import Section from "../../DashboardEcommerce/Section";
+import StatsDashboard from "../../DashboardEcommerce/StatsDashboard";
+import ApplicationsStatistic from "../../DashboardJob/ApplicationsStatistic";
+import Candidates from "../../DashboardJob/Candidates";
+import Widgets from "../../DashboardJob/Widgets";
+import FeaturedCompanies from "../../DashboardJob/FeaturedCompanies";
+import AgendaTable from "./AgendaTable";
+import StoreVisitsCharts from "./StoreVisitsCharts";
 
-import ApplicationsStatistic from "../DashboardJob/ApplicationsStatistic";
-import Candidates from "../DashboardJob/Candidates";
-import Statistics from "./Statistics";
-import Popular from "./Popular";
-import Hello from "./Config/Hello";
-import NotAvailablePage from "../../Components/Common/NotAvailablePage";
 
-const DashboardEcommerce = () => {
+const DashboardRH = () => {
   document.title = "Dashboard | INAWO - Suite de Gestion";
 
   const [rightColumn, setRightColumn] = useState(true);
@@ -56,11 +48,16 @@ const DashboardEcommerce = () => {
           <Row>
             <Col>
               <div className="h-100">
-                <Section rightClickBtn={toggleRightColumn} />
+                {/* <Section rightClickBtn={toggleRightColumn} /> */}
                 <Row>
-                  <Col xl={12}>
+                  {/* <Col xl={12}>
                     <StatsDashboard />
-                  </Col>
+                  </Col> */}
+
+                   <Row>
+            <Widgets />
+            <FeaturedCompanies />
+          </Row>
                 </Row>
                 {/* <Card style={{ borderRadius: "20px" }}>
                   <CardBody>
@@ -68,17 +65,24 @@ const DashboardEcommerce = () => {
                   </CardBody>
                 </Card> */}
                 <Row>
-                  <ApplicationsStatistic dataColors='["--vz-success", "--vz-info", "--vz-primary"]' />
-                  <Candidates />
+                  <ApplicationsStatistic xxl={12} dataColors='["--vz-success", "--vz-info", "--vz-primary"]' />
+                  {/* <Candidates /> */}
                 </Row>
+                <Row>
+                  <AgendaTable />
+                  <StoreVisitsCharts dataColors='["--vz-success", "--vz-info", "--vz-primary", "--vz-warning", "--vz-danger"]' />
+                </Row>
+
               </div>
             </Col>
+            
             {/* <RecentActivity rightColumn={rightColumn} hideRightColumn={toggleRightColumn} /> */}
           </Row>
+           
         </Container>
       </div>
     </React.Fragment>
   );
 };
 
-export default DashboardEcommerce;
+export default DashboardRH;

@@ -239,6 +239,8 @@ import JobLanding from "../pages/Job_Landing/Job";
 import UserProfile from "../pages/Authentication/user-profile";
 import Collaborateurs from "../pages/Pages/Rh/Collaborateurs";
 import CollaborateurAdd from "../pages/Pages/Rh/CollaborateurAdd";
+import DetailsCollaborateur from "../pages/Pages/Rh/DetailsCollaborateur";
+import DashboardRH from "../pages/Pages/Rh/DashboardRH";
 
 
 import Settings from "../pages/Pages/Profile/Settings/Profile/Settings";
@@ -301,7 +303,7 @@ const authProtectedRoutes = [
     ),
   },
   {
-    path: "/dashboard-recrue",
+    path: "/:entreprise/dashboard-recrue",
     component: (
       <RouteWrapper>
         <DashboardRecrue />
@@ -329,11 +331,28 @@ const authProtectedRoutes = [
       </RouteWrapper>
     ),
   },
+  
   {
     path: "/:entreprise/collaborateur-add",
     component: (
       <RouteWrapper>
         <CollaborateurAdd />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/collaborateur-details",
+    component: (
+      <RouteWrapper>
+        <DetailsCollaborateur />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/dashboard-rh",
+    component: (
+      <RouteWrapper>
+        <DashboardRH />
       </RouteWrapper>
     ),
   },

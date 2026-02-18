@@ -312,6 +312,16 @@ const Navdata = () => {
       }),
       subItems: [
         {
+          id: "dashboard-rh",
+          icon: "ri-dashboard-line",
+          label: "Dashboard RH",
+          link: generatePath("/dashboard-rh"),
+          parentId: "HumanResources",
+          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+          utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+          onClick: handleMobileMenuClose,
+        },
+        {
           id: "collaborateur",
           icon: "ri-team-line",
           label: "Collaborateur",

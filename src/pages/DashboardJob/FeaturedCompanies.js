@@ -9,10 +9,10 @@ const FeaturedCompanies = () => {
       <Col xl={6}>
         <Card className="card-height-100">
           <CardHeader className="align-items-center d-flex">
-            <h4 className="card-title mb-0 flex-grow-1">Featured Companies</h4>
+            <h4 className="card-title mb-0 flex-grow-1">Liste des employés/Collaborateurs</h4>
             <div className="flex-shrink-0">
               <Link to="#" className="btn btn-soft-primary btn-sm">
-                View All Companies{" "}
+                Voir tous{" "}
                 <i className="ri-arrow-right-line align-bottom"></i>
               </Link>
             </div>
@@ -64,7 +64,7 @@ const FeaturedCompanies = () => {
                       </td>
                       <td>
                         <Link to="#" className="btn btn-link btn-sm">
-                          View More{" "}
+                          Voir plus{" "}
                           <i className="ri-arrow-right-line align-bottom"></i>
                         </Link>
                       </td>

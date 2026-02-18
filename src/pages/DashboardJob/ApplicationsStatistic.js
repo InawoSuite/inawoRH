@@ -4,7 +4,7 @@ import ReactApexChart from "react-apexcharts";
 import CountUp from "react-countup";
 import getChartColorsArray from "../../Components/Common/ChartsDynamicColor";
 
-const ApplicationsStatistic = ({ dataColors }) => {
+const ApplicationsStatistic = ({ dataColors, xxl = 8 }) => {
   var applicationsStatisticColors = getChartColorsArray(dataColors);
   const series = [
     {
@@ -85,7 +85,7 @@ const ApplicationsStatistic = ({ dataColors }) => {
 
   return (
     <React.Fragment>
-      <Col xxl={8}>
+      <Col xxl={xxl}>
         <Card className="card-height-100">
           <CardHeader className="border-0 align-items-center d-flex">
             <h4 className="card-title mb-0 flex-grow-1">

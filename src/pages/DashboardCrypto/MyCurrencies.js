@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { Card, CardHeader, Col, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap';
 import { currencies } from '../../common/data';
 
-const MyCurrencies = () => {
+const MyCurrencies = ({ xxl = 8, xl = 8 }) => {
     return (
         <React.Fragment>
-            <Col xl={8}>
+            <Col xxl={xxl} xl={xl}>
                 <Card>
                     <CardHeader className="align-items-center d-flex">
                         <h4 className="card-title mb-0 flex-grow-1">My Currencies</h4>
