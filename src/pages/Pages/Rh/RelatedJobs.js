@@ -33,7 +33,7 @@ const RelatedJobs = () => {
                   <i className="mdi mdi-cards-heart fs-16"></i>
                 </button>
                 <div className="avatar-sm mb-4">
-                  <div className={`avatar-title bg-${item.color}-subtle rounded`}>
+                  <div className={`avatar-title bg-${item.color}-subtle rounded-4 border-0`}>
                     <img src={item.companyLogo} alt="" className="avatar-xxs" />
                   </div>
                 </div>

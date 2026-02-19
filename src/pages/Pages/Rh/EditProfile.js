@@ -1,20 +1,60 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardBody, CardHeader, Col, Container, Form, Input, Label, Nav, NavItem, NavLink, Row, TabContent, TabPane } from 'reactstrap';
 import classnames from "classnames";
 import Flatpickr from "react-flatpickr";
-
+import { CustomSelect } from "../../../Components/Common/CustomSelectStyles";
 
 import progileBg from "../../../assets/images/profile-bg.jpg";
 import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 const EditProfile = () => {
     const [activeTab, setActiveTab] = useState("1");
 
+    const [selectedYears, setSelectedYears] = useState(null);
+    const yearsOptions = useMemo(
+        () => [
+            { value: "2001", label: "2001" },
+            { value: "2002", label: "2002" },
+            { value: "2003", label: "2003" },
+            { value: "2004", label: "2004" },
+            { value: "2005", label: "2005" },
+            { value: "2006", label: "2006" },
+            { value: "2007", label: "2007" },
+            { value: "2008", label: "2008" },
+            { value: "2009", label: "2009" },
+            { value: "2010", label: "2010" },
+            { value: "2011", label: "2011" },
+            { value: "2012", label: "2012" },
+            { value: "2013", label: "2013" },
+            { value: "2014", label: "2014" },
+            { value: "2015", label: "2015" },
+            { value: "2016", label: "2016" },
+            { value: "2017", label: "2017" },
+            { value: "2018", label: "2018" },
+            { value: "2019", label: "2019" },
+            { value: "2020", label: "2020" },
+            { value: "2021", label: "2021" },
+            { value: "2022", label: "2022" },
+        ],
+        []
+    );
+    const [selectedSkills, setSelectedSkills] = useState(null);
+    const skillsOptions = useMemo(
+        () => [
+            { value: "CSS", label: "CSS" },
+            { value: "HTML", label: "HTML" },
+            { value: "PYTHON", label: "PYTHON" },
+            { value: "JAVA", label: "JAVA" },
+            { value: "ASP.NET", label: "ASP.NET" },
+        ],
+        []
+    );
+
     const tabChange = (tab) => {
         if (activeTab !== tab) setActiveTab(tab);
     };
 
-    document.title = "Profile Settings | Velzon - React Admin & Dashboard Template";
+    document.title = "Edite Profile";
 
     return (
         <React.Fragment>
@@ -25,7 +65,7 @@ const EditProfile = () => {
                             <img src={progileBg} className="profile-wid-img" alt="" />
                             <div className="overlay-content">
                                 <div className="text-end p-3">
-                                    <div className="p-0 ms-auto rounded-circle profile-photo-edit">
+                                    <div className="p-0 ms-auto profile-photo-edit">
                                         <Input id="profile-foreground-img-file-input" type="file"
                                             className="profile-foreground-img-file-input" />
                                         <Label htmlFor="profile-foreground-img-file-input"
@@ -70,7 +110,7 @@ const EditProfile = () => {
                                             <h5 className="card-title mb-0">Complete Your Profile</h5>
                                         </div>
                                         <div className="flex-shrink-0">
-                                            <Link to="#" className="badge bg-light text-primary fs-12"><i
+                                            <Link to="#" className="badge bg-light rounded-4 text-primary fs-12"><i
                                                 className="ri-edit-box-line align-bottom me-1"></i> Edit</Link>
                                         </div>
                                     </div>
@@ -89,7 +129,7 @@ const EditProfile = () => {
                                             <h5 className="card-title mb-0">Portfolio</h5>
                                         </div>
                                         <div className="flex-shrink-0">
-                                            <Link to="#" className="badge bg-light text-primary fs-12"><i
+                                            <Link to="#" className="badge bg-light rounded-4 text-primary fs-12"><i
                                                 className="ri-add-fill align-bottom me-1"></i> Add</Link>
                                         </div>
                                     </div>
@@ -135,7 +175,7 @@ const EditProfile = () => {
 
                         <Col xxl={9}>
                             <Card className="mt-xxl-n5 rounded-4 border-0 shadow-sm">
-                                <CardHeader className="rounded-4">
+                                <CardHeader className="rounded-top-4">
                                     <Nav className="nav-tabs-custom rounded card-header-tabs border-bottom-0"
                                         role="tablist">
                                         <NavItem>
@@ -238,14 +278,13 @@ const EditProfile = () => {
                                                     <Col lg={12}>
                                                         <div className="mb-3">
                                                             <Label htmlFor="skillsInput" className="form-label">Skills</Label>
-                                                            <Input id="skillsInput" name="skillsInput" type="select" className="rounded-4" required>
-                                                                <option >Select your Skill </option>
-                                                                <option value="Choices1">CSS</option>
-                                                                <option value="Choices2">HTML</option>
-                                                                <option value="Choices3">PYTHON</option>
-                                                                <option value="Choices4">JAVA</option>
-                                                                <option value="Choices5">ASP.NET</option>
-                                                            </Input>
+                                                            <CustomSelect
+                                                                inputId="skillsInput"
+                                                                value={selectedSkills}
+                                                                onChange={(option) => setSelectedSkills(option)}
+                                                                options={skillsOptions}
+                                                                placeholder="Select your skill"
+                                                            />
                                                         </div>
                                                     </Col>
                                                     <Col lg={6}>
@@ -371,7 +410,7 @@ const EditProfile = () => {
                                             </div>
                                             <div className="d-flex align-items-center mb-3">
                                                 <div className="flex-shrink-0 avatar-sm">
-                                                    <div className="avatar-title bg-light text-primary rounded-3 fs-18">
+                                                    <div className="avatar-title bg-light text-primary rounded-4 fs-18">
                                                         <i className="ri-smartphone-line"></i>
                                                     </div>
                                                 </div>
@@ -386,7 +425,7 @@ const EditProfile = () => {
                                             </div>
                                             <div className="d-flex align-items-center mb-3">
                                                 <div className="flex-shrink-0 avatar-sm">
-                                                    <div className="avatar-title bg-light text-primary rounded-3 fs-18">
+                                                    <div className="avatar-title bg-light text-primary rounded-4 fs-18">
                                                         <i className="ri-tablet-line"></i>
                                                     </div>
                                                 </div>
@@ -401,7 +440,7 @@ const EditProfile = () => {
                                             </div>
                                             <div className="d-flex align-items-center mb-3">
                                                 <div className="flex-shrink-0 avatar-sm">
-                                                    <div className="avatar-title bg-light text-primary rounded-3 fs-18">
+                                                    <div className="avatar-title bg-light text-primary rounded-4 fs-18">
                                                         <i className="ri-smartphone-line"></i>
                                                     </div>
                                                 </div>
@@ -416,7 +455,7 @@ const EditProfile = () => {
                                             </div>
                                             <div className="d-flex align-items-center">
                                                 <div className="flex-shrink-0 avatar-sm">
-                                                    <div className="avatar-title bg-light text-primary rounded-3 fs-18">
+                                                    <div className="avatar-title bg-light text-primary rounded-4 fs-18">
                                                         <i className="ri-macbook-line"></i>
                                                     </div>
                                                 </div>
@@ -462,31 +501,13 @@ const EditProfile = () => {
                                                                         className="form-label">Experience Years</label>
                                                                     <Row>
                                                                         <Col lg={5}>
-                                                                            <Input id="experienceYear-1" name="experienceYear-1" type="select" className="rounded-4" required>
-                                                                                <option defaultValue="">Select years</option>
-                                                                                <option value="Choice 1">2001</option>
-                                                                                <option value="Choice 2">2002</option>
-                                                                                <option value="Choice 3">2003</option>
-                                                                                <option value="Choice 4">2004</option>
-                                                                                <option value="Choice 5">2005</option>
-                                                                                <option value="Choice 6">2006</option>
-                                                                                <option value="Choice 7">2007</option>
-                                                                                <option value="Choice 8">2008</option>
-                                                                                <option value="Choice 9">2009</option>
-                                                                                <option value="Choice 10">2010</option>
-                                                                                <option value="Choice 11">2011</option>
-                                                                                <option value="Choice 12">2012</option>
-                                                                                <option value="Choice 13">2013</option>
-                                                                                <option value="Choice 14">2014</option>
-                                                                                <option value="Choice 15">2015</option>
-                                                                                <option value="Choice 16">2016</option>
-                                                                                <option value="Choice 17" >2017</option>
-                                                                                <option value="Choice 18">2018</option>
-                                                                                <option value="Choice 19">2019</option>
-                                                                                <option value="Choice 20">2020</option>
-                                                                                <option value="Choice 21">2021</option>
-                                                                                <option value="Choice 22">2022</option>
-                                                                            </Input>
+                                                                            <CustomSelect
+                                                                                inputId="experienceYear-1"
+                                                                                value={selectedYears}
+                                                                                onChange={(option) => setSelectedYears(option)}
+                                                                                options={yearsOptions}
+                                                                                placeholder="Select years"
+                                                                            />
                                                                         </Col>
 
                                                                         <div className="col-auto align-self-center">
@@ -494,31 +515,13 @@ const EditProfile = () => {
                                                                         </div>
 
                                                                         <Col lg={5}>
-                                                                            <Input id="experienceYear-2" name="experienceYear-2" type="select" className="rounded-4" required>
-                                                                                <option defaultValue="">Select years</option>
-                                                                                <option value="Choice 1">2001</option>
-                                                                                <option value="Choice 2">2002</option>
-                                                                                <option value="Choice 3">2003</option>
-                                                                                <option value="Choice 4">2004</option>
-                                                                                <option value="Choice 5">2005</option>
-                                                                                <option value="Choice 6">2006</option>
-                                                                                <option value="Choice 7">2007</option>
-                                                                                <option value="Choice 8">2008</option>
-                                                                                <option value="Choice 9">2009</option>
-                                                                                <option value="Choice 10">2010</option>
-                                                                                <option value="Choice 11">2011</option>
-                                                                                <option value="Choice 12">2012</option>
-                                                                                <option value="Choice 13">2013</option>
-                                                                                <option value="Choice 14">2014</option>
-                                                                                <option value="Choice 15">2015</option>
-                                                                                <option value="Choice 16">2016</option>
-                                                                                <option value="Choice 17">2017</option>
-                                                                                <option value="Choice 18">2018</option>
-                                                                                <option value="Choice 19">2019</option>
-                                                                                <option value="Choice 20">2020</option>
-                                                                                <option value="Choice 21">2021</option>
-                                                                                <option value="Choice 22">2022</option>
-                                                                            </Input>
+                                                                            <CustomSelect
+                                                                                inputId="experienceYear-2"
+                                                                                value={selectedYears}
+                                                                                onChange={(option) => setSelectedYears(option)}
+                                                                                options={yearsOptions}
+                                                                                placeholder="Select years"
+                                                                            />
                                                                         </Col>
                                                                     </Row>
                                                                 </div>

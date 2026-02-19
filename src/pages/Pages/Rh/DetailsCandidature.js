@@ -159,7 +159,7 @@ const OptionDropdown = () => {
     
     return (
         <Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)} direction="start">
-            <DropdownToggle tag="button" className="btn btn-soft-secondary btn-sm">
+            <DropdownToggle tag="button" className="btn btn-soft-secondary rounded-4 btn-sm">
                 <i className="ri-more-fill"></i>
             </DropdownToggle>
             <DropdownMenu>
@@ -267,7 +267,7 @@ const SkillsCard = ({ skills }) => {
                 </div>
                 <div className="d-flex flex-wrap gap-2">
                     {skills.map((skill, index) => (
-                        <a href="#!" key={index} className="btn btn-soft-secondary btn-sm" onClick={(e) => e.preventDefault()}>
+                        <a href="#!" key={index} className="btn btn-soft-secondary rounded-4 btn-sm" onClick={(e) => e.preventDefault()}>
                             {skill}
                         </a>
                     ))}
@@ -297,7 +297,7 @@ const SuggestionsCard = ({ suggestions }) => {
                                 <h6 className="mb-0">{suggestion.name}</h6>
                                 <p className="text-muted mb-0 small">{suggestion.role} • {suggestion.mutual} mutual</p>
                             </div>
-                            <Button color="soft-primary" size="sm">
+                            <Button className="rounded-4" color="soft-primary" size="sm">
                                 <i className="ri-add-line"></i>
                             </Button>
                         </div>
@@ -366,7 +366,7 @@ const PopularPostsCard = ({ posts }) => {
 const AboutSection = ({ user }) => {
     return (
         <Card className="rounded-4 border-0 shadow-sm">
-            <CardHeader className="rounded-4">
+            <CardHeader className="rounded-top-4">
                 <h5 className="card-title mb-0">About</h5>
             </CardHeader>
             <CardBody>
@@ -426,11 +426,12 @@ const RecentActivityCard = ({ activities }) => {
     
     return (
         <Card className="rounded-4 border-0 shadow-sm">
-            <CardHeader className="d-flex align-items-center rounded-4">
+            <CardHeader className="d-flex align-items-center rounded-top-4">
                 <h5 className="card-title mb-0 flex-grow-1">Recent Activity</h5>
                 <div className="flex-shrink-0">
                     <div className="btn-group" role="group">
-                        <Button 
+                        <Button
+                            
                             color="soft-primary" 
                             size="sm"
                             className={filter === "daily" ? "active" : ""}
@@ -446,7 +447,8 @@ const RecentActivityCard = ({ activities }) => {
                         >
                             Weekly
                         </Button>
-                        <Button 
+                        <Button
+                            
                             color="soft-primary" 
                             size="sm"
                             className={filter === "monthly" ? "active" : ""}
@@ -502,7 +504,7 @@ const ProjectsOverviewCard = ({ projects }) => {
     
     return (
         <Card className="rounded-4 border-0 shadow-sm">
-            <CardHeader className="d-flex rounded-4 align-items-center">
+            <CardHeader className="d-flex rounded-top-4 align-items-center">
                 <h5 className="card-title mb-0 flex-grow-1">Projects</h5>
                 <div className="flex-shrink-0">
                     <div className="btn-group" role="group">
@@ -564,7 +566,7 @@ const ProjectsOverviewCard = ({ projects }) => {
 const ActivitiesTab = ({ activities }) => {
     return (
         <Card className="rounded-4 border-0 shadow-sm">
-            <CardHeader className="rounded-4">
+            <CardHeader className="rounded-top-4">
                 <h5 className="card-title mb-0">Activities</h5>
             </CardHeader>
             <CardBody>
@@ -598,7 +600,7 @@ const ProjectsTab = ({ projects }) => {
             <div className="d-flex align-items-center mb-4">
                 <h5 className="card-title mb-0 flex-grow-1">Projects (12)</h5>
                 <div className="flex-shrink-0">
-                    <Button color="soft-primary" size="sm">
+                    <Button className="rounded-4" color="soft-primary" size="sm">
                         <i className="ri-filter-3-line me-1"></i>Filter
                     </Button>
                 </div>
@@ -606,7 +608,7 @@ const ProjectsTab = ({ projects }) => {
             <Row>
                 {projects.map(project => (
                     <Col xxl={3} md={6} key={project.id}>
-                        <Card className="shadow-none border">
+                        <Card className="shadow-none rounded-4 border">
                             <CardBody>
                                 <div className="d-flex mb-3">
                                     <div className="flex-grow-1">
@@ -655,7 +657,7 @@ const DocumentsTab = ({ documents }) => {
     
     return (
         <Card className="rounded-4 border-0 shadow-sm">
-            <CardHeader className="rounded-4">
+            <CardHeader className="rounded-top-4">
                 <h5 className="card-title mb-0">Documents</h5>
             </CardHeader>
             <CardBody>
@@ -683,7 +685,7 @@ const DocumentsTab = ({ documents }) => {
                                 <td>{doc.date}</td>
                                 <td>
                                     <UncontrolledDropdown>
-                                        <DropdownToggle tag="button" className="btn btn-soft-secondary btn-sm">
+                                        <DropdownToggle tag="button" className="btn btn-soft-secondary rounded-4 btn-sm">
                                             <i className="ri-more-2-fill"></i>
                                         </DropdownToggle>
                                         <DropdownMenu>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Card,
   CardBody,
@@ -11,6 +11,7 @@ import {
   Row,
 } from "reactstrap";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
+import { CustomSelect } from "../../../Components/Common/CustomSelectStyles";
 import Flatpickr from "react-flatpickr";
 
 import { Link, useNavigate } from "react-router-dom";
@@ -19,6 +20,43 @@ import { Link, useNavigate } from "react-router-dom";
 const OffreAdd = () => {
 
     const navigate = useNavigate();
+    const [selectedJobCategory, setSelectedJobCategory] = useState(null);
+    const jobCategoryOptions = useMemo(
+      () => [
+        { value: "Accounting & Finance", label: "Accounting & Finance" },
+        { value: "Purchasing Manager", label: "Purchasing Manager" },
+        { value: "Education & training", label: "Education & training" },
+        { value: "Marketing & Advertising", label: "Marketing & Advertising" },
+        { value: "It / Software Jobs", label: "It / Software Jobs" },
+        { value: "Digital Marketing", label: "Digital Marketing" },
+        { value: "Administrative Officer", label: "Administrative Officer" },
+        { value: "Government Jobs", label: "Government Jobs" },
+      ],
+      []
+    );
+
+    const [selectedJobType, setSelectedJobType] = useState(null);
+    const jobTypeOptions = useMemo(
+      () => [
+        { value: "Full Time", label: "Full Time" },
+        { value: "Part Time", label: "Part Time" },
+        { value: "Freelance", label: "Freelance" },
+        { value: "Intership", label: "Intership" },
+      ],
+      []
+    );
+
+    const [selectedExperience, setSelectedExperience] = useState(null);
+    const experienceOptions = useMemo(
+      () => [
+        { value: "0 Year", label: "0 Year" },
+        { value: "2 Years", label: "2 Years" },
+        { value: "3 Years", label: "3 Years" },
+        { value: "4 Years", label: "4 Years" },
+        { value: "5 Years", label: "5 Years" },
+      ],
+      []
+    );
 
     const cardStyle = {
       borderRadius: "20px",
@@ -81,33 +119,13 @@ const OffreAdd = () => {
                               >
                                 Job Category <span className="text-danger">*</span>
                               </Label>
-                              <Input className="rounded-4" id="job-category-Input" name="job-category-Input" type="select" required>
-                                <option value="">Select Category</option>
-                                <option value="Accounting & Finance">
-                                  Accounting & Finance
-                                </option>
-                                <option value="Purchasing Manager">
-                                  Purchasing Manager
-                                </option>
-                                <option value="Education & training">
-                                  Education & training
-                                </option>
-                                <option value="Marketing & Advertising">
-                                  Marketing & Advertising
-                                </option>
-                                <option value="It / Software Jobs">
-                                  It / Software Jobs
-                                </option>
-                                <option value="Digital Marketing">
-                                  Digital Marketing
-                                </option>
-                                <option value="Administrative Officer">
-                                  Administrative Officer
-                                </option>
-                                <option value="Government Jobs">
-                                  Government Jobs
-                                </option>
-                              </Input>
+                              <CustomSelect
+                                inputId="job-category-Input"
+                                value={selectedJobCategory}
+                                onChange={(option) => setSelectedJobCategory(option)}
+                                options={jobCategoryOptions}
+                                placeholder="Select Category"
+                              />
                             </div>
                           </Col>
                           <Col className="col-lg-6">
@@ -117,13 +135,13 @@ const OffreAdd = () => {
                               >
                                 Job Type <span className="text-danger">*</span>
                               </Label>
-                              <Input className="rounded-4" id="job-type-Input" name="job-type-Input" type="select" required>
-                                <option value="">Select job type</option>
-                                <option value="Full Time">Full Time</option>
-                                <option value="Part Time">Part Time</option>
-                                <option value="Freelance">Freelance</option>
-                                <option value="Intership">Intership</option>
-                              </Input>
+                              <CustomSelect
+                                inputId="job-type-Input"
+                                value={selectedJobType}
+                                onChange={(option) => setSelectedJobType(option)}
+                                options={jobTypeOptions}
+                                placeholder="Select job type"
+                              />
                             </div>
                           </Col>
     
@@ -169,14 +187,13 @@ const OffreAdd = () => {
                               >
                                 Experience <span className="text-danger">*</span>
                               </Label>
-                              <Input className="rounded-4" id="experience-Input" name="experience-Input" type="select" required>
-                                <option value="">Select Experience</option>
-                                <option value="0 Year">0 Year</option>
-                                <option value="2 Years">2 Years</option>
-                                <option value="3 Years">3 Years</option>
-                                <option value="4 Years">4 Years</option>
-                                <option value="5 Years">5 Years</option>
-                              </Input>
+                              <CustomSelect
+                                inputId="experience-Input"
+                                value={selectedExperience}
+                                onChange={(option) => setSelectedExperience(option)}
+                                options={experienceOptions}
+                                placeholder="Select Experience"
+                              />
                             </div>
                           </Col>
     
@@ -294,11 +311,11 @@ const OffreAdd = () => {
                               </Label>
                               <Input
                                 className="rounded-4"
-                                id="choices-text-unique-values"
+                                id="website-field"
                                 data-choices
                                 data-choices-text-unique-true
                                 type="text"
-                                defaultValue="Design, Remote"
+                                placeholder="Enter tags"
                                 required
                               />
                             </div>
