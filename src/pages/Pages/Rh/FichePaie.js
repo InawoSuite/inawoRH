@@ -343,7 +343,7 @@ const FichePaie = () => {
               },
             ]}
             // onExportClick={() => setIsExportCSV(true)}
-            addButtonLink={generatePath("/fiche-paie-add")}
+            addButtonLink={generatePath("/:entreprise/fiche-add")}
             addButtonText="Nouvelle fiche de paie"
             addButtonIcon="ri-file-add-line"
             // showExportButton={true}
@@ -383,7 +383,7 @@ const FichePaie = () => {
                 description="Commencez par ajouter une fiche de paie ."
                 actionButton={
                   <Link
-                    to="/:entreprise/fiche-paie-add"
+                    to={generatePath("/:entreprise/fiche-add")}
                     className="btn btn-success add-btn"
                     style={{ borderRadius: "20px" }}
                   >

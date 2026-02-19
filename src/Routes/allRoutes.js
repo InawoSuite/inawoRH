@@ -243,6 +243,7 @@ import DetailsCollaborateur from "../pages/Pages/Rh/DetailsCollaborateur";
 import DashboardRH from "../pages/Pages/Rh/DashboardRH";
 import FichePaie from "../pages/Pages/Rh/FichePaie";
 import FicheDetail from "../pages/Pages/Rh/FicheDetail";
+import FicheAdd from "../pages/Pages/Rh/FicheAdd";
 
 import Settings from "../pages/Pages/Profile/Settings/Profile/Settings";
 import FileManager from "../pages/FileManager";
@@ -370,6 +371,14 @@ const authProtectedRoutes = [
       component: (
         <RouteWrapper>
           <FicheDetail />
+        </RouteWrapper>
+      ),
+    },
+    {
+      path: "/:entreprise/fiche-add",
+      component: (
+        <RouteWrapper>
+          <FicheAdd />
         </RouteWrapper>
       ),
     },
