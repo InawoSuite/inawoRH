@@ -219,22 +219,22 @@ const Recrutements = () => {
                         <Card className="card-height-100 rounded-4 border-0 shadow-sm">
                         <CardBody>
                             <button
-                            type="button"
-                            className="btn btn-icon btn-soft-primary rounded-4 border-0 float-end"
-                            data-bs-toggle="button"
-                            aria-pressed="true"
-                            onClick={(e) => favouriteBtn(e.target)}
+                                type="button"
+                                className="btn btn-icon btn-soft-primary rounded-4 border-0 float-end"
+                                data-bs-toggle="button"
+                                aria-pressed="true"
+                                onClick={(e) => favouriteBtn(e.target)}
                             >
-                            <i className="mdi mdi-cards-heart fs-16"></i>
+                                <i className="mdi mdi-cards-heart fs-16"></i>
                             </button>
                             <div className="avatar-sm mb-4">
-                            <div className="avatar-title bg-light rounded">
-                                <img
-                                src={item.companyLogo}
-                                alt=""
-                                className="avatar-xxs"
-                                />
-                            </div>
+                                <div className="avatar-title bg-light rounded-4 border-0">
+                                    <img
+                                    src={item.companyLogo}
+                                    alt=""
+                                    className="avatar-xxs"
+                                    />
+                                </div>
                             </div>
                             <Link to="#">
                             <h5>{item.jobTitle}</h5>

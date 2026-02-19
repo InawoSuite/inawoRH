@@ -9,7 +9,7 @@ const RightSection = () => {
   return (
     <React.Fragment>
       <Card className="card rounded-4 border-0 shadow-sm">
-        <CardHeader className="card-header rounded-4">
+        <CardHeader className="card-header rounded-top-4">
           <h5 className="mb-0">Job Overview</h5>
         </CardHeader>
         <CardBody className="card-body">
@@ -151,7 +151,7 @@ const RightSection = () => {
       </Card>
 
       <Card className="card rounded-4 border-0 shadow-sm">
-        <CardHeader className="card-header rounded-4">
+        <CardHeader className="card-header rounded-top-4">
           <h5 className="mb-0">Job Location</h5>
         </CardHeader>
         <CardBody className="card-body rounded-4">
@@ -170,7 +170,7 @@ const RightSection = () => {
       </Card>
 
       <Card className="card rounded-4 border-0 shadow-sm">
-        <CardHeader className="card-header rounded-4">
+        <CardHeader className="card-header rounded-top-4">
           <h5 className="mb-0">Contact Us</h5>
         </CardHeader>
         <CardBody className="card-body">
