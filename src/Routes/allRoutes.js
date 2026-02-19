@@ -246,7 +246,8 @@ import DetailsCandidature from "../pages/Pages/Rh/DetailsCandidature";
 import EditProfile from "../pages/Pages/Rh/EditProfile";
 import DetailsCollaborateur from "../pages/Pages/Rh/DetailsCollaborateur";
 import DashboardRH from "../pages/Pages/Rh/DashboardRH";
-
+import FichePaie from "../pages/Pages/Rh/FichePaie";
+import FicheDetail from "../pages/Pages/Rh/FicheDetail";
 
 import Settings from "../pages/Pages/Profile/Settings/Profile/Settings";
 import FileManager from "../pages/FileManager";
@@ -361,6 +362,22 @@ const authProtectedRoutes = [
       </RouteWrapper>
     ),
   },
+    {
+      path: "/:entreprise/fiche-paie",
+      component: (
+        <RouteWrapper>
+          <FichePaie />
+        </RouteWrapper>
+      ),
+    },
+    {
+      path: "/:entreprise/fiche-details",
+      component: (
+        <RouteWrapper>
+          <FicheDetail />
+        </RouteWrapper>
+      ),
+    },
 
   { path: "/apps-calendar", component: <Calendar /> },
   { path: "/apps-calendar-month-grid", component: <MonthGrid /> },

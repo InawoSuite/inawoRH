@@ -7,8 +7,8 @@ const FeaturedCompanies = () => {
   return (
     <React.Fragment>
       <Col xl={6}>
-        <Card className="card-height-100">
-          <CardHeader className="align-items-center d-flex">
+        <Card className="card-height-100" style={{ borderRadius: "20px", overflow: "hidden" }}>
+          <CardHeader className="align-items-center d-flex"  >
             <h4 className="card-title mb-0 flex-grow-1">Liste des employés/Collaborateurs</h4>
             <div className="flex-shrink-0">
               <Link to="#" className="btn btn-soft-primary btn-sm">
@@ -20,12 +20,12 @@ const FeaturedCompanies = () => {
 
           <CardBody>
             <div className="table-responsive table-card">
-              <Table className="table table-centered table-hover align-middle table-nowrap mb-0">
+              <Table className="table table-centered table-hover align-middle table-nowrap mb-0" >
                 <tbody>
                   {featuredCompany.map((company, key) => (
                     <tr key={key}>
                       <td>
-                        <div className="d-flex align-items-center">
+                        <div className="d-flex align-items-center" >
                           <div className="avatar-xs me-2 flex-shrink-0">
                             <div className={"avatar-title bg-" + company.bgColor + "-subtle rounded"}>
                               <img src={company.img} alt="" height="16" />
