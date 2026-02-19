@@ -341,7 +341,6 @@ const Navdata = () => {
           utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
           onClick: handleMobileMenuClose,
         },
-
       ],
     },
     

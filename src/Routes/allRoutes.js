@@ -239,6 +239,11 @@ import JobLanding from "../pages/Job_Landing/Job";
 import UserProfile from "../pages/Authentication/user-profile";
 import Collaborateurs from "../pages/Pages/Rh/Collaborateurs";
 import CollaborateurAdd from "../pages/Pages/Rh/CollaborateurAdd";
+import Recrutements from "../pages/Pages/Rh/Recrutements";
+import OffreAdd from "../pages/Pages/Rh/OffreAdd";
+import DetailsOffre from "../pages/Pages/Rh/DetailsOffre";
+import DetailsCandidature from "../pages/Pages/Rh/DetailsCandidature";
+import EditProfile from "../pages/Pages/Rh/EditProfile";
 import DetailsCollaborateur from "../pages/Pages/Rh/DetailsCollaborateur";
 import DashboardRH from "../pages/Pages/Rh/DashboardRH";
 import FichePaie from "../pages/Pages/Rh/FichePaie";
@@ -702,6 +707,46 @@ const authProtectedRoutes = [
     component: (
       <RouteWrapper>
         <Navigate to="/:entreprise/dashboard" />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/recrutements",
+    component: (
+      <RouteWrapper>
+        <Recrutements />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/offre-add",
+    component: (
+      <RouteWrapper>
+        <OffreAdd />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/offre-details/:id",
+    component: (
+      <RouteWrapper>
+        <DetailsOffre />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/candidature-details/:id",
+    component: (
+      <RouteWrapper>
+        <DetailsCandidature />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/edit-profile",
+    component: (
+      <RouteWrapper>
+        <EditProfile />
       </RouteWrapper>
     ),
   },
