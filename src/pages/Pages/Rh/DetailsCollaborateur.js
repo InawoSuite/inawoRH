@@ -54,6 +54,7 @@ const DetailsCollaborateur = () => {
             </>
           }
         />
+
         <Row>
             <Col lg={12}>
                 <Card className="border-0 shadow-sm" style={{ borderRadius: "20px", overflow: "hidden" }}>
@@ -187,6 +188,15 @@ const DetailsCollaborateur = () => {
                     </CardBody>
                 </Card>
             </Col>
+        </Row>
+
+                <Row className="mb-3">
+          <Col lg={12} className="text-end">
+            <Link to="/:entreprise/collaborateurs" className="btn btn-success" style={{ borderRadius: "20px" }}>
+              <i className="ri-arrow-left-line me-1"></i>
+              Retour
+            </Link>
+          </Col>
         </Row>
                 
             </Container>

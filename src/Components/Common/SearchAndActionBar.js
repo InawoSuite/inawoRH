@@ -86,17 +86,17 @@ const SearchAndActionBar = ({
 
   // Fonction pour vérifier si l'utilisateur a une permission spécifique
   const hasPermission = (permissionCode) => {
+    // Si pas de permission spécifique demandée, autoriser immédiatement
+    if (!permissionCode) {
+      return true;
+    }
+
     if (permissionsLoading || !userPermissions) {
       return false;
     }
 
     // Si l'utilisateur est admin, il a toutes les permissions
     if (userPermissions.is_admin === true) {
-      return true;
-    }
-
-    // Si pas de permission spécifique demandée, autoriser par défaut
-    if (!permissionCode) {
       return true;
     }
 

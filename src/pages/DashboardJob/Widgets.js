@@ -11,7 +11,7 @@ const Widgets = () => {
           <Row>
             {jobWidgets.map((widget, key) => (
               <Col xl={6} md={6} key={key}>
-                <Card className="card-animate overflow-hidden">
+                <Card className="card-animate overflow-hidden" style={{ borderRadius: "20px" }}>
                   <div
                     className="position-absolute start-0"
                     style={{ zIndex: "0" }}

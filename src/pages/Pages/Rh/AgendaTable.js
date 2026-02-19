@@ -43,7 +43,7 @@ const agendaItems = [
 const AgendaTable = () => {
   return (
     <Col xxl={8}>
-      <Card className="card-height-100">
+      <Card className="card-height-100" style={{ borderRadius: "20px", overflow: "hidden" }}>
         <CardHeader className="align-items-center d-flex">
           <h4 className="card-title mb-0 flex-grow-1">Agenda</h4>
         </CardHeader>

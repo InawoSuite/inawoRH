@@ -8,6 +8,8 @@ import Widgets from "../../DashboardJob/Widgets";
 import FeaturedCompanies from "../../DashboardJob/FeaturedCompanies";
 import AgendaTable from "./AgendaTable";
 import StoreVisitsCharts from "./StoreVisitsCharts";
+import Graphe from "./Graphe";
+import Tache from "./Tache";
 
 
 const DashboardRH = () => {
@@ -65,12 +67,17 @@ const DashboardRH = () => {
                   </CardBody>
                 </Card> */}
                 <Row>
-                  <ApplicationsStatistic xxl={12} dataColors='["--vz-success", "--vz-info", "--vz-primary"]' />
+                  {/* <ApplicationsStatistic xxl={12} dataColors='["--vz-success", "--vz-info", "--vz-primary"]' /> */}
+                    <StoreVisitsCharts dataColors='["--vz-success", "--vz-info", "--vz-primary", "--vz-warning", "--vz-danger"]' />
                   {/* <Candidates /> */}
                 </Row>
                 <Row>
                   <AgendaTable />
-                  <StoreVisitsCharts dataColors='["--vz-success", "--vz-info", "--vz-primary", "--vz-warning", "--vz-danger"]' />
+                  <Graphe dataColors='["--vz-success", "--vz-info", "--vz-primary", "--vz-warning", "--vz-danger"]' />
+                
+                </Row>
+                <Row>
+                  <Tache />
                 </Row>
 
               </div>
