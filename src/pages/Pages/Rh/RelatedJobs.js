@@ -22,11 +22,11 @@ const RelatedJobs = () => {
         </Col>
         {overviewJobs.map((item, key) => (
           <Col xl={4} key={key}>
-            <Card>
+            <Card className="rounded-4 border-0 shadow-sm">
               <CardBody>
                 <button
                   type="button"
-                  className="btn btn-icon btn-soft-primary float-end"
+                  className="btn btn-icon btn-soft-primary rounded-4 border-0 float-end"
                   data-bs-toggle="button"
                   aria-pressed="true"
                 >
@@ -63,10 +63,10 @@ const RelatedJobs = () => {
                 </div>
 
                 <div className="mt-4 hstack gap-2">
-                  <Link to="/:entreprise/offre-details/:id" className="btn btn-soft-primary w-100">
+                  <Link to="/:entreprise/offre-details/:id" className="btn btn-soft-primary rounded-4 border-0 w-100">
                     Details
                   </Link>
-                  <Link to="/:entreprise/candidature-details/:id" className="btn btn-soft-info w-100">
+                  <Link to="/:entreprise/candidature-details/:id" className="btn btn-soft-info rounded-4 border-0 w-100">
                     Candidature
                   </Link>
                 </div>

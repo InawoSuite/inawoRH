@@ -23,7 +23,7 @@ import SearchAndActionBar from "../../../Components/Common/SearchAndActionBar";
 import ExportCSVModal from "../../../Components/Common/ExportCSVModal";
 
 const Recrutements = () => {
-  document.title = "Recrutements | Velzon -  Admin & Dashboard Template";
+  document.title = "Recrutements";
 
     const [recrutementList, setrecrutementList] = useState([
         {
@@ -137,7 +137,7 @@ const Recrutements = () => {
                     <SearchAndActionBar
                         searchTerm={searchTerm}
                         onSearchChange={setSearchTerm}
-                        searchPlaceholder="Chercher un collaborateur..."
+                        searchPlaceholder="Chercher une offre..."
                         showSearch={true}
                         addButtonLink="/:entreprise/offre-add"
                         addButtonText="Creer une offre d'emploi"
@@ -197,7 +197,7 @@ const Recrutements = () => {
 
                 <Row id="job-list">
                     <Col lg={3} md={6} id="job-widget">
-                        <Card className="card-height-100 bg-info bg-job">
+                        <Card className="card-height-100 bg-info rounded-4 border-0 shadow-sm bg-job">
                             <CardBody className="p-5">
                             <h2 className="lh-base text-white">
                                 Velzon invites young professionals for an intership!
@@ -206,7 +206,7 @@ const Recrutements = () => {
                                 Don't miss your opportunity to improve your skills!
                             </p>
                             <div className="mt-5 pt-2">
-                                <button type="button" className="btn btn-light w-100">
+                                <button type="button" className="btn btn-light rounded-4 border-0 w-100">
                                 View More{" "}
                                 <i className="ri-arrow-right-line align-bottom"></i>
                                 </button>
@@ -216,11 +216,11 @@ const Recrutements = () => {
                     </Col>
                     {(jobGridData || []).map((item, key) => (
                     <Col lg={3} md={6} key={key}>
-                        <Card>
+                        <Card className="card-height-100 rounded-4 border-0 shadow-sm">
                         <CardBody>
                             <button
                             type="button"
-                            className="btn btn-icon btn-soft-primary float-end"
+                            className="btn btn-icon btn-soft-primary rounded-4 border-0 float-end"
                             data-bs-toggle="button"
                             aria-pressed="true"
                             onClick={(e) => favouriteBtn(e.target)}
@@ -269,13 +269,13 @@ const Recrutements = () => {
                             <div className="mt-4 hstack gap-2">
                             <Link
                                 to="/:entreprise/offre-details/:id"
-                                className="btn btn-soft-primary w-100"
+                                className="btn btn-soft-primary rounded-4 border-0 shadow-sm w-100"
                             >
                                 Details
                             </Link>
                             <Link
                                 to="/:entreprise/candidature-details/:id"
-                                className="btn btn-soft-success w-100"
+                                className="btn btn-soft-success rounded-4 border-0 shadow-sm w-100"
                             >
                                 Candidature
                             </Link>

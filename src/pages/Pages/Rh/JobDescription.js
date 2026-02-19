@@ -5,7 +5,7 @@ import { Card, CardBody } from "reactstrap";
 const JobDescription = () => {
   return (
     <React.Fragment>
-      <Card>
+      <Card className="rounded-4 border-0 shadow-sm">
         <CardBody>
           <h5 className="mb-3">Job Description</h5>
 

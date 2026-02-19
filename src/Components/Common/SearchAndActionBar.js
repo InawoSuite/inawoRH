@@ -107,6 +107,7 @@ const SearchAndActionBar = ({
   // Fonction pour déterminer si le bouton Ajouter doit être affiché
   const shouldShowAddButton = () => {
     if (!showAddButton) return false;
+    if (!requiredAddPermission) return true;
     if (permissionsLoading) return false;
     return hasPermission(requiredAddPermission);
   };

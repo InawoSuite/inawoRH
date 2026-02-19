@@ -8,13 +8,13 @@ const Widgets = () => {
     <React.Fragment>
       {jobWidgets.map((item, key) => (
         <Col className="col-xl-3 col-md-6" key={key}>
-          <Card className="card card-height-100">
+          <Card className="card card-height-100 rounded-4 border-0 shadow-sm">
             <div className="d-flex">
               <div className="flex-grow-1 p-3">
                 <h5 className="mb-3">{item.lable}</h5>
                 <p className="mb-0 text-muted">
                   <span
-                    className={"badge bg-light text-" + item.badgeColor + " mb-0"}
+                    className={"badge bg-light text-" + item.badgeColor + " mb-0 rounded-pill"}
                   >
                     {" "}
                     <i className={item.icon + "align-middle"}></i> {item.number}

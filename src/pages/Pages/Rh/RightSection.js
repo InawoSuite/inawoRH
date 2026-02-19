@@ -8,8 +8,8 @@ const RightSection = () => {
   const [isBookmarkClick , setIsBookmarkClick] = useState(false);
   return (
     <React.Fragment>
-      <Card className="card">
-        <CardHeader className="card-header">
+      <Card className="card rounded-4 border-0 shadow-sm">
+        <CardHeader className="card-header rounded-4">
           <h5 className="mb-0">Job Overview</h5>
         </CardHeader>
         <CardBody className="card-body">
@@ -58,7 +58,7 @@ const RightSection = () => {
             </Table>
           </div>
           <div className="mt-4 pt-2 hstack gap-2">
-            <Link to="#" className="btn btn-primary w-100">
+            <Link to="#" className="btn btn-primary rounded-4 border-0 shadow-sm w-100">
               Apply Now
             </Link>
             <Link
@@ -67,11 +67,11 @@ const RightSection = () => {
               className={isBookmarkClick ? "btn btn-soft-danger btn-icon custom-toggle flex-shrink-0 active" : "btn btn-soft-danger btn-icon custom-toggle flex-shrink-0"}
             >
               {!isBookmarkClick ?
-              <span className="icon-on">
+              <span className="icon-on rounded-4 border-0 shadow-sm">
                 <i className="ri-bookmark-line align-bottom"></i>
               </span>
               :
-              <span className="icon-off">
+              <span className="icon-off rounded-4 border-0 shadow-sm">
                 <i className="ri-bookmark-3-fill align-bottom"></i>
               </span>
               }
@@ -80,7 +80,7 @@ const RightSection = () => {
         </CardBody>
       </Card>
 
-      <Card className="card">
+      <Card className="card rounded-4 border-0 shadow-sm">
         <CardBody className="card-body">
           <div className="avatar-sm mx-auto">
             <div className="avatar-title bg-warning-subtle rounded">
@@ -150,11 +150,11 @@ const RightSection = () => {
         </CardBody>
       </Card>
 
-      <Card className="card">
-        <CardHeader className="card-header">
+      <Card className="card rounded-4 border-0 shadow-sm">
+        <CardHeader className="card-header rounded-4">
           <h5 className="mb-0">Job Location</h5>
         </CardHeader>
-        <CardBody className="card-body">
+        <CardBody className="card-body rounded-4">
           <div className="ratio ratio-4x3">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1861227.8137337372!2d51.654904288504646!3d24.33915646928631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5e48dfb1ab12bd%3A0x33d32f56c0080aa7!2sUnited%20Arab%20Emirates!5e0!3m2!1sen!2sin!4v1664257145153!5m2!1sen!2sin"
@@ -169,8 +169,8 @@ const RightSection = () => {
         </CardBody>
       </Card>
 
-      <Card className="card">
-        <CardHeader className="card-header">
+      <Card className="card rounded-4 border-0 shadow-sm">
+        <CardHeader className="card-header rounded-4">
           <h5 className="mb-0">Contact Us</h5>
         </CardHeader>
         <CardBody className="card-body">
@@ -181,7 +181,7 @@ const RightSection = () => {
               </label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control rounded-4"
                 id="nameInput"
                 placeholder="Enter your name"
               />
@@ -192,7 +192,7 @@ const RightSection = () => {
               </label>
               <input
                 type="text"
-                className="form-control"
+                className="form-control rounded-4"
                 id="emailInput"
                 placeholder="Enter your email"
               />
@@ -202,14 +202,14 @@ const RightSection = () => {
                 Message
               </label>
               <textarea
-                className="form-control"
+                className="form-control rounded-4"
                 id="messageInput"
                 rows="3"
                 placeholder="Message"
               ></textarea>
             </div>
             <div className="text-end">
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-primary rounded-4">
                 Send Message
               </button>
             </div>

@@ -39,7 +39,7 @@ const EditProfile = () => {
                     </div>
                     <Row>
                         <Col xxl={3}>
-                            <Card className="mt-n5">
+                            <Card className="mt-n5 rounded-4 border-0 shadow-sm">
                                 <CardBody className="p-4">
                                     <div className="text-center">
                                         <div className="profile-user position-relative d-inline-block mx-auto  mb-4">
@@ -63,7 +63,7 @@ const EditProfile = () => {
                                 </CardBody>
                             </Card>
 
-                            <Card>
+                            <Card className="mt-4 rounded-4 border-0 shadow-sm">
                                 <CardBody>
                                     <div className="d-flex align-items-center mb-5">
                                         <div className="flex-grow-1">
@@ -82,7 +82,7 @@ const EditProfile = () => {
                                     </div>
                                 </CardBody>
                             </Card>
-                            <Card>
+                            <Card className="mt-4 rounded-4 border-0 shadow-sm">
                                 <CardBody>
                                     <div className="d-flex align-items-center mb-4">
                                         <div className="flex-grow-1">
@@ -99,7 +99,7 @@ const EditProfile = () => {
                                                 <i className="ri-github-fill"></i>
                                             </span>
                                         </div>
-                                        <Input type="email" className="form-control" id="gitUsername" placeholder="Username"
+                                        <Input type="email" className="form-control rounded-4" id="gitUsername" placeholder="Username"
                                             defaultValue="@daveadame" />
                                     </div>
                                     <div className="mb-3 d-flex">
@@ -108,7 +108,7 @@ const EditProfile = () => {
                                                 <i className="ri-global-fill"></i>
                                             </span>
                                         </div>
-                                        <Input type="text" className="form-control" id="websiteInput"
+                                        <Input type="text" className="form-control rounded-4" id="websiteInput"
                                             placeholder="www.example.com" defaultValue="www.velzon.com" />
                                     </div>
                                     <div className="mb-3 d-flex">
@@ -117,7 +117,7 @@ const EditProfile = () => {
                                                 <i className="ri-dribbble-fill"></i>
                                             </span>
                                         </div>
-                                        <Input type="text" className="form-control" id="dribbleName" placeholder="Username"
+                                        <Input type="text" className="form-control rounded-4" id="dribbleName" placeholder="Username"
                                             defaultValue="@dave_adame" />
                                     </div>
                                     <div className="d-flex">
@@ -126,7 +126,7 @@ const EditProfile = () => {
                                                 <i className="ri-pinterest-fill"></i>
                                             </span>
                                         </div>
-                                        <Input type="text" className="form-control" id="pinterestName"
+                                        <Input type="text" className="form-control rounded-4" id="pinterestName"
                                             placeholder="Username" defaultValue="Advance Dave" />
                                     </div>
                                 </CardBody>
@@ -134,8 +134,8 @@ const EditProfile = () => {
                         </Col>
 
                         <Col xxl={9}>
-                            <Card className="mt-xxl-n5">
-                                <CardHeader>
+                            <Card className="mt-xxl-n5 rounded-4 border-0 shadow-sm">
+                                <CardHeader className="rounded-4">
                                     <Nav className="nav-tabs-custom rounded card-header-tabs border-bottom-0"
                                         role="tablist">
                                         <NavItem>
@@ -192,7 +192,7 @@ const EditProfile = () => {
                                                         <div className="mb-3">
                                                             <Label htmlFor="firstnameInput" className="form-label">First
                                                                 Name</Label>
-                                                            <Input type="text" className="form-control" id="firstnameInput"
+                                                            <Input type="text" className="form-control rounded-4" id="firstnameInput"
                                                                 placeholder="Enter your firstname" defaultValue="Dave" />
                                                         </div>
                                                     </Col>
@@ -200,7 +200,7 @@ const EditProfile = () => {
                                                         <div className="mb-3">
                                                             <Label htmlFor="lastnameInput" className="form-label">Last
                                                                 Name</Label>
-                                                            <Input type="text" className="form-control" id="lastnameInput"
+                                                            <Input type="text" className="form-control rounded-4" id="lastnameInput"
                                                                 placeholder="Enter your lastname" defaultValue="Adame" />
                                                         </div>
                                                     </Col>
@@ -208,7 +208,7 @@ const EditProfile = () => {
                                                         <div className="mb-3">
                                                             <Label htmlFor="phonenumberInput" className="form-label">Phone
                                                                 Number</Label>
-                                                            <Input type="text" className="form-control"
+                                                            <Input type="text" className="form-control rounded-4"
                                                                 id="phonenumberInput"
                                                                 placeholder="Enter your phone number"
                                                                 defaultValue="+(1) 987 6543" />
@@ -218,7 +218,7 @@ const EditProfile = () => {
                                                         <div className="mb-3">
                                                             <Label htmlFor="emailInput" className="form-label">Email
                                                                 Address</Label>
-                                                            <Input type="email" className="form-control" id="emailInput"
+                                                            <Input type="email" className="form-control rounded-4" id="emailInput"
                                                                 placeholder="Enter your email"
                                                                 defaultValue="daveadame@velzon.com" />
                                                         </div>
@@ -228,7 +228,7 @@ const EditProfile = () => {
                                                             <Label htmlFor="JoiningdatInput" className="form-label">Joining
                                                                 Date</Label>
                                                             <Flatpickr
-                                                                className="form-control"
+                                                                className="form-control rounded-4"
                                                                 options={{
                                                                     dateFormat: "d M, Y"
                                                                 }}
@@ -238,21 +238,21 @@ const EditProfile = () => {
                                                     <Col lg={12}>
                                                         <div className="mb-3">
                                                             <Label htmlFor="skillsInput" className="form-label">Skills</Label>
-                                                            <select className="form-select mb-3">
+                                                            <Input id="skillsInput" name="skillsInput" type="select" className="rounded-4" required>
                                                                 <option >Select your Skill </option>
                                                                 <option value="Choices1">CSS</option>
                                                                 <option value="Choices2">HTML</option>
                                                                 <option value="Choices3">PYTHON</option>
                                                                 <option value="Choices4">JAVA</option>
                                                                 <option value="Choices5">ASP.NET</option>
-                                                            </select>
+                                                            </Input>
                                                         </div>
                                                     </Col>
                                                     <Col lg={6}>
                                                         <div className="mb-3">
                                                             <Label htmlFor="designationInput"
                                                                 className="form-label">Designation</Label>
-                                                            <Input type="text" className="form-control"
+                                                            <Input type="text" className="form-control rounded-4"
                                                                 id="designationInput" placeholder="Designation"
                                                                 defaultValue="Lead Designer / Developer" />
                                                         </div>
@@ -261,21 +261,21 @@ const EditProfile = () => {
                                                         <div className="mb-3">
                                                             <Label htmlFor="websiteInput1"
                                                                 className="form-label">Website</Label>
-                                                            <Input type="text" className="form-control" id="websiteInput1"
+                                                            <Input type="text" className="form-control rounded-4" id="websiteInput1"
                                                                 placeholder="www.example.com" defaultValue="www.velzon.com" />
                                                         </div>
                                                     </Col>
                                                     <Col lg={4}>
                                                         <div className="mb-3">
                                                             <Label htmlFor="cityInput" className="form-label">City</Label>
-                                                            <Input type="text" className="form-control" id="cityInput"
+                                                            <Input type="text" className="form-control rounded-4" id="cityInput"
                                                                 placeholder="City" defaultValue="California" />
                                                         </div>
                                                     </Col>
                                                     <Col lg={4}>
                                                         <div className="mb-3">
                                                             <Label htmlFor="countryInput" className="form-label">Country</Label>
-                                                            <Input type="text" className="form-control" id="countryInput"
+                                                            <Input type="text" className="form-control rounded-4" id="countryInput"
                                                                 placeholder="Country" defaultValue="United States" />
                                                         </div>
                                                     </Col>
@@ -283,7 +283,7 @@ const EditProfile = () => {
                                                         <div className="mb-3">
                                                             <Label htmlFor="zipcodeInput" className="form-label">Zip
                                                                 Code</Label>
-                                                            <Input type="text" className="form-control" minLength="5"
+                                                            <Input type="text" className="form-control rounded-4" minLength="5"
                                                                 maxLength="6" id="zipcodeInput"
                                                                 placeholder="Enter zipcode" defaultValue="90011" />
                                                         </div>
@@ -292,17 +292,21 @@ const EditProfile = () => {
                                                         <div className="mb-3 pb-2">
                                                             <Label htmlFor="exampleFormControlTextarea"
                                                                 className="form-label">Description</Label>
-                                                            <textarea className="form-control"
-                                                                id="exampleFormControlTextarea"
-                                                                rows="3" defaultValue="Hi I'm Anna Adame, It will be as simple as Occidental; in fact, it will be Occidental. To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental is European languages are members of the same family."></textarea>
+                                                            <Input 
+                                                                id="exampleFormControlTextarea" 
+                                                                className="form-control rounded-4"
+                                                                name="exampleFormControlTextarea" 
+                                                                type="textarea" rows="3" 
+                                                                defaultValue="Hi I'm Anna Adame, It will be as simple as Occidental; in fact, it will be Occidental. To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental is European languages are members of the same family." 
+                                                                required />
                                                         </div>
                                                     </Col>
                                                     <Col lg={12}>
                                                         <div className="hstack gap-2 justify-content-end">
                                                             <button type="button"
-                                                                className="btn btn-secondary">Updates</button>
+                                                                className="btn btn-secondary rounded-4">Updates</button>
                                                             <button type="button"
-                                                                className="btn btn-soft-danger">Cancel</button>
+                                                                className="btn btn-soft-danger rounded-4">Cancel</button>
                                                         </div>
                                                     </Col>
                                                 </Row>
@@ -316,7 +320,7 @@ const EditProfile = () => {
                                                         <div>
                                                             <Label htmlFor="oldpasswordInput" className="form-label">Old
                                                                 Password*</Label>
-                                                            <Input type="password" className="form-control"
+                                                            <Input type="password" className="form-control rounded-4"
                                                                 id="oldpasswordInput"
                                                                 placeholder="Enter current password" />
                                                         </div>
@@ -326,7 +330,7 @@ const EditProfile = () => {
                                                         <div>
                                                             <Label htmlFor="newpasswordInput" className="form-label">New
                                                                 Password*</Label>
-                                                            <Input type="password" className="form-control"
+                                                            <Input type="password" className="form-control rounded-4"
                                                                 id="newpasswordInput" placeholder="Enter new password" />
                                                         </div>
                                                     </Col>
@@ -335,7 +339,7 @@ const EditProfile = () => {
                                                         <div>
                                                             <Label htmlFor="confirmpasswordInput" className="form-label">Confirm
                                                                 Password*</Label>
-                                                            <Input type="password" className="form-control"
+                                                            <Input type="password" className="form-control rounded-4"
                                                                 id="confirmpasswordInput"
                                                                 placeholder="Confirm password" />
                                                         </div>
@@ -351,7 +355,7 @@ const EditProfile = () => {
 
                                                     <Col lg={12}>
                                                         <div className="text-end">
-                                                            <button type="button" className="btn btn-secondary">Change
+                                                            <button type="button" className="btn btn-secondary rounded-4">Change
                                                                 Password</button>
                                                         </div>
                                                     </Col>
@@ -436,7 +440,7 @@ const EditProfile = () => {
                                                                 <div className="mb-3">
                                                                     <Label htmlFor="jobTitle" className="form-label">Job
                                                                         Title</Label>
-                                                                    <Input type="text" className="form-control"
+                                                                    <Input type="text" className="form-control rounded-4"
                                                                         id="jobTitle" placeholder="Job title"
                                                                         defaultValue="Lead Designer / Developer" />
                                                                 </div>
@@ -446,7 +450,7 @@ const EditProfile = () => {
                                                                 <div className="mb-3">
                                                                     <Label htmlFor="companyName" className="form-label">Company
                                                                         Name</Label>
-                                                                    <Input type="text" className="form-control"
+                                                                    <Input type="text" className="form-control rounded-4"
                                                                         id="companyName" placeholder="Company name"
                                                                         defaultValue="Themesbrand" />
                                                                 </div>
@@ -458,10 +462,7 @@ const EditProfile = () => {
                                                                         className="form-label">Experience Years</label>
                                                                     <Row>
                                                                         <Col lg={5}>
-                                                                            <select className="form-control" data-choices
-                                                                                data-choices-search-false
-                                                                                name="experienceYear"
-                                                                                id="experienceYear">
+                                                                            <Input id="experienceYear-1" name="experienceYear-1" type="select" className="rounded-4" required>
                                                                                 <option defaultValue="">Select years</option>
                                                                                 <option value="Choice 1">2001</option>
                                                                                 <option value="Choice 2">2002</option>
@@ -485,7 +486,7 @@ const EditProfile = () => {
                                                                                 <option value="Choice 20">2020</option>
                                                                                 <option value="Choice 21">2021</option>
                                                                                 <option value="Choice 22">2022</option>
-                                                                            </select>
+                                                                            </Input>
                                                                         </Col>
 
                                                                         <div className="col-auto align-self-center">
@@ -493,9 +494,7 @@ const EditProfile = () => {
                                                                         </div>
 
                                                                         <Col lg={5}>
-                                                                            <select className="form-control" data-choices
-                                                                                data-choices-search-false
-                                                                                name="choices-single-default2">
+                                                                            <Input id="experienceYear-2" name="experienceYear-2" type="select" className="rounded-4" required>
                                                                                 <option defaultValue="">Select years</option>
                                                                                 <option value="Choice 1">2001</option>
                                                                                 <option value="Choice 2">2002</option>
@@ -519,7 +518,7 @@ const EditProfile = () => {
                                                                                 <option value="Choice 20">2020</option>
                                                                                 <option value="Choice 21">2021</option>
                                                                                 <option value="Choice 22">2022</option>
-                                                                            </select>
+                                                                            </Input>
                                                                         </Col>
                                                                     </Row>
                                                                 </div>
@@ -530,7 +529,7 @@ const EditProfile = () => {
                                                                     <Label htmlFor="jobDescription" className="form-label">Job
                                                                         Description</Label>
                                                                     <Input type='teaxtarea'
-                                                                        className="form-control" id="jobDescription"
+                                                                        className="form-control rounded-4" id="jobDescription"
                                                                         rows="3"
                                                                         placeholder='Enter description'
                                                                         defaultValue="You always want to make sure that your fonts work well together and try to limit the number of fonts you use to three or less. Experiment and play around with the fonts that you already have in the software you're working with reputable font websites."
@@ -539,7 +538,7 @@ const EditProfile = () => {
                                                             </Col>
 
                                                             <div className="hstack gap-2 justify-content-end">
-                                                                <Link className="btn btn-danger"
+                                                                <Link className="btn btn-danger rounded-4"
                                                                     to="#">Delete</Link>
                                                             </div>
                                                         </Row>
@@ -550,8 +549,8 @@ const EditProfile = () => {
 
                                                 <Col lg={12}>
                                                     <div className="hstack gap-2">
-                                                        <button type="submit" className="btn btn-primary">Update</button>
-                                                        <Link to="#" className="btn btn-secondary">Add
+                                                        <button type="submit" className="btn btn-primary rounded-4">Update</button>
+                                                        <Link to="#" className="btn btn-secondary rounded-4">Add
                                                             New</Link>
                                                     </div>
                                                 </Col>
@@ -571,7 +570,7 @@ const EditProfile = () => {
                                                     </div>
                                                     <div className="flex-shrink-0 ms-sm-3">
                                                         <Link to="#"
-                                                            className="btn btn-sm btn-primary">Enable Two-facor
+                                                            className="btn btn-sm rounded-4 btn-primary">Enable Two-facor
                                                             Authentication</Link>
                                                     </div>
                                                 </div>
@@ -584,7 +583,7 @@ const EditProfile = () => {
                                                             retina.</p>
                                                     </div>
                                                     <div className="flex-shrink-0 ms-sm-3">
-                                                        <Link to="#" className="btn btn-sm btn-primary">Set
+                                                        <Link to="#" className="btn btn-sm rounded-4 btn-primary">Set
                                                             up secondary method</Link>
                                                     </div>
                                                 </div>
@@ -598,7 +597,7 @@ const EditProfile = () => {
                                                     </div>
                                                     <div className="flex-shrink-0 ms-sm-3">
                                                         <Link to="#"
-                                                            className="btn btn-sm btn-primary">Generate backup codes</Link>
+                                                            className="btn btn-sm rounded-4 btn-primary">Generate backup codes</Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -695,14 +694,14 @@ const EditProfile = () => {
                                                     Profile Account. Follow the instructions to delete your account :
                                                 </p>
                                                 <div>
-                                                    <Input type="password" className="form-control" id="passwordInput"
+                                                    <Input type="password" className="form-control rounded-4" id="passwordInput"
                                                         placeholder="Enter your password" defaultValue="make@321654987"
                                                         style={{ maxWidth: "265px" }} />
                                                 </div>
                                                 <div className="hstack gap-2 mt-3">
-                                                    <Link to="#" className="btn btn-soft-danger">Close &
+                                                    <Link to="#" className="btn btn-soft-danger rounded-4">Close &
                                                         Delete This Account</Link>
-                                                    <Link to="#" className="btn btn-light">Cancel</Link>
+                                                    <Link to="#" className="btn btn-light rounded-4">Cancel</Link>
                                                 </div>
                                             </div>
                                         </TabPane>

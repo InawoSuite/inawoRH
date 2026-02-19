@@ -104,7 +104,7 @@ const Collaborateurs = () => {
         key: "1",
         label: "Tous les collaborateurs",
         icon: "ri-user-line",
-        filterType: "actif",
+        filterType: "all",
       },
       // {
       //   key: "2",
@@ -164,6 +164,9 @@ const Collaborateurs = () => {
   const filteredData = useMemo(() => {
     let filtered = collaborateurList;
 
+    const activeStatusFilter =
+      activeTab === "2" ? "actif" : activeTab === "3" ? "inactif" : "all";
+
     // Filtre par recherche uniquement
     if (searchTerm) {
       filtered = filtered.filter((item) =>
@@ -175,8 +178,14 @@ const Collaborateurs = () => {
       );
     }
 
+    if (activeStatusFilter !== "all") {
+      filtered = filtered.filter(
+        (item) => (item.statut || "").toLowerCase() === activeStatusFilter
+      );
+    }
+
     return filtered;
-  }, [collaborateurList, searchTerm]);
+  }, [collaborateurList, searchTerm, activeTab]);
 
   // Pagination
   const currentItems = useMemo(() => {
@@ -187,7 +196,7 @@ const Collaborateurs = () => {
 
   // Colonnes du tableau
   const columns = useMemo(() => {
-    if (activeTab === "1") {
+    if (activeTab === "1" || activeTab === "2" || activeTab === "3") {
       return [
         {
           header: "N°",
@@ -202,7 +211,12 @@ const Collaborateurs = () => {
           header: "Nom",
           accessorKey: "nom",
           enableColumnFilter: false,
-          cell: (cell) => cell.getValue() || "Non défini",
+          cell: (cell) => (
+            <div className="d-flex align-items-center gap-2">
+              <i className="ri-user-fill text-primary"></i>
+              {cell.getValue() || "Non défini"}
+            </div>
+          ),
         },
         {
           header: "Prénom",
@@ -233,9 +247,20 @@ const Collaborateurs = () => {
         enableColumnFilter: false,
         cell: (cell) => {
           const status = cell.getValue();
+          const normalizedStatus = (status || "").toLowerCase();
           const badgeClass =
-            status === "actif" ? "badge bg-success" : "badge bg-secondary";
-          return <span className={badgeClass}>{status || "Inconnu"}</span>;
+            normalizedStatus === "actif"
+              ? "badge bg-success rounded-pill"
+              : normalizedStatus === "inactif"
+              ? "badge bg-danger rounded-pill"
+              : "badge bg-secondary rounded-pill";
+          const label =
+            normalizedStatus === "actif"
+              ? "Actif"
+              : normalizedStatus === "inactif"
+              ? "Inactif"
+              : "Inconnu";
+          return <span className={badgeClass} style={{fontSize: "0.65rem", padding: "0.25rem 0.5rem"}}>{label}</span>;
         },
       },
       {
@@ -247,7 +272,7 @@ const Collaborateurs = () => {
           return (
             <div className="gap-1">
               <Link
-                to={`/:entreprise/collaborateur-details/${collab.id}`}
+                to="/:entreprise/collaborateur-details"
                 className="text-primary p-2"
                 title="Voir détails"
               >
@@ -279,69 +304,31 @@ const Collaborateurs = () => {
 
       ];
     }
-    if (activeTab === "2") {
-      return [
-         {
-        header: "N°",
-        accessorKey: "id",
-        enableColumnFilter: false,
-        cell: (cellProps) => {
-          const index = cellProps.row.index;
-          return (currentPage - 1) * itemsPerPage + index + 1;
-        },
-      },
-
-          {
-        header: "Nom complet",
-        accessorKey: "nom",
-        enableColumnFilter: false,
-        cell: (cellProps) => {
-          const collab = cellProps.row.original;
-          const fullName = [collab.prenom, collab.nom].filter(Boolean).join(" ");
-          return (
-            <Link
-              to={`/:entreprise/collaborateur-details/${collab.id}`}
-              className="fw-medium text-body"
-            >
-              {fullName || "Sans nom"}
-            </Link>
-          );
-        },
-      },
-        {
-          header: "Type de contrat",
-          accessorKey: "typecontrat",
-          enableColumnFilter: false,
-        },
-        
-      ];
-    }
-
-    if (activeTab === "4") {
-      return [
-        {
-          header: "N°",
-          accessorKey: "id",
-          enableColumnFilter: false,
-          cell: (cellProps) => {
-            const index = cellProps.row.index;
-            return (currentPage - 1) * itemsPerPage + index + 1;
-          },
-        },
-        {
-          header: "Poste",
-          accessorKey: "poste",
-          enableColumnFilter: false,
-          cell: (cell) => cell.getValue() || "Non défini",
-        },
-        {
-          header: "Departement",
-          accessorKey: "departement",
-          enableColumnFilter: false,
-          cell: (cell) => cell.getValue() || "Non défini",
-        },
-      ];
-    }
+    // if (activeTab === "4") {
+    //   return [
+    //     {
+    //       header: "N°",
+    //       accessorKey: "id",
+    //       enableColumnFilter: false,
+    //       cell: (cellProps) => {
+    //         const index = cellProps.row.index;
+    //         return (currentPage - 1) * itemsPerPage + index + 1;
+    //       },
+    //     },
+    //     {
+    //       header: "Poste",
+    //       accessorKey: "poste",
+    //       enableColumnFilter: false,
+    //       cell: (cell) => cell.getValue() || "Non défini",
+    //     },
+    //     {
+    //       header: "Departement",
+    //       accessorKey: "departement",
+    //       enableColumnFilter: false,
+    //       cell: (cell) => cell.getValue() || "Non défini",
+    //     },
+    //   ];
+    // }
     
 
     return [
@@ -363,7 +350,7 @@ const Collaborateurs = () => {
           const fullName = [collab.prenom, collab.nom].filter(Boolean).join(" ");
           return (
             <Link
-              to={`/:entreprise/collaborateur-details/${collab.id}`}
+              to="/:entreprise/collaborateur-details"
               className="fw-medium text-body"
             >
               {fullName || "Sans nom"}
@@ -393,9 +380,20 @@ const Collaborateurs = () => {
         enableColumnFilter: false,
         cell: (cell) => {
           const status = cell.getValue();
+          const normalizedStatus = (status || "").toLowerCase();
           const badgeClass =
-            status === "actif" ? "badge bg-success" : "badge bg-secondary";
-          return <span className={badgeClass}>{status || "Inconnu"}</span>;
+            normalizedStatus === "actif"
+              ? "badge bg-success"
+              : normalizedStatus === "inactif"
+              ? "badge bg-danger"
+              : "badge bg-secondary";
+          const label =
+            normalizedStatus === "actif"
+              ? "Actif"
+              : normalizedStatus === "inactif"
+              ? "Inactif"
+              : "Inconnu";
+          return <span className={badgeClass}>{label}</span>;
         },
       },
       {
@@ -407,7 +405,7 @@ const Collaborateurs = () => {
           return (
             <div className="gap-1">
               <Link
-                to={`/:entreprise/collaborateur-details/${collab.id}`}
+                to="/:entreprise/collaborateur-details"
                 className="text-primary p-2"
                 title="Voir détails"
               >

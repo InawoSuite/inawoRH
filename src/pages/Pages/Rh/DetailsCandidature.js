@@ -4,15 +4,12 @@ import { Link } from 'react-router-dom';
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
 import classnames from "classnames";
 
-// Images
 import progileBg from "../../../assets/images/profile-bg.jpg";
 import avatar1 from "../../../assets/images/users/avatar-1.jpg";
 import avatar2 from "../../../assets/images/users/avatar-2.jpg";
 import avatar3 from "../../../assets/images/users/avatar-3.jpg";
 import avatar4 from "../../../assets/images/users/avatar-4.jpg";
 import avatar5 from "../../../assets/images/users/avatar-5.jpg";
-
-// ==================== CONSTANTS ====================
 
 const USER_DATA = {
     name: "Anna Adame",
@@ -104,8 +101,6 @@ const DOCUMENTS = [
     { id: 5, name: "Image Assets.zip", type: "ZIP File", size: "25.3 MB", date: "2024-01-11" }
 ];
 
-// ==================== SUB-COMPONENTS ====================
-
 const ProfileHeader = ({ user }) => {
     return (
         <>
@@ -178,7 +173,7 @@ const OptionDropdown = () => {
 
 const CompleteProfileCard = () => {
     return (
-        <Card>
+        <Card className="rounded-4 border-0 shadow-sm">
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
@@ -239,7 +234,7 @@ const PortfolioCard = () => {
     ];
 
     return (
-        <Card>
+        <Card className="rounded-4 border-0 shadow-sm">
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
@@ -262,7 +257,7 @@ const PortfolioCard = () => {
 
 const SkillsCard = ({ skills }) => {
     return (
-        <Card>
+        <Card className="rounded-4 border-0 shadow-sm">
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
@@ -284,7 +279,7 @@ const SkillsCard = ({ skills }) => {
 
 const SuggestionsCard = ({ suggestions }) => {
     return (
-        <Card>
+        <Card className="rounded-4 border-0 shadow-sm">
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
@@ -315,7 +310,7 @@ const SuggestionsCard = ({ suggestions }) => {
 
 const PopularPostsCard = ({ posts }) => {
     return (
-        <Card>
+        <Card className="rounded-4 border-0 shadow-sm">
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
@@ -340,7 +335,7 @@ const PopularPostsCard = ({ posts }) => {
                                         style={{ width: "70px", height: "70px", objectFit: "cover" }}
                                     />
                                 </div>
-                                <div className="flex-grow-1 ms-3" style={{ minWidth: 0 }}> {/* Important pour le texte tronqué */}
+                                <div className="flex-grow-1 ms-3" style={{ minWidth: 0 }}>
                                     <h6 className="mb-1 fs-14 fw-semibold text-truncate" style={{ maxWidth: "180px" }}>
                                         {post.title}
                                     </h6>
@@ -370,8 +365,8 @@ const PopularPostsCard = ({ posts }) => {
 
 const AboutSection = ({ user }) => {
     return (
-        <Card>
-            <CardHeader>
+        <Card className="rounded-4 border-0 shadow-sm">
+            <CardHeader className="rounded-4">
                 <h5 className="card-title mb-0">About</h5>
             </CardHeader>
             <CardBody>
@@ -414,7 +409,7 @@ const AboutSection = ({ user }) => {
 };
 
 const RecentActivityCard = ({ activities }) => {
-    const [filter, setFilter] = useState("weekly");
+    const [filter, setFilter] = useState("monthly");
     
     const getFilteredActivities = () => {
         switch(filter) {
@@ -423,15 +418,15 @@ const RecentActivityCard = ({ activities }) => {
             case "weekly":
                 return activities;
             case "monthly":
-                return [...activities, ...activities]; // Simulated monthly data
+                return [...activities, ...activities];
             default:
                 return activities;
         }
     };
     
     return (
-        <Card>
-            <CardHeader className="d-flex align-items-center">
+        <Card className="rounded-4 border-0 shadow-sm">
+            <CardHeader className="d-flex align-items-center rounded-4">
                 <h5 className="card-title mb-0 flex-grow-1">Recent Activity</h5>
                 <div className="flex-shrink-0">
                     <div className="btn-group" role="group">
@@ -506,8 +501,8 @@ const ProjectsOverviewCard = ({ projects }) => {
     );
     
     return (
-        <Card>
-            <CardHeader className="d-flex align-items-center">
+        <Card className="rounded-4 border-0 shadow-sm">
+            <CardHeader className="d-flex rounded-4 align-items-center">
                 <h5 className="card-title mb-0 flex-grow-1">Projects</h5>
                 <div className="flex-shrink-0">
                     <div className="btn-group" role="group">
@@ -524,7 +519,7 @@ const ProjectsOverviewCard = ({ projects }) => {
                 <Row>
                     {displayedProjects.map(project => (
                         <Col md={4} key={project.id}>
-                            <Card className="shadow-none border">
+                            <Card className="shadow-none rounded-4 border">
                                 <CardBody>
                                     <div className="d-flex mb-3">
                                         <div className="flex-grow-1">
@@ -568,9 +563,9 @@ const ProjectsOverviewCard = ({ projects }) => {
 
 const ActivitiesTab = ({ activities }) => {
     return (
-        <Card>
-            <CardHeader>
-                <h5 className="card-title mb-0">All Activities</h5>
+        <Card className="rounded-4 border-0 shadow-sm">
+            <CardHeader className="rounded-4">
+                <h5 className="card-title mb-0">Activities</h5>
             </CardHeader>
             <CardBody>
                 {activities.map(activity => (
@@ -601,7 +596,7 @@ const ProjectsTab = ({ projects }) => {
     return (
         <>
             <div className="d-flex align-items-center mb-4">
-                <h5 className="card-title mb-0 flex-grow-1">All Projects (12)</h5>
+                <h5 className="card-title mb-0 flex-grow-1">Projects (12)</h5>
                 <div className="flex-shrink-0">
                     <Button color="soft-primary" size="sm">
                         <i className="ri-filter-3-line me-1"></i>Filter
@@ -659,8 +654,8 @@ const DocumentsTab = ({ documents }) => {
     };
     
     return (
-        <Card>
-            <CardHeader>
+        <Card className="rounded-4 border-0 shadow-sm">
+            <CardHeader className="rounded-4">
                 <h5 className="card-title mb-0">Documents</h5>
             </CardHeader>
             <CardBody>
@@ -714,8 +709,6 @@ const DocumentsTab = ({ documents }) => {
     );
 };
 
-// ==================== MAIN COMPONENT ====================
-
 const Preference = () => {
     const [activeMainTab, setActiveMainTab] = useState("overview");
 
@@ -752,7 +745,7 @@ const Preference = () => {
                             ))}
                         </Nav>
                         <div className="flex-shrink-0">
-                            <Link to="/:entreprise/edit-profile" className="btn btn-success">
+                            <Link to="/:entreprise/edit-profile" className="btn rounded-4 btn-success">
                                 <i className="ri-edit-box-line align-bottom me-1"></i>
                                 Edit Profile
                             </Link>
@@ -760,7 +753,6 @@ const Preference = () => {
                     </div>
                 </Col>
 
-                {/* Left Sidebar - Only visible in Overview tab */}
                 {activeMainTab === "overview" && (
                     <Col xxl={3}>
                         <div className="tab-content pt-4 text-muted">
@@ -773,7 +765,6 @@ const Preference = () => {
                     </Col>
                 )}
 
-                {/* Main Content */}
                 <Col xxl={activeMainTab === "overview" ? 9 : 12}>
                     <TabContent activeTab={activeMainTab} className="pt-4 text-muted">
                         <TabPane tabId="overview">
@@ -799,8 +790,6 @@ const Preference = () => {
         </Container>
     );
 };
-
-// ==================== EXPORT COMPONENT ====================
 
 const DetailsCandidature = () => {
     return (
