@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { Container, Row, Col, Card, CardBody, Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
+import { CustomSelect } from "../../../Components/Common/CustomSelectStyles";
 
-// Données mockées pour l'exemple (à remplacer par votre API)
 const mockData = {
     "1": {
         id: 1,
@@ -45,7 +45,7 @@ const mockData = {
 
 const AvanceEtPretForm = ({ mode = "add" }) => {
     const navigate = useNavigate();
-    const { id } = useParams(); // Récupère l'ID depuis l'URL si on est en mode edit
+    const { id } = useParams();
     
     const [formData, setFormData] = useState({
         nomEmploye: "",
@@ -58,7 +58,6 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
         statut: "actif"
     });
 
-    // Charger les données si on est en mode édition
     useEffect(() => {
         if (mode === "edit" && id && mockData[id]) {
             const data = mockData[id];
@@ -86,8 +85,7 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log("Données soumises:", formData);
-        // Ici, vous enverriez les données à votre API
-        navigate("/avance-et-pret");
+        navigate("/:entreprise/avance-et-pret");
     };
 
     const cardStyle = {
@@ -95,6 +93,16 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
         background: "#fff",
         boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
     };
+
+    const [selectedStatut, setSelectedStatut] = useState(null);
+    const statutOptions = useMemo(
+        () => [
+            { value: "actif", label: "Actif" },
+            { value: "payé", label: "Payé" },
+            { value: "dépassé", label: "Dépassé" },
+        ],
+        []
+    );
 
     document.title = mode === "add" ? "Ajouter Avance/Prêt" : "Modifier Avance/Prêt";
 
@@ -121,7 +129,6 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                 </h5>
                                 
                                 <Form onSubmit={handleSubmit}>
-                                    {/* Informations de base (toujours visibles) */}
                                     <Row>
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
@@ -144,7 +151,7 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="salaireNet">
-                                                    Salaire net (FCFA) <span className="text-danger">*</span>
+                                                    Salaire net <span className="text-danger">*</span>
                                                 </Label>
                                                 <Input 
                                                     id="salaireNet"
@@ -166,7 +173,7 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="montantPret">
-                                                    Montant du prêt (FCFA) <span className="text-danger">*</span>
+                                                    Montant du prêt <span className="text-danger">*</span>
                                                 </Label>
                                                 <Input 
                                                     id="montantPret"
@@ -220,7 +227,6 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                         </Col>
                                     </Row>
 
-                                    {/* Champs supplémentaires pour l'édition */}
                                     {mode === "edit" && (
                                         <>
                                             <h6 className="text-primary mt-4 mb-3">Informations de suivi</h6>
@@ -228,7 +234,7 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                                 <Col md={4}>
                                                     <FormGroup className="mb-3">
                                                         <Label for="montantRembourse">
-                                                            Montant remboursé (FCFA)
+                                                            Montant remboursé 
                                                         </Label>
                                                         <Input 
                                                             id="montantRembourse"
@@ -247,7 +253,7 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                                 <Col md={4}>
                                                     <FormGroup className="mb-3">
                                                         <Label for="solde">
-                                                            Solde restant (FCFA)
+                                                            Solde restant 
                                                         </Label>
                                                         <Input 
                                                             id="solde"
@@ -259,7 +265,7 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                                             onChange={handleChange}
                                                             step="1000"
                                                             min="0"
-                                                            readOnly={mode === "edit"} // Optionnel : calculé automatiquement
+                                                            readOnly={mode === "edit"}
                                                         />
                                                         <small className="text-muted">Montant prêt - Montant remboursé</small>
                                                     </FormGroup>
@@ -267,21 +273,16 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                                 
                                                 <Col md={4}>
                                                     <FormGroup className="mb-3">
-                                                        <Label for="statut">
+                                                        <Label htmlFor="statut">
                                                             Statut
                                                         </Label>
-                                                        <Input 
-                                                            id="statut"
-                                                            className="rounded-4"
-                                                            name="statut" 
-                                                            type="select"
-                                                            value={formData.statut}
-                                                            onChange={handleChange}
-                                                        >
-                                                            <option value="actif">Actif</option>
-                                                            <option value="payé">Payé</option>
-                                                            <option value="dépassé">Dépassé</option>
-                                                        </Input>
+                                                        <CustomSelect
+                                                            inputId="statut"
+                                                            value={selectedStatut}
+                                                            onChange={(option) => setSelectedStatut(option)}
+                                                            options={statutOptions}
+                                                            placeholder="Select Statut"
+                                                        />
                                                     </FormGroup>
                                                 </Col>
                                             </Row>
@@ -295,7 +296,7 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                                     color="secondary"
                                                     type="button"
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
-                                                    onClick={() => navigate("/avance-et-pret")}
+                                                    onClick={() => navigate("/:entreprise/avance-et-pret")}
                                                 >
                                                     Annuler
                                                 </Button>

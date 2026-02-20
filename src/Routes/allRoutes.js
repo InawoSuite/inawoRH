@@ -248,10 +248,15 @@ import DetailsCollaborateur from "../pages/Pages/Rh/DetailsCollaborateur";
 import DashboardRH from "../pages/Pages/Rh/DashboardRH";
 import FichePaie from "../pages/Pages/Rh/FichePaie";
 import FicheDetail from "../pages/Pages/Rh/FicheDetail";
+import FicheAdd from "../pages/Pages/Rh/FicheAdd";
 import AvanceEtPret from "../pages/Pages/Rh/AvanceEtPret";
 import AvanceEtPretForm from "../pages/Pages/Rh/AvanceEtPretForm";
 import AvanceEtPretAdd from "../pages/Pages/Rh/AvanceEtPretAdd";
 import AvanceEtPretEdit from "../pages/Pages/Rh/AvanceEtPretEdit";
+import CongeEtAbsence from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsence";
+import CongeEtAbsenceForm from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsenceForm";
+import CongeEtAbsenceAdd from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsenceAdd";
+import CongeEtAbsenceEdit from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsenceEdit";
 
 import Settings from "../pages/Pages/Profile/Settings/Profile/Settings";
 import FileManager from "../pages/FileManager";
@@ -785,6 +790,39 @@ const authProtectedRoutes = [
       </RouteWrapper>
     ),
   },
+  {
+    path: "/:entreprise/conge-et-absence",
+    component: (
+      <RouteWrapper>
+        <CongeEtAbsence />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/conge-et-absence-form",
+    component: (
+      <RouteWrapper>
+        <CongeEtAbsenceForm />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/conge-et-absence-add",
+    component: (
+      <RouteWrapper>
+        <CongeEtAbsenceAdd />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/conge-et-absence-edit/:id",
+    component: (
+      <RouteWrapper>
+        <CongeEtAbsenceEdit />
+      </RouteWrapper>
+    ),
+  },
+  
   { path: "*", component: <Navigate to="/:entreprise/dashboard" /> },
 
   //Compta
