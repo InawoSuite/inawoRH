@@ -381,6 +381,17 @@ const Navdata = () => {
           modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
           utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
           onClick: handleMobileMenuClose,
+        },
+        
+        {
+          id : "Pointages",
+          icon: "ri-timer-line",
+          label: "Pointages",
+          link: generatePath("/pointage"),
+          parentId: "HumanResources",
+          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+          utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+          onClick: handleMobileMenuClose,
         }
       ],
     },
