@@ -23,8 +23,8 @@ const FichePaie = () => {
       prenom: "Jean",
       periode: "Mai",
       lot_de_paie: "Lot 1",
-      remuneration_totale: "500 000 FCFA",
-      salaire_base: "400 000 FCFA",
+      remuneration_totale: "500 000 ",
+      salaire_base: "400 000 ",
       statut: "actif",
     },
     {
@@ -33,8 +33,8 @@ const FichePaie = () => {
       prenom: "Marie",
       periode: "Juin",
         lot_de_paie: "Lot 2",
-        remuneration_totale: "600 000 FCFA",
-        salaire_base: "500 000 FCFA",
+        remuneration_totale: "600 000 ",
+        salaire_base: "500 000 ",
         statut: "actif",
      
     },
@@ -44,8 +44,8 @@ const FichePaie = () => {
       prenom: "Pierre",
       periode: "Juillet",
         lot_de_paie: "Lot 3",
-        remuneration_totale: "550 000 FCFA",
-        salaire_base: "450 000 FCFA",
+        remuneration_totale: "550 000 ",
+        salaire_base: "450 000 ",
         statut: "inactif",
     },
    
