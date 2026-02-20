@@ -212,7 +212,6 @@ const AvanceEtPret = () => {
                     </>
                 }
             />
-            <div className="container-fluid">
                 <Row className="mb-4">
                     
                         <SearchAndActionBar
@@ -356,7 +355,7 @@ const AvanceEtPret = () => {
                     onCloseClick={handleDeleteClose}
                 />
             
-            </div>
+            
         </Container>
 {/* MODAL VOIR DÉTAILS */}
 <Modal 
