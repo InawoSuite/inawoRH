@@ -281,6 +281,7 @@ import Rappprochement from "../pages/Rapprochement/index.js";
 import FinancementsEmprunts from "../pages/Financement/index.js";
 import Piece from "../pages/Piece/index.js";
 import Etats from "../pages/Pages/Compta/Etats/Index.js";
+import FicheAdd from "../pages/Pages/Rh/FicheAdd.js";
 
 const authProtectedRoutes = [
   {path: "/unauthorized", component: <Unauthorized /> },
