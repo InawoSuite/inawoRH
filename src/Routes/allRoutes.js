@@ -248,7 +248,10 @@ import DetailsCollaborateur from "../pages/Pages/Rh/DetailsCollaborateur";
 import DashboardRH from "../pages/Pages/Rh/DashboardRH";
 import FichePaie from "../pages/Pages/Rh/FichePaie";
 import FicheDetail from "../pages/Pages/Rh/FicheDetail";
-import FicheAdd from "../pages/Pages/Rh/FicheAdd";
+import AvanceEtPret from "../pages/Pages/Rh/AvanceEtPret";
+import AvanceEtPretForm from "../pages/Pages/Rh/AvanceEtPretForm";
+import AvanceEtPretAdd from "../pages/Pages/Rh/AvanceEtPretAdd";
+import AvanceEtPretEdit from "../pages/Pages/Rh/AvanceEtPretEdit";
 
 import Settings from "../pages/Pages/Profile/Settings/Profile/Settings";
 import FileManager from "../pages/FileManager";
@@ -747,6 +750,38 @@ const authProtectedRoutes = [
     component: (
       <RouteWrapper>
         <EditProfile />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/avance-et-pret",
+    component: (
+      <RouteWrapper>
+        <AvanceEtPret />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/avance-et-pret-form",
+    component: (
+      <RouteWrapper>
+        <AvanceEtPretForm />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/avance-et-pret-add",
+    component: (
+      <RouteWrapper>
+        <AvanceEtPretAdd />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/avance-et-pret-edit/:id",
+    component: (
+      <RouteWrapper>
+        <AvanceEtPretEdit />
       </RouteWrapper>
     ),
   },
