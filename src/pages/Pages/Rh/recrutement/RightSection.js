@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, CardHeader, Table } from "reactstrap";
-import img3 from "../../../assets/images/companies/img-3.png";
+import img3 from "../../../../assets/images/companies/img-3.png";
 
 const RightSection = () => {
 

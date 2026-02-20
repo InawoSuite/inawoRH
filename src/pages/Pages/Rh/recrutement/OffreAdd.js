@@ -10,8 +10,8 @@ import {
   Label,
   Row,
 } from "reactstrap";
-import BreadCrumb from "../../../Components/Common/BreadCrumb";
-import { CustomSelect } from "../../../Components/Common/CustomSelectStyles";
+import BreadCrumb from "../../../../Components/Common/BreadCrumb";
+import { CustomSelect } from "../../../../Components/Common/CustomSelectStyles";
 import Flatpickr from "react-flatpickr";
 
 import { Link, useNavigate } from "react-router-dom";

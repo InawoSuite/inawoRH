@@ -1,15 +1,15 @@
 import React, { useMemo, useState } from "react";
 import { Button, Card, CardBody, CardHeader, Col, Row } from "reactstrap";
 import ReactApexChart from "react-apexcharts";
-import getChartColorsArray from "../../../Components/Common/ChartsDynamicColor";
+import getChartColorsArray from "../../../../Components/Common/ChartsDynamicColor";
 import CountUp from "react-countup";
-import { revenueWidgets } from "../../../common/data/ecommerce";
+import { revenueWidgets } from "../../../../common/data/ecommerce";
 import {
   allRevenueData,
   monthRevenueData,
   halfYearRevenueData,
   yearRevenueData,
-} from "../../../common/data/dashboardEcommerce";
+} from "../../../../common/data/dashboardEcommerce";
 
 const StoreVisitsCharts = ({
   dataColors = '["--vz-primary", "--vz-success", "--vz-danger"]',

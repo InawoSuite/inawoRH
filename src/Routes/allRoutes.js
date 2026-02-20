@@ -237,22 +237,25 @@ import JobLanding from "../pages/Job_Landing/Job";
 
 // User Profile
 import UserProfile from "../pages/Authentication/user-profile";
-import Collaborateurs from "../pages/Pages/Rh/Collaborateurs";
-import CollaborateurAdd from "../pages/Pages/Rh/CollaborateurAdd";
-import Recrutements from "../pages/Pages/Rh/Recrutements";
-import OffreAdd from "../pages/Pages/Rh/OffreAdd";
-import DetailsOffre from "../pages/Pages/Rh/DetailsOffre";
-import DetailsCandidature from "../pages/Pages/Rh/DetailsCandidature";
+import Collaborateurs from "../pages/Pages/Rh/collaborateur/Collaborateurs";
+import CollaborateurAdd from "../pages/Pages/Rh/collaborateur/CollaborateurAdd";
+import CollaborateurEdit from "../pages/Pages/Rh/collaborateur/CollaborateurEdit";
+import Recrutements from "../pages/Pages/Rh/recrutement/Recrutements";
+import OffreAdd from "../pages/Pages/Rh/recrutement/OffreAdd";
+import DetailsOffre from "../pages/Pages/Rh/recrutement/DetailsOffre";
+import DetailsCandidature from "../pages/Pages/Rh/recrutement/DetailsCandidature";
 import EditProfile from "../pages/Pages/Rh/EditProfile";
-import DetailsCollaborateur from "../pages/Pages/Rh/DetailsCollaborateur";
-import DashboardRH from "../pages/Pages/Rh/DashboardRH";
-import FichePaie from "../pages/Pages/Rh/FichePaie";
-import FicheDetail from "../pages/Pages/Rh/FicheDetail";
-import AvanceEtPret from "../pages/Pages/Rh/AvanceEtPret";
-import AvanceEtPretForm from "../pages/Pages/Rh/AvanceEtPretForm";
-import AvanceEtPretAdd from "../pages/Pages/Rh/AvanceEtPretAdd";
-import AvanceEtPretEdit from "../pages/Pages/Rh/AvanceEtPretEdit";
-
+import DetailsCollaborateur from "../pages/Pages/Rh/collaborateur/DetailsCollaborateur";
+import DashboardRH from "../pages/Pages/Rh/dashboard-rh/DashboardRH";
+import FichePaie from "../pages/Pages/Rh/fiche-paie/FichePaie";
+import FicheAdd from "../pages/Pages/Rh/fiche-paie/FicheAdd";
+import FicheDetail from "../pages/Pages/Rh/fiche-paie/FicheDetail";
+import FicheEdit from "../pages/Pages/Rh/fiche-paie/FicheEdit";
+import AvanceEtPret from "../pages/Pages/Rh/avance-et-pret/AvanceEtPret";
+import AvanceEtPretForm from "../pages/Pages/Rh/avance-et-pret/AvanceEtPretForm";
+import AvanceEtPretAdd from "../pages/Pages/Rh/avance-et-pret/AvanceEtPretAdd";
+import AvanceEtPretEdit from "../pages/Pages/Rh/avance-et-pret/AvanceEtPretEdit";
+import Contrat from "../pages/Pages/Rh/Contrats/Contract";
 import Settings from "../pages/Pages/Profile/Settings/Profile/Settings";
 import FileManager from "../pages/FileManager";
 import ToDoList from "../pages/ToDo";
@@ -352,10 +355,18 @@ const authProtectedRoutes = [
     ),
   },
   {
-    path: "/:entreprise/collaborateur-details",
+    path: "/:entreprise/collaborateur-details/:id",
     component: (
       <RouteWrapper>
         <DetailsCollaborateur />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/collaborateur-edit/:id",
+    component: (
+      <RouteWrapper>
+        <CollaborateurEdit />
       </RouteWrapper>
     ),
   },
@@ -376,7 +387,7 @@ const authProtectedRoutes = [
       ),
     },
     {
-      path: "/:entreprise/fiche-details",
+      path: "/:entreprise/fiche-details/:id",
       component: (
         <RouteWrapper>
           <FicheDetail />
@@ -388,6 +399,22 @@ const authProtectedRoutes = [
       component: (
         <RouteWrapper>
           <FicheAdd />
+        </RouteWrapper>
+      ),
+    },
+    {
+      path: "/:entreprise/fiche-edit/:id",
+      component: (
+        <RouteWrapper>
+          <FicheEdit />
+        </RouteWrapper>
+      ),
+    },
+    {
+      path: "/:entreprise/contrats",
+      component: (
+        <RouteWrapper>
+          <Contrat />
         </RouteWrapper>
       ),
     },
