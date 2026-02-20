@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { Row, Col, Card, CardBody, Table, Badge, Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from "reactstrap";
+import { Row, Col, Card, CardBody, Container, Table, Badge, Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { Link } from "react-router-dom";
-import SearchAndActionBar from "../../../../Components/Common/SearchAndActionBar";
-import BreadCrumb from "../../../../Components/Common/BreadCrumb";
-import DeleteModal from "../../../../Components/Common/DeleteModal";
+import SearchAndActionBar from "../../../Components/Common/SearchAndActionBar";
+import BreadCrumb from "../../../Components/Common/BreadCrumb";
+import DeleteModal from "../../../Components/Common/DeleteModal";
+import Pagination from "../../../Components/Common/Pagination";
 import { toast } from "react-toastify";
 
 const AvanceEtPret = () => {
@@ -11,6 +12,9 @@ const AvanceEtPret = () => {
 
     const [isExportCSV, setIsExportCSV] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(5);
     
     // États pour les modals
     const [viewModal, setViewModal] = useState(false);
@@ -132,13 +136,13 @@ const AvanceEtPret = () => {
     const getStatutBadge = (statut) => {
         switch(statut) {
             case 'actif':
-                return <Badge color="success" pill className="px-3 py-2">Actif</Badge>;
+                return <Badge className="badge bg-success rounded-pill" pill>Actif</Badge>;
             case 'payé':
-                return <Badge color="primary" pill className="px-3 py-2">Payé</Badge>;
+                return <Badge className="badge bg-primary rounded-pill" pill>Payé</Badge>;
             case 'dépassé':
-                return <Badge color="danger" pill className="px-3 py-2">Dépassé</Badge>;
+                return <Badge className="badge bg-danger rounded-pill" pill>Dépassé</Badge>;
             default:
-                return <Badge color="secondary" pill className="px-3 py-2">{statut}</Badge>;
+                return <Badge className="badge bg-secondary rounded-pill" pill>{statut}</Badge>;
         }
     };
 
@@ -198,6 +202,7 @@ const AvanceEtPret = () => {
 
     return (
         <div className="page-content">
+            <Container fluid>
             <BreadCrumb
                 title="&nbsp;Avance et Pret"
                 pageTitle={
@@ -209,7 +214,7 @@ const AvanceEtPret = () => {
             />
             <div className="container-fluid">
                 <Row className="mb-4">
-                    <Col lg={12}>
+                    
                         <SearchAndActionBar
                             searchTerm={searchTerm}
                             onSearchChange={setSearchTerm}
@@ -217,17 +222,14 @@ const AvanceEtPret = () => {
                             showSearch={true}
                             addButtonLink="/entreprise/avance-et-pret-add"
                             addButtonText="Créer avance/prêt"
-                            addButtonIcon="ri-add-line"
+                            addButtonIcon="ri-file-add-line"
                             showAddButton={true}
                             onExportClick={() => setIsExportCSV(true)}
                             exportButtonText="Exporter"
                             exportButtonIcon="ri-file-upload-line"
                             showExportButton={true}
                         />
-                    </Col>
-                </Row>
 
-                <Row>
                     <Col lg={12}>
                         <Card style={{ borderRadius: "20px", boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)" }}>
                             <CardBody>
@@ -252,15 +254,21 @@ const AvanceEtPret = () => {
                                                             <span className="fw-medium">{item.numero}</span>
                                                         </td>
                                                         <td>
-                                                            <div className="d-flex align-items-center">
+                                                            <Link
+                                                                to="#" 
+                                                                className="d-flex align-items-center"
+                                                                onClick={(e) => {
+                                                                    e.preventDefault();
+                                                                    toggleViewModal(item);
+                                                                }}
+                                                            >
                                                                 <div className="flex-shrink-0">
                                                                     <i className="ri-user-fill text-primary"></i>
                                                                 </div>
                                                                 <div className="flex-grow-1 ms-2">
                                                                     <span className="fw-medium">{item.employe}</span>
-                                                                    
                                                                 </div>
-                                                            </div>
+                                                            </Link>
                                                         </td>
                                                         <td>
                                                             {formatPeriode(item.periodeDebut, item.periodeFin)}
@@ -282,7 +290,7 @@ const AvanceEtPret = () => {
                                                             <div className="gap-1">
                                                                 <Link
                                                                     to="#"
-                                                                    className="text-primary p-2"
+                                                                    className="text-info p-2"
                                                                     title="Voir détails"
                                                                     onClick={(e) => {
                                                                         e.preventDefault();
@@ -293,7 +301,7 @@ const AvanceEtPret = () => {
                                                                 </Link>
                                                                 <Link
                                                                     to="/:entreprise/avance-et-pret-edit/:id"
-                                                                    className="text-warning p-2"
+                                                                    className="text-primary p-2"
                                                                     title="Modifier"
                                                                 >
                                                                     <i className="ri-pencil-fill fs-16"></i>
@@ -325,7 +333,18 @@ const AvanceEtPret = () => {
                                                 </tr>
                                             )}
                                         </tbody>
+
                                     </Table>
+                                </div>
+                                <div className="mt-3">
+                                    <Pagination
+                                        data={filteredData}
+                                        currentPage={currentPage}
+                                        setCurrentPage={setCurrentPage}
+                                        perPageData={itemsPerPage}
+                                        alwaysShow={true}
+                                        showInfo={true}
+                                    />
                                 </div>
                             </CardBody>
                         </Card>
@@ -336,8 +355,9 @@ const AvanceEtPret = () => {
                     onDeleteClick={handleDeleteConfirm}
                     onCloseClick={handleDeleteClose}
                 />
+            
             </div>
-
+        </Container>
 {/* MODAL VOIR DÉTAILS */}
 <Modal 
     isOpen={viewModal} 

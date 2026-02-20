@@ -133,67 +133,24 @@ const Recrutements = () => {
 
         return (
             <React.Fragment>
-                <Row>
-                    <SearchAndActionBar
-                        searchTerm={searchTerm}
-                        onSearchChange={setSearchTerm}
-                        searchPlaceholder="Chercher une offre..."
-                        showSearch={true}
-                        addButtonLink="/:entreprise/offre-add"
-                        addButtonText="Creer une offre d'emploi"
-                        addButtonIcon="ri-user-add-line"
-                        showAddButton={true}
-                        onExportClick={() => setIsExportCSV(true)}
-                        exportButtonText="Exporter"
-                        exportButtonIcon="ri-file-upload-line"
-                        showExportButton={true}
-                    />
-                </Row>
 
-                <Row>
-                    <Col lg={12}>
-                    <div className="d-flex align-items-center mb-4">
-                        <div className="flex-grow-1">
-                        <p className="text-muted fs-14 mb-0">
-                            Result: <span id="total-result">7</span>
-                        </p>
-                        </div>
-                        <div className="flex-shrink-0">
-                        <UncontrolledDropdown className="dropdown">
-                            <DropdownToggle
-                            className="btn text-muted fs-14 dropdown-toggle"
-                            to="#"
-                            role="button"
-                            tag="button"
-                            type="button"
-                            >
-                            All View
-                            </DropdownToggle>
-                            <DropdownMenu
-                            className="dropdown-menu"
-                            aria-labelledby="dropdownMenuLink"
-                            >
-                            <li>
-                                <DropdownItem className="dropdown-item" href="#">
-                                Action
-                                </DropdownItem>
-                            </li>
-                            <li>
-                                <DropdownItem className="dropdown-item" href="#">
-                                Another action
-                                </DropdownItem>
-                            </li>
-                            <li>
-                                <DropdownItem className="dropdown-item" href="#">
-                                Something else here
-                                </DropdownItem>
-                            </li>
-                            </DropdownMenu>
-                        </UncontrolledDropdown>
-                        </div>
-                    </div>
-                    </Col>
-                </Row>
+                <SearchAndActionBar
+                    searchTerm={searchTerm}
+                    onSearchChange={setSearchTerm}
+                    searchPlaceholder="Chercher une offre..."
+                    showSearch={true}
+                    addButtonLink="/:entreprise/offre-add"
+                    addButtonText="Creer une offre d'emploi"
+                    addButtonIcon="ri-user-add-line"
+                    showAddButton={true}
+                    onExportClick={() => setIsExportCSV(true)}
+                    exportButtonText="Exporter"
+                    exportButtonIcon="ri-file-upload-line"
+                    showExportButton={true}
+                />
+
+                    
+
 
                 <Row id="job-list">
                     <Col lg={3} md={6} id="job-widget">
