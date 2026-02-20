@@ -4,7 +4,7 @@ import Header from "./Header";
 import JobDescription from "./JobDescription";
 import RelatedJobs from "./RelatedJobs";
 import RightSection from "./RightSection";
-import BreadCrumb from "../../../Components/Common/BreadCrumb";
+import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 import { Link } from "react-router-dom";
 
 const DetailsOffre = () => {

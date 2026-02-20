@@ -1,14 +1,16 @@
-﻿import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Container, Row, Col, Card, CardBody, Form, FormGroup, Label, Input, Button, Modal, ModalHeader, ModalBody, ModalFooter, Table } from "reactstrap";
-import { Link, useNavigate } from "react-router-dom";
-import BreadCrumb from "../../../Components/Common/BreadCrumb";
-import PhoneInput from "../../../Components/ContactDeleteModal/CountryPhoneInput";
-import { country } from "../../../common/data";
-import { CustomSelect } from "../../../Components/Common/CustomSelectStyles";
-import dummyImg from "../../../assets/images/users/user-dummy-img.jpg";
+import { Link, useLocation, useNavigate, useParams } from "react-router-dom";
+import BreadCrumb from "../../../../Components/Common/BreadCrumb";
+import PhoneInput from "../../../../Components/ContactDeleteModal/CountryPhoneInput";
+import { country } from "../../../../common/data";
+import { CustomSelect } from "../../../../Components/Common/CustomSelectStyles";
+import dummyImg from "../../../../assets/images/users/user-dummy-img.jpg";
 
-const CollaborateurAdd = () => {
+const CollaborateurEdit = () => {
 	const navigate = useNavigate();
+	const { id } = useParams();
+	const { state } = useLocation();
 	const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
 	const [historyItems, setHistoryItems] = useState([]);
 	const [historyForm, setHistoryForm] = useState({
@@ -78,13 +80,95 @@ const CollaborateurAdd = () => {
 		[]
 	);
 
+	const collaborateursData = useMemo(() => ([
+		{
+			id: 1,
+			nom: "Dupont",
+			prenom: "Jean",
+			affiliation: "Mari",
+			email: "jean.dupont@inawo.com",
+			telephone: "+229 97 00 00 01",
+			ville: "Cotonou",
+			poste: "Directeur Général",
+			departement: "Direction",
+			typecontrat: "CDI",
+			statut: "actif"
+		},
+		{
+			id: 2,
+			nom: "Martin",
+			prenom: "Marie",
+			affiliation: "Femme",
+			email: "marie.martin@inawo.com",
+			telephone: "+229 97 00 00 02",
+			ville: "Porto-Novo",
+			poste: "Responsable RH",
+			departement: "Ressources humaines",
+			statut: "inactif",
+			typecontrat: "CDD"
+		},
+		{
+			id: 3,
+			nom: "Durant",
+			prenom: "Pierre",
+			affiliation: "Enfant",
+			email: "pierre.durant@inawo.com",
+			telephone: "+229 97 00 00 03",
+			ville: "Parakou",
+			poste: "Comptable",
+			departement: "Finance",
+			statut: "actif",
+			typecontrat: "Stage professionnelle"
+		},
+	]), []);
+
+	const selectedCollaborateur = useMemo(() => {
+		const fromState = state?.collaborateur;
+		if (fromState) {
+			return fromState;
+		}
+		return collaborateursData.find((item) => String(item.id) === String(id)) || null;
+	}, [state, collaborateursData, id]);
+
+	const [editData, setEditData] = useState({
+		nom: "",
+		prenom: "",
+		poste: "",
+		departement: "",
+	});
+
+	const handleEditChange = (event) => {
+		const { name, value } = event.target;
+		setEditData((prev) => ({ ...prev, [name]: value }));
+	};
+
+	useEffect(() => {
+		if (!selectedCollaborateur) {
+			return;
+		}
+
+		setEditData({
+			nom: selectedCollaborateur.nom || "",
+			prenom: selectedCollaborateur.prenom || "",
+			poste: selectedCollaborateur.poste || "",
+			departement: selectedCollaborateur.departement || "",
+		});
+
+		setContactValue(selectedCollaborateur.telephone || "");
+
+		const selectedContrat = typeContratOptions.find(
+			(option) => option.label === selectedCollaborateur.typecontrat
+		);
+		setSelectedTypeContrat(selectedContrat || null);
+	}, [selectedCollaborateur, typeContratOptions]);
+
 	const cardStyle = {
 		borderRadius: "20px",
 		background: "#fff",
 		boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
 	};
 
-	document.title = "Collaborateur | INAWO - Suite de Gestion";
+	document.title = "Modifier un collaborateur | INAWO - Suite de Gestion";
 
 	const handleHistoryChange = (event) => {
 		const { name, value } = event.target;
@@ -115,11 +199,6 @@ const CollaborateurAdd = () => {
 		setIsHistoryModalOpen(false);
 	};
 	
-	
-
-
-
-
 	const handleAddContact = (event) => {
 		event.preventDefault();
 		if (!contactForm.nom || !contactForm.prenom || !contactForm.contact || !contactForm.lien || !contactForm.ville) {
@@ -144,14 +223,12 @@ const CollaborateurAdd = () => {
 		const newHoraires = [...horaires];
 		newHoraires[index][field] = value;
 		
-		// Si on active "ouvert24h", mettre les heures à 00:00-00:00
 		if (field === "ouvert24h" && value === true) {
 			newHoraires[index].heureDebut = "00:00";
 			newHoraires[index].heureFin = "00:00";
 			newHoraires[index].ouvert = true;
 		}
 		
-		// Si on ferme, désactiver ouvert24h
 		if (field === "ouvert" && value === false) {
 			newHoraires[index].ouvert24h = false;
 		}
@@ -173,7 +250,7 @@ const CollaborateurAdd = () => {
 		<div className="page-content">
 			<Container fluid>
 				<BreadCrumb
-					title="&nbsp;Ajouter un collaborateur"
+					title="&nbsp;Modifier un collaborateur"
 					pageTitle={
 						<>
 							<i className="ri-team-line"></i>
@@ -237,13 +314,13 @@ const CollaborateurAdd = () => {
 												<Col md={6}>
 													<FormGroup className="mb-0">
 														<Label style={{marginBottom: "0"}} for="nom">Nom <span className="text-danger">*</span></Label>
-														<Input id="nom" name="nom" type="text" placeholder="Nom" required />
+														<Input id="nom" name="nom" type="text" placeholder="Nom" value={editData.nom} onChange={handleEditChange} required />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
 														<Label style={{marginBottom: "0"}} for="prenom">Prenom <span className="text-danger">*</span></Label>
-														<Input id="prenom" name="prenom" type="text" placeholder="Prenom" required />
+														<Input id="prenom" name="prenom" type="text" placeholder="Prenom" value={editData.prenom} onChange={handleEditChange} required />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
@@ -353,7 +430,6 @@ const CollaborateurAdd = () => {
 																	<th>Contact</th>
 																	<th>Affiliation</th>
 																	<th>Ville</th>
-																	{/* <th>Actions</th> */}
 																</tr>
 															</thead>
 															<tbody>
@@ -374,45 +450,6 @@ const CollaborateurAdd = () => {
 													)}
 												</Col>
 											</Row>
-											{/* <Row className="gx-3 gy-0">
-												<Col md={6}>
-													<FormGroup>
-														<Label style={{marginBottom: "0"}} for="urgenceNom">Nom</Label>
-														<Input id="urgenceNom" name="urgenceNom" type="text" placeholder="Nom" />
-													</FormGroup> */}
-												{/* </Col>
-												<Col md={6}>
-													<FormGroup>
-														<Label style={{marginBottom: "0"}} for="urgencePrenom">Prenom</Label>
-														<Input id="urgencePrenom" name="urgencePrenom" type="text" placeholder="Prenom" />
-													</FormGroup>
-												</Col>
-												<Col md={6}>
-													<FormGroup>
-														<Label style={{marginBottom: "0"}} for="urgenceAffiliation">Affiliation</Label>
-														<Input id="urgenceAffiliation" name="urgenceAffiliation" type="text" placeholder="Mari, parents, enfant, femme" />
-													</FormGroup> */}
-												{/* </Col>
-												<Col md={6}>
-													<FormGroup>
-														<Label style={{marginBottom: "0"}} for="urgenceTelephone">Telephone</Label>
-														<PhoneInput
-															name="urgenceTelephone"
-															value={contactValue}
-															onChange={(value) => setContactValue(value)}
-															countries={country}
-															defaultCountry="BJ"
-														/>
-														<Input id="urgenceTelephone" name="urgenceTelephone" type="text" placeholder="Telephone" /> */}
-													{/* </FormGroup>
-												</Col>
-												<Col md={6}>
-													<FormGroup>
-														<Label style={{marginBottom: "0"}} for="urgenceVille">Ville</Label>
-														<Input id="urgenceVille" name="urgenceVille" type="text" placeholder="Ville" />
-													</FormGroup>
-												</Col>
-											</Row> */}
 										</CardBody>
 									</Card>
 								</Col>
@@ -431,13 +468,13 @@ const CollaborateurAdd = () => {
 												<Col md={6}>
 													<FormGroup className="mb-0">
 														<Label style={{marginBottom: "0"}} for="poste">Poste</Label>
-														<Input id="poste" name="poste" type="text" placeholder="Poste" />
+														<Input id="poste" name="poste" type="text" placeholder="Poste" value={editData.poste} onChange={handleEditChange} />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
 														<Label style={{marginBottom: "0"}} for="departement">Departement</Label>
-														<Input id="departement" name="departement" type="text" placeholder="Departement" />
+														<Input id="departement" name="departement" type="text" placeholder="Departement" value={editData.departement} onChange={handleEditChange} />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
@@ -484,7 +521,7 @@ const CollaborateurAdd = () => {
 id="horaire" 
 name="horaire" 
 type="text" 
-placeholder="Cliquez pour d�finir" 
+placeholder="Cliquez pour définir" 
 value={getHoraireSummary()}
 readOnly
 style={{ cursor: "pointer" }}
@@ -542,7 +579,6 @@ style={{ borderRadius: "8px" }}
 																	<th>Poste</th>
 																	<th>Entreprise</th>
 																	<th>Description</th>
-																	{/* <th>Actions</th> */}
 																</tr>
 															</thead>
 															<tbody>
@@ -552,9 +588,6 @@ style={{ borderRadius: "8px" }}
 																		<td>{item.poste}</td>
 																		<td>{item.entreprise}</td>
 																		<td>{item.description}</td>
-																		{/* <td>
-																			<button type="button" className="btn btn-sm btn-soft-danger">Supprimer</button>
-																		</td> */}
 																	</tr>
 																))}
 															</tbody>
@@ -812,4 +845,4 @@ style={{ borderRadius: "8px" }}
 };
 
 
-export default CollaborateurAdd;
+export default CollaborateurEdit;

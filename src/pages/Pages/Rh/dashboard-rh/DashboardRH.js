@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Col, Container, Row } from "reactstrap";
-import Section from "../../DashboardEcommerce/Section";
-import StatsDashboard from "../../DashboardEcommerce/StatsDashboard";
-import ApplicationsStatistic from "../../DashboardJob/ApplicationsStatistic";
-import Candidates from "../../DashboardJob/Candidates";
-import Widgets from "../../DashboardJob/Widgets";
-import FeaturedCompanies from "../../DashboardJob/FeaturedCompanies";
+import Section from "../../../DashboardEcommerce/Section";
+import StatsDashboard from "../../../DashboardEcommerce/StatsDashboard";
+import ApplicationsStatistic from "../../../DashboardJob/ApplicationsStatistic";
+import Candidates from "../../../DashboardJob/Candidates";
+import Widgets from "../../../DashboardJob/Widgets";
+import FeaturedCompanies from "../../../DashboardJob/FeaturedCompanies";
 import AgendaTable from "./AgendaTable";
 import StoreVisitsCharts from "./StoreVisitsCharts";
 import Graphe from "./Graphe";

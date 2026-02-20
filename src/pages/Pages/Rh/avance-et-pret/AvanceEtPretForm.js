@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Card, CardBody, Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import BreadCrumb from "../../../Components/Common/BreadCrumb";
+import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 
 // Données mockées pour l'exemple (à remplacer par votre API)
 const mockData = {

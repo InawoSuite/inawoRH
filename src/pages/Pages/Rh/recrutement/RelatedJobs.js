@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, Col, Row } from "reactstrap";
-import { overviewJobs } from "../../../common/data/appsJobs";
+import { overviewJobs } from "../../../../common/data/appsJobs";
 
 const RelatedJobs = () => {
   return (

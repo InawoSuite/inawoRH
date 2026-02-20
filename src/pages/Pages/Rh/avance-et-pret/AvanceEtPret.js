@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Row, Col, Card, CardBody, Table, Badge, Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { Link } from "react-router-dom";
-import SearchAndActionBar from "../../../Components/Common/SearchAndActionBar";
-import BreadCrumb from "../../../Components/Common/BreadCrumb";
-import DeleteModal from "../../../Components/Common/DeleteModal";
+import SearchAndActionBar from "../../../../Components/Common/SearchAndActionBar";
+import BreadCrumb from "../../../../Components/Common/BreadCrumb";
+import DeleteModal from "../../../../Components/Common/DeleteModal";
 import { toast } from "react-toastify";
 
 const AvanceEtPret = () => {

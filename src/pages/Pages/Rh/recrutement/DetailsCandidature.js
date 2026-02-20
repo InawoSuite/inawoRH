@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardBody, CardHeader, Col, Container, Row, Nav, NavItem, NavLink, TabContent, TabPane, Button, Badge, Table, Dropdown, DropdownToggle, DropdownMenu, DropdownItem, UncontrolledDropdown, Input, Label } from 'reactstrap';
 import { Link } from 'react-router-dom';
-import BreadCrumb from "../../../Components/Common/BreadCrumb";
+import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 import classnames from "classnames";
 
-import progileBg from "../../../assets/images/profile-bg.jpg";
-import avatar1 from "../../../assets/images/users/avatar-1.jpg";
-import avatar2 from "../../../assets/images/users/avatar-2.jpg";
-import avatar3 from "../../../assets/images/users/avatar-3.jpg";
-import avatar4 from "../../../assets/images/users/avatar-4.jpg";
-import avatar5 from "../../../assets/images/users/avatar-5.jpg";
+import progileBg from "../../../../assets/images/profile-bg.jpg";
+import avatar1 from "../../../../assets/images/users/avatar-1.jpg";
+import avatar2 from "../../../../assets/images/users/avatar-2.jpg";
+import avatar3 from "../../../../assets/images/users/avatar-3.jpg";
+import avatar4 from "../../../../assets/images/users/avatar-4.jpg";
+import avatar5 from "../../../../assets/images/users/avatar-5.jpg";
 
 const USER_DATA = {
     name: "Anna Adame",

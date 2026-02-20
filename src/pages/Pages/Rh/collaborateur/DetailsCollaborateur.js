@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
     Container,
     Row,
@@ -13,11 +13,63 @@ import {
     TabContent,
     TabPane,
 } from "reactstrap";
-import { Link } from "react-router-dom";
-import BreadCrumb from "../../../Components/Common/BreadCrumb";
+import { Link, useLocation, useParams } from "react-router-dom";
+import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 
 const DetailsCollaborateur = () => {
+    const { id } = useParams();
+    const { state } = useLocation();
     const [activeTab, setActiveTab] = useState("informations-personnelles");
+
+    const collaborateursData = useMemo(() => ([
+        {
+            id: 1,
+            nom: "Dupont",
+            prenom: "Jean",
+            affiliation: "Mari",
+            email: "jean.dupont@inawo.com",
+            telephone: "+229 97 00 00 01",
+            ville: "Cotonou",
+            poste: "Directeur Général",
+            departement: "Direction",
+            typecontrat: "CDI",
+            statut: "actif"
+        },
+        {
+            id: 2,
+            nom: "Martin",
+            prenom: "Marie",
+            affiliation: "Femme",
+            email: "marie.martin@inawo.com",
+            telephone: "+229 97 00 00 02",
+            ville: "Porto-Novo",
+            poste: "Responsable RH",
+            departement: "Ressources humaines",
+            statut: "inactif",
+            typecontrat: "CDD"
+        },
+        {
+            id: 3,
+            nom: "Durant",
+            prenom: "Pierre",
+            affiliation: "Enfant",
+            email: "pierre.durant@inawo.com",
+            telephone: "+229 97 00 00 03",
+            ville: "Parakou",
+            poste: "Comptable",
+            departement: "Finance",
+            statut: "actif",
+            typecontrat: "Stage professionnelle"
+        },
+    ]), []);
+
+    const selectedCollaborateur = useMemo(() => {
+        const fromState = state?.collaborateur;
+        if (fromState) {
+            return fromState;
+        }
+        return collaborateursData.find((item) => String(item.id) === String(id)) || null;
+    }, [state, collaborateursData, id]);
 
     const tabs = [
         { id: "informations-personnelles", label: "Informations personnelles", icon: "ri-user-3-line" },
@@ -89,31 +141,31 @@ const DetailsCollaborateur = () => {
                                                 <Col lg={6}>
                                                     <div className="mb-3">
                                                         <Label htmlFor="collabNom" className="form-label fw-semibold">Nom</Label>
-                                                        <Input id="collabNom" type="text" className="rounded-pill" value="" placeholder="Nom" disabled />
+                                                        <Input id="collabNom" type="text" className="rounded-pill" value={selectedCollaborateur?.nom || ""} placeholder="Nom" disabled />
                                                     </div>
                                                 </Col>
                                                 <Col lg={6}>
                                                     <div className="mb-3">
                                                         <Label htmlFor="collabPrenom" className="form-label fw-semibold">Prénom</Label>
-                                                        <Input id="collabPrenom" type="text" className="rounded-pill" value="" placeholder="Prénom" disabled />
+                                                        <Input id="collabPrenom" type="text" className="rounded-pill" value={selectedCollaborateur?.prenom || ""} placeholder="Prénom" disabled />
                                                     </div>
                                                 </Col>
                                                 <Col lg={6}>
                                                     <div className="mb-3">
                                                         <Label htmlFor="collabAffiliation" className="form-label fw-semibold">Affiliation</Label>
-                                                        <Input id="collabAffiliation" type="text" className="rounded-pill" value="" placeholder="Affiliation" disabled />
+                                                        <Input id="collabAffiliation" type="text" className="rounded-pill" value={selectedCollaborateur?.affiliation || ""} placeholder="Affiliation" disabled />
                                                     </div>
                                                 </Col>
                                                 <Col lg={6}>
                                                     <div className="mb-3">
                                                         <Label htmlFor="collabTelephone" className="form-label fw-semibold">Téléphone</Label>
-                                                        <Input id="collabTelephone" type="text" className="rounded-pill" value="" placeholder="Téléphone" disabled />
+                                                        <Input id="collabTelephone" type="text" className="rounded-pill" value={selectedCollaborateur?.telephone || ""} placeholder="Téléphone" disabled />
                                                     </div>
                                                 </Col>
                                                 <Col lg={6}>
                                                     <div className="mb-0">
                                                         <Label htmlFor="collabVille" className="form-label fw-semibold">Ville</Label>
-                                                        <Input id="collabVille" type="text" className="rounded-pill" value="" placeholder="Ville" disabled />
+                                                        <Input id="collabVille" type="text" className="rounded-pill" value={selectedCollaborateur?.ville || ""} placeholder="Ville" disabled />
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -125,25 +177,25 @@ const DetailsCollaborateur = () => {
                                                 <Col lg={6}>
                                                     <div className="mb-3">
                                                         <Label htmlFor="contractNom" className="form-label fw-semibold">Nom</Label>
-                                                        <Input id="contractNom" type="text" className="rounded-pill" value="" placeholder="Nom" disabled />
+                                                        <Input id="contractNom" type="text" className="rounded-pill" value={selectedCollaborateur?.nom || ""} placeholder="Nom" disabled />
                                                     </div>
                                                 </Col>
                                                 <Col lg={6}>
                                                     <div className="mb-3">
                                                         <Label htmlFor="contractPrenom" className="form-label fw-semibold">Prénom</Label>
-                                                        <Input id="contractPrenom" type="text" className="rounded-pill" value="" placeholder="Prénom" disabled />
+                                                        <Input id="contractPrenom" type="text" className="rounded-pill" value={selectedCollaborateur?.prenom || ""} placeholder="Prénom" disabled />
                                                     </div>
                                                 </Col>
                                                 <Col lg={6}>
                                                     <div className="mb-3">
                                                         <Label htmlFor="contractPoste" className="form-label fw-semibold">Poste</Label>
-                                                        <Input id="contractPoste" type="text" className="rounded-pill" value="" placeholder="Poste" disabled />
+                                                        <Input id="contractPoste" type="text" className="rounded-pill" value={selectedCollaborateur?.poste || ""} placeholder="Poste" disabled />
                                                     </div>
                                                 </Col>
                                                 <Col lg={6}>
                                                     <div className="mb-0">
                                                         <Label htmlFor="contractDepartement" className="form-label fw-semibold">Département</Label>
-                                                        <Input id="contractDepartement" type="text" className="rounded-pill" value="" placeholder="Département" disabled />
+                                                        <Input id="contractDepartement" type="text" className="rounded-pill" value={selectedCollaborateur?.departement || ""} placeholder="Département" disabled />
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -155,20 +207,20 @@ const DetailsCollaborateur = () => {
                                                 <Col lg={6}>
                                                     <div className="mb-3">
                                                         <Label htmlFor="contractNom" className="form-label fw-semibold">Nom</Label>
-                                                        <Input id="contractNom" type="text" className="rounded-pill" value="" placeholder="Nom" disabled />
+                                                        <Input id="contractNom" type="text" className="rounded-pill" value={selectedCollaborateur?.nom || ""} placeholder="Nom" disabled />
                                                     </div>
                                                 </Col>
                                                   <Col lg={6}>
                                                     <div className="mb-3">
                                                         <Label htmlFor="contractPrenom" className="form-label fw-semibold">Prénom</Label>
-                                                        <Input id="contractPrenom" type="text" className="rounded-pill" value="" placeholder="Prénom" disabled />
+                                                        <Input id="contractPrenom" type="text" className="rounded-pill" value={selectedCollaborateur?.prenom || ""} placeholder="Prénom" disabled />
                                                     </div>
                     
                                                 </Col>
                                                 <Col lg={6}>
                                                     <div className="mb-3">
                                                         <Label htmlFor="contractPoste" className="form-label fw-semibold">Type de contrat</Label>
-                                                        <Input id="contractPoste" type="text" className="rounded-pill" value="" placeholder="Type de contrat" disabled />
+                                                        <Input id="contractPoste" type="text" className="rounded-pill" value={selectedCollaborateur?.typecontrat || ""} placeholder="Type de contrat" disabled />
                                                     </div>
                                                 </Col>
                                             </Row>

@@ -372,6 +372,16 @@ const Navdata = () => {
           utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
           onClick: handleMobileMenuClose,
         },
+        {
+          id: "Contrats",
+          icon: "ri-file-text-line",
+          label: "Contrats",
+          link: generatePath("/contrats"),
+          parentId: "HumanResources",
+          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+          utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+          onClick: handleMobileMenuClose,
+        }
       ],
     },
     

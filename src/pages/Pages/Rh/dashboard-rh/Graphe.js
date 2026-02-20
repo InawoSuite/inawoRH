@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, CardHeader, Col } from "reactstrap";
 import ReactApexChart from "react-apexcharts";
-import getChartColorsArray from "../../../Components/Common/ChartsDynamicColor";
+import getChartColorsArray from "../../../../Components/Common/ChartsDynamicColor";
 
 const Graphe = ({ dataColors = '["--vz-primary", "--vz-success", "--vz-danger", "--vz-warning", "--vz-info"]', xxl = 4, xl = 4 }) => {
   var chartDonutBasicColors = getChartColorsArray(dataColors);

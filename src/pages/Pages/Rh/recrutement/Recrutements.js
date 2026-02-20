@@ -14,13 +14,13 @@ import {
   UncontrolledDropdown,
 } from "reactstrap";
 import Flatpickr from "react-flatpickr";
-import BreadCrumb from "../../../Components/Common/BreadCrumb";
-import Pagination from "../../../Components/Common/Pagination";
-import UsersByDevice from "../../DashboardAnalytics/UsersByDevice";
+import BreadCrumb from "../../../../Components/Common/BreadCrumb";
+import Pagination from "../../../../Components/Common/Pagination";
+import UsersByDevice from "../../../DashboardAnalytics/UsersByDevice";
 import Widgets from "./Widgets";
-import { jobGrid } from "../../../common/data/appsJobs";
-import SearchAndActionBar from "../../../Components/Common/SearchAndActionBar";
-import ExportCSVModal from "../../../Components/Common/ExportCSVModal";
+import { jobGrid } from "../../../../common/data/appsJobs";
+import SearchAndActionBar from "../../../../Components/Common/SearchAndActionBar";
+import ExportCSVModal from "../../../../Components/Common/ExportCSVModal";
 
 const Recrutements = () => {
   document.title = "Recrutements";

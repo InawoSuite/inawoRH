@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardBody, Col, Row } from "reactstrap";
 
-import Slack from "../../../assets/images/brands/slack.png";
+import Slack from "../../../../assets/images/brands/slack.png";
 
 const Header = () => {
   return (

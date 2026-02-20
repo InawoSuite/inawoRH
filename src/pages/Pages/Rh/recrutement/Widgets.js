@@ -1,5 +1,5 @@
 import React from "react";
-import { jobWidgets } from "../../../common/data/appsJobs";
+import { jobWidgets } from "../../../../common/data/appsJobs";
 import { Card, Col } from "reactstrap";
 import Charts from "./Charts";
 

@@ -1,18 +1,20 @@
 import React, { useEffect, useState, useMemo, useCallback } from "react";
-import { Col, Container, Row } from "reactstrap";
-import { Link } from "react-router-dom";
-import BreadCrumb from "../../../Components/Common/BreadCrumb";
-import TableContainer from "../../../Components/Common/TableContainer";
-import Loader from "../../../Components/Common/Loader";
-import { useProfile } from "../../../Components/Hooks/UserHooks";
+import { Col, Container, Row, Badge } from "reactstrap";
+import { Link, useParams } from "react-router-dom";
+import BreadCrumb from "../../../../Components/Common/BreadCrumb";
+import TableContainer from "../../../../Components/Common/TableContainer";
+import Loader from "../../../../Components/Common/Loader";
+import { useProfile } from "../../../../Components/Hooks/UserHooks";
 import { toast } from "react-toastify";
-import ExportCSVModal from "../../../Components/Common/ExportCSVModal";
-import SearchAndActionBar from "../../../Components/Common/SearchAndActionBar";
-import EmptyDataCard from "../../../Components/Common/EmptyDataCard";
-import Pagination from "../../../Components/Common/Pagination";
-import { BaseUrl } from "../../APIKey/ApiKey";
+import ExportCSVModal from "../../../../Components/Common/ExportCSVModal";
+import SearchAndActionBar from "../../../../Components/Common/SearchAndActionBar";
+import EmptyDataCard from "../../../../Components/Common/EmptyDataCard";
+import Pagination from "../../../../Components/Common/Pagination";
+import { BaseUrl } from "../../../APIKey/ApiKey";
+import DeleteModal from "../../../../Components/Common/DeleteModal";
 
 const Collaborateurs = () => {
+  const { entreprise } = useParams();
   const { userProfile, token } = useProfile();
   
   // États avec données statiques
@@ -65,6 +67,46 @@ const Collaborateurs = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 50;
+  const [deleteModal, setDeleteModal] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState(null);
+    
+  
+  // ✅ Fonction pour obtenir le label du statut
+  const getStatusLabel = useCallback((statusValue) => {
+    const statusLabels = {
+      'actif': 'Actif',
+      'inactif': 'Inactif'
+    };
+    return statusLabels[statusValue] || 'Inconnu';
+  }, []);
+
+  // ✅ Fonction pour obtenir la couleur du statut
+  const getStatusColor = useCallback((statusValue) => {
+    const statusColors = {
+      'actif': 'success',
+      'inactif': 'danger'
+    };
+    return statusColors[statusValue] || 'secondary';
+  }, []);
+
+     const handleDeleteClick = (item) => {
+            setItemToDelete(item);
+            setDeleteModal(true);
+        };
+    
+        const handleDeleteConfirm = () => {
+            if (itemToDelete) {
+                setAvancePretList(avancePretList.filter(i => i.id !== itemToDelete.id));
+                toast.success("Suppression effectuée avec succès");
+                setDeleteModal(false);
+                setItemToDelete(null);
+            }
+        };
+    
+        const handleDeleteClose = () => {
+            setDeleteModal(false);
+            setItemToDelete(null);
+        };
 
   // Récupération des collaborateurs (désactivé - utilisation de données statiques)
   /*
@@ -211,12 +253,19 @@ const Collaborateurs = () => {
           header: "Nom",
           accessorKey: "nom",
           enableColumnFilter: false,
-          cell: (cell) => (
-            <div className="d-flex align-items-center gap-2">
-              <i className="ri-user-fill text-primary"></i>
-              {cell.getValue() || "Non défini"}
-            </div>
-          ),
+          cell: (cellProps) => {
+            const collab = cellProps.row.original;
+            return (
+              <Link
+                to={`/${entreprise}/collaborateur-details/${collab.id}`}
+                state={{ collaborateur: collab }}
+                className="d-flex align-items-center gap-2 text-body fw-medium"
+              >
+                <i className="ri-user-fill text-primary"></i>
+                {cellProps.getValue() || "Non défini"}
+              </Link>
+            );
+          },
         },
         {
           header: "Prénom",
@@ -246,21 +295,15 @@ const Collaborateurs = () => {
         accessorKey: "statut",
         enableColumnFilter: false,
         cell: (cell) => {
-          const status = cell.getValue();
-          const normalizedStatus = (status || "").toLowerCase();
-          const badgeClass =
-            normalizedStatus === "actif"
-              ? "badge bg-success rounded-pill"
-              : normalizedStatus === "inactif"
-              ? "badge bg-danger rounded-pill"
-              : "badge bg-secondary rounded-pill";
-          const label =
-            normalizedStatus === "actif"
-              ? "Actif"
-              : normalizedStatus === "inactif"
-              ? "Inactif"
-              : "Inconnu";
-          return <span className={badgeClass} style={{fontSize: "0.65rem", padding: "0.25rem 0.5rem"}}>{label}</span>;
+          const statusValue = cell.getValue();
+          return (
+            <Badge 
+              color={getStatusColor(statusValue)} 
+              className="rounded-pill"
+            >
+              {getStatusLabel(statusValue)}
+            </Badge>
+          );
         },
       },
       {
@@ -272,31 +315,33 @@ const Collaborateurs = () => {
           return (
             <div className="gap-1">
               <Link
-                to="/:entreprise/collaborateur-details"
-                className="text-primary p-2"
+                to={`/${entreprise}/collaborateur-details/${collab.id}`}
+                state={{ collaborateur: collab }}
+                className="text-info p-2"
                 title="Voir détails"
               >
                 <i className="ri-eye-fill fs-16"></i>
               </Link>
               <Link
-                to={`/:entreprise/collaborateur-edit/${collab.id}`}
-                className="text-warning p-2"
+                to={`/${entreprise}/collaborateur-edit/${collab.id}`}
+                state={{ collaborateur: collab }}
+                className="text-primary"
                 title="Modifier"
               >
                 <i className="ri-pencil-fill fs-16"></i>
               </Link>
               <Link
-                to="#"
-                className="text-danger p-2"
-                title="Supprimer"
-                onClick={() => {
-                  if (window.confirm("Confirmer la suppression ?")) {
-                    toast.info("Suppression non implémentée");
-                  }
-                }}
-              >
-                <i className="ri-delete-bin-5-fill fs-16"></i>
-              </Link>
+                              
+                               to="#"
+                               className="text-danger p-2"
+                              title="Supprimer"
+                               onClick={(e) => {
+                              e.preventDefault();
+                              handleDeleteClick(cellProps.row.original);
+                                }}
+                                       >
+                               <i className="ri-delete-bin-5-fill fs-16"></i>
+                                 </Link>
             </div>
           );
         },
@@ -350,7 +395,8 @@ const Collaborateurs = () => {
           const fullName = [collab.prenom, collab.nom].filter(Boolean).join(" ");
           return (
             <Link
-              to="/:entreprise/collaborateur-details"
+              to={`/${entreprise}/collaborateur-details/${collab.id}`}
+              state={{ collaborateur: collab }}
               className="fw-medium text-body"
             >
               {fullName || "Sans nom"}
@@ -379,21 +425,15 @@ const Collaborateurs = () => {
         accessorKey: "statut",
         enableColumnFilter: false,
         cell: (cell) => {
-          const status = cell.getValue();
-          const normalizedStatus = (status || "").toLowerCase();
-          const badgeClass =
-            normalizedStatus === "actif"
-              ? "badge bg-success"
-              : normalizedStatus === "inactif"
-              ? "badge bg-danger"
-              : "badge bg-secondary";
-          const label =
-            normalizedStatus === "actif"
-              ? "Actif"
-              : normalizedStatus === "inactif"
-              ? "Inactif"
-              : "Inconnu";
-          return <span className={badgeClass}>{label}</span>;
+          const statusValue = cell.getValue();
+          return (
+            <Badge 
+              color={getStatusColor(statusValue)} 
+              className="rounded-pill"
+            >
+              {getStatusLabel(statusValue)}
+            </Badge>
+          );
         },
       },
       {
@@ -405,14 +445,16 @@ const Collaborateurs = () => {
           return (
             <div className="gap-1">
               <Link
-                to="/:entreprise/collaborateur-details"
-                className="text-primary p-2"
+                to={`/${entreprise}/collaborateur-details/${collab.id}`}
+                state={{ collaborateur: collab }}
+                className="text-info"
                 title="Voir détails"
               >
                 <i className="ri-eye-fill fs-16"></i>
               </Link>
               <Link
-                to={`/:entreprise/collaborateur-edit/${collab.id}`}
+                to={`/${entreprise}/collaborateur-edit/${collab.id}`}
+                state={{ collaborateur: collab }}
                 className="text-warning p-2"
                 title="Modifier"
               >
@@ -435,7 +477,7 @@ const Collaborateurs = () => {
         },
       },
     ];
-  }, [activeTab, currentPage, itemsPerPage]);
+  }, [activeTab, currentPage, itemsPerPage, entreprise]);
 
   // Gestion des onglets
   const handleTabChange = useCallback((tabKey) => {
@@ -470,7 +512,7 @@ const Collaborateurs = () => {
             showSearch={true}
             addButtonLink="/:entreprise/collaborateur-add"
             addButtonText="Ajouter un collaborateur"
-            addButtonIcon="ri-user-add-line"
+            addButtonIcon="ri-file-add-line"
             showAddButton={true}
             onExportClick={() => setIsExportCSV(true)}
             exportButtonText="Exporter"
@@ -527,6 +569,11 @@ const Collaborateurs = () => {
             )}
           </Col>
         </Row>
+         <DeleteModal
+                            show={deleteModal}
+                            onDeleteClick={handleDeleteConfirm}
+                            onCloseClick={handleDeleteClose}
+                        />
       </Container>
     </div>
   );
