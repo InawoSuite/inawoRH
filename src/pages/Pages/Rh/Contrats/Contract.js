@@ -2028,7 +2028,7 @@ const Contrat = () => {
                                     </div>
                                 </div>
 
-                                <div id="file-overview" className="h-100">
+                                <div id="file-overview" className="h-100" style={{ display: 'none' }}>
                                     <div className="d-flex h-100 flex-column">
                                         <div className="d-flex align-items-center pb-3 border-bottom border-bottom-dashed mb-3 gap-2">
                                             <h5 className="flex-grow-1 fw-semibold mb-0">Aperçu du fichier</h5>
