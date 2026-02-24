@@ -250,11 +250,12 @@ const Collaborateurs = () => {
           },
         },
         {
-          header: "Nom",
+          header: "Nom complet",
           accessorKey: "nom",
           enableColumnFilter: false,
           cell: (cellProps) => {
             const collab = cellProps.row.original;
+            const fullName = [collab.nom, collab.prenom].filter(Boolean).join(" ");
             return (
               <Link
                 to={`/${entreprise}/collaborateur-details/${collab.id}`}
@@ -262,16 +263,10 @@ const Collaborateurs = () => {
                 className="d-flex align-items-center gap-2 text-body fw-medium"
               >
                 <i className="ri-user-fill text-primary"></i>
-                {cellProps.getValue() || "Non défini"}
+                {fullName || "Non défini"}
               </Link>
             );
           },
-        },
-        {
-          header: "Prénom",
-          accessorKey: "prenom",
-          enableColumnFilter: false,
-          cell: (cell) => cell.getValue() || "Non défini",
         },
         {
           header: "Affiliation",
@@ -505,20 +500,22 @@ const Collaborateurs = () => {
           }
         />
         <Row>
-          <SearchAndActionBar
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            searchPlaceholder="Chercher un collaborateur..."
-            showSearch={true}
-            addButtonLink="/:entreprise/collaborateur-add"
-            addButtonText="Ajouter un collaborateur"
-            addButtonIcon="ri-file-add-line"
-            showAddButton={true}
-            onExportClick={() => setIsExportCSV(true)}
-            exportButtonText="Exporter"
-            exportButtonIcon="ri-file-upload-line"
-            showExportButton={true}
-          />
+          <Col lg={12}>
+            <SearchAndActionBar
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+              searchPlaceholder="Chercher un collaborateur..."
+              showSearch={true}
+              addButtonLink="/:entreprise/collaborateur-add"
+              addButtonText="Ajouter un collaborateur"
+              addButtonIcon="ri-file-add-line"
+              showAddButton={true}
+              onExportClick={() => setIsExportCSV(true)}
+              exportButtonText="Exporter"
+              exportButtonIcon="ri-file-upload-line"
+              showExportButton={true}
+            />
+          </Col>
 
           <Col lg={12}>
             {loading ? (

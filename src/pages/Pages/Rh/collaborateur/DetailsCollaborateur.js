@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import {
     Container,
     Row,
@@ -7,6 +7,7 @@ import {
     CardBody,
     Label,
     Input,
+    Table,
     Nav,
     NavItem,
     NavLink,
@@ -17,9 +18,10 @@ import { Link, useLocation, useParams } from "react-router-dom";
 import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 
 const DetailsCollaborateur = () => {
-    const { id } = useParams();
+    const { id, entreprise } = useParams();
     const { state } = useLocation();
     const [activeTab, setActiveTab] = useState("informations-personnelles");
+    const tabsScrollRef = useRef(null);
 
     const collaborateursData = useMemo(() => ([
         {
@@ -71,6 +73,44 @@ const DetailsCollaborateur = () => {
         return collaborateursData.find((item) => String(item.id) === String(id)) || null;
     }, [state, collaborateursData, id]);
 
+    const contactUrgenceRows = useMemo(() => {
+        const contactsFromState = state?.collaborateur?.contactsUrgence;
+        if (Array.isArray(contactsFromState) && contactsFromState.length > 0) {
+            return contactsFromState;
+        }
+
+        if (!selectedCollaborateur) {
+            return [];
+        }
+
+        return [
+            {
+                id: 1,
+                nom: selectedCollaborateur.nom || "",
+                prenom: selectedCollaborateur.prenom || "",
+                contact: selectedCollaborateur.telephone || "",
+                lien: selectedCollaborateur.affiliation || "",
+                ville: selectedCollaborateur.ville || "",
+            },
+        ];
+    }, [state, selectedCollaborateur]);
+
+    const getEditSectionByTab = () => {
+        switch (activeTab) {
+            case "informations-personnelles":
+                return "informations-personnelles";
+            case "informations-contractuelles":
+            case "affectation":
+                return "informations-contractuelles";
+            case "experience-affectation":
+                return "historique-professionnelle";
+            default:
+                return "informations-personnelles";
+        }
+    };
+
+    const editCollaborateurPath = `/${entreprise}/collaborateur-edit/${selectedCollaborateur?.id || id}?section=${getEditSectionByTab()}`;
+
     const tabs = [
         { id: "informations-personnelles", label: "Informations personnelles", icon: "ri-user-3-line" },
         { id: "informations-contractuelles", label: "Informations contractuelles", icon: "ri-file-list-3-line" },
@@ -82,6 +122,35 @@ const DetailsCollaborateur = () => {
         { id: "presence", label: "Présence", icon: "ri-user-follow-line" },
         { id: "informations-pointages", label: "Informations de pointages", icon: "ri-time-line" },
     ];
+
+    const activeTabIndex = useMemo(
+        () => tabs.findIndex((tab) => tab.id === activeTab),
+        [tabs, activeTab]
+    );
+
+    const handlePrevTab = () => {
+        if (activeTabIndex > 0) {
+            setActiveTab(tabs[activeTabIndex - 1].id);
+        }
+    };
+
+    const handleNextTab = () => {
+        if (activeTabIndex < tabs.length - 1) {
+            setActiveTab(tabs[activeTabIndex + 1].id);
+        }
+    };
+
+    useEffect(() => {
+        const container = tabsScrollRef.current;
+        if (!container) {
+            return;
+        }
+
+        const activeItem = container.querySelector(`[data-tab-id="${activeTab}"]`);
+        if (activeItem) {
+            activeItem.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+        }
+    }, [activeTab]);
 
     const tabContents = {
         "informations-contractuelles": "Section dédiée aux informations contractuelles du collaborateur.",
@@ -98,7 +167,7 @@ const DetailsCollaborateur = () => {
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-          title="&nbsp;Collaborateurs"
+          title="&nbsp; Détails Collaborateurs"
           pageTitle={
             <>
               <i className="ri-team-line"></i>
@@ -114,21 +183,47 @@ const DetailsCollaborateur = () => {
                         <Nav
                             className="nav-tabs nav-tabs-custom nav-success py-4 mb-0 rounded-top-20"
                             role="tablist"
-                            style={{ flexWrap: "nowrap", overflowX: "auto", overflowY: "hidden" }}
                         >
-                            {tabs.map((tab) => (
-                                <NavItem key={tab.id} style={{ flex: "0 0 auto" }}>
-                                <NavLink
-                                    key={tab.id}
-                                    className={activeTab === tab.id ? "active" : ""}
-                                    style={{ cursor: "pointer", whiteSpace: "nowrap" }}
-                                    onClick={() => setActiveTab(tab.id)}
-                                >
-                                    <i className={tab.icon}></i>
-                                    <span>{tab.label}</span>
-                                </NavLink>
-                                </NavItem>
-                            ))}
+                            <div className="tabs-nav">
+                                <div className="tabs-nav-controls">
+                                    <button
+                                        type="button"
+                                        className="tabs-nav-btn"
+                                        onClick={handlePrevTab}
+                                        disabled={activeTabIndex <= 0}
+                                        aria-label="Onglet precedent"
+                                    >
+                                        <i className="ri-arrow-left-s-line"></i>
+                                    </button>
+                                    <button
+                                        type="button"
+                                        className="tabs-nav-btn"
+                                        onClick={handleNextTab}
+                                        disabled={activeTabIndex >= tabs.length - 1}
+                                        aria-label="Onglet suivant"
+                                    >
+                                        <i className="ri-arrow-right-s-line"></i>
+                                    </button>
+                                </div>
+                                <div ref={tabsScrollRef} className="tabs-scroll">
+                                    <div className="d-flex" style={{ flexWrap: "nowrap" }}>
+                                        {tabs.map((tab) => (
+                                            <NavItem key={tab.id} style={{ flex: "0 0 auto" }}>
+                                                <NavLink
+                                                    key={tab.id}
+                                                    className={activeTab === tab.id ? "active" : ""}
+                                                    style={{ cursor: "pointer", whiteSpace: "nowrap" }}
+                                                    onClick={() => setActiveTab(tab.id)}
+                                                    data-tab-id={tab.id}
+                                                >
+                                                    <i className={tab.icon}></i>
+                                                    <span>{tab.label}</span>
+                                                </NavLink>
+                                            </NavItem>
+                                        ))}
+                                    </div>
+                                </div>
+                            </div>
                         </Nav>
 
                         <TabContent activeTab={activeTab} className="p-3">
@@ -152,21 +247,77 @@ const DetailsCollaborateur = () => {
                                                 </Col>
                                                 <Col lg={6}>
                                                     <div className="mb-3">
-                                                        <Label htmlFor="collabAffiliation" className="form-label fw-semibold">Affiliation</Label>
-                                                        <Input id="collabAffiliation" type="text" className="rounded-pill" value={selectedCollaborateur?.affiliation || ""} placeholder="Affiliation" disabled />
+                                                        <Label htmlFor="collabDateNaissance" className="form-label fw-semibold">Date de naissance</Label>
+                                                        <Input id="collabDateNaissance" type="text" className="rounded-pill" value={selectedCollaborateur?.dateNaissance || selectedCollaborateur?.date_naissance || ""} placeholder="Date de naissance" disabled />
                                                     </div>
                                                 </Col>
                                                 <Col lg={6}>
                                                     <div className="mb-3">
-                                                        <Label htmlFor="collabTelephone" className="form-label fw-semibold">Téléphone</Label>
-                                                        <Input id="collabTelephone" type="text" className="rounded-pill" value={selectedCollaborateur?.telephone || ""} placeholder="Téléphone" disabled />
+                                                        <Label htmlFor="collabLieuNaissance" className="form-label fw-semibold">Lieu de naissance</Label>
+                                                        <Input id="collabLieuNaissance" type="text" className="rounded-pill" value={selectedCollaborateur?.lieuNaissance || selectedCollaborateur?.lieu_naissance || ""} placeholder="Lieu de naissance" disabled />
+                                                    </div>
+                                                </Col>
+                                                <Col lg={6}>
+                                                    <div className="mb-3">
+                                                        <Label htmlFor="collabEnfants" className="form-label fw-semibold">Nombre d&apos;enfants à charge</Label>
+                                                        <Input id="collabEnfants" type="text" className="rounded-pill" value={selectedCollaborateur?.enfants || selectedCollaborateur?.nombreEnfants || ""} placeholder="Nombre d'enfants à charge" disabled />
+                                                    </div>
+                                                </Col>
+                                                <Col lg={6}>
+                                                    <div className="mb-3">
+                                                        <Label htmlFor="collabStatutMatrimonial" className="form-label fw-semibold">Statut matrimonial</Label>
+                                                        <Input id="collabStatutMatrimonial" type="text" className="rounded-pill" value={selectedCollaborateur?.statutMatrimonial || selectedCollaborateur?.statut_matrimonial || ""} placeholder="Statut matrimonial" disabled />
+                                                    </div>
+                                                </Col>
+                                                <Col lg={6}>
+                                                    <div className="mb-3">
+                                                        <Label htmlFor="collabAdresse" className="form-label fw-semibold">Adresse</Label>
+                                                        <Input id="collabAdresse" type="text" className="rounded-pill" value={selectedCollaborateur?.adresse || ""} placeholder="Adresse" disabled />
+                                                    </div>
+                                                </Col>
+                                                <Col lg={6}>
+                                                    <div className="mb-3">
+                                                        <Label htmlFor="collabPays" className="form-label fw-semibold">Pays</Label>
+                                                        <Input id="collabPays" type="text" className="rounded-pill" value={selectedCollaborateur?.pays || ""} placeholder="Pays" disabled />
                                                     </div>
                                                 </Col>
                                                 <Col lg={6}>
                                                     <div className="mb-0">
-                                                        <Label htmlFor="collabVille" className="form-label fw-semibold">Ville</Label>
-                                                        <Input id="collabVille" type="text" className="rounded-pill" value={selectedCollaborateur?.ville || ""} placeholder="Ville" disabled />
+                                                        <Label htmlFor="collabTelephone" className="form-label fw-semibold">Contact</Label>
+                                                        <Input id="collabTelephone" type="text" className="rounded-pill" value={selectedCollaborateur?.telephone || selectedCollaborateur?.contact || ""} placeholder="Contact" disabled />
                                                     </div>
+                                                </Col>
+                                            </Row>
+
+                                            <Row className="mt-4">
+                                                <Col lg={12}>
+                                                    <h6 className="text-uppercase text-muted mb-3">Contact d'urgence</h6>
+                                                    {contactUrgenceRows.length > 0 ? (
+                                                        <Table responsive className="align-middle mb-0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th>Nom</th>
+                                                                    <th>Prenom</th>
+                                                                    <th>Contact</th>
+                                                                    <th>Affiliation</th>
+                                                                    <th>Ville</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                {contactUrgenceRows.map((item, index) => (
+                                                                    <tr key={item.id || index}>
+                                                                        <td>{item.nom || ""}</td>
+                                                                        <td>{item.prenom || ""}</td>
+                                                                        <td>{item.contact || ""}</td>
+                                                                        <td>{item.lien || item.affiliation || ""}</td>
+                                                                        <td>{item.ville || ""}</td>
+                                                                    </tr>
+                                                                ))}
+                                                            </tbody>
+                                                        </Table>
+                                                    ) : (
+                                                        <p className="text-muted mb-0">Aucun contact d'urgence.</p>
+                                                    )}
                                                 </Col>
                                             </Row>
                                         </div>
@@ -244,7 +395,16 @@ const DetailsCollaborateur = () => {
 
                 <Row className="mb-3">
           <Col lg={12} className="text-end">
-            <Link to="/:entreprise/collaborateurs" className="btn btn-success" style={{ borderRadius: "20px" }}>
+                        <Link
+                            to={editCollaborateurPath}
+                            state={{ collaborateur: selectedCollaborateur }}
+                            className="btn btn-primary me-2"
+                            style={{ borderRadius: "20px" }}
+                        >
+                            <i className="ri-pencil-line me-1"></i>
+                            Modifier
+                        </Link>
+                        <Link to={`/${entreprise}/collaborateurs`} className="btn btn-success" style={{ borderRadius: "20px" }}>
               <i className="ri-arrow-left-line me-1"></i>
               Retour
             </Link>

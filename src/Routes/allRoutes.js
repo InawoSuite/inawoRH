@@ -259,6 +259,7 @@ import Contrat from "../pages/Pages/Rh/Contrats/Contract";
 import AddContract from "../pages/Pages/Rh/Contrats/AddContract";
 import EditContract from "../pages/Pages/Rh/Contrats/EditContract";
 import Pointage from "../pages/Pages/Rh/Pointage/Pointage";
+import PointageParam from "../pages/Pages/Parametres/PointageParam";
 import DetailContract from "../pages/Pages/Rh/Contrats/DetailContract";
 import Settings from "../pages/Pages/Profile/Settings/Profile/Settings";
 import FileManager from "../pages/FileManager";
@@ -450,6 +451,14 @@ const authProtectedRoutes = [
       component: (
         <RouteWrapper>
           <Pointage />
+        </RouteWrapper>
+      ),
+    },
+    {
+      path: "/:entreprise/pointage-param",
+      component: (
+        <RouteWrapper>
+          <PointageParam />
         </RouteWrapper>
       ),
     },
