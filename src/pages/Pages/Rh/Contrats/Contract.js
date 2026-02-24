@@ -1869,7 +1869,7 @@ const Contrat = () => {
                                                     <option value="Documents">Documents</option>
                                                 </select>
 
-                                                <button className="btn btn-success text-nowrap create-folder-modal flex-shrink-0 rounded-pill" onClick={() => handleFolderClicks()}><i className="ri-add-line align-bottom me-1"></i> Créer des dossiers</button>
+                                                <button className="btn btn-primary text-nowrap create-folder-modal flex-shrink-0 rounded-pill" onClick={() => handleFolderClicks()}><i className="ri-file-add-line align-bottom me-1"></i> Créer des dossiers</button>
                                             </div>
                                         </Col>
                                     </Row>
@@ -1918,7 +1918,7 @@ const Contrat = () => {
                                     <div className="d-flex align-items-center mb-3">
                                         <h5 className="flex-grow-1 fs-16 mb-0" id="filetype-title">Fichiers récents</h5>
                                         <div className="flex-shrink-0">
-                                            <button className="btn btn-success createFile-modal rounded-pill" onClick={() => handleFileClicks()}><i className="ri-add-line align-bottom me-1"></i> Créer un fichier</button>
+                                            <button className="btn btn-primary createFile-modal rounded-pill" onClick={() => handleFileClicks()}><i className="ri-file-add-line align-bottom me-1"></i> Créer un fichier</button>
                                         </div>
                                     </div>
                                     <TableContainer

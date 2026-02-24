@@ -18,7 +18,22 @@ const SimpleDonutCharts = ({ dataColors }) => {
               }
         },
         legend: {
-            show: false
+            show: true,
+            position: 'bottom',
+            horizontalAlign: 'center',
+            fontSize: '14px',
+            markers: {
+                width: 10,
+                height: 10,
+                radius: 12,
+            },
+            itemMargin: {
+                horizontal: 10,
+                vertical: 5
+            },
+            formatter: function(seriesName, opts) {
+                return seriesName + ":  " + opts.w.globals.series[opts.seriesIndex].toFixed(2) + " Go"
+            }
         },
         colors: chartDonutBasicColors
     };
