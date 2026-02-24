@@ -7,72 +7,73 @@ const JobDescription = () => {
     <React.Fragment>
       <Card className="rounded-4 border-0 shadow-sm">
         <CardBody>
-          <h5 className="mb-3">Job Description</h5>
+          <h5 className="mb-3">Description du poste</h5>
 
           <p className="text-muted mb-2">
-            A Product Designer of a company is responsible for the user
-            experience of a product, which usually includes taking direction on
-            the business goals and objectives from product management. Product
-            Designers are typically associated with the vis ual or tactile
-            aspects of a product but sometimes they can also play a role in the
-            information architecture and system design of a product.
+            Un(e) Designer Produit dans une entreprise est responsable de l'expérience 
+            utilisateur d'un produit, ce qui inclut généralement la prise en compte 
+            des objectifs commerciaux définis par la gestion de produit. Les designers 
+            produit sont généralement associés aux aspects visuels ou tactiles d'un 
+            produit, mais ils peuvent également jouer un rôle dans l'architecture de 
+            l'information et la conception système d'un produit.
           </p>
           <p className="text-muted mb-4">
-            Product designer is an exceptional career choice. The demand for
-            product designers is increasing with each passing day but there is a
-            huge shortage for a skilful product designer in the market. With
-            hard work and an apt skill set, a product designer can make a
-            handsome amount of money.
+            Le métier de designer produit est un choix de carrière exceptionnel. La 
+            demande pour les designers produit augmente chaque jour, mais il existe 
+            une énorme pénurie de designers produit qualifiés sur le marché. Avec du 
+            travail acharné et un ensemble de compétences approprié, un designer 
+            produit peut gagner une somme d'argent considérable.
           </p>
+          
           <div>
-            <h5 className="mb-3">Responsibilities of Product Designer</h5>
+            <h5 className="mb-3">Responsabilités du Designer Produit</h5>
             <p className="text-muted">
-              Provided below are the responsibilities of a Product Designer:
+              Voici les responsabilités d'un Designer Produit :
             </p>
             <ul className="text-muted vstack gap-2">
               <li>
-                To visualise and create drawings and design concepts to
-                determine the best product.
+                Visualiser et créer des dessins et concepts de design pour 
+                déterminer le meilleur produit.
               </li>
               <li>
-                To present ideas and concepts to relevant team members for
-                brainstorming.
+                Présenter les idées et concepts aux membres de l'équipe concernés 
+                pour des séances de brainstorming.
               </li>
-              <li>To employ design concepts into functional prototypes.</li>
+              <li>Transformer les concepts de design en prototypes fonctionnels.</li>
               <li>
-                To analyse, modify and revise existing designs or products and
-                meet customer expectations.
+                Analyser, modifier et réviser les designs ou produits existants 
+                pour répondre aux attentes des clients.
               </li>
               <li>
-                To coordinate with team members and to ensure accurate
-                efficiency in the design phase.
+                Coordonner avec les membres de l'équipe et assurer une efficacité 
+                précise dans la phase de conception.
               </li>
-              <li>Excellent attention to detail</li>
-              <li>Meticulous and diligent</li>
+              <li>Excellent sens du détail</li>
+              <li>Méticuleux(se) et assidu(e)</li>
             </ul>
           </div>
 
           <div>
-            <h5 className="mb-3">Skill & Experience</h5>
+            <h5 className="mb-3">Compétences & Expérience</h5>
             <ul className="text-muted vstack gap-2">
-              <li>Communication skills</li>
-              <li>Sound visualisation abilities</li>
-              <li>Observation skills</li>
-              <li>Problem-solving abilities</li>
+              <li>Compétences en communication</li>
+              <li>Bonnes capacités de visualisation</li>
+              <li>Capacité d'observation</li>
+              <li>Capacités de résolution de problèmes</li>
               <li>
-                Eye for aesthetic design and understanding of customer appeal
+                Sens de l'esthétique et compréhension des préférences des clients
               </li>
-              <li>Artistic & innovative flair</li>
-              <li>Strong knowledge of the industry & market trends</li>
+              <li>Esprit artistique et innovant</li>
+              <li>Bonne connaissance de l'industrie et des tendances du marché</li>
               <li>
-                Relevant work experience in a particular field is mandatory
+                Expérience professionnelle pertinente dans le domaine requise
               </li>
             </ul>
           </div>
 
           <ul className="list-inline mb-0">
             <li className="list-inline-item">
-              <h5 className="mb-0">Share this job:</h5>
+              <h5 className="mb-0">Partager cette offre :</h5>
             </li>
             <li className="list-inline-item">
               <Link to="#" className="btn btn-icon btn-soft-info">

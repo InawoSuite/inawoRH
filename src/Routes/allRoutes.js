@@ -269,6 +269,10 @@ import CongeEtAbsence from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsence"
 import CongeEtAbsenceForm from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsenceForm";
 import CongeEtAbsenceAdd from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsenceAdd";
 import CongeEtAbsenceEdit from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsenceEdit";
+import Evaluation from "../pages/Pages/Rh/evaluations/Evaluation";
+import EvaluationForm from "../pages/Pages/Rh/evaluations/EvaluationForm";
+import EvaluationAdd from "../pages/Pages/Rh/evaluations/EvaluationAdd";
+import EvaluationEdit from "../pages/Pages/Rh/evaluations/EvaluationEdit";
 
 import AddContract from "../pages/Pages/Rh/Contrats/AddContract";
 import EditContract from "../pages/Pages/Rh/Contrats/EditContract";
@@ -892,6 +896,38 @@ const authProtectedRoutes = [
     component: (
       <RouteWrapper>
         <CongeEtAbsenceEdit />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/evaluation",
+    component: (
+      <RouteWrapper>
+        <Evaluation />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/evaluation-form",
+    component: (
+      <RouteWrapper>
+        <EvaluationForm />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/evaluation-add",
+    component: (
+      <RouteWrapper>
+        <EvaluationAdd />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/evaluation-edit/:id",
+    component: (
+      <RouteWrapper>
+        <EvaluationEdit />
       </RouteWrapper>
     ),
   },

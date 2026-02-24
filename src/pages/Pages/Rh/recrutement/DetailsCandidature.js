@@ -13,19 +13,19 @@ import avatar5 from "../../../../assets/images/users/avatar-5.jpg";
 
 const USER_DATA = {
     name: "Anna Adame",
-    role: "Owner & Founder",
-    location: "California, United States",
+    role: "Propriétaire & Fondatrice",
+    location: "Californie, États-Unis",
     company: "Themesbrand",
     avatar: avatar1,
-    followers: "24.3K",
-    following: "1.3K",
+    followers: "24,3 k",
+    following: "1,3 k",
     fullName: "Anna Adame",
     mobile: "+1 (987) 654-3210",
     email: "anna.adame@velzon.com",
-    joiningDate: "15 Mar, 2020",
-    about: "Hi I'm Anna Adame, It will be as simple as Occidental; in fact, it will be Occidental. To an English person, it will seem like simplified English, as a skeptical Cambridge friend of mine told me what Occidental is European languages are members of the same family.",
-    aboutExtended: "You always want to make sure that your fonts work well together and try to limit the number of fonts you use to three or less. Experiment and play around with the fonts that you already have in the software you're working with reputable font websites.",
-    designation: "Lead Designer",
+    joiningDate: "15 mars 2020",
+    about: "Bonjour, je suis Anna Adame. Ce sera aussi simple que l'occidental ; en fait, ce sera occidental. Pour un Anglais, cela ressemblera à de l'anglais simplifié, comme me l'a dit un ami sceptique de Cambridge à propos de ce que l'occidental est : les langues européennes sont membres de la même famille.",
+    aboutExtended: "Vous voulez toujours vous assurer que vos polices fonctionnent bien ensemble et essayez de limiter le nombre de polices que vous utilisez à trois ou moins. Expérimentez et jouez avec les polices que vous avez déjà dans le logiciel avec lequel vous travaillez sur des sites Web de polices réputés.",
+    designation: "Designer Principal",
     website: "www.velzon.com"
 };
 
@@ -35,36 +35,36 @@ const SKILLS = [
 ];
 
 const SUGGESTIONS = [
-    { id: 1, name: "John Doe", role: "UI Designer", avatar: avatar2, mutual: 5 },
-    { id: 2, name: "Sarah Smith", role: "Developer", avatar: avatar3, mutual: 3 },
-    { id: 3, name: "Mike Johnson", role: "Project Manager", avatar: avatar4, mutual: 8 },
-    { id: 4, name: "Emma Wilson", role: "UX Designer", avatar: avatar5, mutual: 2 }
+    { id: 1, name: "Jean Dupont", role: "Designer UI", avatar: avatar2, mutual: 5 },
+    { id: 2, name: "Sarah Martin", role: "Développeuse", avatar: avatar3, mutual: 3 },
+    { id: 3, name: "Michel Durand", role: "Chef de Projet", avatar: avatar4, mutual: 8 },
+    { id: 4, name: "Emma Wilson", role: "Designeuse UX", avatar: avatar5, mutual: 2 }
 ];
 
 const POPULAR_POSTS = [
     { 
         id: 1, 
-        title: "10 UI Design Tips for Beginners", 
+        title: "10 conseils de design UI pour débutants", 
         image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
-        date: "15 Jan 2024",
+        date: "15 janv. 2024",
         author: "Anna Adame",
         likes: 234,
         comments: 45
     },
     { 
         id: 2, 
-        title: "React Best Practices 2024", 
+        title: "Meilleures pratiques React 2024", 
         image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
-        date: "12 Jan 2024",
+        date: "12 janv. 2024",
         author: "Anna Adame",
         likes: 189,
         comments: 32
     },
     { 
         id: 3, 
-        title: "Mastering Figma Components", 
+        title: "Maîtriser les composants Figma", 
         image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
-        date: "08 Jan 2024",
+        date: "8 janv. 2024",
         author: "Anna Adame",
         likes: 143,
         comments: 19
@@ -72,33 +72,33 @@ const POPULAR_POSTS = [
 ];
 
 const RECENT_ACTIVITIES = [
-    { id: 1, user: "John Doe", action: "created a new project", project: "E-commerce App", time: "2 hours ago", icon: "ri-folder-4-line" },
-    { id: 2, user: "Sarah Smith", action: "commented on", project: "Dashboard Design", time: "5 hours ago", icon: "ri-chat-4-line" },
-    { id: 3, user: "Mike Johnson", action: "updated task", project: "Bug Fixing", time: "1 day ago", icon: "ri-task-line" },
-    { id: 4, user: "Emma Wilson", action: "uploaded files to", project: "Mobile App", time: "2 days ago", icon: "ri-upload-line" }
+    { id: 1, user: "Jean Dupont", action: "a créé un nouveau projet", project: "Application E-commerce", time: "il y a 2 heures", icon: "ri-folder-4-line" },
+    { id: 2, user: "Sarah Martin", action: "a commenté sur", project: "Design du tableau de bord", time: "il y a 5 heures", icon: "ri-chat-4-line" },
+    { id: 3, user: "Michel Durand", action: "a mis à jour la tâche", project: "Correction de bugs", time: "il y a 1 jour", icon: "ri-task-line" },
+    { id: 4, user: "Emma Wilson", action: "a téléversé des fichiers vers", project: "Application Mobile", time: "il y a 2 jours", icon: "ri-upload-line" }
 ];
 
 const PROJECTS_OVERVIEW = [
-    { id: 1, name: "E-commerce Platform", status: "In Progress", progress: 75, color: "success", members: [avatar1, avatar2, avatar3] },
-    { id: 2, name: "Admin Dashboard", status: "Completed", progress: 100, color: "primary", members: [avatar1, avatar4] },
-    { id: 3, name: "Mobile App Design", status: "Review", progress: 90, color: "warning", members: [avatar2, avatar3, avatar5] },
-    { id: 4, name: "CRM System", status: "New", progress: 10, color: "info", members: [avatar1, avatar5] },
-    { id: 5, name: "Portfolio Website", status: "In Progress", progress: 60, color: "success", members: [avatar3, avatar4] },
-    { id: 6, name: "Social Media App", status: "Planning", progress: 25, color: "secondary", members: [avatar1, avatar2, avatar4] },
-    { id: 7, name: "Analytics Dashboard", status: "In Progress", progress: 45, color: "success", members: [avatar2, avatar5] },
-    { id: 8, name: "Inventory System", status: "New", progress: 5, color: "info", members: [avatar3] },
-    { id: 9, name: "HR Management", status: "Review", progress: 85, color: "warning", members: [avatar1, avatar4, avatar5] },
-    { id: 10, name: "Learning Platform", status: "In Progress", progress: 55, color: "success", members: [avatar2, avatar3] },
-    { id: 11, name: "Booking System", status: "Completed", progress: 100, color: "primary", members: [avatar1, avatar2] },
-    { id: 12, name: "Chat Application", status: "In Progress", progress: 70, color: "success", members: [avatar4, avatar5] }
+    { id: 1, name: "Plateforme E-commerce", status: "En cours", progress: 75, color: "success", members: [avatar1, avatar2, avatar3] },
+    { id: 2, name: "Tableau de bord Admin", status: "Terminé", progress: 100, color: "primary", members: [avatar1, avatar4] },
+    { id: 3, name: "Design App Mobile", status: "En révision", progress: 90, color: "warning", members: [avatar2, avatar3, avatar5] },
+    { id: 4, name: "Système CRM", status: "Nouveau", progress: 10, color: "info", members: [avatar1, avatar5] },
+    { id: 5, name: "Site Portfolio", status: "En cours", progress: 60, color: "success", members: [avatar3, avatar4] },
+    { id: 6, name: "App Réseaux sociaux", status: "Planification", progress: 25, color: "secondary", members: [avatar1, avatar2, avatar4] },
+    { id: 7, name: "Tableau de bord Analytics", status: "En cours", progress: 45, color: "success", members: [avatar2, avatar5] },
+    { id: 8, name: "Système d'inventaire", status: "Nouveau", progress: 5, color: "info", members: [avatar3] },
+    { id: 9, name: "Gestion RH", status: "En révision", progress: 85, color: "warning", members: [avatar1, avatar4, avatar5] },
+    { id: 10, name: "Plateforme d'apprentissage", status: "En cours", progress: 55, color: "success", members: [avatar2, avatar3] },
+    { id: 11, name: "Système de réservation", status: "Terminé", progress: 100, color: "primary", members: [avatar1, avatar2] },
+    { id: 12, name: "Application de chat", status: "En cours", progress: 70, color: "success", members: [avatar4, avatar5] }
 ];
 
 const DOCUMENTS = [
-    { id: 1, name: "Project Proposal.pdf", type: "PDF File", size: "2.3 MB", date: "2024-01-15" },
-    { id: 2, name: "Design Assets.zip", type: "ZIP File", size: "15.7 MB", date: "2024-01-14" },
-    { id: 3, name: "Presentation.pptx", type: "PPTX File", size: "5.1 MB", date: "2024-01-13" },
-    { id: 4, name: "Documentation.docx", type: "DOCX File", size: "1.8 MB", date: "2024-01-12" },
-    { id: 5, name: "Image Assets.zip", type: "ZIP File", size: "25.3 MB", date: "2024-01-11" }
+    { id: 1, name: "Proposition de projet.pdf", type: "Fichier PDF", size: "2,3 Mo", date: "2024-01-15" },
+    { id: 2, name: "Assets de design.zip", type: "Fichier ZIP", size: "15,7 Mo", date: "2024-01-14" },
+    { id: 3, name: "Présentation.pptx", type: "Fichier PPTX", size: "5,1 Mo", date: "2024-01-13" },
+    { id: 4, name: "Documentation.docx", type: "Fichier DOCX", size: "1,8 Mo", date: "2024-01-12" },
+    { id: 5, name: "Assets d'images.zip", type: "Fichier ZIP", size: "25,3 Mo", date: "2024-01-11" }
 ];
 
 const ProfileHeader = ({ user }) => {
@@ -106,7 +106,7 @@ const ProfileHeader = ({ user }) => {
         <>
             <div className="profile-foreground position-relative mx-n4 mt-n4">
                 <div className="profile-wid-bg">
-                    <img src={progileBg} className="profile-wid-img" alt="Profile Background" />
+                    <img src={progileBg} className="profile-wid-img" alt="Fond de profil" />
                 </div>
             </div>
             <div className="pt-4 mb-4 mb-lg-3 pb-lg-4 profile-wrapper">
@@ -137,13 +137,13 @@ const ProfileHeader = ({ user }) => {
                             <div className="col-lg-6 col-4">
                                 <div className="p-2">
                                     <h4 className="text-white mb-1">{user.followers}</h4>
-                                    <p className="text-white-50 mb-0">Followers</p>
+                                    <p className="text-white-50 mb-0">Abonnés</p>
                                 </div>
                             </div>
                             <div className="col-lg-6 col-4">
                                 <div className="p-2">
                                     <h4 className="text-white mb-1">{user.following}</h4>
-                                    <p className="text-white-50 mb-0">Following</p>
+                                    <p className="text-white-50 mb-0">Abonnements</p>
                                 </div>
                             </div>
                         </div>
@@ -163,9 +163,9 @@ const OptionDropdown = () => {
                 <i className="ri-more-fill"></i>
             </DropdownToggle>
             <DropdownMenu>
-                <DropdownItem><i className="ri-eye-line me-2"></i>View</DropdownItem>
-                <DropdownItem><i className="ri-pencil-line me-2"></i>Edit</DropdownItem>
-                <DropdownItem><i className="ri-delete-bin-line me-2"></i>Delete</DropdownItem>
+                <DropdownItem><i className="ri-eye-line me-2"></i>Voir</DropdownItem>
+                <DropdownItem><i className="ri-pencil-line me-2"></i>Modifier</DropdownItem>
+                <DropdownItem><i className="ri-delete-bin-line me-2"></i>Supprimer</DropdownItem>
             </DropdownMenu>
         </Dropdown>
     );
@@ -177,7 +177,7 @@ const CompleteProfileCard = () => {
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
-                        <h5 className="card-title mb-0">Complete Your Profile</h5>
+                        <h5 className="card-title mb-0">Complétez votre profil</h5>
                     </div>
                 </div>
                 <div className="progress animated-progress custom-progress progress-label mb-3">
@@ -187,17 +187,17 @@ const CompleteProfileCard = () => {
                     </div>
                 </div>
                 
-                <h6 className="mt-4 mb-3">Personal Information</h6>
+                <h6 className="mt-4 mb-3">Informations personnelles</h6>
                 <Row>
                     <Col md={6}>
                         <div className="mb-3">
-                            <Label className="form-label text-muted">Full Name</Label>
+                            <Label className="form-label text-muted">Nom complet</Label>
                             <p className="fw-semibold">{USER_DATA.fullName}</p>
                         </div>
                     </Col>
                     <Col md={6}>
                         <div className="mb-3">
-                            <Label className="form-label text-muted">Mobile</Label>
+                            <Label className="form-label text-muted">Téléphone</Label>
                             <p className="fw-semibold">{USER_DATA.mobile}</p>
                         </div>
                     </Col>
@@ -209,13 +209,13 @@ const CompleteProfileCard = () => {
                     </Col>
                     <Col md={6}>
                         <div className="mb-3">
-                            <Label className="form-label text-muted">Location</Label>
+                            <Label className="form-label text-muted">Localisation</Label>
                             <p className="fw-semibold">{USER_DATA.location}</p>
                         </div>
                     </Col>
                     <Col md={6}>
                         <div className="mb-3">
-                            <Label className="form-label text-muted">Joining Date</Label>
+                            <Label className="form-label text-muted">Date d'arrivée</Label>
                             <p className="fw-semibold">{USER_DATA.joiningDate}</p>
                         </div>
                     </Col>
@@ -261,7 +261,7 @@ const SkillsCard = ({ skills }) => {
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
-                        <h5 className="card-title mb-0">Skills</h5>
+                        <h5 className="card-title mb-0">Compétences</h5>
                     </div>
                     <OptionDropdown />
                 </div>
@@ -295,7 +295,7 @@ const SuggestionsCard = ({ suggestions }) => {
                             </div>
                             <div className="flex-grow-1 ms-2">
                                 <h6 className="mb-0">{suggestion.name}</h6>
-                                <p className="text-muted mb-0 small">{suggestion.role} • {suggestion.mutual} mutual</p>
+                                <p className="text-muted mb-0 small">{suggestion.role} • {suggestion.mutual} en commun</p>
                             </div>
                             <Button className="rounded-4" color="soft-primary" size="sm">
                                 <i className="ri-add-line"></i>
@@ -314,7 +314,7 @@ const PopularPostsCard = ({ posts }) => {
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
-                        <h5 className="card-title mb-0">Popular Posts</h5>
+                        <h5 className="card-title mb-0">Articles populaires</h5>
                     </div>
                     <OptionDropdown />
                 </div>
@@ -367,7 +367,7 @@ const AboutSection = ({ user }) => {
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardHeader className="rounded-top-4">
-                <h5 className="card-title mb-0">About</h5>
+                <h5 className="card-title mb-0">À propos</h5>
             </CardHeader>
             <CardBody>
                 <p className="text-muted mb-3">{user.about}</p>
@@ -382,7 +382,7 @@ const AboutSection = ({ user }) => {
                                 </div>
                             </div>
                             <div className="flex-grow-1 overflow-hidden">
-                                <p className="mb-1">Designation :</p>
+                                <p className="mb-1">Poste :</p>
                                 <h6 className="text-truncate mb-0">{user.designation}</h6>
                             </div>
                         </div>
@@ -395,7 +395,7 @@ const AboutSection = ({ user }) => {
                                 </div>
                             </div>
                             <div className="flex-grow-1 overflow-hidden">
-                                <p className="mb-1">Website :</p>
+                                <p className="mb-1">Site web :</p>
                                 <a href={`https://${user.website}`} className="fw-semibold" target="_blank" rel="noopener noreferrer">
                                     {user.website}
                                 </a>
@@ -427,17 +427,16 @@ const RecentActivityCard = ({ activities }) => {
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardHeader className="d-flex align-items-center rounded-top-4">
-                <h5 className="card-title mb-0 flex-grow-1">Recent Activity</h5>
+                <h5 className="card-title mb-0 flex-grow-1">Activité récente</h5>
                 <div className="flex-shrink-0">
                     <div className="btn-group" role="group">
                         <Button
-                            
                             color="soft-primary" 
                             size="sm"
                             className={filter === "daily" ? "active" : ""}
                             onClick={() => setFilter("daily")}
                         >
-                            Daily
+                            Jour
                         </Button>
                         <Button 
                             color="soft-primary" 
@@ -445,16 +444,15 @@ const RecentActivityCard = ({ activities }) => {
                             className={filter === "weekly" ? "active" : ""}
                             onClick={() => setFilter("weekly")}
                         >
-                            Weekly
+                            Semaine
                         </Button>
                         <Button
-                            
                             color="soft-primary" 
                             size="sm"
                             className={filter === "monthly" ? "active" : ""}
                             onClick={() => setFilter("monthly")}
                         >
-                            Monthly
+                            Mois
                         </Button>
                     </div>
                 </div>
@@ -505,7 +503,7 @@ const ProjectsOverviewCard = ({ projects }) => {
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardHeader className="d-flex rounded-top-4 align-items-center">
-                <h5 className="card-title mb-0 flex-grow-1">Projects</h5>
+                <h5 className="card-title mb-0 flex-grow-1">Projets</h5>
                 <div className="flex-shrink-0">
                     <div className="btn-group" role="group">
                         <Button color="soft-primary" size="sm" onClick={prevPage} disabled={currentPage === 0}>
@@ -534,7 +532,7 @@ const ProjectsOverviewCard = ({ projects }) => {
                                     </div>
                                     <div className="mb-3">
                                         <div className="d-flex justify-content-between mb-2">
-                                            <span>Progress</span>
+                                            <span>Progression</span>
                                             <span>{project.progress}%</span>
                                         </div>
                                         <div className="progress" style={{ height: "5px" }}>
@@ -545,12 +543,12 @@ const ProjectsOverviewCard = ({ projects }) => {
                                         <div className="avatar-group flex-grow-1">
                                             {project.members.map((member, idx) => (
                                                 <div key={idx} className="avatar-group-item">
-                                                    <img src={member} alt="" className="avatar-xs rounded-circle" />
+                                                    <img src={member} alt="Membre" className="avatar-xs rounded-circle" />
                                                 </div>
                                             ))}
                                         </div>
                                         <div>
-                                            <Badge color="light" pill>12 tasks</Badge>
+                                            <Badge color="light" pill>12 tâches</Badge>
                                         </div>
                                     </div>
                                 </CardBody>
@@ -567,7 +565,7 @@ const ActivitiesTab = ({ activities }) => {
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardHeader className="rounded-top-4">
-                <h5 className="card-title mb-0">Activities</h5>
+                <h5 className="card-title mb-0">Activités</h5>
             </CardHeader>
             <CardBody>
                 {activities.map(activity => (
@@ -598,10 +596,10 @@ const ProjectsTab = ({ projects }) => {
     return (
         <>
             <div className="d-flex align-items-center mb-4">
-                <h5 className="card-title mb-0 flex-grow-1">Projects (12)</h5>
+                <h5 className="card-title mb-0 flex-grow-1">Projets (12)</h5>
                 <div className="flex-shrink-0">
                     <Button className="rounded-4" color="soft-primary" size="sm">
-                        <i className="ri-filter-3-line me-1"></i>Filter
+                        <i className="ri-filter-3-line me-1"></i>Filtrer
                     </Button>
                 </div>
             </div>
@@ -621,7 +619,7 @@ const ProjectsTab = ({ projects }) => {
                                 </div>
                                 <div className="mb-3">
                                     <div className="d-flex justify-content-between mb-2">
-                                        <span>Progress</span>
+                                        <span>Progression</span>
                                         <span>{project.progress}%</span>
                                     </div>
                                     <div className="progress" style={{ height: "5px" }}>
@@ -632,12 +630,12 @@ const ProjectsTab = ({ projects }) => {
                                     <div className="avatar-group flex-grow-1">
                                         {project.members.map((member, idx) => (
                                             <div key={idx} className="avatar-group-item">
-                                                <img src={member} alt="" className="avatar-xs rounded-circle" />
+                                                <img src={member} alt="Membre" className="avatar-xs rounded-circle" />
                                             </div>
                                         ))}
                                     </div>
                                     <div>
-                                        <Badge color="light" pill>12 tasks</Badge>
+                                        <Badge color="light" pill>12 tâches</Badge>
                                     </div>
                                 </div>
                             </CardBody>
@@ -652,7 +650,6 @@ const ProjectsTab = ({ projects }) => {
 const DocumentsTab = ({ documents }) => {
     const handleAction = (action, doc) => {
         console.log(`${action} document:`, doc);
-        // Implémenter les actions réelles ici
     };
     
     return (
@@ -664,10 +661,10 @@ const DocumentsTab = ({ documents }) => {
                 <Table responsive className="align-middle">
                     <thead>
                         <tr>
-                            <th>File Name</th>
+                            <th>Nom du fichier</th>
                             <th>Type</th>
-                            <th>Size</th>
-                            <th>Upload Date</th>
+                            <th>Taille</th>
+                            <th>Date d'upload</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -676,7 +673,7 @@ const DocumentsTab = ({ documents }) => {
                             <tr key={doc.id}>
                                 <td>
                                     <div className="d-flex align-items-center">
-                                        <i className={`ri-file-${doc.type === 'ZIP File' ? 'zip' : 'copy'}-line fs-18 me-2`}></i>
+                                        <i className={`ri-file-${doc.type === 'Fichier ZIP' ? 'zip' : 'copy'}-line fs-18 me-2`}></i>
                                         {doc.name}
                                     </div>
                                 </td>
@@ -690,14 +687,14 @@ const DocumentsTab = ({ documents }) => {
                                         </DropdownToggle>
                                         <DropdownMenu>
                                             <DropdownItem onClick={() => handleAction('view', doc)}>
-                                                <i className="ri-eye-line me-2"></i>View
+                                                <i className="ri-eye-line me-2"></i>Voir
                                             </DropdownItem>
                                             <DropdownItem onClick={() => handleAction('download', doc)}>
-                                                <i className="ri-download-line me-2"></i>Download
+                                                <i className="ri-download-line me-2"></i>Télécharger
                                             </DropdownItem>
                                             <DropdownItem divider />
                                             <DropdownItem className="text-danger" onClick={() => handleAction('delete', doc)}>
-                                                <i className="ri-delete-bin-line me-2"></i>Delete
+                                                <i className="ri-delete-bin-line me-2"></i>Supprimer
                                             </DropdownItem>
                                         </DropdownMenu>
                                     </UncontrolledDropdown>
@@ -715,13 +712,13 @@ const Preference = () => {
     const [activeMainTab, setActiveMainTab] = useState("overview");
 
     useEffect(() => {
-        document.title = "Details Candidature";
+        document.title = "Détails Candidature";
     }, []);
 
     const tabs = [
-        { id: "overview", label: "Overview", icon: "ri-airplay-fill" },
-        { id: "activities", label: "Activities", icon: "ri-list-unordered" },
-        { id: "projects", label: "Projects", icon: "ri-price-tag-line" },
+        { id: "overview", label: "Aperçu", icon: "ri-airplay-fill" },
+        { id: "activities", label: "Activités", icon: "ri-list-unordered" },
+        { id: "projects", label: "Projets", icon: "ri-price-tag-line" },
         { id: "documents", label: "Documents", icon: "ri-folder-4-line" }
     ];
 
@@ -749,7 +746,7 @@ const Preference = () => {
                         <div className="flex-shrink-0">
                             <Link to="/:entreprise/edit-profile" className="btn rounded-4 btn-success">
                                 <i className="ri-edit-box-line align-bottom me-1"></i>
-                                Edit Profile
+                                Modifier le profil
                             </Link>
                         </div>
                     </div>
@@ -798,7 +795,7 @@ const DetailsCandidature = () => {
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-                    title="Details Candidature"
+                    title="Détails Candidature"
                     pageTitle={
                         <>
                             <i className="ri-team-line"></i>
