@@ -603,7 +603,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                     </div>
 
                                                     <Row>
-                                                        <Col md={6}>
+                                                        <Col md={4}>
                                                             <FormGroup className="mb-3">
                                                                 <Label>Titre du quiz</Label>
                                                                 <Input
@@ -625,7 +625,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                 />
                                                             </FormGroup>
                                                         </Col>
-                                                        <Col md={2}>
+                                                        <Col md={4}>
                                                             <FormGroup className="mb-3">
                                                                 <Label>% requis</Label>
                                                                 <Input
@@ -945,7 +945,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                         <Col md={12}>
                                             <div className="d-flex justify-content-end gap-2">
                                                 <Button
-                                                    color="secondary"
+                                                    className="btn btn-light rounded-4"
                                                     type="button"
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
                                                     onClick={() => navigate("/:entreprise/evaluation")}
@@ -953,7 +953,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                     Annuler
                                                 </Button>
                                                 <Button
-                                                    color="primary"
+                                                    className="btn btn-success rounded-4"
                                                     type="submit"
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
                                                 >

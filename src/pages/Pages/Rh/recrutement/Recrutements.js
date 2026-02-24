@@ -238,7 +238,7 @@ const Recrutements = () => {
       />
       <Container fluid>
         <BreadCrumb
-          title="&nbsp;Offres d'emploi"
+          title="&nbsp;Recrutements"
           pageTitle={
             <>
               <i className="ri-team-line"></i>
