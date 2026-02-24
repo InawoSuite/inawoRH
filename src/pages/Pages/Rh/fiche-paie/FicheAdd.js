@@ -62,25 +62,25 @@ const FicheAdd = () => {
                                         </Col>
                                     </Row>
                                     <Row className="gx-3 gy-2">
-                                        <Col md={4}>
+                                        <Col md={6}>
                                             <FormGroup className="mb-0">
                                                 <Label style={{ marginBottom: "0" }} for="entreprise">Entreprise</Label>
                                                 <Input id="entreprise" name="entreprise" type="text" value={formData.entreprise} onChange={handleChange} className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
-                                        <Col md={4}>
+                                        <Col md={6}>
                                             <FormGroup className="mb-0">
                                                 <Label style={{ marginBottom: "0" }} for="numero">N°</Label>
                                                 <Input id="numero" name="numero" type="text" value={formData.numero} onChange={handleChange} className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
-                                        <Col md={4}>
+                                        <Col md={6}>
                                             <FormGroup className="mb-0">
                                                 <Label style={{ marginBottom: "0" }} for="mois">Mois</Label>
                                                 <Input id="mois" name="mois" type="text" value={formData.mois} onChange={handleChange} className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
-                                        <Col md={4}>
+                                        <Col md={6}>
                                             <FormGroup className="mb-0">
                                                 <Label style={{ marginBottom: "0" }} for="datePaie">Date de paie</Label>
                                                 <Input id="datePaie" name="datePaie" type="date" value={formData.datePaie} onChange={handleChange} className="rounded-pill" />

@@ -1281,7 +1281,7 @@ const Pointage = () => {
                 {/* Header avec indicateurs en temps réel */}
                 <Row className="mb-3">
                     <Col lg={12}>
-                        <Card className={`border-${online ? 'success' : 'danger'}`}>
+                        <Card className={`border-${online ? 'success' : 'danger'} rounded-4`}>
                             <CardBody>
                                 <Row className="align-items-center">
                                     <Col md={2}>
@@ -1342,12 +1342,12 @@ const Pointage = () => {
                                                 <i className={`ri-${autoMode.enabled ? 'stop' : 'play'}-circle-line me-1`}></i>
                                                 {autoMode.enabled ? 'Auto actif' : 'Auto inactif'}
                                             </Button>
-                                            <Button 
+                                            {/* <Button 
                                                 color="info" 
                                                 onClick={() => setSettingsModal(true)}
                                             >
-                                                <i className="ri-settings-4-line"></i>
-                                            </Button>
+                                                <i className="ri-settings-4-line"></i> */}
+                                            {/* </Button> */}
                                             <Button 
                                                 color="secondary" 
                                                 onClick={() => setReportModal(true)}
@@ -1374,7 +1374,7 @@ const Pointage = () => {
                 {notifications.length > 0 && (
                     <Row className="mb-3">
                         <Col lg={12}>
-                            <Card>
+                            <Card className="rounded-4">
                                 <CardBody className="py-2">
                                     <div className="d-flex align-items-center justify-content-between">
                                         <div>
@@ -1413,7 +1413,7 @@ const Pointage = () => {
                 {anomalies.length > 0 && (
                     <Row className="mb-3">
                         <Col lg={12}>
-                            <Card className="border-warning">
+                            <Card className="border-warning rounded-4">
                                 <CardBody className="py-2">
                                     <div className="d-flex align-items-center">
                                         <i className="ri-alert-line text-warning me-2 fs-5"></i>
@@ -1454,7 +1454,7 @@ const Pointage = () => {
                 {/* En-tête avec filtres et boutons */}
                 <Row className="mb-3">
                     <Col lg={12}>
-                        <Card>
+                        <Card className="rounded-4">
                             <CardBody>
                                 <Row className="align-items-center g-3">
                                     <Col md={3}>
@@ -1536,7 +1536,8 @@ const Pointage = () => {
                                                 <i className="ri-calendar-line"></i>
                                             </span>
                                             <Input 
-                                                type="date" 
+                                                type="date"
+                                                className="rounded-2"
                                                 value={formatDate(currentDate)}
                                                 onChange={(e) => setCurrentDate(new Date(e.target.value))}
                                             />
@@ -1575,7 +1576,7 @@ const Pointage = () => {
                 {viewMode === "calendar" && (
                     <Row>
                         <Col lg={8}>
-                            <Card>
+                            <Card className="rounded-4">
                                 <CardBody>
                                     <Nav tabs className="mb-3">
                                         <NavItem>
@@ -1708,25 +1709,25 @@ const Pointage = () => {
                                                 <h5 className="mb-3">Résumé hebdomadaire</h5>
                                                 <Row className="g-3">
                                                     <Col md={3}>
-                                                        <div className="p-3 bg-soft-primary rounded">
+                                                        <div className="p-3 bg-soft-primary rounded-3">
                                                             <h6>Heures totales</h6>
                                                             <h3>{weeklyStats.totalHours}</h3>
                                                         </div>
                                                     </Col>
                                                     <Col md={3}>
-                                                        <div className="p-3 bg-soft-success rounded">
+                                                        <div className="p-3 bg-soft-success rounded-3">
                                                             <h6>Heures prévues</h6>
                                                             <h3>{weeklyStats.expectedHours}</h3>
                                                         </div>
                                                     </Col>
                                                     <Col md={3}>
-                                                        <div className="p-3 bg-soft-warning rounded">
+                                                        <div className="p-3 bg-soft-warning rounded-3">
                                                             <h6>Heures sup.</h6>
                                                             <h3>{weeklyStats.overtime}</h3>
                                                         </div>
                                                     </Col>
                                                     <Col md={3}>
-                                                        <div className="p-3 bg-soft-info rounded">
+                                                        <div className="p-3 bg-soft-info rounded-3">
                                                             <h6>Présence</h6>
                                                             <h3>{weeklyStats.presentDays}/5</h3>
                                                         </div>
@@ -1784,11 +1785,11 @@ const Pointage = () => {
                         </Col>
 
                         <Col lg={4}>
-                            <Card>
+                            <Card className="rounded-4">
                                 <CardBody>
                                     <h5 className="card-title mb-3">Pointage rapide</h5>
                                     <div className="text-center mb-4">
-                                        <div className="bg-light rounded p-4 position-relative">
+                                        <div className="bg-light rounded-4 p-4 position-relative">
                                             <i className="ri-qr-scan-2-line" style={{ fontSize: '64px', color: '#3b82f6' }}></i>
                                             <h6 className="mt-3">Scanner un badge</h6>
                                             <p className="text-muted small">
@@ -1831,7 +1832,7 @@ const Pointage = () => {
                                         <h6 className="mb-3">Employés en cours</h6>
                                         {activeSessions.length > 0 ? (
                                             activeSessions.slice(0, 3).map(record => (
-                                                <div key={record.id} className="d-flex justify-content-between align-items-center mb-2 p-2 border rounded">
+                                                <div key={record.id} className="d-flex justify-content-between align-items-center mb-2 p-2 border rounded-3">
                                                     <div>
                                                         <div className="fw-medium">{record.employee}</div>
                                                         <small className="text-muted">Arrivée: {record.checkIn}</small>
@@ -1849,7 +1850,7 @@ const Pointage = () => {
                                         {Object.entries(predictions).slice(0, 3).map(([empId, pred]) => {
                                             const emp = employeesData.find(e => e.value === empId);
                                             return (
-                                                <div key={empId} className="mb-2 p-2 bg-light rounded">
+                                                <div key={empId} className="mb-2 p-2 bg-light rounded-3">
                                                     <div className="d-flex justify-content-between">
                                                         <span>{emp?.label}</span>
                                                         <small className="text-muted">
@@ -1876,7 +1877,7 @@ const Pointage = () => {
                 {viewMode === "list" && (
                     <Row>
                         <Col lg={12}>
-                            <Card>
+                            <Card className="rounded-4">
                                 <CardBody>
                                     <div className="table-responsive">
                                         <Table className="table-nowrap align-middle mb-0">
@@ -1982,7 +1983,7 @@ const Pointage = () => {
                 {viewMode === "stats" && (
                     <Row>
                         <Col lg={4}>
-                            <Card>
+                            <Card className="rounded-4">
                                 <CardBody>
                                     <h5 className="card-title mb-4">Taux de présence</h5>
                                     <div className="text-center">
@@ -2004,7 +2005,7 @@ const Pointage = () => {
                                 </CardBody>
                             </Card>
                             
-                            <Card className="mt-3">
+                            <Card className="mt-3 rounded-4">
                                 <CardBody>
                                     <h5 className="card-title mb-4">Méthodes de pointage</h5>
                                     <div className="mb-3">
@@ -2040,19 +2041,19 @@ const Pointage = () => {
                         </Col>
 
                         <Col lg={8}>
-                            <Card>
+                            <Card className="rounded-4">
                                 <CardBody>
                                     <h5 className="card-title mb-4">Répartition des pointages</h5>
                                     <Row className="g-4">
                                         <Col md={4}>
-                                            <div className="text-center p-3 border rounded">
+                                            <div className="text-center p-3 border rounded-3">
                                                 <i className="ri-user-star-line fs-1 text-primary"></i>
                                                 <h3 className="mt-2">{employeesData.length}</h3>
                                                 <p className="text-muted">Employés actifs</p>
                                             </div>
                                         </Col>
                                         <Col md={4}>
-                                            <div className="text-center p-3 border rounded">
+                                            <div className="text-center p-3 border rounded-3">
                                                 <i className="ri-time-line fs-1 text-warning"></i>
                                                 <h3 className="mt-2">{
                                                     attendanceData.filter(r => r.date === formatDate(new Date()) && r.type === 'retard').length
@@ -2061,7 +2062,7 @@ const Pointage = () => {
                                             </div>
                                         </Col>
                                         <Col md={4}>
-                                            <div className="text-center p-3 border rounded">
+                                            <div className="text-center p-3 border rounded-3">
                                                 <i className="ri-door-open-line fs-1 text-success"></i>
                                                 <h3 className="mt-2">{
                                                     attendanceData.filter(r => r.date === formatDate(new Date()) && r.checkIn).length
@@ -2096,12 +2097,12 @@ const Pointage = () => {
                                 </CardBody>
                             </Card>
                             
-                            <Card className="mt-3">
+                            <Card className="mt-3 rounded-4">
                                 <CardBody>
                                     <h5 className="card-title mb-3">Anomalies récentes</h5>
                                     {anomalies.length > 0 ? (
                                         anomalies.slice(0, 3).map(anomaly => (
-                                            <div key={anomaly.id} className="d-flex align-items-center mb-2 p-2 border rounded">
+                                            <div key={anomaly.id} className="d-flex align-items-center mb-2 p-2 border rounded-3">
                                                 <Badge color={anomaly.severity === 'high' ? 'danger' : 'warning'} pill className="me-2">
                                                     {anomaly.severity}
                                                 </Badge>
