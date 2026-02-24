@@ -12,10 +12,20 @@ const CollaborateurAdd = () => {
 	const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
 	const [historyItems, setHistoryItems] = useState([]);
 	const [historyForm, setHistoryForm] = useState({
-		periode: "",
-		poste: "",
-		date: "",
-		description: "",
+		intitulePoste: "",
+		typeEmploi: "Indépendant",
+		entreprise: "",
+		posteActuel: true,
+		dateDebutMois: "",
+		dateDebutAnnee: "",
+		dateFinMois: "",
+		dateFinAnnee: "",
+		terminerPosteActuel: false,
+		lieu: "",
+		typeLieu: "",
+		descriptif: "",
+		titreProfil: "",
+		sourceOffre: "",
 	});
 	const [isContactModalOpen, setIsContactModalOpen] = useState(false);
 	const [contactItems, setContactItems] = useState([]);
@@ -78,6 +88,44 @@ const CollaborateurAdd = () => {
 		[]
 	);
 
+	const moisOptions = useMemo(
+		() => [
+			"Janvier",
+			"Février",
+			"Mars",
+			"Avril",
+			"Mai",
+			"Juin",
+			"Juillet",
+			"Août",
+			"Septembre",
+			"Octobre",
+			"Novembre",
+			"Décembre",
+		],
+		[]
+	);
+
+	const anneeOptions = useMemo(() => {
+		const currentYear = new Date().getFullYear();
+		return Array.from({ length: 55 }, (_, index) => (currentYear - index).toString());
+	}, []);
+
+	const typeEmploiOptions = useMemo(
+		() => ["CDI", "CDD", "Stage", "Alternance", "Freelance", "Indépendant"],
+		[]
+	);
+
+	const typeLieuOptions = useMemo(
+		() => ["Sur site", "Hybride", "À distance"],
+		[]
+	);
+
+	const sourceOffreOptions = useMemo(
+		() => ["LinkedIn", "Site carrière", "Recommandation", "Cabinet RH", "Autre"],
+		[]
+	);
+
 	const cardStyle = {
 		borderRadius: "20px",
 		background: "#fff",
@@ -87,8 +135,16 @@ const CollaborateurAdd = () => {
 	document.title = "Collaborateur | INAWO - Suite de Gestion";
 
 	const handleHistoryChange = (event) => {
-		const { name, value } = event.target;
-		setHistoryForm((prev) => ({ ...prev, [name]: value }));
+		const { name, value, type, checked } = event.target;
+		const nextValue = type === "checkbox" ? checked : value;
+		setHistoryForm((prev) => {
+			const updated = { ...prev, [name]: nextValue };
+			if (name === "posteActuel" && checked) {
+				updated.dateFinMois = "";
+				updated.dateFinAnnee = "";
+			}
+			return updated;
+		});
 	};
 
 	const handleContactChange = (event) => {
@@ -98,20 +154,42 @@ const CollaborateurAdd = () => {
 
 	const handleAddHistory = (event) => {
 		event.preventDefault();
-		if (!historyForm.periode || !historyForm.poste || !historyForm.entreprise || !historyForm.description) {
+		if (!historyForm.intitulePoste || !historyForm.typeEmploi || !historyForm.entreprise || !historyForm.dateDebutMois || !historyForm.dateDebutAnnee) {
 			return;
 		}
+
+		const periode = historyForm.posteActuel
+			? `${historyForm.dateDebutMois} ${historyForm.dateDebutAnnee} - Aujourd'hui`
+			: `${historyForm.dateDebutMois} ${historyForm.dateDebutAnnee} - ${historyForm.dateFinMois || ""} ${historyForm.dateFinAnnee || ""}`.trim();
+
 		setHistoryItems((prev) => [
 			...prev,
 			{
 				id: prev.length + 1,
-				periode: historyForm.periode,
-				poste: historyForm.poste,
+				periode,
+				poste: historyForm.intitulePoste,
+				typeEmploi: historyForm.typeEmploi,
 				entreprise: historyForm.entreprise,
-				description: historyForm.description,
+				lieu: historyForm.lieu,
+				description: historyForm.descriptif,
 			},
 		]);
-		setHistoryForm({ periode: "", poste: "", entreprise: "", description: "" });
+		setHistoryForm({
+			intitulePoste: "",
+			typeEmploi: "Indépendant",
+			entreprise: "",
+			posteActuel: true,
+			dateDebutMois: "",
+			dateDebutAnnee: "",
+			dateFinMois: "",
+			dateFinAnnee: "",
+			terminerPosteActuel: false,
+			lieu: "",
+			typeLieu: "",
+			descriptif: "",
+			titreProfil: "",
+			sourceOffre: "",
+		});
 		setIsHistoryModalOpen(false);
 	};
 	
@@ -342,10 +420,10 @@ const CollaborateurAdd = () => {
 												</Col>
 											</Row>
 
-												<Row className="mb-0">
-												<Col>
+												<Row className="mb-0 mx-n4">
+													<Col className="px-0">
 													{contactItems.length > 0 ? (
-														<Table responsive className="align-middle">
+															<Table responsive className="align-middle mb-0">
 															<thead>
 																<tr>
 																	<th>Nom</th>
@@ -532,15 +610,17 @@ style={{ borderRadius: "8px" }}
 													</Button>
 												</Col>
 											</Row>
-											<Row className="mb-0">
-												<Col>
+											<Row className="mb-0 mx-n4">
+												<Col className="px-0">
 													{historyItems.length > 0 ? (
-														<Table responsive className="align-middle">
+														<Table responsive className="align-middle mb-0">
 															<thead>
 																<tr>
-																	<th>Periode</th>
-																	<th>Poste</th>
+																	<th>Période</th>
+																	<th>Intitulé du poste</th>
+																	<th>Type d'emploi</th>
 																	<th>Entreprise</th>
+																	<th>Lieu</th>
 																	<th>Description</th>
 																	{/* <th>Actions</th> */}
 																</tr>
@@ -550,7 +630,9 @@ style={{ borderRadius: "8px" }}
 																	<tr key={item.id}>
 																		<td>{item.periode}</td>
 																		<td>{item.poste}</td>
+																		<td>{item.typeEmploi}</td>
 																		<td>{item.entreprise}</td>
+																		<td>{item.lieu || "-"}</td>
 																		<td>{item.description}</td>
 																		{/* <td>
 																			<button type="button" className="btn btn-sm btn-soft-danger">Supprimer</button>
@@ -591,41 +673,137 @@ style={{ borderRadius: "8px" }}
 				</Row>
 			</Container>
 
-			<Modal isOpen={isHistoryModalOpen} toggle={() => setIsHistoryModalOpen(false)} centered className="collaborateur-modal">
+			<Modal isOpen={isHistoryModalOpen} toggle={() => setIsHistoryModalOpen(false)} centered size="lg" className="collaborateur-modal">
 				<ModalHeader toggle={() => setIsHistoryModalOpen(false)}>Ajouter une expérience professionnelle</ModalHeader>
 				<Form onSubmit={handleAddHistory}>
-					<ModalBody>
+					<ModalBody style={{ maxHeight: "75vh", overflowY: "auto" }}>
+						<p className="text-muted mb-3"><small>* Indique un champ obligatoire</small></p>
 						<Row className="gx-3 gy-0">
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="periodeHistorique">Période (mois année)</Label>
-									<Input id="periodeHistorique" name="periode" type="date" placeholder="Période (mois année)" value={historyForm.periode} onChange={handleHistoryChange} required />
+									<Label style={{marginBottom: "0"}} for="intitulePoste">Intitulé de poste <span className="text-danger">*</span></Label>
+									<Input id="intitulePoste" name="intitulePoste" type="text" placeholder="Ex : chef des ventes au détail" value={historyForm.intitulePoste} onChange={handleHistoryChange} required />
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="posteHistorique">Poste</Label>
-									<Input id="posteHistorique" name="poste" type="text" placeholder="Poste" value={historyForm.poste} onChange={handleHistoryChange} required />
+									<Label style={{marginBottom: "0"}} for="typeEmploi">Type d'emploi</Label>
+									<Input id="typeEmploi" name="typeEmploi" type="select" value={historyForm.typeEmploi} onChange={handleHistoryChange}>
+										{typeEmploiOptions.map((option) => (
+											<option key={option} value={option}>{option}</option>
+										))}
+									</Input>
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="entrepriseHistorique">Entreprise</Label>
-									<Input id="entrepriseHistorique" name="entreprise" type="text" placeholder="Entreprise" value={historyForm.entreprise} onChange={handleHistoryChange} required />
+									<Label style={{marginBottom: "0"}} for="entrepriseHistorique">Entreprise ou organisation</Label>
+									<Input id="entrepriseHistorique" name="entreprise" type="text" placeholder="Ex : Microsoft" value={historyForm.entreprise} onChange={handleHistoryChange} required />
+								</FormGroup>
+							</Col>
+							<Col md={12}>
+								<FormGroup check className="mb-3 mt-1">
+									<Input id="posteActuel" name="posteActuel" type="checkbox" checked={historyForm.posteActuel} onChange={handleHistoryChange} />
+									<Label check for="posteActuel">J&apos;occupe actuellement ce poste</Label>
+								</FormGroup>
+							</Col>
+							<Col md={6}>
+								<FormGroup>
+									<Label style={{marginBottom: "0"}} for="dateDebutMois">Date de début <span className="text-danger">*</span></Label>
+									<Input id="dateDebutMois" name="dateDebutMois" type="select" value={historyForm.dateDebutMois} onChange={handleHistoryChange} required>
+										<option value="">Mois</option>
+										{moisOptions.map((mois) => (
+											<option key={mois} value={mois}>{mois}</option>
+										))}
+									</Input>
+								</FormGroup>
+							</Col>
+							<Col md={6}>
+								<FormGroup>
+									<Label style={{marginBottom: "0"}} for="dateDebutAnnee">&nbsp;</Label>
+									<Input id="dateDebutAnnee" name="dateDebutAnnee" type="select" value={historyForm.dateDebutAnnee} onChange={handleHistoryChange} required>
+										<option value="">Année</option>
+										{anneeOptions.map((annee) => (
+											<option key={annee} value={annee}>{annee}</option>
+										))}
+									</Input>
+								</FormGroup>
+							</Col>
+							<Col md={6}>
+								<FormGroup>
+									<Label style={{marginBottom: "0"}} for="dateFinMois">Date de fin <span className="text-danger">*</span></Label>
+									<Input id="dateFinMois" name="dateFinMois" type="select" value={historyForm.dateFinMois} onChange={handleHistoryChange} disabled={historyForm.posteActuel}>
+										<option value="">Mois</option>
+										{moisOptions.map((mois) => (
+											<option key={mois} value={mois}>{mois}</option>
+										))}
+									</Input>
+								</FormGroup>
+							</Col>
+							<Col md={6}>
+								<FormGroup>
+									<Label style={{marginBottom: "0"}} for="dateFinAnnee">&nbsp;</Label>
+									<Input id="dateFinAnnee" name="dateFinAnnee" type="select" value={historyForm.dateFinAnnee} onChange={handleHistoryChange} disabled={historyForm.posteActuel}>
+										<option value="">Année</option>
+										{anneeOptions.map((annee) => (
+											<option key={annee} value={annee}>{annee}</option>
+										))}
+									</Input>
+								</FormGroup>
+							</Col>
+							<Col md={12}>
+								<FormGroup check className="mb-3">
+									<Input id="terminerPosteActuel" name="terminerPosteActuel" type="checkbox" checked={historyForm.terminerPosteActuel} onChange={handleHistoryChange} />
+									<Label check for="terminerPosteActuel">Terminer le poste actuel à ce jour</Label>
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="descriptionHistorique">Description</Label>
-									<Input id="descriptionHistorique" name="description" type="textarea" rows="1" placeholder="Description" value={historyForm.description} onChange={handleHistoryChange} required />
+									<Label style={{marginBottom: "0"}} for="lieuExperience">Lieu</Label>
+									<Input id="lieuExperience" name="lieu" type="text" placeholder="Ex : Paris, France" value={historyForm.lieu} onChange={handleHistoryChange} />
+								</FormGroup>
+							</Col>
+							<Col md={12}>
+								<FormGroup>
+									<Label style={{marginBottom: "0"}} for="typeLieu">Type de lieu</Label>
+									<Input id="typeLieu" name="typeLieu" type="select" value={historyForm.typeLieu} onChange={handleHistoryChange}>
+										<option value="">Veuillez sélectionner</option>
+										{typeLieuOptions.map((option) => (
+											<option key={option} value={option}>{option}</option>
+										))}
+									</Input>
+									<small className="text-muted">Choisissez un type de lieu (ex : à distance)</small>
+								</FormGroup>
+							</Col>
+							<Col md={12}>
+								<FormGroup>
+									<Label style={{marginBottom: "0"}} for="descriptionHistorique">Descriptif</Label>
+									<Input id="descriptionHistorique" name="descriptif" type="textarea" rows="1" maxLength="2000" placeholder="Décrivez votre expérience" value={historyForm.descriptif} onChange={handleHistoryChange} />
+									{/* <div className="text-end text-muted"><small>{historyForm.descriptif.length}/2000</small></div> */}
+								</FormGroup>
+							</Col>
+							<Col md={12}>
+								<FormGroup>
+									<Label style={{marginBottom: "0"}} for="titreProfil">Titre du profil</Label>
+									<Input id="titreProfil" name="titreProfil" type="text" placeholder="Ex : CEO chez INAWO" value={historyForm.titreProfil} onChange={handleHistoryChange} />
+									<small className="text-muted">Apparaît en dessous de votre nom en haut du profil</small>
+								</FormGroup>
+							</Col>
+							<Col md={12}>
+								<FormGroup>
+									<Label style={{marginBottom: "0"}} for="sourceOffre">Où avez-vous trouvé cette offre d'emploi ?</Label>
+									<Input id="sourceOffre" name="sourceOffre" type="select" value={historyForm.sourceOffre} onChange={handleHistoryChange}>
+										<option value="">Veuillez sélectionner</option>
+										{sourceOffreOptions.map((option) => (
+											<option key={option} value={option}>{option}</option>
+										))}
+									</Input>
+									<small className="text-muted">Ces informations sont utilisées pour améliorer l'expérience de recherche d'emploi.</small>
 								</FormGroup>
 							</Col>
 						</Row>
 					</ModalBody>
 				<ModalFooter>
-					<Button color="secondary" type="button" style={{ borderRadius: "20px" }} onClick={() => setIsHistoryModalOpen(false)}>
-						Annuler
-					</Button>
 					<Button color="primary" type="submit" style={{ borderRadius: "20px" }}>
 						Enregistrer
 					</Button>

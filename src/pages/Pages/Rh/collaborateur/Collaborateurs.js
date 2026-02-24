@@ -16,7 +16,7 @@ import DeleteModal from "../../../../Components/Common/DeleteModal";
 const Collaborateurs = () => {
   const { entreprise } = useParams();
   const { userProfile, token } = useProfile();
-  
+
   // États avec données statiques
   const [collaborateurList, setCollaborateurList] = useState([
     {
@@ -30,7 +30,7 @@ const Collaborateurs = () => {
       poste: "Directeur Général",
       departement: "Direction",
       typecontrat: "CDI",
-      statut: "actif"
+      statut: "actif",
     },
     {
       id: 2,
@@ -43,7 +43,7 @@ const Collaborateurs = () => {
       poste: "Responsable RH",
       departement: "Ressources humaines",
       statut: "inactif",
-      typecontrat: "CDD"
+      typecontrat: "CDD",
     },
     {
       id: 3,
@@ -56,9 +56,8 @@ const Collaborateurs = () => {
       poste: "Comptable",
       departement: "Finance",
       statut: "actif",
-      typecontrat: "Stage professionnelle"
+      typecontrat: "Stage professionnelle",
     },
-    
   ]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -68,45 +67,44 @@ const Collaborateurs = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 50;
   const [deleteModal, setDeleteModal] = useState(false);
-    const [itemToDelete, setItemToDelete] = useState(null);
-    
-  
+  const [itemToDelete, setItemToDelete] = useState(null);
+
   // ✅ Fonction pour obtenir le label du statut
   const getStatusLabel = useCallback((statusValue) => {
     const statusLabels = {
-      'actif': 'Actif',
-      'inactif': 'Inactif'
+      actif: "Actif",
+      inactif: "Inactif",
     };
-    return statusLabels[statusValue] || 'Inconnu';
+    return statusLabels[statusValue] || "Inconnu";
   }, []);
 
   // ✅ Fonction pour obtenir la couleur du statut
   const getStatusColor = useCallback((statusValue) => {
     const statusColors = {
-      'actif': 'success',
-      'inactif': 'danger'
+      actif: "success",
+      inactif: "danger",
     };
-    return statusColors[statusValue] || 'secondary';
+    return statusColors[statusValue] || "secondary";
   }, []);
 
-     const handleDeleteClick = (item) => {
-            setItemToDelete(item);
-            setDeleteModal(true);
-        };
-    
-        const handleDeleteConfirm = () => {
-            if (itemToDelete) {
-                setAvancePretList(avancePretList.filter(i => i.id !== itemToDelete.id));
-                toast.success("Suppression effectuée avec succès");
-                setDeleteModal(false);
-                setItemToDelete(null);
-            }
-        };
-    
-        const handleDeleteClose = () => {
-            setDeleteModal(false);
-            setItemToDelete(null);
-        };
+  const handleDeleteClick = (item) => {
+    setItemToDelete(item);
+    setDeleteModal(true);
+  };
+
+  const handleDeleteConfirm = () => {
+    if (itemToDelete) {
+      setAvancePretList(avancePretList.filter((i) => i.id !== itemToDelete.id));
+      toast.success("Suppression effectuée avec succès");
+      setDeleteModal(false);
+      setItemToDelete(null);
+    }
+  };
+
+  const handleDeleteClose = () => {
+    setDeleteModal(false);
+    setItemToDelete(null);
+  };
 
   // Récupération des collaborateurs (désactivé - utilisation de données statiques)
   /*
@@ -154,7 +152,7 @@ const Collaborateurs = () => {
       //   icon: "ri-file-text-line",
       //   filterType: "all",
       // },
-      { 
+      {
         key: "2",
         label: "Actifs",
         icon: "ri-user-follow-line",
@@ -199,7 +197,7 @@ const Collaborateurs = () => {
       //   filterType: "all",
       // },
     ],
-    []
+    [],
   );
 
   // Filtrage des données
@@ -215,14 +213,14 @@ const Collaborateurs = () => {
         Object.values(item).some(
           (value) =>
             value &&
-            value.toString().toLowerCase().includes(searchTerm.toLowerCase())
-        )
+            value.toString().toLowerCase().includes(searchTerm.toLowerCase()),
+        ),
       );
     }
 
     if (activeStatusFilter !== "all") {
       filtered = filtered.filter(
-        (item) => (item.statut || "").toLowerCase() === activeStatusFilter
+        (item) => (item.statut || "").toLowerCase() === activeStatusFilter,
       );
     }
 
@@ -250,11 +248,14 @@ const Collaborateurs = () => {
           },
         },
         {
-          header: "Nom",
+          header: "Nom complet",
           accessorKey: "nom",
           enableColumnFilter: false,
           cell: (cellProps) => {
             const collab = cellProps.row.original;
+            const fullName = [collab.nom, collab.prenom]
+              .filter(Boolean)
+              .join(" ");
             return (
               <Link
                 to={`/${entreprise}/collaborateur-details/${collab.id}`}
@@ -262,16 +263,10 @@ const Collaborateurs = () => {
                 className="d-flex align-items-center gap-2 text-body fw-medium"
               >
                 <i className="ri-user-fill text-primary"></i>
-                {cellProps.getValue() || "Non défini"}
+                {fullName || "Non défini"}
               </Link>
             );
           },
-        },
-        {
-          header: "Prénom",
-          accessorKey: "prenom",
-          enableColumnFilter: false,
-          cell: (cell) => cell.getValue() || "Non défini",
         },
         {
           header: "Affiliation",
@@ -285,68 +280,66 @@ const Collaborateurs = () => {
           enableColumnFilter: false,
         },
         {
-         header: "Poste",
-        accessorKey: "poste",
-        enableColumnFilter: false,
-        cell: (cell) => cell.getValue() || "Non défini",
+          header: "Poste",
+          accessorKey: "poste",
+          enableColumnFilter: false,
+          cell: (cell) => cell.getValue() || "Non défini",
         },
-           {
-        header: "Statut",
-        accessorKey: "statut",
-        enableColumnFilter: false,
-        cell: (cell) => {
-          const statusValue = cell.getValue();
-          return (
-            <Badge 
-              color={getStatusColor(statusValue)} 
-              className="rounded-pill"
-            >
-              {getStatusLabel(statusValue)}
-            </Badge>
-          );
-        },
-      },
-      {
-        header: "Actions",
-        enableColumnFilter: false,
-        cell: (cellProps) => {
-          const collab = cellProps.row.original;
-
-          return (
-            <div className="gap-1">
-              <Link
-                to={`/${entreprise}/collaborateur-details/${collab.id}`}
-                state={{ collaborateur: collab }}
-                className="text-info p-2"
-                title="Voir détails"
+        {
+          header: "Statut",
+          accessorKey: "statut",
+          enableColumnFilter: false,
+          cell: (cell) => {
+            const statusValue = cell.getValue();
+            return (
+              <Badge
+                color={getStatusColor(statusValue)}
+                className="rounded-pill"
               >
-                <i className="ri-eye-fill fs-16"></i>
-              </Link>
-              <Link
-                to={`/${entreprise}/collaborateur-edit/${collab.id}`}
-                state={{ collaborateur: collab }}
-                className="text-primary"
-                title="Modifier"
-              >
-                <i className="ri-pencil-fill fs-16"></i>
-              </Link>
-              <Link
-                              
-                               to="#"
-                               className="text-danger p-2"
-                              title="Supprimer"
-                               onClick={(e) => {
-                              e.preventDefault();
-                              handleDeleteClick(cellProps.row.original);
-                                }}
-                                       >
-                               <i className="ri-delete-bin-5-fill fs-16"></i>
-                                 </Link>
-            </div>
-          );
+                {getStatusLabel(statusValue)}
+              </Badge>
+            );
+          },
         },
-      },
+        {
+          header: "Actions",
+          enableColumnFilter: false,
+          cell: (cellProps) => {
+            const collab = cellProps.row.original;
 
+            return (
+              <div className="gap-1">
+                <Link
+                  to={`/${entreprise}/collaborateur-details/${collab.id}`}
+                  state={{ collaborateur: collab }}
+                  className="text-info p-2"
+                  title="Voir détails"
+                >
+                  <i className="ri-eye-fill fs-16"></i>
+                </Link>
+                <Link
+                  to={`/${entreprise}/collaborateur-edit/${collab.id}`}
+                  state={{ collaborateur: collab }}
+                  className="text-primary"
+                  title="Modifier"
+                >
+                  <i className="ri-pencil-fill fs-16"></i>
+                </Link>
+                <Link
+                  to="#"
+                  className="text-danger p-2"
+                  title="Supprimer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleDeleteClick(cellProps.row.original);
+                  }}
+                >
+                  <i className="ri-delete-bin-5-fill fs-16"></i>
+                </Link>
+              </div>
+            );
+          },
+        },
       ];
     }
     // if (activeTab === "4") {
@@ -374,7 +367,6 @@ const Collaborateurs = () => {
     //     },
     //   ];
     // }
-    
 
     return [
       {
@@ -392,7 +384,9 @@ const Collaborateurs = () => {
         enableColumnFilter: false,
         cell: (cellProps) => {
           const collab = cellProps.row.original;
-          const fullName = [collab.prenom, collab.nom].filter(Boolean).join(" ");
+          const fullName = [collab.prenom, collab.nom]
+            .filter(Boolean)
+            .join(" ");
           return (
             <Link
               to={`/${entreprise}/collaborateur-details/${collab.id}`}
@@ -427,10 +421,7 @@ const Collaborateurs = () => {
         cell: (cell) => {
           const statusValue = cell.getValue();
           return (
-            <Badge 
-              color={getStatusColor(statusValue)} 
-              className="rounded-pill"
-            >
+            <Badge color={getStatusColor(statusValue)} className="rounded-pill">
               {getStatusLabel(statusValue)}
             </Badge>
           );
@@ -513,7 +504,7 @@ const Collaborateurs = () => {
               showSearch={true}
               addButtonLink="/:entreprise/collaborateur-add"
               addButtonText="Ajouter un collaborateur"
-              addButtonIcon="ri-user-add-line"
+              addButtonIcon="ri-file-add-line"
               showAddButton={true}
               onExportClick={() => setIsExportCSV(true)}
               exportButtonText="Exporter"
@@ -570,11 +561,11 @@ const Collaborateurs = () => {
             )}
           </Col>
         </Row>
-         <DeleteModal
-                            show={deleteModal}
-                            onDeleteClick={handleDeleteConfirm}
-                            onCloseClick={handleDeleteClose}
-                        />
+        <DeleteModal
+          show={deleteModal}
+          onDeleteClick={handleDeleteConfirm}
+          onCloseClick={handleDeleteClose}
+        />
       </Container>
     </div>
   );

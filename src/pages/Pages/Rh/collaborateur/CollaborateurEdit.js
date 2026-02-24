@@ -10,7 +10,8 @@ import dummyImg from "../../../../assets/images/users/user-dummy-img.jpg";
 const CollaborateurEdit = () => {
 	const navigate = useNavigate();
 	const { id } = useParams();
-	const { state } = useLocation();
+	const location = useLocation();
+	const { state } = location;
 	const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
 	const [historyItems, setHistoryItems] = useState([]);
 	const [historyForm, setHistoryForm] = useState({
@@ -162,6 +163,22 @@ const CollaborateurEdit = () => {
 		setSelectedTypeContrat(selectedContrat || null);
 	}, [selectedCollaborateur, typeContratOptions]);
 
+	useEffect(() => {
+		const section = new URLSearchParams(location.search).get("section");
+		if (!section) {
+			return;
+		}
+
+		const target = document.getElementById(`section-${section}`);
+		if (!target) {
+			return;
+		}
+
+		setTimeout(() => {
+			target.scrollIntoView({ behavior: "smooth", block: "start" });
+		}, 100);
+	}, [location.search]);
+
 	const cardStyle = {
 		borderRadius: "20px",
 		background: "#fff",
@@ -263,7 +280,7 @@ const CollaborateurEdit = () => {
 						<Form className="collaborateur-form" onSubmit={(event) => event.preventDefault()}>
 						<Row className="mb-2">
 								<Col lg={12}>
-									<Card className="border-0" style={cardStyle}>
+									<Card id="section-informations-personnelles" className="border-0" style={cardStyle}>
 										<CardBody className="p-6">
 											<Row className="mb-3">
 												<Col>
@@ -401,7 +418,7 @@ const CollaborateurEdit = () => {
 
 						<Row className="mb-1">
 								<Col lg={12}>
-									<Card className="border-0" style={cardStyle}>
+									<Card id="section-contact-urgence" className="border-0" style={cardStyle}>
 										<CardBody className="p-4">
 											<Row className="mb-3">
 												<Col>
@@ -457,7 +474,7 @@ const CollaborateurEdit = () => {
 
 						<Row className="mb-1">
 								<Col lg={12}>
-									<Card className="border-0" style={cardStyle}>
+									<Card id="section-informations-contractuelles" className="border-0" style={cardStyle}>
 										<CardBody className="p-4">
 											<Row className="mb-3">
 												<Col>
@@ -552,7 +569,7 @@ style={{ borderRadius: "8px" }}
 
 							<Row className="mb-1">
 								<Col lg={12}>
-									<Card className="border-0" style={cardStyle}>
+									<Card id="section-historique-professionnelle" className="border-0" style={cardStyle}>
 										<CardBody className="p-4">
 											<Row className="mb-3 align-items-center">
 												<Col>

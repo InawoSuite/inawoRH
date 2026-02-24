@@ -397,6 +397,12 @@ const TwoColumnLayout = (props) => {
       icon: "ri-dashboard-line",
       title: "Suite Inawo",
     },
+     {
+      id: "Paramètres",
+      label: "Paramètres",
+      icon: "ri-settings-5-line",
+      title: "Paramètres",
+    },
   ];
 
   const getSubMenusForMainMenu = (menuId) => {

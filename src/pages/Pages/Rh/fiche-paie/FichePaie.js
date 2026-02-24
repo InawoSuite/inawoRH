@@ -374,7 +374,8 @@ const FichePaie = () => {
           }
         />
         <Row>
-          <SearchAndActionBar
+          <Col lg={12}>
+           <SearchAndActionBar
             searchTerm={searchTerm}
             onSearchChange={setSearchTerm}
             searchPlaceholder="Chercher une fiche de paie..."
@@ -394,6 +395,9 @@ const FichePaie = () => {
             // showExportButton={true}
             showAddButton={true}
           />
+          </Col>
+
+         
 
           <Col lg={12}>
             {loading ? (
