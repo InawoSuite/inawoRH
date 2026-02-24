@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { Container, Row, Col, Card, CardBody, Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import BreadCrumb from "../../../Components/Common/BreadCrumb";
-import { CustomSelect } from "../../../Components/Common/CustomSelectStyles";
+import BreadCrumb from "../../../../Components/Common/BreadCrumb";
+import { CustomSelect } from "../../../../Components/Common/CustomSelectStyles";
 
 const mockData = {
     "1": {

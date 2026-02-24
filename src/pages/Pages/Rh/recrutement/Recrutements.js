@@ -7,8 +7,8 @@ import {
   Col,
   Row,
 } from "reactstrap";
-import BreadCrumb from "../../../Components/Common/BreadCrumb";
-import Pagination from "../../../Components/Common/Pagination";
+import BreadCrumb from "../../../../Components/Common/BreadCrumb";
+import Pagination from "../../../../Components/Common/Pagination";
 import Widgets from "./Widgets";
 import { jobGrid } from "../../../../common/data/appsJobs";
 import SearchAndActionBar from "../../../../Components/Common/SearchAndActionBar";

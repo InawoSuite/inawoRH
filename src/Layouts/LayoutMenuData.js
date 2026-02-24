@@ -302,7 +302,7 @@ const Navdata = () => {
       icon: "ri-briefcase-4-line",
       link: "/#",
       img: "param_img.svg",
-      modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+      modules: ["INAWOGLOBAL", "INAWORH"],
       stateVariables: isHumanResources,
       click: handleMenuClick(function (e) {
         e.preventDefault();
@@ -317,7 +317,7 @@ const Navdata = () => {
           label: "Dashboard RH",
           link: generatePath("/dashboard-rh"),
           parentId: "HumanResources",
-          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+          modules: ["INAWOGLOBAL", "INAWORH"],
           utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
           onClick: handleMobileMenuClose,
         },

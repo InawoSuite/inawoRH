@@ -256,15 +256,15 @@ import AvanceEtPretForm from "../pages/Pages/Rh/avance-et-pret/AvanceEtPretForm"
 import AvanceEtPretAdd from "../pages/Pages/Rh/avance-et-pret/AvanceEtPretAdd";
 import AvanceEtPretEdit from "../pages/Pages/Rh/avance-et-pret/AvanceEtPretEdit";
 import Contrat from "../pages/Pages/Rh/Contrats/Contract";
-import DetailsCollaborateur from "../pages/Pages/Rh/DetailsCollaborateur";
-import DashboardRH from "../pages/Pages/Rh/DashboardRH";
-import FichePaie from "../pages/Pages/Rh/FichePaie";
-import FicheDetail from "../pages/Pages/Rh/FicheDetail";
-import FicheAdd from "../pages/Pages/Rh/FicheAdd";
-import AvanceEtPret from "../pages/Pages/Rh/AvanceEtPret";
-import AvanceEtPretForm from "../pages/Pages/Rh/AvanceEtPretForm";
-import AvanceEtPretAdd from "../pages/Pages/Rh/AvanceEtPretAdd";
-import AvanceEtPretEdit from "../pages/Pages/Rh/AvanceEtPretEdit";
+// import DetailsCollaborateur from "../pages/Pages/Rh/DetailsCollaborateur";
+// import DashboardRH from "../pages/Pages/Rh/DashboardRH";
+// import FichePaie from "../pages/Pages/Rh/FichePaie";
+// import FicheDetail from "../pages/Pages/Rh/FicheDetail";
+// import FicheAdd from "../pages/Pages/Rh/FicheAdd";
+// import AvanceEtPret from "../pages/Pages/Rh/AvanceEtPret";
+// import AvanceEtPretForm from "../pages/Pages/Rh/AvanceEtPretForm";
+// import AvanceEtPretAdd from "../pages/Pages/Rh/AvanceEtPretAdd";
+// import AvanceEtPretEdit from "../pages/Pages/Rh/AvanceEtPretEdit";
 import CongeEtAbsence from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsence";
 import CongeEtAbsenceForm from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsenceForm";
 import CongeEtAbsenceAdd from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsenceAdd";
@@ -306,7 +306,7 @@ import Rappprochement from "../pages/Rapprochement/index.js";
 import FinancementsEmprunts from "../pages/Financement/index.js";
 import Piece from "../pages/Piece/index.js";
 import Etats from "../pages/Pages/Compta/Etats/Index.js";
-import FicheAdd from "../pages/Pages/Rh/FicheAdd.js";
+// import FicheAdd from "../pages/Pages/Rh/FicheAdd.js";
 
 const authProtectedRoutes = [
   {path: "/unauthorized", component: <Unauthorized /> },
