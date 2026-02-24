@@ -85,7 +85,7 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                 
                                 <Form onSubmit={handleSubmit}>
                                     <Row>
-                                        <Col md={12}>
+                                        <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="nomEmploye">
                                                     Nom employé <span className="text-danger">*</span>
@@ -102,10 +102,8 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                                 />
                                             </FormGroup>
                                         </Col>
-                                    </Row>
 
-                                    <Row>
-                                        <Col md={12}>
+                                        <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="dateDemande">
                                                     Date de la demande <span className="text-danger">*</span>
@@ -160,7 +158,7 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                     </Row>
 
                                     <Row>
-                                        <Col md={12}>
+                                        <Col md={4}>
                                             <FormGroup className="mb-3">
                                                 <Label for="nombreJour">
                                                     Nombre de jour <span className="text-danger">*</span>
@@ -178,10 +176,8 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                                 />
                                             </FormGroup>
                                         </Col>
-                                    </Row>
 
-                                    <Row>
-                                        <Col md={12}>
+                                        <Col md={4}>
                                             <FormGroup className="mb-3">
                                                 <Label htmlFor="statut">
                                                     Statut <span className="text-danger">*</span>
@@ -208,10 +204,8 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                                 )}
                                             </FormGroup>
                                         </Col>
-                                    </Row>
 
-                                    <Row>
-                                        <Col md={12}>
+                                        <Col md={4}>
                                             <FormGroup className="mb-3">
                                                 <Label for="nombreJourTotal">
                                                     Nombre de jour total <span className="text-danger">*</span>

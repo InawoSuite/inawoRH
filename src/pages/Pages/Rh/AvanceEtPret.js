@@ -213,14 +213,14 @@ const AvanceEtPret = () => {
                 }
             />
                 <Row className="mb-4">
-                    
+                    <Col lg={12}>
                         <SearchAndActionBar
                             searchTerm={searchTerm}
                             onSearchChange={setSearchTerm}
-                            searchPlaceholder="Chercher avance/prêt..."
+                            searchPlaceholder="Chercher une avance ou un prêt..."
                             showSearch={true}
                             addButtonLink="/entreprise/avance-et-pret-add"
-                            addButtonText="Créer avance/prêt"
+                            addButtonText="Faire une demande d'avance ou de prêt"
                             addButtonIcon="ri-file-add-line"
                             showAddButton={true}
                             onExportClick={() => setIsExportCSV(true)}
@@ -228,7 +228,7 @@ const AvanceEtPret = () => {
                             exportButtonIcon="ri-file-upload-line"
                             showExportButton={true}
                         />
-
+                    </Col>
                     <Col lg={12}>
                         <Card style={{ borderRadius: "20px", boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)" }}>
                             <CardBody>

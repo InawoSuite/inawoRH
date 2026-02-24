@@ -371,6 +371,16 @@ const Navdata = () => {
           utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
           onClick: handleMobileMenuClose,
         },
+        {
+          id: "Evaluations",
+          icon: "ri-checkbox-circle-line",
+          label: "Evaluations",
+          link: generatePath("/evaluation"),
+          parentId: "HumanResources",
+          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+          utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+          onClick: handleMobileMenuClose,
+        },
       ],
     },
     

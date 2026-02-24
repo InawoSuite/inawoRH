@@ -463,21 +463,22 @@ const Collaborateurs = () => {
           }
         />
         <Row>
-          <SearchAndActionBar
-            searchTerm={searchTerm}
-            onSearchChange={setSearchTerm}
-            searchPlaceholder="Chercher un collaborateur..."
-            showSearch={true}
-            addButtonLink="/:entreprise/collaborateur-add"
-            addButtonText="Ajouter un collaborateur"
-            addButtonIcon="ri-user-add-line"
-            showAddButton={true}
-            onExportClick={() => setIsExportCSV(true)}
-            exportButtonText="Exporter"
-            exportButtonIcon="ri-file-upload-line"
-            showExportButton={true}
-          />
-
+          <Col lg={12}>
+            <SearchAndActionBar
+              searchTerm={searchTerm}
+              onSearchChange={setSearchTerm}
+              searchPlaceholder="Chercher un collaborateur..."
+              showSearch={true}
+              addButtonLink="/:entreprise/collaborateur-add"
+              addButtonText="Ajouter un collaborateur"
+              addButtonIcon="ri-user-add-line"
+              showAddButton={true}
+              onExportClick={() => setIsExportCSV(true)}
+              exportButtonText="Exporter"
+              exportButtonIcon="ri-file-upload-line"
+              showExportButton={true}
+            />
+          </Col>
           <Col lg={12}>
             {loading ? (
               <div className="d-flex justify-content-center my-5">

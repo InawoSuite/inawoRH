@@ -127,14 +127,14 @@ const CongeEtAbsence = () => {
                 />
                 
                 <Row className="mb-4">
-                    
+                    <Col lg={12}>
                         <SearchAndActionBar
                             searchTerm={searchTerm}
                             onSearchChange={setSearchTerm}
-                            searchPlaceholder="Chercher congés/absences..."
+                            searchPlaceholder="Chercher un congé ou une absence..."
                             showSearch={true}
                             addButtonLink="/entreprise/conge-et-absence-add"
-                            addButtonText="Créer congé/absence"
+                            addButtonText="Faire une demande de congé/absence"
                             addButtonIcon="ri-file-add-line"
                             showAddButton={true}
                             onExportClick={() => setIsExportCSV(true)}
@@ -142,7 +142,7 @@ const CongeEtAbsence = () => {
                             exportButtonIcon="ri-file-upload-line"
                             showExportButton={true}
                         />
-                    
+                    </Col>
                     <Col lg={12}>
                         <Card style={{ borderRadius: "20px", boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)" }}>
                             <CardBody>

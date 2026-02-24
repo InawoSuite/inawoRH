@@ -4,62 +4,63 @@ import { Card, CardBody, CardHeader, Table } from "reactstrap";
 import img3 from "../../../assets/images/companies/img-3.png";
 
 const RightSection = () => {
-
   const [isBookmarkClick , setIsBookmarkClick] = useState(false);
+  
   return (
     <React.Fragment>
+      {/* ========== APERÇU DE L'OFFRE ========== */}
       <Card className="card rounded-4 border-0 shadow-sm">
         <CardHeader className="card-header rounded-top-4">
-          <h5 className="mb-0">Job Overview</h5>
+          <h5 className="mb-0">Aperçu de l'offre</h5>
         </CardHeader>
         <CardBody className="card-body">
           <div className="table-responsive table-card">
             <Table className="table mb-0">
               <tbody>
                 <tr>
-                  <td className="fw-medium">Title</td>
-                  <td>Product Designer</td>
+                  <td className="fw-medium">Titre</td>
+                  <td>Designer Produit</td>
                 </tr>
                 <tr>
-                  <td className="fw-medium">Company Name</td>
+                  <td className="fw-medium">Nom de l'entreprise</td>
                   <td>Themesbrand</td>
                 </tr>
                 <tr>
-                  <td className="fw-medium">Location</td>
-                  <td>Zuweihir, UAE</td>
+                  <td className="fw-medium">Localisation</td>
+                  <td>Zuweihir, Émirats Arabes Unis</td>
                 </tr>
                 <tr>
-                  <td className="fw-medium">Time</td>
+                  <td className="fw-medium">Type de contrat</td>
                   <td>
-                    <span className="badge bg-success-subtle text-success">Full Time</span>
+                    <span className="badge bg-success-subtle text-success">Temps plein</span>
                   </td>
                 </tr>
                 <tr>
-                  <td className="fw-medium">Job Application</td>
-                  <td>54 Application</td>
+                  <td className="fw-medium">Candidatures reçues</td>
+                  <td>54 candidatures</td>
                 </tr>
                 <tr>
-                  <td className="fw-medium">Post Date</td>
-                  <td>15 Sep, 2021</td>
+                  <td className="fw-medium">Date de publication</td>
+                  <td>15 Sept, 2021</td>
                 </tr>
                 <tr>
-                  <td className="fw-medium">Salary</td>
-                  <td>$35k - $45k</td>
+                  <td className="fw-medium">Salaire</td>
+                  <td>35k$ - 45k$</td>
                 </tr>
                 <tr>
-                  <td className="fw-medium">Experience</td>
-                  <td>5+ Years</td>
+                  <td className="fw-medium">Expérience requise</td>
+                  <td>5+ ans</td>
                 </tr>
                 <tr>
-                  <td className="fw-medium">Qualification</td>
-                  <td>Master Degree</td>
+                  <td className="fw-medium">Formation requise</td>
+                  <td>Master</td>
                 </tr>
               </tbody>
             </Table>
           </div>
           <div className="mt-4 pt-2 hstack gap-2">
             <Link to="#" className="btn btn-primary rounded-4 border-0 shadow-sm w-100">
-              Apply Now
+              Postuler maintenant
             </Link>
             <Link
               to="#"
@@ -80,37 +81,38 @@ const RightSection = () => {
         </CardBody>
       </Card>
 
+      {/* ========== INFORMATIONS SUR L'ENTREPRISE ========== */}
       <Card className="card rounded-4 border-0 shadow-sm">
         <CardBody className="card-body">
           <div className="avatar-sm mx-auto">
             <div className="avatar-title bg-warning-subtle rounded">
-              <img src={img3} alt="" className="avatar-xxs" />
+              <img src={img3} alt="Logo Themesbrand" className="avatar-xxs" />
             </div>
           </div>
           <div className="text-center">
             <Link to="#">
               <h5 className="mt-3">Themesbrand</h5>
             </Link>
-            <p className="text-muted">IT Department</p>
+            <p className="text-muted">Département IT</p>
           </div>
 
           <div className="table-responsive">
             <Table className="table mb-0">
               <tbody>
                 <tr>
-                  <td className="fw-medium">Company Size</td>
-                  <td>5</td>
+                  <td className="fw-medium">Taille de l'entreprise</td>
+                  <td>5 employés</td>
                 </tr>
                 <tr>
-                  <td className="fw-medium">Industry Type</td>
-                  <td>Software</td>
+                  <td className="fw-medium">Secteur d'activité</td>
+                  <td>Développement logiciel</td>
                 </tr>
                 <tr>
-                  <td className="fw-medium">Founded in</td>
+                  <td className="fw-medium">Année de création</td>
                   <td>2016</td>
                 </tr>
                 <tr>
-                  <td className="fw-medium">Phone</td>
+                  <td className="fw-medium">Téléphone</td>
                   <td>+(234) 12345 67890</td>
                 </tr>
                 <tr>
@@ -118,26 +120,26 @@ const RightSection = () => {
                   <td>themesbrand@gmail.com</td>
                 </tr>
                 <tr>
-                  <td className="fw-medium">Social media</td>
+                  <td className="fw-medium">Réseaux sociaux</td>
                   <td>
                     <ul className="list-inline mb-0">
                       <li className="list-inline-item">
-                        <Link to="#">
+                        <Link to="#" title="WhatsApp">
                           <i className="ri-whatsapp-line"></i>
                         </Link>
                       </li>
                       <li className="list-inline-item">
-                        <Link to="#">
+                        <Link to="#" title="Facebook">
                           <i className="ri-facebook-line"></i>
                         </Link>
                       </li>
                       <li className="list-inline-item">
-                        <Link to="#">
+                        <Link to="#" title="Twitter">
                           <i className="ri-twitter-line"></i>
                         </Link>
                       </li>
                       <li className="list-inline-item">
-                        <Link to="#">
+                        <Link to="#" title="YouTube">
                           <i className="ri-youtube-line"></i>
                         </Link>
                       </li>
@@ -150,9 +152,10 @@ const RightSection = () => {
         </CardBody>
       </Card>
 
+      {/* ========== LOCALISATION ========== */}
       <Card className="card rounded-4 border-0 shadow-sm">
         <CardHeader className="card-header rounded-top-4">
-          <h5 className="mb-0">Job Location</h5>
+          <h5 className="mb-0">Localisation</h5>
         </CardHeader>
         <CardBody className="card-body rounded-4">
           <div className="ratio ratio-4x3">
@@ -160,7 +163,7 @@ const RightSection = () => {
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1861227.8137337372!2d51.654904288504646!3d24.33915646928631!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3e5e48dfb1ab12bd%3A0x33d32f56c0080aa7!2sUnited%20Arab%20Emirates!5e0!3m2!1sen!2sin!4v1664257145153!5m2!1sen!2sin"
               height="450"
               style={{ border: "0" }}
-              title="abc"
+              title="Carte des Émirats Arabes Unis"
               allowFullScreen=""
               loading="lazy"
               referrerPolicy="no-referrer-when-downgrade"
@@ -169,21 +172,22 @@ const RightSection = () => {
         </CardBody>
       </Card>
 
+      {/* ========== NOUS CONTACTER ========== */}
       <Card className="card rounded-4 border-0 shadow-sm">
         <CardHeader className="card-header rounded-top-4">
-          <h5 className="mb-0">Contact Us</h5>
+          <h5 className="mb-0">Nous contacter</h5>
         </CardHeader>
         <CardBody className="card-body">
           <form>
             <div className="mb-3">
               <label htmlFor="nameInput" className="form-label">
-                Name
+                Nom
               </label>
               <input
                 type="text"
                 className="form-control rounded-4"
                 id="nameInput"
-                placeholder="Enter your name"
+                placeholder="Entrez votre nom"
               />
             </div>
             <div className="mb-3">
@@ -194,7 +198,7 @@ const RightSection = () => {
                 type="text"
                 className="form-control rounded-4"
                 id="emailInput"
-                placeholder="Enter your email"
+                placeholder="Entrez votre email"
               />
             </div>
             <div className="mb-3">
@@ -205,12 +209,12 @@ const RightSection = () => {
                 className="form-control rounded-4"
                 id="messageInput"
                 rows="3"
-                placeholder="Message"
+                placeholder="Votre message"
               ></textarea>
             </div>
             <div className="text-end">
               <button type="submit" className="btn btn-primary rounded-4">
-                Send Message
+                Envoyer le message
               </button>
             </div>
           </form>

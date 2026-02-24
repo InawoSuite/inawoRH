@@ -10,11 +10,11 @@ const RelatedJobs = () => {
         <Col lg={12}>
           <div className="d-flex align-items-center mb-4">
             <div className="flex-grow-1">
-              <h5 className="mb-0">Related Jobs</h5>
+              <h5 className="mb-0">Offres similaires</h5>
             </div>
             <div className="flex-shrink-0">
               <Link to="#" className="btn btn-ghost-secondary">
-                View All{" "}
+                Voir tout{" "}
                 <i className="ri-arrow-right-line ms-1 align-bottom"></i>
               </Link>
             </div>
@@ -34,7 +34,7 @@ const RelatedJobs = () => {
                 </button>
                 <div className="avatar-sm mb-4">
                   <div className={`avatar-title bg-${item.color}-subtle rounded-4 border-0`}>
-                    <img src={item.companyLogo} alt="" className="avatar-xxs" />
+                    <img src={item.companyLogo} alt="Logo entreprise" className="avatar-xxs" />
                   </div>
                 </div>
                 <Link to="#">
@@ -64,7 +64,7 @@ const RelatedJobs = () => {
 
                 <div className="mt-4 hstack gap-2">
                   <Link to="/:entreprise/offre-details/:id" className="btn btn-soft-primary rounded-4 border-0 w-100">
-                    Details
+                    Détails
                   </Link>
                   <Link to="/:entreprise/candidature-details/:id" className="btn btn-soft-info rounded-4 border-0 w-100">
                     Candidature

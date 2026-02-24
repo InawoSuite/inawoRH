@@ -19,7 +19,7 @@ const Widgets = () => {
                     {" "}
                     <i className={item.icon + "align-middle"}></i> {item.number}
                   </span>{" "}
-                  vs. previous month
+                  vs. mois précédent
                 </p>
               </div>
               <div>
