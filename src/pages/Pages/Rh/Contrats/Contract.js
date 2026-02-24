@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import TableContainer from "../../../../Components/Common/TableContainer";
-import { Link } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Loader from "../../../../Components/Common/Loader";
 import EmptyDataCard from "../../../../Components/Common/EmptyDataCard";
@@ -257,6 +257,8 @@ const Contrat = () => {
       }
     }, 500);
   }, []);
+   const { entreprise } = useParams();
+   const navigate = useNavigate();
 
   // ✅ Chargement initial
   useEffect(() => {
@@ -316,6 +318,8 @@ const Contrat = () => {
       await handleSubmitPiece(values, resetForm, setSubmitting);
     }
   });
+   
+    
 
   // ✅ Validation du formulaire d'import
   const importValidationSchema = Yup.object({
@@ -507,11 +511,8 @@ const Contrat = () => {
   }, [pieceFormik]);
 
   const handleOpenAddModal = useCallback(() => {
-    setCurrentPiece(null);
-    setIsEdit(false);
-    pieceFormik.resetForm();
-    setModal(true);
-  }, [pieceFormik]);
+    navigate(`/${entreprise}/contrat-add`);
+  }, [navigate, entreprise]);
 
   const handleOpenDeleteModal = useCallback((piece) => {
     setPieceToDelete(piece);
@@ -677,23 +678,18 @@ const Contrat = () => {
         return (
           <div className="d-flex gap-2">
             <Link
-              to="#"
-              className="text-info"
-              onClick={(e) => {
-                e.preventDefault();
-                handleOpenDetailModal(piece);
-              }}
-              title="Voir détails"
+                                                                   
+            to={`/${entreprise}/contrat-details/${piece.id}`}
+                state={{ contrat: piece }}
+                className="text-info "
+                title="Details"
             >
               <i className="ri-eye-fill fs-16"></i>
             </Link>
             <Link
-              to="#"
+              to={`/${entreprise}/contrat-edit/${piece.id}`}
               className="text-primary"
-              onClick={(e) => {
-                e.preventDefault();
-                handleOpenEditModal(piece);
-              }}
+              
               title="Éditer"
             >
               <i className="ri-pencil-fill fs-16"></i>
@@ -836,7 +832,9 @@ const Contrat = () => {
                   actionButton={
                     <Button
                       color="success"
-                      onClick={handleOpenAddModal}
+                      onClick={() => window.location.href = `/${entreprise}/contrat-add`}
+                     
+                    
                       className="rounded-pill"
                     >
                       <i className="ri-file-add-line me-1"></i>

@@ -270,6 +270,10 @@ import CongeEtAbsenceForm from "../pages/Pages/Rh/conges-et-absences/CongeEtAbse
 import CongeEtAbsenceAdd from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsenceAdd";
 import CongeEtAbsenceEdit from "../pages/Pages/Rh/conges-et-absences/CongeEtAbsenceEdit";
 
+import AddContract from "../pages/Pages/Rh/Contrats/AddContract";
+import EditContract from "../pages/Pages/Rh/Contrats/EditContract";
+import Pointage from "../pages/Pages/Rh/Pointage/Pointage";
+import DetailContract from "../pages/Pages/Rh/Contrats/DetailContract";
 import Settings from "../pages/Pages/Profile/Settings/Profile/Settings";
 import FileManager from "../pages/FileManager";
 import ToDoList from "../pages/ToDo";
@@ -429,6 +433,38 @@ const authProtectedRoutes = [
       component: (
         <RouteWrapper>
           <Contrat />
+        </RouteWrapper>
+      ),
+    },
+    {
+      path: "/:entreprise/contrat-add",
+      component: (
+        <RouteWrapper>
+          <AddContract />
+        </RouteWrapper>
+      ),
+    },
+    {
+      path: "/:entreprise/contrat-details/:id",
+      component: (
+        <RouteWrapper>
+          <DetailContract />
+        </RouteWrapper>
+      ),
+    },
+    {
+      path: "/:entreprise/contrat-edit/:id",
+      component: (
+        <RouteWrapper>
+          <EditContract />
+        </RouteWrapper>
+      ),
+    },
+    {
+      path: "/:entreprise/pointage",
+      component: (
+        <RouteWrapper>
+          <Pointage />
         </RouteWrapper>
       ),
     },
