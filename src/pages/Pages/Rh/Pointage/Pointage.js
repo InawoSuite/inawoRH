@@ -1173,7 +1173,7 @@ const Pointage = () => {
             late: { color: 'warning', label: 'Retard' }
         };
         const badge = badges[status] || badges.present;
-        return <Badge color={badge.color}>{badge.label}</Badge>;
+        return <Badge color={badge.color} pill>{badge.label}</Badge>;
     };
 
     const getTypeBadge = (type) => {
@@ -1877,7 +1877,7 @@ const Pointage = () => {
                                                         <div className="fw-medium">{record.employee}</div>
                                                         <small className="text-muted">Arrivée: {record.checkIn}</small>
                                                     </div>
-                                                    <Badge color="info">En cours</Badge>
+                                                    <Badge color="info" pill>En cours</Badge>
                                                 </div>
                                             ))
                                         ) : (
@@ -2308,11 +2308,11 @@ const Pointage = () => {
                                                         <td>{record.checkOut || '-'}</td>
                                                         <td>
                                                             {record.status === 'working' ? (
-                                                                <Badge color="info">En cours</Badge>
+                                                                <Badge color="info" pill>En cours</Badge>
                                                             ) : record.status === 'present' ? (
-                                                                <Badge color="success">Présent</Badge>
+                                                                <Badge color="success" pill>Présent</Badge>
                                                             ) : (
-                                                                <Badge color="secondary">-</Badge>
+                                                                <Badge color="secondary" pill>-</Badge>
                                                             )}
                                                         </td>
                                                     </tr>
