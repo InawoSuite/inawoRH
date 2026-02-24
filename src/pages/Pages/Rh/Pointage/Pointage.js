@@ -7,6 +7,8 @@ import {
 } from "reactstrap";
 import { Link, useParams } from "react-router-dom";
 import BreadCrumb from "../../../../Components/Common/BreadCrumb";
+import DeleteModal from "../../../../Components/Common/DeleteModal";
+import Pagination from "../../../../Components/Common/Pagination";
 import Select from "react-select";
 import classnames from 'classnames';
 
@@ -54,6 +56,8 @@ const Pointage = () => {
     const [settingsModal, setSettingsModal] = useState(false);
     const [reportModal, setReportModal] = useState(false);
     const [popoverOpen, setPopoverOpen] = useState({});
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [recordToDelete, setRecordToDelete] = useState(null);
     
     // ==================== ÉTATS D'AUTOMATISATION ====================
     const [autoMode, setAutoMode] = useState({
@@ -1017,6 +1021,22 @@ const Pointage = () => {
         addNotification('success', 'Pointage manuel', `Pointage ajouté pour ${employee.label}`);
     };
 
+    // Fonction pour ouvrir le modal de suppression
+    const handleDeleteClick = (record) => {
+        setRecordToDelete(record);
+        setDeleteModal(true);
+    };
+
+    // Fonction pour confirmer la suppression
+    const handleDeleteRecord = () => {
+        if (recordToDelete) {
+            setAttendanceData(prev => prev.filter(r => r.id !== recordToDelete.id));
+            setDeleteModal(false);
+            setRecordToDelete(null);
+            addNotification('success', 'Suppression', `Pointage de ${recordToDelete.employee} supprimé avec succès`);
+        }
+    };
+
     const detectAndCheckin = async () => {
         setLoading(true);
         
@@ -1672,36 +1692,56 @@ const Pointage = () => {
                                                                         </small>
                                                                     </td>
                                                                     <td>
-                                                                        <UncontrolledDropdown>
-                                                                            <DropdownToggle
-                                                                                href="#"
-                                                                                className="btn btn-soft-secondary btn-sm"
-                                                                                tag="button"
+                                                                        <div className="d-flex gap-2">
+                                                                            <Link
+                                                                                to="#"
+                                                                                className="text-info"
+                                                                                title="Voir détails"
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                    setSelectedRecord(record);
+                                                                                }}
                                                                             >
-                                                                                <i className="ri-more-fill" />
-                                                                            </DropdownToggle>
-                                                                            <DropdownMenu className="dropdown-menu-end">
-                                                                                <DropdownItem onClick={() => setSelectedRecord(record)}>
-                                                                                    <i className="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                                                    Détails
-                                                                                </DropdownItem>
-                                                                                <DropdownItem href="#">
-                                                                                    <i className="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                                                    Modifier
-                                                                                </DropdownItem>
-                                                                                <DropdownItem divider />
-                                                                                <DropdownItem href="#">
-                                                                                    <i className="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                                                    Supprimer
-                                                                                </DropdownItem>
-                                                                            </DropdownMenu>
-                                                                        </UncontrolledDropdown>
+                                                                                <i className="ri-eye-fill fs-16"></i>
+                                                                            </Link>
+                                                                            <Link
+                                                                                to="#"
+                                                                                className="text-primary"
+                                                                                title="Modifier"
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                }}
+                                                                            >
+                                                                                <i className="ri-pencil-fill fs-16"></i>
+                                                                            </Link>
+                                                                            <Link
+                                                                                to="#"
+                                                                                className="text-danger"
+                                                                                title="Supprimer"
+                                                                                onClick={(e) => {
+                                                                                    e.preventDefault();
+                                                                                    handleDeleteClick(record);
+                                                                                }}
+                                                                            >
+                                                                                <i className="ri-delete-bin-5-fill fs-16"></i>
+                                                                            </Link>
+                                                                        </div>
                                                                     </td>
                                                                 </tr>
                                                             ))}
                                                     </tbody>
                                                 </Table>
                                             </div>
+
+                                            {attendanceData.filter(record => record.date === formatDate(currentDate)).length > 0 && (
+                                                <Row className="align-items-center mt-3 pt-3 border-top">
+                                                    <Col sm={6}>
+                                                        <div className="text-muted">
+                                                            {attendanceData.filter(record => record.date === formatDate(currentDate)).length} pointage(s) pour cette date
+                                                        </div>
+                                                    </Col>
+                                                </Row>
+                                            )}
                                         </TabPane>
 
                                         <TabPane tabId="2">
@@ -1883,9 +1923,7 @@ const Pointage = () => {
                                         <Table className="table-nowrap align-middle mb-0">
                                             <thead className="table-light">
                                                 <tr>
-                                                    <th style={{ width: '40px' }}>
-                                                        <Input type="checkbox" />
-                                                    </th>
+                                                    
                                                     <th>Employé</th>
                                                     <th>Département</th>
                                                     <th>Date</th>
@@ -1900,11 +1938,9 @@ const Pointage = () => {
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                {attendanceData.map((record) => (
+                                                {attendanceData.slice((pagination.page - 1) * 50, pagination.page * 50).map((record) => (
                                                     <tr key={record.id}>
-                                                        <td>
-                                                            <Input type="checkbox" />
-                                                        </td>
+                                                       
                                                         <td>
                                                             <div className="d-flex align-items-center">
                                                                 <div className="avatar-xs me-2">
@@ -1936,30 +1972,40 @@ const Pointage = () => {
                                                             </small>
                                                         </td>
                                                         <td>
-                                                            <UncontrolledDropdown>
-                                                                <DropdownToggle
-                                                                    href="#"
-                                                                    className="btn btn-soft-secondary btn-sm"
-                                                                    tag="button"
+                                                            <div className="d-flex gap-2">
+                                                                <Link
+                                                                    to="#"
+                                                                    className="text-info"
+                                                                    title="Voir détails"
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        setSelectedRecord(record);
+                                                                    }}
                                                                 >
-                                                                    <i className="ri-more-fill" />
-                                                                </DropdownToggle>
-                                                                <DropdownMenu className="dropdown-menu-end">
-                                                                    <DropdownItem onClick={() => setSelectedRecord(record)}>
-                                                                        <i className="ri-eye-fill align-bottom me-2 text-muted"></i>
-                                                                        Détails
-                                                                    </DropdownItem>
-                                                                    <DropdownItem href="#">
-                                                                        <i className="ri-pencil-fill align-bottom me-2 text-muted"></i>
-                                                                        Modifier
-                                                                    </DropdownItem>
-                                                                    <DropdownItem divider />
-                                                                    <DropdownItem href="#">
-                                                                        <i className="ri-delete-bin-fill align-bottom me-2 text-muted"></i>
-                                                                        Supprimer
-                                                                    </DropdownItem>
-                                                                </DropdownMenu>
-                                                            </UncontrolledDropdown>
+                                                                    <i className="ri-eye-fill fs-16"></i>
+                                                                </Link>
+                                                                <Link
+                                                                    to="#"
+                                                                    className="text-primary"
+                                                                    title="Modifier"
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                    }}
+                                                                >
+                                                                    <i className="ri-pencil-fill fs-16"></i>
+                                                                </Link>
+                                                                <Link
+                                                                    to="#"
+                                                                    className="text-danger"
+                                                                    title="Supprimer"
+                                                                    onClick={(e) => {
+                                                                        e.preventDefault();
+                                                                        handleDeleteClick(record);
+                                                                    }}
+                                                                >
+                                                                    <i className="ri-delete-bin-5-fill fs-16"></i>
+                                                                </Link>
+                                                            </div>
                                                         </td>
                                                     </tr>
                                                 ))}
@@ -1973,6 +2019,17 @@ const Pointage = () => {
                                             <p className="text-muted mt-3">Aucune donnée de présence disponible</p>
                                         </div>
                                     )}
+
+                                    <div className="mt-3 pt-3">
+                                        <Pagination
+                                            data={attendanceData}
+                                            currentPage={pagination.page}
+                                            setCurrentPage={(page) => setPagination({...pagination, page})}
+                                            perPageData={50}
+                                            alwaysShow={true}
+                                            showInfo={true}
+                                        />
+                                    </div>
                                 </CardBody>
                             </Card>
                         </Col>
@@ -2746,6 +2803,16 @@ const Pointage = () => {
                         </Button>
                     </ModalFooter>
                 </Modal>
+
+                {/* Modal de suppression */}
+                <DeleteModal
+                    show={deleteModal}
+                    onDeleteClick={handleDeleteRecord}
+                    onCloseClick={() => {
+                        setDeleteModal(false);
+                        setRecordToDelete(null);
+                    }}
+                />
 
                 {/* Styles CSS pour le mode kiosque */}
                 <style jsx>{`

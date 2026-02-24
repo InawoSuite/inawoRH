@@ -18,7 +18,7 @@ const SimpleDonutCharts = ({ dataColors }) => {
               }
         },
         legend: {
-            position: 'bottom'
+            show: false
         },
         colors: chartDonutBasicColors
     };
