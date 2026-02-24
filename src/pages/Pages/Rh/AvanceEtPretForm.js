@@ -293,7 +293,7 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                         <Col md={12}>
                                             <div className="d-flex justify-content-end gap-2">
                                                 <Button
-                                                    color="secondary"
+                                                    className="btn btn-light rounded-4"
                                                     type="button"
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
                                                     onClick={() => navigate("/:entreprise/avance-et-pret")}
@@ -301,7 +301,7 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                                     Annuler
                                                 </Button>
                                                 <Button
-                                                    color="primary"
+                                                    className="btn btn-success rounded-4"
                                                     type="submit"
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
                                                 >

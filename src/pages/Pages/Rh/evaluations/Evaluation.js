@@ -427,8 +427,14 @@ const Evaluation = () => {
                 </Row>
 
                 {/* MODAL DE CRÉATION DE CAMPAGNE */}
-                <Modal isOpen={createModal} toggle={toggleCreateModal} size="lg" centered>
-                    <ModalHeader toggle={toggleCreateModal}>
+                <Modal 
+                    isOpen={createModal} 
+                    toggle={toggleCreateModal} 
+                    size="lg" 
+                    centered
+                    contentClassName="rounded-4 border-0"
+                >
+                    <ModalHeader toggle={toggleCreateModal} className="border-0">
                         <i className="ri-megaphone-line me-2"></i>
                         Nouvelle campagne d'évaluation
                     </ModalHeader>
@@ -516,11 +522,19 @@ const Evaluation = () => {
                                 </Col>
                             </Row>
                         </ModalBody>
-                        <ModalFooter>
-                            <Button color="secondary" onClick={toggleCreateModal}>
+                        <ModalFooter className="border-0 pb-4">
+                            <Button
+                                className="rounded-4"
+                                color="secondary" 
+                                onClick={toggleCreateModal}
+                            >
                                 Annuler
                             </Button>
-                            <Button color="primary" type="submit">
+                            <Button 
+                                className="rounded-4" 
+                                color="primary" 
+                                type="submit"
+                            >
                                 Créer la campagne
                             </Button>
                         </ModalFooter>
@@ -528,8 +542,14 @@ const Evaluation = () => {
                 </Modal>
 
                 {/* MODAL QUIZ */}
-                <Modal isOpen={quizModal} toggle={() => toggleQuizModal()} size="lg" centered>
-                    <ModalHeader toggle={() => toggleQuizModal()}>
+                <Modal 
+                    isOpen={quizModal} 
+                    toggle={() => toggleQuizModal()} 
+                    size="lg" 
+                    centered
+                    contentClassName="rounded-4 border-0"
+                >
+                    <ModalHeader toggle={() => toggleQuizModal()} className="border-0">
                         <div className="d-flex align-items-center justify-content-between w-100">
                             <div>
                                 <i className="ri-questionnaire-line me-2"></i>
@@ -598,6 +618,7 @@ const Evaluation = () => {
 
                                 <div className="d-flex justify-content-between">
                                     <Button
+                                        className="rounded-4"
                                         color="secondary"
                                         onClick={prevQuestion}
                                         disabled={currentQuestion === 0}
@@ -607,6 +628,7 @@ const Evaluation = () => {
                                     </Button>
                                     {currentQuestion < quizQuestions.length - 1 ? (
                                         <Button
+                                            className="rounded-4"
                                             color="primary"
                                             onClick={nextQuestion}
                                             disabled={!answers[quizQuestions[currentQuestion].id]}
@@ -616,6 +638,7 @@ const Evaluation = () => {
                                         </Button>
                                     ) : (
                                         <Button
+                                            className="rounded-4"
                                             color="success"
                                             onClick={submitQuiz}
                                             disabled={!answers[quizQuestions[currentQuestion].id]}
@@ -631,8 +654,14 @@ const Evaluation = () => {
                 </Modal>
 
                 {/* MODAL VOIR DÉTAILS */}
-                <Modal isOpen={viewModal} toggle={() => toggleViewModal()} size="lg" centered>
-                    <ModalHeader toggle={() => toggleViewModal()}>
+                <Modal 
+                    isOpen={viewModal} 
+                    toggle={() => toggleViewModal()} 
+                    size="md" 
+                    centered
+                    contentClassName="rounded-4 border-0"
+                >
+                    <ModalHeader toggle={() => toggleViewModal()} className="border-0">
                         <i className="ri-eye-line me-2"></i>
                         Détails de la campagne
                     </ModalHeader>
@@ -654,8 +683,12 @@ const Evaluation = () => {
                             </div>
                         )}
                     </ModalBody>
-                    <ModalFooter>
-                        <Button color="secondary" onClick={() => toggleViewModal()}>
+                    <ModalFooter className="border-0 pb-4">
+                        <Button 
+                            className="rounded-4"
+                            color="secondary" 
+                            onClick={() => toggleViewModal()}
+                        >
                             Fermer
                         </Button>
                     </ModalFooter>

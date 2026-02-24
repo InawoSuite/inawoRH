@@ -24,6 +24,11 @@ const OffreAdd = () => {
     const [selectedJobCategory, setSelectedJobCategory] = useState(null);
     const [selectedJobType, setSelectedJobType] = useState(null);
     const [selectedExperience, setSelectedExperience] = useState(null);
+
+    // Référence pour Quill des tags
+    const tagsQuillRef = useRef(null);
+    const [tagsQuill, setTagsQuill] = useState(null);
+    const [tags, setTags] = useState("");
     
     // État pour la description avec Quill
     const [description, setDescription] = useState("");
@@ -105,6 +110,44 @@ const OffreAdd = () => {
             };
         }
     }, [quill]);
+
+    // Initialisation de Quill pour les tags
+    useEffect(() => {
+        if (!tagsQuillRef.current) return;
+
+        const quillInstance = new Quill(tagsQuillRef.current, {
+            placeholder: "Ex: React, JavaScript, Senior",
+            theme: "snow",
+            modules: {
+                toolbar: [
+                    // Toolbar simplifié pour les tags
+                    ['bold', 'italic'],
+                    [{ 'list': 'bullet' }],
+                    ['clean']
+                ]
+            }
+        });
+
+        setTagsQuill(quillInstance);
+
+        return () => {};
+    }, []);
+
+    // Gérer les changements de Quill pour les tags
+    useEffect(() => {
+        if (tagsQuill) {
+            const handleTextChange = () => {
+                const html = tagsQuill.root.innerHTML;
+                setTags(html);
+            };
+
+            tagsQuill.on('text-change', handleTextChange);
+
+            return () => {
+                tagsQuill.off('text-change', handleTextChange);
+            };
+        }
+    }, [tagsQuill]);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -391,15 +434,23 @@ const OffreAdd = () => {
                                                     <Label htmlFor="tags-field">
                                                         Tags / Mots-clés
                                                     </Label>
-                                                    <Input
-                                                        className="rounded-4"
-                                                        id="tags-field"
-                                                        name="tags-field"
-                                                        data-choices
-                                                        data-choices-text-unique-true
-                                                        type="text"
-                                                        placeholder="Ex: React, JavaScript, Senior"
-                                                    />
+                                                    <div 
+                                                        className="snow-editor" 
+                                                        style={{ 
+                                                            border: '1px solid #ced4da',
+                                                            borderRadius: '20px',
+                                                            background: '#fff',
+                                                            overflow: 'hidden'
+                                                        }}
+                                                    >
+                                                        <div 
+                                                            ref={tagsQuillRef} 
+                                                            style={{ minHeight: '100px' }} 
+                                                        />
+                                                    </div>
+                                                    <small className="text-muted d-block mt-1">
+                                                        Saisissez vos tags (chaque ligne = un tag)
+                                                    </small>
                                                 </FormGroup>
                                             </Col>
 
@@ -408,15 +459,15 @@ const OffreAdd = () => {
                                                 <div className="hstack justify-content-end gap-2">
                                                     <button
                                                         type="button"
-                                                        className="btn btn-ghost-danger"
-                                                        onClick={() => navigate("/:entreprise/offres")}
+                                                        className="btn btn-light rounded-4"
+                                                        onClick={() => navigate("/:entreprise/recrutements")}
                                                     >
-                                                        <i className="ri-close-line align-bottom"></i> Annuler
+                                                        Annuler
                                                     </button>
                                                     <button
                                                         style={{ borderRadius: "20px" }}
                                                         type="submit" 
-                                                        className="btn btn-secondary"
+                                                        className="btn btn-success rounded-4"
                                                     >
                                                         Ajouter l'offre d'emploi
                                                     </button>
