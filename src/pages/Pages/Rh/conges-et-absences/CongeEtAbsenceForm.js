@@ -70,7 +70,7 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                         <>
                             <i className="ri-calendar-check-line"></i>
                             &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>
-                            &nbsp;&gt;&nbsp;<Link to="/conge-et-absence">Congés et Absences</Link>&nbsp;&gt;&nbsp;
+                            &nbsp;&gt;&nbsp;<Link to="/:entreprise/presence-et-absence">Présence et Absences</Link>&nbsp;&gt;&nbsp;
                         </>
                     }
                 />
@@ -233,7 +233,7 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                                     className="btn btn-light rounded-4"
                                                     type="button"
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
-                                                    onClick={() => navigate("/:entreprise/conge-et-absence")}
+                                                    onClick={() => navigate(-1)}
                                                 >
                                                     Annuler
                                                 </Button>

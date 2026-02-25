@@ -115,7 +115,7 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                         <>
                             <i className="ri-money-dollar-circle-line"></i>
                             &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>
-                            &nbsp;&gt;&nbsp;<Link to="/avance-et-pret">Avance et Prêt</Link>&nbsp;&gt;&nbsp;
+                            &nbsp;&gt;&nbsp;<Link to="/:entreprise/paie-et-avances">Paie et Avances</Link>&nbsp;&gt;&nbsp;
                         </>
                     }
                 />
@@ -296,7 +296,7 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                                     className="btn btn-light rounded-4"
                                                     type="button"
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
-                                                    onClick={() => navigate("/:entreprise/avance-et-pret")}
+                                                    onClick={() => navigate(-1)}
                                                 >
                                                     Annuler
                                                 </Button>

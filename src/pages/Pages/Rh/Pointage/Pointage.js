@@ -1296,8 +1296,8 @@ const Pointage = () => {
 
     // ==================== RENDU ====================
     return (
-        <div className="page-content">
-            <Container fluid>
+
+            <div>
                 {/* Header avec indicateurs en temps réel */}
                 <Row className="mb-3">
                     <Col lg={12}>
@@ -2894,7 +2894,6 @@ const Pointage = () => {
                         color: #1e40af;
                     }
                 `}</style>
-            </Container>
         </div>
     );
 };
