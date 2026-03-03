@@ -273,6 +273,8 @@ import Evaluation from "../pages/Pages/Rh/evaluations/Evaluation";
 import EvaluationForm from "../pages/Pages/Rh/evaluations/EvaluationForm";
 import EvaluationAdd from "../pages/Pages/Rh/evaluations/EvaluationAdd";
 import EvaluationEdit from "../pages/Pages/Rh/evaluations/EvaluationEdit";
+import PaieEtAvances from "../pages/Pages/Rh/PaieEtAvances";
+import PresenceEtAbsence from "../pages/Pages/Rh/PresenceEtAbsence";
 
 import AddContract from "../pages/Pages/Rh/Contrats/AddContract";
 import EditContract from "../pages/Pages/Rh/Contrats/EditContract";
@@ -809,6 +811,22 @@ const authProtectedRoutes = [
     component: (
       <RouteWrapper>
         <Recrutements />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/paie-et-avances",
+    component: (
+      <RouteWrapper>
+        <PaieEtAvances />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/presence-et-absence",
+    component: (
+      <RouteWrapper>
+        <PresenceEtAbsence />
       </RouteWrapper>
     ),
   },

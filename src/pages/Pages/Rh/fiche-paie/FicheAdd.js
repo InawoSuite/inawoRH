@@ -46,7 +46,8 @@ const FicheAdd = () => {
                     pageTitle={
                         <>
                             <i className="ri-team-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>&nbsp;&gt;
+                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>
+                            &nbsp;&gt;&nbsp;<Link to="/:entreprise/paie-et-avances">Paie et Avances</Link>&nbsp;&gt;&nbsp;
                         </>
                     }
                 />

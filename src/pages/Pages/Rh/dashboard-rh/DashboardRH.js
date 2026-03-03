@@ -52,10 +52,6 @@ const DashboardRH = () => {
               <div className="h-100">
                 {/* <Section rightClickBtn={toggleRightColumn} /> */}
                 <Row>
-                  {/* <Col xl={12}>
-                    <StatsDashboard />
-                  </Col> */}
-
                    <Row>
             <Widgets />
             <FeaturedCompanies />
