@@ -10,11 +10,13 @@ import SearchAndActionBar from "../../../Components/Common/SearchAndActionBar";
 import EmptyDataCard from "../../../Components/Common/EmptyDataCard";
 import Pagination from "../../../Components/Common/Pagination";
 import DeleteModal from "../../../Components/Common/DeleteModal";
+import { useTranslation } from "react-i18next";
 
 import Pointage from "./Pointage/Pointage";
 
 const PresenceEtAbsence = () => {
     const { entreprise } = useParams();
+    const { t } = useTranslation();
 
     // ========== ÉTATS GÉNÉRAUX ==========
     const [isExportCSV, setIsExportCSV] = useState(false);
@@ -81,9 +83,9 @@ const PresenceEtAbsence = () => {
 
     // ========== FONCTIONS UTILITAIRES POUR CONGÉS ==========
     const getApprouveBadge = (approuve) => {
-        return approuve === "Oui" 
-            ? <Badge className="badge bg-success rounded-pill" pill>Oui</Badge>
-            : <Badge className="badge bg-danger rounded-pill" pill>Non</Badge>;
+        return approuve === "Oui"
+            ? <Badge className="badge bg-success rounded-pill" pill>{t("Oui")}</Badge>
+            : <Badge className="badge bg-danger rounded-pill" pill>{t("Non")}</Badge>;
     };
 
     const getDifferenceColor = (diff) => {
@@ -107,10 +109,10 @@ const PresenceEtAbsence = () => {
         if (itemToDelete) {
             if (activeTab === "1") {
                 setCongeList(congeList.filter(i => i.id !== itemToDelete.id));
-                toast.success("Demande supprimée avec succès");
+                toast.success(t("Demande supprimée avec succès"));
             } else {
                 // Pour l'onglet Pointage, on ne fait rien car la suppression est gérée dans le composant Pointage
-                toast.info("La suppression est gérée dans le composant Pointage");
+                toast.info(t("La suppression est gérée dans le composant Pointage"));
             }
             setDeleteModal(false);
             setItemToDelete(null);
@@ -127,16 +129,16 @@ const PresenceEtAbsence = () => {
         () => [
             {
                 key: "1",
-                label: "Congés et Absences",
+                label: t("Congés et Absences"),
                 icon: "ri-calendar-check-line",
             },
             {
                 key: "2",
-                label: "Pointage",
+                label: t("Pointage"),
                 icon: "ri-timer-line",
             }
         ],
-        [],
+        [t],
     );
 
     const handleTabChange = useCallback((tabKey) => {
@@ -148,7 +150,7 @@ const PresenceEtAbsence = () => {
     // ========== FILTRAGE DES DONNÉES POUR CONGÉS ==========
     const filteredCongeData = useMemo(() => {
         if (activeTab !== "1") return [];
-        
+
         let filtered = congeList;
 
         if (searchTerm) {
@@ -180,7 +182,7 @@ const PresenceEtAbsence = () => {
             cell: (cell) => <span className="fw-medium">{cell.getValue()}</span>,
         },
         {
-            header: "Employé",
+            header: t("Employé"),
             accessorKey: "employe",
             enableColumnFilter: false,
             cell: (cellProps) => {
@@ -205,41 +207,41 @@ const PresenceEtAbsence = () => {
             },
         },
         {
-            header: "Date",
+            header: t("Date"),
             accessorKey: "date",
             enableColumnFilter: false,
         },
         {
-            header: "Jours prévus",
+            header: t("Jours prévus"),
             accessorKey: "joursPrevue",
             enableColumnFilter: false,
             cell: (cell) => (
                 <span className="fw-medium text-success">
-                    {cell.getValue()} jours
+                    {cell.getValue()} {t("jours")}
                 </span>
             ),
         },
         {
-            header: "Congés approuvés",
+            header: t("Congés approuvés"),
             accessorKey: "congesApprouves",
             enableColumnFilter: false,
             cell: (cell) => getApprouveBadge(cell.getValue()),
         },
         {
-            header: "Différence",
+            header: t("Différence"),
             accessorKey: "difference",
             enableColumnFilter: false,
             cell: (cell) => {
                 const diff = cell.getValue();
                 return (
                     <span className={`fw-medium ${getDifferenceColor(diff)}`}>
-                        {diff > 0 ? '+' : ''}{diff} jours
+                        {diff > 0 ? '+' : ''}{diff} {t("jours")}
                     </span>
                 );
             },
         },
         {
-            header: "Actions",
+            header: t("Actions"),
             enableColumnFilter: false,
             cell: (cellProps) => {
                 const item = cellProps.row.original;
@@ -248,7 +250,7 @@ const PresenceEtAbsence = () => {
                         <Link
                             to="#"
                             className="text-info p-2"
-                            title="Voir détails"
+                            title={t("Voir détails")}
                             onClick={(e) => {
                                 e.preventDefault();
                                 toggleViewModal(item);
@@ -259,14 +261,14 @@ const PresenceEtAbsence = () => {
                         <Link
                             to={`/${entreprise}/conge-et-absence-edit/${item.id}`}
                             className="text-primary p-2"
-                            title="Modifier"
+                            title={t("Modifier")}
                         >
                             <i className="ri-pencil-fill fs-16"></i>
                         </Link>
                         <Link
                             to="#"
                             className="text-danger p-2"
-                            title="Supprimer"
+                            title={t("Supprimer")}
                             onClick={(e) => {
                                 e.preventDefault();
                                 handleDeleteClick(item);
@@ -278,9 +280,9 @@ const PresenceEtAbsence = () => {
                 );
             },
         },
-    ], [entreprise]);
+    ], [entreprise, t]);
 
-    document.title = "Presence et Absence";
+    document.title = t("Presence et Absence");
 
     // ========== RENDU ==========
     return (
@@ -292,11 +294,11 @@ const PresenceEtAbsence = () => {
             />
             <Container fluid>
                 <BreadCrumb
-                    title="&nbsp;Presence et Absence"
+                    title={`\u00a0${t("Presence et Absence")}`}
                     pageTitle={
                         <>
                             <i className="ri-calendar-check-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>&nbsp;&gt;
+                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>&nbsp;&gt;
                         </>
                     }
                 />
@@ -309,11 +311,10 @@ const PresenceEtAbsence = () => {
                                 <Link
                                     key={tab.key}
                                     to="#"
-                                    className={`btn ${
-                                        activeTab === tab.key
+                                    className={`btn ${activeTab === tab.key
                                             ? "btn-primary"
                                             : "btn-soft-secondary"
-                                    } rounded-4 px-4 py-2`}
+                                        } rounded-4 px-4 py-2`}
                                     onClick={() => handleTabChange(tab.key)}
                                 >
                                     <i className={`${tab.icon} me-2`}></i>
@@ -332,14 +333,14 @@ const PresenceEtAbsence = () => {
                             <SearchAndActionBar
                                 searchTerm={searchTerm}
                                 onSearchChange={setSearchTerm}
-                                searchPlaceholder="Chercher un congé ou une absence..."
+                                searchPlaceholder={t("Chercher un congé ou une absence...")}
                                 showSearch={true}
                                 addButtonLink={`/${entreprise}/conge-et-absence-add`}
-                                addButtonText="Faire une demande de congé/absence"
+                                addButtonText={t("Faire une demande de congé/absence")}
                                 addButtonIcon="ri-file-add-line"
                                 showAddButton={true}
                                 onExportClick={() => setIsExportCSV(true)}
-                                exportButtonText="Exporter"
+                                exportButtonText={t("Exporter")}
                                 exportButtonIcon="ri-file-upload-line"
                                 showExportButton={true}
                             />
@@ -373,8 +374,8 @@ const PresenceEtAbsence = () => {
                                 </TableContainer>
                             ) : (
                                 <EmptyDataCard
-                                    title="Aucun congé ou absence trouvé"
-                                    description="Commencez par créer une nouvelle demande"
+                                    title={t("Aucun congé ou absence trouvé")}
+                                    description={t("Commencez par créer une nouvelle demande")}
                                     actionButton={
                                         <Link
                                             to={`/${entreprise}/conge-et-absence-add`}
@@ -382,7 +383,7 @@ const PresenceEtAbsence = () => {
                                             style={{ borderRadius: "20px" }}
                                         >
                                             <i className="ri-calendar-check-line me-1"></i>
-                                            Nouvelle demande
+                                            {t("Nouvelle demande")}
                                         </Link>
                                     }
                                 />
@@ -404,15 +405,15 @@ const PresenceEtAbsence = () => {
                 )}
 
                 {/* MODAL VOIR DÉTAILS POUR CONGÉS */}
-                <Modal 
-                    isOpen={viewModal && activeTab === "1"} 
-                    toggle={() => toggleViewModal()} 
-                    size="lg" 
+                <Modal
+                    isOpen={viewModal && activeTab === "1"}
+                    toggle={() => toggleViewModal()}
+                    size="lg"
                     centered
                     className="modal-dialog-centered"
                     contentClassName="rounded-4 border-0"
                 >
-                    <ModalHeader 
+                    <ModalHeader
                         toggle={() => toggleViewModal()}
                         className="border-0 pt-4 px-4"
                     >
@@ -423,25 +424,25 @@ const PresenceEtAbsence = () => {
                                 </span>
                             </div>
                             <div>
-                                <h5 className="modal-title mb-0">Détails du congé/absence</h5>
-                                <p className="text-muted mb-0">N° {selectedItem?.numero}</p>
+                                <h5 className="modal-title mb-0">{t("Détails du congé/absence")}</h5>
+                                <p className="text-muted mb-0">{t("N°")} {selectedItem?.numero}</p>
                             </div>
                         </div>
                     </ModalHeader>
-                    
+
                     <ModalBody className="p-4">
                         {selectedItem && (
                             <Row className="g-4">
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <small className="text-muted d-block mb-1">Employé</small>
+                                        <small className="text-muted d-block mb-1">{t("Employé")}</small>
                                         <p className="fw-semibold fs-5 mb-0">{selectedItem.employe}</p>
                                     </div>
                                 </Col>
 
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <small className="text-muted d-block mb-1">Date</small>
+                                        <small className="text-muted d-block mb-1">{t("Date")}</small>
                                         <p className="fw-semibold mb-0">
                                             <i className="ri-calendar-line me-2 text-primary"></i>
                                             {selectedItem.date}
@@ -451,38 +452,38 @@ const PresenceEtAbsence = () => {
 
                                 <Col md={4}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <small className="text-muted d-block mb-1">Jours prévus</small>
-                                        <p className="fw-semibold text-success fs-5 mb-0">{selectedItem.joursPrevue} jours</p>
+                                        <small className="text-muted d-block mb-1">{t("Jours prévus")}</small>
+                                        <p className="fw-semibold text-success fs-5 mb-0">{selectedItem.joursPrevue} {t("jours")}</p>
                                     </div>
                                 </Col>
 
                                 <Col md={4}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <small className="text-muted d-block mb-1">Congés approuvés</small>
+                                        <small className="text-muted d-block mb-1">{t("Congés approuvés")}</small>
                                         <div>{getApprouveBadge(selectedItem.congesApprouves)}</div>
                                     </div>
                                 </Col>
 
                                 <Col md={4}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <small className="text-muted d-block mb-1">Différence</small>
+                                        <small className="text-muted d-block mb-1">{t("Différence")}</small>
                                         <p className={`fw-semibold fs-5 mb-0 ${getDifferenceColor(selectedItem.difference)}`}>
-                                            {selectedItem.difference > 0 ? '+' : ''}{selectedItem.difference} jours
+                                            {selectedItem.difference > 0 ? '+' : ''}{selectedItem.difference} {t("jours")}
                                         </p>
                                     </div>
                                 </Col>
                             </Row>
                         )}
                     </ModalBody>
-                    
+
                     <ModalFooter className="border-0 pt-0 pb-4 px-4">
-                        <Button 
-                            color="secondary" 
+                        <Button
+                            color="secondary"
                             onClick={() => toggleViewModal()}
                             className="rounded-3 px-4"
                         >
                             <i className="ri-close-line me-1"></i>
-                            Fermer
+                            {t("Fermer")}
                         </Button>
                     </ModalFooter>
                 </Modal>

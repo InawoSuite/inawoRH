@@ -7,16 +7,18 @@ import DeleteModal from "../../../../Components/Common/DeleteModal";
 import Pagination from "../../../../Components/Common/Pagination";
 import { CustomSelect } from "../../../../Components/Common/CustomSelectStyles";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const Evaluation = () => {
-    document.title = "Evaluation";
+    const { t } = useTranslation();
+    document.title = t("Evaluation");
 
     // États généraux
     const [isExportCSV, setIsExportCSV] = useState(false);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage, setItemsPerPage] = useState(5);
-    
+
     // États pour les modals
     const [viewModal, setViewModal] = useState(false);
     const [createModal, setCreateModal] = useState(false);
@@ -166,10 +168,10 @@ const Evaluation = () => {
 
     const formatDate = (date) => {
         if (!date) return "-";
-        return new Date(date).toLocaleDateString('fr-FR', { 
-            day: '2-digit', 
-            month: '2-digit', 
-            year: 'numeric' 
+        return new Date(date).toLocaleDateString('fr-FR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
         });
     };
 
@@ -215,13 +217,13 @@ const Evaluation = () => {
     };
 
     const getStatutBadge = (statut) => {
-        switch(statut) {
+        switch (statut) {
             case 'en_cours':
-                return <Badge className="badge bg-warning rounded-pill" pill>En cours</Badge>;
+                return <Badge className="badge bg-warning rounded-pill" pill>{t("En cours")}</Badge>;
             case 'planifié':
-                return <Badge className="badge bg-info rounded-pill" pill>Planifié</Badge>;
+                return <Badge className="badge bg-info rounded-pill" pill>{t("Planifié")}</Badge>;
             case 'terminé':
-                return <Badge className="badge bg-success rounded-pill" pill>Terminé</Badge>;
+                return <Badge className="badge bg-success rounded-pill" pill>{t("Terminé")}</Badge>;
             default:
                 return <Badge className="badge bg-secondary rounded-pill" pill>{statut}</Badge>;
         }
@@ -243,7 +245,7 @@ const Evaluation = () => {
     const handleDeleteConfirm = () => {
         if (itemToDelete) {
             setCampagnesList(campagnesList.filter(i => i.id !== itemToDelete.id));
-            toast.success("Suppression effectuée avec succès");
+            toast.success(t("Suppression effectuée avec succès"));
             setDeleteModal(false);
             setItemToDelete(null);
         }
@@ -258,11 +260,11 @@ const Evaluation = () => {
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-                    title="&nbsp;Évaluation"
+                    title={`\u00a0${t("Évaluation")}`}
                     pageTitle={
                         <>
                             <i className="ri-bar-chart-grouped-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>&nbsp;&gt;
+                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>&nbsp;&gt;
                         </>
                     }
                 />
@@ -272,15 +274,15 @@ const Evaluation = () => {
                         <SearchAndActionBar
                             searchTerm={searchTerm}
                             onSearchChange={setSearchTerm}
-                            searchPlaceholder="Chercher une campagne..."
+                            searchPlaceholder={t("Chercher une campagne...")}
                             showSearch={true}
                             addButtonLink="/:entreprise/evaluation-add"
-                            addButtonText="Nouvelle campagne d'évaluation"
+                            addButtonText={t("Nouvelle campagne d'évaluation")}
                             addButtonIcon="ri-file-add-line"
                             showAddButton={true}
                             onAddClick={toggleCreateModal}
                             onExportClick={() => setIsExportCSV(true)}
-                            exportButtonText="Exporter"
+                            exportButtonText={t("Exporter")}
                             exportButtonIcon="ri-file-upload-line"
                             showExportButton={true}
                         />
@@ -294,13 +296,13 @@ const Evaluation = () => {
                                         <thead className="text-muted">
                                             <tr>
                                                 <th>N°</th>
-                                                <th>Titre</th>
-                                                <th>Mode</th>
-                                                <th>Responsable</th>
-                                                <th>Date</th>
-                                                <th>Progression</th>
-                                                <th>Statut</th>
-                                                <th>Actions</th>
+                                                <th>{t("Titre")}</th>
+                                                <th>{t("Mode")}</th>
+                                                <th>{t("Responsable")}</th>
+                                                <th>{t("Date")}</th>
+                                                <th>{t("Progression")}</th>
+                                                <th>{t("Statut")}</th>
+                                                <th>{t("Actions")}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -327,8 +329,8 @@ const Evaluation = () => {
                                                         <td>{formatDate(item.dateEvaluation)}</td>
                                                         <td style={{ minWidth: "120px" }}>
                                                             <div className="d-flex align-items-center gap-2">
-                                                                <Progress 
-                                                                    value={item.progression} 
+                                                                <Progress
+                                                                    value={item.progression}
                                                                     color={item.progression === 100 ? "success" : "primary"}
                                                                     style={{ height: "8px", width: "100px" }}
                                                                 />
@@ -342,7 +344,7 @@ const Evaluation = () => {
                                                                     <Link
                                                                         to="#"
                                                                         className="text-success p-2"
-                                                                        title="Démarrer"
+                                                                        title={t("Démarrer")}
                                                                         onClick={(e) => {
                                                                             e.preventDefault();
                                                                             toggleQuizModal(item);
@@ -355,7 +357,7 @@ const Evaluation = () => {
                                                                     <Link
                                                                         to="#"
                                                                         className="text-warning p-2"
-                                                                        title="Continuer"
+                                                                        title={t("Continuer")}
                                                                         onClick={(e) => {
                                                                             e.preventDefault();
                                                                             toggleQuizModal(item);
@@ -367,7 +369,7 @@ const Evaluation = () => {
                                                                 <Link
                                                                     to="#"
                                                                     className="text-info p-2"
-                                                                    title="Voir détails"
+                                                                    title={t("Voir détails")}
                                                                     onClick={(e) => {
                                                                         e.preventDefault();
                                                                         toggleViewModal(item);
@@ -378,14 +380,14 @@ const Evaluation = () => {
                                                                 <Link
                                                                     to="/:entreprise/evaluation-edit/:id"
                                                                     className="text-primary p-2"
-                                                                    title="Modifier"
+                                                                    title={t("Modifier")}
                                                                 >
                                                                     <i className="ri-pencil-fill fs-16"></i>
                                                                 </Link>
                                                                 <Link
                                                                     to="#"
                                                                     className="text-danger p-2"
-                                                                    title="Supprimer"
+                                                                    title={t("Supprimer")}
                                                                     onClick={(e) => {
                                                                         e.preventDefault();
                                                                         handleDeleteClick(item);
@@ -402,8 +404,8 @@ const Evaluation = () => {
                                                     <td colSpan="8" className="text-center py-5">
                                                         <div className="text-muted">
                                                             <i className="ri-inbox-line" style={{ fontSize: "3rem" }}></i>
-                                                            <h5 className="mt-3">Aucune campagne trouvée</h5>
-                                                            <p className="mb-0">Commencez par créer une nouvelle campagne</p>
+                                                            <h5 className="mt-3">{t("Aucune campagne trouvée")}</h5>
+                                                            <p className="mb-0">{t("Commencez par créer une nouvelle campagne")}</p>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -427,16 +429,16 @@ const Evaluation = () => {
                 </Row>
 
                 {/* MODAL DE CRÉATION DE CAMPAGNE */}
-                <Modal 
-                    isOpen={createModal} 
-                    toggle={toggleCreateModal} 
-                    size="lg" 
+                <Modal
+                    isOpen={createModal}
+                    toggle={toggleCreateModal}
+                    size="lg"
                     centered
                     contentClassName="rounded-4 border-0"
                 >
                     <ModalHeader toggle={toggleCreateModal} className="border-0">
                         <i className="ri-megaphone-line me-2"></i>
-                        Nouvelle campagne d'évaluation
+                        {t("Nouvelle campagne d'évaluation")}
                     </ModalHeader>
                     <Form onSubmit={handleCreateCampagne}>
                         <ModalBody>
@@ -448,7 +450,7 @@ const Evaluation = () => {
                                             type="text"
                                             placeholder="Ex: Évaluation annuelle 2024"
                                             value={formData.titre}
-                                            onChange={(e) => setFormData({...formData, titre: e.target.value})}
+                                            onChange={(e) => setFormData({ ...formData, titre: e.target.value })}
                                             required
                                             className="rounded-4"
                                         />
@@ -462,7 +464,7 @@ const Evaluation = () => {
                                         <CustomSelect
                                             options={modeOptions}
                                             value={modeOptions.find(opt => opt.value === formData.mode)}
-                                            onChange={(opt) => setFormData({...formData, mode: opt.value})}
+                                            onChange={(opt) => setFormData({ ...formData, mode: opt.value })}
                                             placeholder="Sélectionner un mode"
                                         />
                                     </FormGroup>
@@ -474,7 +476,7 @@ const Evaluation = () => {
                                             type="text"
                                             placeholder="Nom du responsable"
                                             value={formData.responsable}
-                                            onChange={(e) => setFormData({...formData, responsable: e.target.value})}
+                                            onChange={(e) => setFormData({ ...formData, responsable: e.target.value })}
                                             required
                                             className="rounded-4"
                                         />
@@ -488,7 +490,7 @@ const Evaluation = () => {
                                         <CustomSelect
                                             options={modeEvaluationOptions}
                                             value={modeEvaluationOptions.find(opt => opt.value === formData.modeEvaluation)}
-                                            onChange={(opt) => setFormData({...formData, modeEvaluation: opt.value})}
+                                            onChange={(opt) => setFormData({ ...formData, modeEvaluation: opt.value })}
                                             placeholder="Sélectionner le mode"
                                         />
                                     </FormGroup>
@@ -499,7 +501,7 @@ const Evaluation = () => {
                                         <Input
                                             type="date"
                                             value={formData.dateEvaluation}
-                                            onChange={(e) => setFormData({...formData, dateEvaluation: e.target.value})}
+                                            onChange={(e) => setFormData({ ...formData, dateEvaluation: e.target.value })}
                                             required
                                             className="rounded-4"
                                         />
@@ -515,7 +517,7 @@ const Evaluation = () => {
                                             rows="3"
                                             placeholder="Description de la campagne..."
                                             value={formData.description}
-                                            onChange={(e) => setFormData({...formData, description: e.target.value})}
+                                            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                             className="rounded-4"
                                         />
                                     </FormGroup>
@@ -525,27 +527,27 @@ const Evaluation = () => {
                         <ModalFooter className="border-0 pb-4">
                             <Button
                                 className="rounded-4"
-                                color="secondary" 
+                                color="secondary"
                                 onClick={toggleCreateModal}
                             >
-                                Annuler
+                                {t("Annuler")}
                             </Button>
-                            <Button 
-                                className="rounded-4" 
-                                color="primary" 
+                            <Button
+                                className="rounded-4"
+                                color="primary"
                                 type="submit"
                             >
-                                Créer la campagne
+                                {t("Créer la campagne")}
                             </Button>
                         </ModalFooter>
                     </Form>
                 </Modal>
 
                 {/* MODAL QUIZ */}
-                <Modal 
-                    isOpen={quizModal} 
-                    toggle={() => toggleQuizModal()} 
-                    size="lg" 
+                <Modal
+                    isOpen={quizModal}
+                    toggle={() => toggleQuizModal()}
+                    size="lg"
                     centered
                     contentClassName="rounded-4 border-0"
                 >
@@ -571,25 +573,25 @@ const Evaluation = () => {
                                         <i className="ri-questionnaire-line"></i>
                                     </span>
                                 </div>
-                                <h4>Prêt à commencer ?</h4>
+                                <h4>{t("Prêt à commencer ?")}</h4>
                                 <p className="text-muted mb-4">
-                                    Cette évaluation contient {quizQuestions.length} questions.<br />
-                                    Vous aurez 60 minutes pour la compléter.
+                                    {t("Cette évaluation contient")} {quizQuestions.length} {t("questions")}.<br />
+                                    {t("Vous aurez 60 minutes pour la compléter.")}
                                 </p>
                                 <Button color="primary" onClick={startQuiz} size="lg" className="rounded-pill px-5">
                                     <i className="ri-play-fill me-2"></i>
-                                    Commencer l'évaluation
+                                    {t("Commencer l'évaluation")}
                                 </Button>
                             </div>
                         ) : (
                             <div>
                                 <div className="mb-4">
                                     <div className="d-flex justify-content-between mb-2">
-                                        <span>Question {currentQuestion + 1}/{quizQuestions.length}</span>
+                                        <span>{t("Question")} {currentQuestion + 1}/{quizQuestions.length}</span>
                                         <span>{Math.round(((currentQuestion + 1) / quizQuestions.length) * 100)}%</span>
                                     </div>
-                                    <Progress 
-                                        value={((currentQuestion + 1) / quizQuestions.length) * 100} 
+                                    <Progress
+                                        value={((currentQuestion + 1) / quizQuestions.length) * 100}
                                         color="primary"
                                         style={{ height: "8px" }}
                                     />
@@ -624,7 +626,7 @@ const Evaluation = () => {
                                         disabled={currentQuestion === 0}
                                     >
                                         <i className="ri-arrow-left-line me-2"></i>
-                                        Précédent
+                                        {t("Précédent")}
                                     </Button>
                                     {currentQuestion < quizQuestions.length - 1 ? (
                                         <Button
@@ -633,7 +635,7 @@ const Evaluation = () => {
                                             onClick={nextQuestion}
                                             disabled={!answers[quizQuestions[currentQuestion].id]}
                                         >
-                                            Suivant
+                                            {t("Suivant")}
                                             <i className="ri-arrow-right-line ms-2"></i>
                                         </Button>
                                     ) : (
@@ -644,7 +646,7 @@ const Evaluation = () => {
                                             disabled={!answers[quizQuestions[currentQuestion].id]}
                                         >
                                             <i className="ri-check-line me-2"></i>
-                                            Soumettre
+                                            {t("Soumettre")}
                                         </Button>
                                     )}
                                 </div>
@@ -654,16 +656,16 @@ const Evaluation = () => {
                 </Modal>
 
                 {/* MODAL VOIR DÉTAILS */}
-                <Modal 
-                    isOpen={viewModal} 
-                    toggle={() => toggleViewModal()} 
-                    size="md" 
+                <Modal
+                    isOpen={viewModal}
+                    toggle={() => toggleViewModal()}
+                    size="md"
                     centered
                     contentClassName="rounded-4 border-0"
                 >
                     <ModalHeader toggle={() => toggleViewModal()} className="border-0">
                         <i className="ri-eye-line me-2"></i>
-                        Détails de la campagne
+                        {t("Détails de la campagne")}
                     </ModalHeader>
                     <ModalBody>
                         {selectedItem && (
@@ -684,12 +686,12 @@ const Evaluation = () => {
                         )}
                     </ModalBody>
                     <ModalFooter className="border-0 pb-4">
-                        <Button 
+                        <Button
                             className="rounded-4"
-                            color="secondary" 
+                            color="secondary"
                             onClick={() => toggleViewModal()}
                         >
-                            Fermer
+                            {t("Fermer")}
                         </Button>
                     </ModalFooter>
                 </Modal>

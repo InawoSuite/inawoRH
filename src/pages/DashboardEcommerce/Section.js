@@ -16,14 +16,14 @@ import InawoOnboarding from "../../Components/Common/InawoOnboarding";
 const Section = (props) => {
   const { userProfile, token, loading: profileLoading } = useProfile();
   const [isRight, setIsRight] = useState(false);
-  
+
   // Utilisation du hook pour gérer l'affichage du modal
-  const { 
-    showSubscriptionModal, 
-    setShowSubscriptionModal, 
-    hasChecked: subscriptionChecked 
+  const {
+    showSubscriptionModal,
+    setShowSubscriptionModal,
+    hasChecked: subscriptionChecked
   } = useFirstLoginSubscription(userProfile);
-  
+
   // États pour gérer le flux d'onboarding
   const [showOnboarding, setShowOnboarding] = useState(false);
   const [isCheckingOnboarding, setIsCheckingOnboarding] = useState(true);
@@ -33,10 +33,10 @@ const Section = (props) => {
       if (!userProfile || profileLoading || !subscriptionChecked) return;
 
       setIsCheckingOnboarding(true);
-      
+
       const userAbonnement = userProfile?.abonnement;
       const hasCompletedOnboarding = userProfile?.onboarding_complete;
-      
+
       // console.log("🎯 Onboarding complété:", hasCompletedOnboarding);
 
       // Si le modal d'abonnement est affiché, on ne montre pas l'onboarding
@@ -50,7 +50,7 @@ const Section = (props) => {
       // Vérifier si l'utilisateur a un abonnement
       if (userAbonnement) {
         const { module, categorie_nom, etat } = userAbonnement;
-        
+
         // Vérifier si l'abonnement est payant
         const isPaidSubscription = isSubscriptionPaid(module, categorie_nom);
         // console.log("💰 Abonnement payant?", isPaidSubscription);
@@ -58,9 +58,9 @@ const Section = (props) => {
         if (isPaidSubscription) {
           // Pour les abonnements payants, vérifier le statut de paiement
           // console.log("📊 Statut du paiement:", etat);
-          
+
           const isPaymentSuccessful = etat === "réussi" || etat === "actif" || etat === "success" || etat === "paid";
-          
+
           if (isPaymentSuccessful && !hasCompletedOnboarding) {
             // Paiement réussi et onboarding pas complété
             // console.log("✅ Paiement réussi - lancement onboarding");
@@ -90,7 +90,7 @@ const Section = (props) => {
         // console.log("❌ Pas d'abonnement - onboarding différé");
         setShowOnboarding(false);
       }
-      
+
       setIsCheckingOnboarding(false);
     };
 
@@ -100,11 +100,11 @@ const Section = (props) => {
   // Fonction pour déterminer si un abonnement est payant
   const isSubscriptionPaid = (module, categorie) => {
     // InawoSales et InawoStock avec catégorie Essentiel sont gratuits
-    if ((module === "InawoSales" || module === "InawoStock") && 
-        categorie === "Essentiel") {
+    if ((module === "InawoSales" || module === "InawoStock") &&
+      categorie === "Essentiel") {
       return false;
     }
-    
+
     // InawoGlobal et toutes les autres catégories sont payantes
     return true;
   };
@@ -127,8 +127,8 @@ const Section = (props) => {
     // Ici vous pourriez mettre à jour le profil utilisateur
     // pour marquer l'onboarding comme terminé
   };
-console.log("🎯 Token:", token);
-console.log("🎯 Token:", userProfile);
+  console.log("🎯 Token:", token);
+  console.log("🎯 Token:", userProfile);
 
   return (
     <React.Fragment>
@@ -139,7 +139,7 @@ console.log("🎯 Token:", userProfile);
         userProfile={userProfile}
         onProceedToPayment={handleProceedToPayment}
       />
-      
+
       {/* Onboarding - s'affiche après souscription réussie ou pour les abonnements gratuits */}
       <InawoOnboarding
         isOpen={showOnboarding}
@@ -191,7 +191,7 @@ console.log("🎯 Token:", userProfile);
           </div>
         </Col>
       </Row>
-      
+
       <Offcanvas
         isOpen={isRight}
         direction="end"

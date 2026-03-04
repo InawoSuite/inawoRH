@@ -18,7 +18,7 @@ const Navdata = () => {
   const { activeMenu, setActiveMenu } = useSidebar();
   const navigate = useNavigate();
 
-   // Fermer le menu mobile après navigation
+  // Fermer le menu mobile après navigation
   const handleMobileMenuClose = () => {
     if (window.innerWidth <= 991) {
       setIsMobileMenuOpen(false);
@@ -26,7 +26,7 @@ const Navdata = () => {
     }
   };
 
-   const handleContactMenuClick = (type, menuId) => {
+  const handleContactMenuClick = (type, menuId) => {
     setActiveMenu(menuId);
     navigate(`/contact?type=${type}`);
 
@@ -38,17 +38,17 @@ const Navdata = () => {
   };
 
   const getTabKeyFromType = (type) => {
-  const tabMap = {
-    'all': '1',
-    'Client': '2', 
-    'Fournisseur': '3',
-    'Prospect': '5',
-    'Partenaire': '6'
+    const tabMap = {
+      'all': '1',
+      'Client': '2',
+      'Fournisseur': '3',
+      'Prospect': '5',
+      'Partenaire': '6'
+    };
+    return tabMap[type] || '1';
   };
-  return tabMap[type] || '1';
-};
 
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const history = useNavigate();
   const { generatePath } = useMenuLinks();
   //state data
@@ -260,7 +260,7 @@ const Navdata = () => {
     isMenu_profil,
   ]);
 
-    const handleMenuClick = (clickFunction) => (e) => {
+  const handleMenuClick = (clickFunction) => (e) => {
     clickFunction(e);
     // Ne ferme pas le menu principal, seulement lors de la navigation vers un sous-item
   };
@@ -274,7 +274,7 @@ const Navdata = () => {
       img: "param_img.svg",
       modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
       stateVariables: isDashboard,
-      click: handleMenuClick(  function (e) {
+      click: handleMenuClick(function (e) {
         e.preventDefault();
         // setIsDashboard( !isDashboard );
         setIsDashboard(true);
@@ -282,7 +282,7 @@ const Navdata = () => {
         updateIconSidebar(e);
         // window.href = "/dashboard";
       }),
-     
+
       subItems: [
         {
           id: "analytique",
@@ -295,10 +295,10 @@ const Navdata = () => {
           onClick: handleMobileMenuClose,
         },
 
-          {
+        {
           id: "dashboard-rh",
           icon: "ri-dashboard-line",
-          label: "Dashboard RH",
+          label: t("Dashboard RH"),
           link: generatePath("/dashboard-rh"),
           parentId: "HumanResources",
           modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
@@ -309,7 +309,7 @@ const Navdata = () => {
     },
     {
       id: "HumanResources",
-      label: "Ressources humaines",
+      label: t("Ressources humaines"),
       icon: "ri-briefcase-4-line",
       link: "/#",
       img: "param_img.svg",
@@ -325,7 +325,7 @@ const Navdata = () => {
         {
           id: "collaborateur",
           icon: "ri-team-line",
-          label: "Collaborateur",
+          label: t("Collaborateur"),
           link: generatePath("/collaborateurs"),
           parentId: "HumanResources",
           modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
@@ -335,7 +335,7 @@ const Navdata = () => {
         {
           id: "Paie et Avances",
           icon: "ri-money-dollar-circle-line",
-          label: "Paie et Avances",
+          label: t("Paie et Avances"),
           link: generatePath("/paie-et-avances"),
           parentId: "HumanResources",
           modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
@@ -345,7 +345,7 @@ const Navdata = () => {
         {
           id: "Présence et Absence",
           icon: "ri-calendar-check-line",
-          label: "Présence et Absence",
+          label: t("Présence et Absence"),
           link: generatePath("/presence-et-absence"),
           parentId: "HumanResources",
           modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
@@ -355,7 +355,7 @@ const Navdata = () => {
         {
           id: "recrutement",
           icon: "ri-user-add-line",
-          label: "Recrutement",
+          label: t("Recrutement"),
           link: generatePath("/recrutements"),
           parentId: "HumanResources",
           modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
@@ -393,10 +393,10 @@ const Navdata = () => {
         //   onClick: handleMobileMenuClose,
         // },
         {
-         
+
           id: "Evaluations",
           icon: "ri-checkbox-circle-line",
-          label: "Evaluations",
+          label: t("Evaluations"),
           link: generatePath("/evaluation"),
           parentId: "HumanResources",
           modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
@@ -406,7 +406,7 @@ const Navdata = () => {
         {
           id: "Contrats",
           icon: "ri-file-text-line",
-          label: "Contrats",
+          label: t("Contrats"),
           link: generatePath("/contrats"),
           parentId: "HumanResources",
           modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
@@ -415,67 +415,71 @@ const Navdata = () => {
         }
       ],
     },
-    
-    // Paramètres
-    {
-      id: "Settings",
-      label: "Paramètres",
-      icon: "ri-settings-5-line",
-      link: "/#",
-      img: "param_img.svg",
-      modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-      stateVariables: isSettings,
-      click: handleMenuClick(function (e) {
-        e.preventDefault();
-        setIsSettings(true);
-        setIscurrentState("Settings");
-        updateIconSidebar(e);
-      }),
-      subItems: [
-        // {
-        //   id: "profil",
-        //   icon: "ri-user-settings-line",
-        //   label: "Profil",
-        //   link: generatePath("/profil"),
-        //   parentId: "Settings",
-        //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-        //   utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
-        //   onClick: handleMobileMenuClose,
-        // },
 
-        // {
-        //   id: "notification",
-        //   icon: "ri-notification-3-line",
-        //   label: "Notifications",
-        //   link: generatePath("/notification"),
-        //   parentId: "Settings",
-        //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-        //   utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
-        //   onClick: handleMobileMenuClose,
-        // },
-        // {
-        //   id: "preference",
-        //   icon: "ri-thumb-up-line",
-        //   label: "Préférences",
-        //   link: generatePath("/preference"),
-        //   parentId: "Settings",
-        //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-        //   utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
-        //   onClick: handleMobileMenuClose,
-        // },
+    ...(i18n.language?.startsWith("en")
+      ? []
+      : [
+        // Paramètres
         {
-          id: "pointage",
-          icon: "ri-timer-line",
-          label: "Pointage",
-          link: generatePath("/pointage-param"),
-          parentId: "Settings",
+          id: "Settings",
+          label: t("Paramètres"),
+          icon: "ri-settings-5-line",
+          link: "/#",
+          img: "param_img.svg",
           modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-          utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
-          onClick: handleMobileMenuClose,
+          stateVariables: isSettings,
+          click: handleMenuClick(function (e) {
+            e.preventDefault();
+            setIsSettings(true);
+            setIscurrentState("Settings");
+            updateIconSidebar(e);
+          }),
+          subItems: [
+            // {
+            //   id: "profil",
+            //   icon: "ri-user-settings-line",
+            //   label: "Profil",
+            //   link: generatePath("/profil"),
+            //   parentId: "Settings",
+            //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+            //   utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+            //   onClick: handleMobileMenuClose,
+            // },
+
+            // {
+            //   id: "notification",
+            //   icon: "ri-notification-3-line",
+            //   label: "Notifications",
+            //   link: generatePath("/notification"),
+            //   parentId: "Settings",
+            //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+            //   utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+            //   onClick: handleMobileMenuClose,
+            // },
+            // {
+            //   id: "preference",
+            //   icon: "ri-thumb-up-line",
+            //   label: "Préférences",
+            //   link: generatePath("/preference"),
+            //   parentId: "Settings",
+            //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+            //   utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+            //   onClick: handleMobileMenuClose,
+            // },
+            {
+              id: "pointage",
+              icon: "ri-timer-line",
+              label: t("Pointage"),
+              link: generatePath("/pointage-param"),
+              parentId: "Settings",
+              modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+              utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+              onClick: handleMobileMenuClose,
+            },
+          ],
         },
-      ],
-    },
-  
+      ]),
+
     // Documents
     // {
     //   id: "documents",

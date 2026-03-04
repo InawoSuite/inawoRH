@@ -10,9 +10,11 @@ import SearchAndActionBar from "../../../Components/Common/SearchAndActionBar";
 import EmptyDataCard from "../../../Components/Common/EmptyDataCard";
 import Pagination from "../../../Components/Common/Pagination";
 import DeleteModal from "../../../Components/Common/DeleteModal";
+import { useTranslation } from "react-i18next";
 
 const PaieEtAvances = () => {
     const { entreprise } = useParams();
+    const { t } = useTranslation();
 
     // ========== ÉTATS GÉNÉRAUX ==========
     const [isExportCSV, setIsExportCSV] = useState(false);
@@ -142,10 +144,10 @@ const PaieEtAvances = () => {
 
     const formatDate = (date) => {
         if (!date) return "-";
-        return new Date(date).toLocaleDateString('fr-FR', { 
-            day: '2-digit', 
-            month: '2-digit', 
-            year: 'numeric' 
+        return new Date(date).toLocaleDateString('fr-FR', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
         });
     };
 
@@ -156,13 +158,13 @@ const PaieEtAvances = () => {
     // ✅ Fonction pour obtenir le label du statut
     const getStatusLabel = useCallback((statusValue) => {
         const statusLabels = {
-            'actif': 'Actif',
-            'inactif': 'Inactif',
-            'payé': 'Payé',
-            'dépassé': 'Dépassé'
+            'actif': t('Actif'),
+            'inactif': t('Inactif'),
+            'payé': t('Payé'),
+            'dépassé': t('Dépassé')
         };
-        return statusLabels[statusValue] || 'Inconnu';
-    }, []);
+        return statusLabels[statusValue] || t('Inconnu');
+    }, [t]);
 
     // ✅ Fonction pour obtenir la couleur du statut
     const getStatusColor = useCallback((statusValue) => {
@@ -176,13 +178,13 @@ const PaieEtAvances = () => {
     }, []);
 
     const getStatutBadge = (statut) => {
-        switch(statut) {
+        switch (statut) {
             case 'actif':
-                return <Badge className="badge bg-success rounded-pill" pill>Actif</Badge>;
+                return <Badge className="badge bg-success rounded-pill" pill>{t('Actif')}</Badge>;
             case 'payé':
-                return <Badge className="badge bg-primary rounded-pill" pill>Payé</Badge>;
+                return <Badge className="badge bg-primary rounded-pill" pill>{t('Payé')}</Badge>;
             case 'dépassé':
-                return <Badge className="badge bg-danger rounded-pill" pill>Dépassé</Badge>;
+                return <Badge className="badge bg-danger rounded-pill" pill>{t('Dépassé')}</Badge>;
             default:
                 return <Badge className="badge bg-secondary rounded-pill" pill>{statut}</Badge>;
         }
@@ -206,7 +208,7 @@ const PaieEtAvances = () => {
             } else {
                 setAvancePretList(avancePretList.filter(i => i.id !== itemToDelete.id));
             }
-            toast.success("Suppression effectuée avec succès");
+            toast.success(t("Suppression effectuée avec succès"));
             setDeleteModal(false);
             setItemToDelete(null);
         }
@@ -222,16 +224,16 @@ const PaieEtAvances = () => {
         () => [
             {
                 key: "1",
-                label: "Fiche de paie",
+                label: t("Fiche de paie"),
                 icon: "ri-money-dollar-circle-line",
             },
             {
                 key: "2",
-                label: "Avance et Prêt",
+                label: t("Avance et Prêt"),
                 icon: "ri-bank-line",
             }
         ],
-        [],
+        [t],
     );
 
     const handleTabChange = useCallback((tabKey) => {
@@ -274,7 +276,7 @@ const PaieEtAvances = () => {
             // Colonnes pour Fiche de paie
             return [
                 {
-                    header: "N°",
+                    header: t("N°"),
                     accessorKey: "id",
                     enableColumnFilter: false,
                     cell: (cellProps) => {
@@ -283,7 +285,7 @@ const PaieEtAvances = () => {
                     },
                 },
                 {
-                    header: "Nom-Prénom",
+                    header: t("Nom-Prénom"),
                     accessorKey: "nom",
                     enableColumnFilter: false,
                     cell: (cellProps) => {
@@ -299,37 +301,37 @@ const PaieEtAvances = () => {
                                 }}
                             >
                                 <i className="ri-user-fill text-primary"></i>
-                                {fullName || "Non défini"}
+                                {fullName || t("Non défini")}
                             </Link>
                         );
                     },
                 },
                 {
-                    header: "Période",
+                    header: t("Période"),
                     accessorKey: "periode",
                     enableColumnFilter: false,
-                    cell: (cell) => cell.getValue() || "Non défini",
+                    cell: (cell) => cell.getValue() || t("Non défini"),
                 },
                 {
-                    header: "Lot de paie",
+                    header: t("Lot de paie"),
                     accessorKey: "lot_de_paie",
                     enableColumnFilter: false,
-                    cell: (cell) => cell.getValue() || "Non défini",
+                    cell: (cell) => cell.getValue() || t("Non défini"),
                 },
                 {
-                    header: "Rémunération totale",
+                    header: t("Rémunération totale"),
                     accessorKey: "remuneration_totale",
                     enableColumnFilter: false,
-                    cell: (cell) => cell.getValue() || "Non défini",
+                    cell: (cell) => cell.getValue() || t("Non défini"),
                 },
                 {
-                    header: "Salaire de base",
+                    header: t("Salaire de base"),
                     accessorKey: "salaire_base",
                     enableColumnFilter: false,
-                    cell: (cell) => cell.getValue() || "Non défini",
+                    cell: (cell) => cell.getValue() || t("Non défini"),
                 },
                 {
-                    header: "Statut",
+                    header: t("Statut"),
                     accessorKey: "statut",
                     enableColumnFilter: false,
                     cell: (cell) => {
@@ -345,7 +347,7 @@ const PaieEtAvances = () => {
                     },
                 },
                 {
-                    header: "Actions",
+                    header: t("Actions"),
                     enableColumnFilter: false,
                     cell: (cellProps) => {
                         const item = cellProps.row.original;
@@ -354,7 +356,7 @@ const PaieEtAvances = () => {
                                 <Link
                                     to="#"
                                     className="text-info p-2"
-                                    title="Voir détails"
+                                    title={t("Voir détails")}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         toggleViewModal(item);
@@ -365,22 +367,22 @@ const PaieEtAvances = () => {
                                 <Link
                                     to={`/${entreprise}/fiche-edit/${item.id}`}
                                     className="text-primary p-2"
-                                    title="Modifier"
+                                    title={t("Modifier")}
                                 >
                                     <i className="ri-pencil-fill fs-16"></i>
                                 </Link>
                                 <Link
                                     to="#"
                                     className="text-info p-2"
-                                    title="Exporter"
-                                    onClick={() => toast.info("Export non implémenté")}
+                                    title={t("Exporter")}
+                                    onClick={() => toast.info(t("Export non implémenté"))}
                                 >
                                     <i className="ri-file-download-line fs-16"></i>
                                 </Link>
                                 <Link
                                     to="#"
                                     className="text-danger p-2"
-                                    title="Supprimer"
+                                    title={t("Supprimer")}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         handleDeleteClick(item);
@@ -397,13 +399,13 @@ const PaieEtAvances = () => {
             // Colonnes pour Avance et Prêt
             return [
                 {
-                    header: "N°",
+                    header: t("N°"),
                     accessorKey: "numero",
                     enableColumnFilter: false,
                     cell: (cell) => <span className="fw-medium">{cell.getValue()}</span>,
                 },
                 {
-                    header: "Nom de l'employé",
+                    header: t("Nom de l'employé"),
                     accessorKey: "employe",
                     enableColumnFilter: false,
                     cell: (cellProps) => {
@@ -428,7 +430,7 @@ const PaieEtAvances = () => {
                     },
                 },
                 {
-                    header: "Période",
+                    header: t("Période"),
                     accessorKey: "periodeDebut",
                     enableColumnFilter: false,
                     cell: (cellProps) => {
@@ -437,7 +439,7 @@ const PaieEtAvances = () => {
                     },
                 },
                 {
-                    header: "Salaire net",
+                    header: t("Salaire net"),
                     accessorKey: "salaireNet",
                     enableColumnFilter: false,
                     cell: (cell) => (
@@ -447,7 +449,7 @@ const PaieEtAvances = () => {
                     ),
                 },
                 {
-                    header: "Montant prêt",
+                    header: t("Montant prêt"),
                     accessorKey: "montantPret",
                     enableColumnFilter: false,
                     cell: (cell) => (
@@ -457,13 +459,13 @@ const PaieEtAvances = () => {
                     ),
                 },
                 {
-                    header: "Statut",
+                    header: t("Statut"),
                     accessorKey: "statut",
                     enableColumnFilter: false,
                     cell: (cell) => getStatutBadge(cell.getValue()),
                 },
                 {
-                    header: "Actions",
+                    header: t("Actions"),
                     enableColumnFilter: false,
                     cell: (cellProps) => {
                         const item = cellProps.row.original;
@@ -472,7 +474,7 @@ const PaieEtAvances = () => {
                                 <Link
                                     to="#"
                                     className="text-info p-2"
-                                    title="Voir détails"
+                                    title={t("Voir détails")}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         toggleViewModal(item);
@@ -483,14 +485,14 @@ const PaieEtAvances = () => {
                                 <Link
                                     to={`/${entreprise}/avance-et-pret-edit/${item.id}`}
                                     className="text-primary p-2"
-                                    title="Modifier"
+                                    title={t("Modifier")}
                                 >
                                     <i className="ri-pencil-fill fs-16"></i>
                                 </Link>
                                 <Link
                                     to="#"
                                     className="text-danger p-2"
-                                    title="Supprimer"
+                                    title={t("Supprimer")}
                                     onClick={(e) => {
                                         e.preventDefault();
                                         handleDeleteClick(item);
@@ -507,7 +509,7 @@ const PaieEtAvances = () => {
     }, [activeTab, currentPage, itemsPerPage, entreprise]);
 
     // ========== RENDU ==========
-    document.title = "Paie et Avances";
+    document.title = t("Paie et Avances");
 
     return (
         <div className="page-content">
@@ -518,11 +520,11 @@ const PaieEtAvances = () => {
             />
             <Container fluid>
                 <BreadCrumb
-                    title="&nbsp;Paie et Avances"
+                    title={`\u00a0${t("Paie et Avances")}`}
                     pageTitle={
                         <>
                             <i className="ri-money-dollar-circle-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>&nbsp;&gt;
+                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>&nbsp;&gt;
                         </>
                     }
                 />
@@ -532,25 +534,25 @@ const PaieEtAvances = () => {
                             searchTerm={searchTerm}
                             onSearchChange={setSearchTerm}
                             searchPlaceholder={
-                                activeTab === "1" 
-                                    ? "Chercher une fiche de paie..." 
-                                    : "Chercher une avance ou un prêt..."
+                                activeTab === "1"
+                                    ? "Chercher une fiche de paie..."
+                                    : t("Chercher une avance ou un prêt...")
                             }
                             showSearch={true}
                             addButtonLink={
-                                activeTab === "1" 
-                                    ? `/${entreprise}/fiche-add` 
+                                activeTab === "1"
+                                    ? `/${entreprise}/fiche-add`
                                     : `/${entreprise}/avance-et-pret-add`
                             }
                             addButtonText={
-                                activeTab === "1" 
-                                    ? "Nouvelle fiche de paie" 
-                                    : "Faire une demande d'avance ou de prêt"
+                                activeTab === "1"
+                                    ? "Nouvelle fiche de paie"
+                                    : t("Faire une demande d'avance ou de prêt")
                             }
                             addButtonIcon="ri-file-add-line"
                             showAddButton={true}
                             onExportClick={() => setIsExportCSV(true)}
-                            exportButtonText="Exporter"
+                            exportButtonText={t("Exporter")}
                             exportButtonIcon="ri-file-upload-line"
                             showExportButton={true}
                         />
@@ -589,14 +591,14 @@ const PaieEtAvances = () => {
                         ) : (
                             <EmptyDataCard
                                 title={
-                                    activeTab === "1" 
-                                        ? "Aucune fiche de paie trouvée" 
-                                        : "Aucune avance ou prêt trouvé"
+                                    activeTab === "1"
+                                        ? "Aucune fiche de paie trouvée"
+                                        : t("Aucune avance ou prêt trouvé")
                                 }
                                 description={
                                     activeTab === "1"
-                                        ? "Commencez par ajouter une fiche de paie"
-                                        : "Commencez par créer une nouvelle avance ou prêt"
+                                        ? t("Commencez par ajouter une fiche de paie")
+                                        : t("Commencez par créer une nouvelle avance ou prêt")
                                 }
                                 actionButton={
                                     <Link
@@ -609,9 +611,9 @@ const PaieEtAvances = () => {
                                         style={{ borderRadius: "20px" }}
                                     >
                                         <i className="ri-user-add-line me-1"></i>
-                                        {activeTab === "1" 
-                                            ? "Ajouter une fiche de paie" 
-                                            : "Ajouter une avance ou un prêt"}
+                                        {activeTab === "1"
+                                            ? "Ajouter une fiche de paie"
+                                            : t("Ajouter une avance ou un prêt")}
                                     </Link>
                                 }
                             />
@@ -647,8 +649,8 @@ const PaieEtAvances = () => {
                             </div>
                             <div>
                                 <h5 className="modal-title mb-0">
-                                    {activeTab === "1" 
-                                        ? "Détails de la fiche de paie" 
+                                    {activeTab === "1"
+                                        ? "Détails de la fiche de paie"
                                         : "Détails de l'avance/prêt"}
                                 </h5>
                                 <p className="text-muted mb-0">

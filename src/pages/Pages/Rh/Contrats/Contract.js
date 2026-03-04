@@ -194,7 +194,7 @@
 
 // const Contrat = () => {
 //   const { t } = useTranslation();
-  
+
 //   // États principaux
 //   const [piecesData, setPiecesData] = useState([]);
 //   const [loading, setLoading] = useState(true);
@@ -202,7 +202,7 @@
 //   const [currentPage, setCurrentPage] = useState(1);
 //   const [isExportCSV, setIsExportCSV] = useState(false);
 //   const [exportData, setExportData] = useState([]);
-  
+
 //   // États des modals
 //   const [modal, setModal] = useState(false);
 //   const [detailModal, setDetailModal] = useState(false);
@@ -210,7 +210,7 @@
 //   const [isEdit, setIsEdit] = useState(false);
 //   const [currentPiece, setCurrentPiece] = useState(null);
 //   const [selectedPiece, setSelectedPiece] = useState(null);
-  
+
 //   // États pour la suppression
 //   const [deleteModal, setDeleteModal] = useState(false);
 //   const [pieceToDelete, setPieceToDelete] = useState(null);
@@ -224,7 +224,7 @@
 //   // ✅ Filtrage optimisé des pièces
 //   const filteredData = useMemo(() => {
 //     if (!searchTerm.trim()) return piecesData;
-    
+
 //     return piecesData.filter((piece) =>
 //       Object.values(piece).some((value) =>
 //         value !== null &&
@@ -243,11 +243,11 @@
 //   // ✅ Fonction pour récupérer les pièces (MOCK)
 //   const fetchPieces = useCallback(async () => {
 //     setLoading(true);
-    
+
 //     setTimeout(() => {
 //       try {
 //         setPiecesData(MOCK_PIECES_DATA);
-        
+
 //         // Préparer les données pour l'export
 //         const exportDataFormatted = MOCK_PIECES_DATA.map(piece => ({
 //           "Référence": piece.reference || "N/A",
@@ -261,7 +261,7 @@
 //           "Compte associé": piece.compte_associe || "N/A",
 //         }));
 //         setExportData(exportDataFormatted);
-        
+
 //         toast.success("Données des contrats chargées avec succès !");
 //       } catch (err) {
 //         console.error("Erreur fetchPieces:", err);
@@ -334,8 +334,8 @@
 //       await handleSubmitPiece(values, resetForm, setSubmitting);
 //     }
 //   });
-   
-    
+
+
 
 //   // ✅ Validation du formulaire d'import
 //   const importValidationSchema = Yup.object({
@@ -379,7 +379,7 @@
 //   // ✅ Fonction de soumission de pièce (MOCK)
 //   const handleSubmitPiece = async (values, resetForm, setSubmitting) => {
 //     setSubmitting(true);
-    
+
 //     setTimeout(() => {
 //       try {
 //         if (isEdit && currentPiece) {
@@ -409,10 +409,10 @@
 //           setPiecesData(prev => [newPiece, ...prev]);
 //           toast.success("Pièce ajoutée avec succès!");
 //         }
-        
+
 //         resetForm();
 //         handleModalClose();
-        
+
 //       } catch (err) {
 //         console.error(`Erreur lors de ${isEdit ? 'la modification' : 'l\'ajout'} de la pièce:`, err);
 //         toast.error(`Erreur lors de ${isEdit ? 'la modification' : 'l\'ajout'} de la pièce`);
@@ -425,7 +425,7 @@
 //   // ✅ Fonction d'import de fichier
 //   const handleImportFile = async (values, resetForm, setSubmitting) => {
 //     setSubmitting(true);
-    
+
 //     setTimeout(() => {
 //       try {
 //         // Simulation de l'import
@@ -451,7 +451,7 @@
 //         toast.success(`Fichier "${values.nom}" importé avec succès !`);
 //         resetForm();
 //         handleImportModalClose();
-        
+
 //       } catch (err) {
 //         console.error("Erreur lors de l'import:", err);
 //         toast.error("Erreur lors de l'import du fichier");
@@ -472,7 +472,7 @@
 //         toast.success("Pièce supprimée avec succès!");
 //         setDeleteModal(false);
 //         setPieceToDelete(null);
-        
+
 //       } catch (err) {
 //         console.error("Erreur lors de la suppression:", err);
 //         toast.error("Erreur lors de la suppression de la pièce");
@@ -694,7 +694,7 @@
 //         return (
 //           <div className="d-flex gap-2">
 //             <Link
-                                                                   
+
 //             to={`/${entreprise}/contrat-details/${piece.id}`}
 //                 state={{ contrat: piece }}
 //                 className="text-info "
@@ -705,7 +705,7 @@
 //             <Link
 //               to={`/${entreprise}/contrat-edit/${piece.id}`}
 //               className="text-primary"
-              
+
 //               title="Éditer"
 //             >
 //               <i className="ri-pencil-fill fs-16"></i>
@@ -849,8 +849,8 @@
 //                     <Button
 //                       color="success"
 //                       onClick={() => window.location.href = `/${entreprise}/contrat-add`}
-                     
-                    
+
+
 //                       className="rounded-pill"
 //                     >
 //                       <i className="ri-file-add-line me-1"></i>
@@ -1286,10 +1286,10 @@
 //                       </Badge>
 //                     </Col>
 //                   </Row>
-                  
+
 //                   <h5 className="mt-3 mb-2">Numéro :</h5>
 //                   <p className="fs-5 fw-semibold text-primary">{selectedPiece.numero}</p>
-                  
+
 //                   <div className="row mt-3">
 //                     <Col md={6}>
 //                       <h6 className="text-muted mb-1">Date :</h6>
@@ -1309,7 +1309,7 @@
 //                     <i className="ri-file-text-line me-2"></i>
 //                     Informations complémentaires
 //                   </h5>
-                  
+
 //                   <Table bordered striped hover className="mb-4">
 //                     <thead className="table-light">
 //                       <tr>
@@ -1414,11 +1414,13 @@ import * as  Yup from "yup";
 import { useFormik } from "formik";
 import { Link } from 'react-router-dom';
 import { createSelector } from 'reselect';
+import { useTranslation } from "react-i18next";
 
 
 
 const Contrat = () => {
-    document.title = "Contrat  ";
+    const { t } = useTranslation();
+    document.title = t("Contrat");
 
     const dispatch = useDispatch();
 
@@ -1700,7 +1702,7 @@ const Contrat = () => {
 
     const fileColumns = [
         {
-            header: "Nom",
+            header: t("Nom"),
             accessorKey: "fileName",
             enableColumnFilter: false,
             cell: (cellProps) => {
@@ -1717,22 +1719,22 @@ const Contrat = () => {
             },
         },
         {
-            header: "Élément",
+            header: t("Élément"),
             accessorKey: "fileItem",
             enableColumnFilter: false,
         },
         {
-            header: "Taille",
+            header: t("Taille"),
             accessorKey: "size",
             enableColumnFilter: false,
         },
         {
-            header: "Date récente",
+            header: t("Date récente"),
             accessorKey: "createDate",
             enableColumnFilter: false,
         },
         {
-            header: "Actions",
+            header: t("Actions"),
             enableColumnFilter: false,
             cell: (cellProps) => {
                 const item = cellProps.row.original;
@@ -1747,10 +1749,10 @@ const Contrat = () => {
                                 <i className="ri-more-fill align-bottom" />
                             </DropdownToggle>
                             <DropdownMenu className="dropdown-menu-end">
-                                <DropdownItem className="viewfile-list" onClick={() => { setSidebarData(item); fileSidebar(); sidebarOpen("file-detail-show"); }}>Voir</DropdownItem>
-                                <DropdownItem className="edit-list" onClick={() => handleFileClick(item)}>Renommer</DropdownItem>
+                                <DropdownItem className="viewfile-list" onClick={() => { setSidebarData(item); fileSidebar(); sidebarOpen("file-detail-show"); }}>{t("Voir")}</DropdownItem>
+                                <DropdownItem className="edit-list" onClick={() => handleFileClick(item)}>{t("Renommer")}</DropdownItem>
                                 <DropdownItem divider />
-                                <DropdownItem className="remove-list" onClick={() => onClickFileDelete(item)}>Supprimer</DropdownItem>
+                                <DropdownItem className="remove-list" onClick={() => onClickFileDelete(item)}>{t("Supprimer")}</DropdownItem>
                             </DropdownMenu>
                         </UncontrolledDropdown>
                     </div>
@@ -1775,58 +1777,58 @@ const Contrat = () => {
                         <div className="file-manager-sidebar">
                             <div className="p-3 d-flex flex-column h-100">
                                 <div className="mb-3">
-                                    <h5 className="mb-0 fw-semibold">Mon espace</h5>
+                                    <h5 className="mb-0 fw-semibold">{t("Mon espace")}</h5>
                                 </div>
                                 <div className="search-box">
-                                    <input type="text" className="form-control bg-light border-light rounded-pill" placeholder="Rechercher..." />
+                                    <input type="text" className="form-control bg-light border-light rounded-pill" placeholder={t("Rechercher...")} />
                                     <i className="ri-search-2-line search-icon"></i>
                                 </div>
                                 <SimpleBar className="mt-3 mx-n4 px-4 file-menu-sidebar-scroll">
                                     <ul className="list-unstyled file-manager-menu">
                                         <li>
                                             <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
-                                                <i className="ri-folder-2-line align-bottom me-2"></i> <span className="file-list-link">Mon espace</span>
+                                                <i className="ri-folder-2-line align-bottom me-2"></i> <span className="file-list-link">{t("Mon espace")}</span>
                                             </a>
                                             <div className="collapse show" id="collapseExample">
                                                 <ul className="sub-menu list-unstyled">
                                                     <li>
-                                                        <Link to="#">Ressources</Link>
+                                                        <Link to="#">{t("Ressources")}</Link>
                                                     </li>
                                                     <li>
-                                                        <Link to="#">Marketing</Link>
+                                                        <Link to="#">{t("Marketing")}</Link>
                                                     </li>
                                                     <li>
-                                                        <Link to="#">Personnel</Link>
+                                                        <Link to="#">{t("Personnel")}</Link>
                                                     </li>
                                                     <li>
-                                                        <Link to="#">Projets</Link>
+                                                        <Link to="#">{t("Projets")}</Link>
                                                     </li>
                                                     <li>
-                                                        <Link to="#">Modèles</Link>
+                                                        <Link to="#">{t("Modèles")}</Link>
                                                     </li>
                                                 </ul>
                                             </div>
                                         </li>
                                         <li>
-                                            <Link to="#" className={filterActive === "Documents" ? "active" : ""} onClick={() => fileCategory("Documents", "Documents")}><i className="ri-file-list-2-line align-bottom me-2"></i> <span className="file-list-link">Documents</span></Link>
+                                            <Link to="#" className={filterActive === "Documents" ? "active" : ""} onClick={() => fileCategory("Documents", "Documents")}><i className="ri-file-list-2-line align-bottom me-2"></i> <span className="file-list-link">{t("Documents")}</span></Link>
                                         </li>
                                         <li>
-                                            <Link to="#" className={filterActive === "Media" ? "active" : ""} onClick={() => fileCategory("Media", "Media")}><i className="ri-image-2-line align-bottom me-2"></i> <span className="file-list-link">Médias</span></Link>
+                                            <Link to="#" className={filterActive === "Media" ? "active" : ""} onClick={() => fileCategory("Media", "Media")}><i className="ri-image-2-line align-bottom me-2"></i> <span className="file-list-link">{t("Médias")}</span></Link>
                                         </li>
                                         <li>
-                                            <Link to="#" className={filterActive === "Recents" ? "active" : ""} onClick={() => fileCategory("Media", "Recents")}><i className="ri-history-line align-bottom me-2"></i> <span className="file-list-link">Récents</span></Link>
+                                            <Link to="#" className={filterActive === "Recents" ? "active" : ""} onClick={() => fileCategory("Media", "Recents")}><i className="ri-history-line align-bottom me-2"></i> <span className="file-list-link">{t("Récents")}</span></Link>
                                         </li>
                                         <li>
-                                            <Link to="#" className={filterActive === "Important" ? "active" : ""} onClick={() => fileCategory("Documents", "Important")}><i className="ri-star-line align-bottom me-2"></i> <span className="file-list-link">Importants</span></Link>
+                                            <Link to="#" className={filterActive === "Important" ? "active" : ""} onClick={() => fileCategory("Documents", "Important")}><i className="ri-star-line align-bottom me-2"></i> <span className="file-list-link">{t("Importants")}</span></Link>
                                         </li>
                                         <li>
-                                            <Link to="#" className={filterActive === "Deleted" ? "active" : ""} onClick={() => fileCategory("Deleted", "Deleted")}><i className="ri-delete-bin-line align-bottom me-2"></i> <span className="file-list-link">Supprimés</span></Link>
+                                            <Link to="#" className={filterActive === "Deleted" ? "active" : ""} onClick={() => fileCategory("Deleted", "Deleted")}><i className="ri-delete-bin-line align-bottom me-2"></i> <span className="file-list-link">{t("Supprimés")}</span></Link>
                                         </li>
                                     </ul>
                                 </SimpleBar>
 
                                 <div className="mt-auto">
-                                    <h6 className="fs-11 text-muted text-uppercase mb-3">État du stockage</h6>
+                                    <h6 className="fs-11 text-muted text-uppercase mb-3">{t("État du stockage")}</h6>
                                     <div className="d-flex align-items-center">
                                         <div className="flex-shrink-0">
                                             <i className="ri-database-2-line fs-17"></i>
