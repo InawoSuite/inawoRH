@@ -312,7 +312,7 @@ import Etats from "../pages/Pages/Compta/Etats/Index.js";
 // import FicheAdd from "../pages/Pages/Rh/FicheAdd.js";
 
 const authProtectedRoutes = [
-  {path: "/unauthorized", component: <Unauthorized /> },
+  { path: "/unauthorized", component: <Unauthorized /> },
 
   { path: "/dashboard-analytics", component: <DashboardEcommerce /> },
   { path: "/dashboard-crm", component: <DashboardCrm /> },
@@ -370,7 +370,7 @@ const authProtectedRoutes = [
       </RouteWrapper>
     ),
   },
-  
+
   {
     path: "/:entreprise/collaborateur-add",
     component: (
@@ -403,92 +403,92 @@ const authProtectedRoutes = [
       </RouteWrapper>
     ),
   },
-    {
-      path: "/:entreprise/fiche-paie",
-      component: (
-        <RouteWrapper>
-          <FichePaie />
-        </RouteWrapper>
-      ),
-    },
-    {
-      path: "/:entreprise/fiche-details/:id",
-      component: (
-        <RouteWrapper>
-          <FicheDetail />
-        </RouteWrapper>
-      ),
-    },
-    {
-      path: "/:entreprise/fiche-add",
-      component: (
-        <RouteWrapper>
-          <FicheAdd />
-        </RouteWrapper>
-      ),
-    },
-    {
-      path: "/:entreprise/fiche-edit/:id",
-      component: (
-        <RouteWrapper>
-          <FicheEdit />
-        </RouteWrapper>
-      ),
-    },
-    {
-      path: "/:entreprise/contrats",
-      component: (
-        <RouteWrapper>
-          <Contrat />
-        </RouteWrapper>
-      ),
-    },
-    {
-      path: "/:entreprise/contrat-add",
-      component: (
-        <RouteWrapper>
-          <AddContract />
-        </RouteWrapper>
-      ),
-    },
-    {
-      path: "/:entreprise/contrat-details/:id",
-      component: (
-        <RouteWrapper>
-          <DetailContract />
-        </RouteWrapper>
-      ),
-    },
-    {
-      path: "/:entreprise/contrat-edit/:id",
-      component: (
-        <RouteWrapper>
-          <EditContract />
-        </RouteWrapper>
-      ),
-    },
-    {
-      path: "/:entreprise/pointage",
-      component: (
-        <RouteWrapper>
-          <Pointage />
-        </RouteWrapper>
-      ),
-    },
-    {
-      path: "/:entreprise/pointage-param",
-      component: (
-        <RouteWrapper>
-          <PointageParam />
-        </RouteWrapper>
-      ),
-    },
+  {
+    path: "/:entreprise/fiche-paie",
+    component: (
+      <RouteWrapper>
+        <FichePaie />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/fiche-details/:id",
+    component: (
+      <RouteWrapper>
+        <FicheDetail />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/fiche-add",
+    component: (
+      <RouteWrapper>
+        <FicheAdd />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/fiche-edit/:id",
+    component: (
+      <RouteWrapper>
+        <FicheEdit />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/contrats",
+    component: (
+      <RouteWrapper>
+        <Contrat />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/contrat-add",
+    component: (
+      <RouteWrapper>
+        <AddContract />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/contrat-details/:id",
+    component: (
+      <RouteWrapper>
+        <DetailContract />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/contrat-edit/:id",
+    component: (
+      <RouteWrapper>
+        <EditContract />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/pointage",
+    component: (
+      <RouteWrapper>
+        <Pointage />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/pointage-param",
+    component: (
+      <RouteWrapper>
+        <PointageParam />
+      </RouteWrapper>
+    ),
+  },
 
   { path: "/apps-calendar", component: <Calendar /> },
   { path: "/apps-calendar-month-grid", component: <MonthGrid /> },
   { path: "/apps-ecommerce-cart", component: <EcommerceCart /> },
   { path: "/apps-ecommerce-checkout", component: <EcommerceCheckout /> },
- 
+
   { path: "/apps-file-manager", component: <FileManager /> },
   { path: "/apps-todo", component: <ToDoList /> },
 
@@ -958,7 +958,7 @@ const authProtectedRoutes = [
       </RouteWrapper>
     ),
   },
-  
+
   { path: "*", component: <Navigate to="/:entreprise/dashboard" /> },
 
   //Compta

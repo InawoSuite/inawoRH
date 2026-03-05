@@ -114,7 +114,7 @@ const DetailContract = () => {
                     }
                 />
 
-               
+
             </Container>
         </div>
     );
