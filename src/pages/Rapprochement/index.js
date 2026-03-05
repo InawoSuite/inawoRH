@@ -469,13 +469,12 @@ const RapprochementBancaire = () => {
           }
           return (
             <span
-              className={`fw-bold ${
-                value > 0
+              className={`fw-bold ${value > 0
                   ? "text-success"
                   : value < 0
-                  ? "text-danger"
-                  : "text-primary"
-              }`}
+                    ? "text-danger"
+                    : "text-primary"
+                }`}
             >
               {formatAmount(value)}
             </span>
@@ -784,7 +783,7 @@ const RapprochementBancaire = () => {
                                 columns={columns}
                                 data={paginatedData}
                                 isGlobalFilter={false}
-                                custom  PageSize={itemsPerPage}
+                                custom PageSize={itemsPerPage}
                               >
                                 <Pagination
                                   data={filteredData}
@@ -801,8 +800,8 @@ const RapprochementBancaire = () => {
                               title="Aucun rapport de rapprochement"
                               description={
                                 searchTerm ||
-                                selectedBank !== "all" ||
-                                selectedStatus !== "all"
+                                  selectedBank !== "all" ||
+                                  selectedStatus !== "all"
                                   ? `Aucun résultat pour vos critères de recherche.`
                                   : "Commencez par créer un nouveau rapprochement bancaire."
                               }
@@ -1014,26 +1013,26 @@ const RapprochementBancaire = () => {
                     <Label htmlFor="account" className="form-label">
                       Compte Bancaire <span className="text-danger">*</span>
                     </Label>
-                      <CustomSelect
-              id="account"
-              name="account"
-              value={
-                BANK_ACCOUNTS.find(
-                  (account) => account.value === reconciliationFormik.values.account
-                ) || null
-              }
-              onChange={(selectedOption) => {
-                reconciliationFormik.setFieldValue(
-                  "account",
-                  selectedOption ? selectedOption.value : ""
-                );
-              }}
-              onBlur={() => reconciliationFormik.setFieldTouched("account", true)}
-              options={BANK_ACCOUNTS}
-              placeholder="Sélectionnez un compte"
-              isClearable={false}
-              className={`w-100 ${reconciliationFormik.touched.account && reconciliationFormik.errors.account ? 'is-invalid' : ''}`}
-            />
+                    <CustomSelect
+                      id="account"
+                      name="account"
+                      value={
+                        BANK_ACCOUNTS.find(
+                          (account) => account.value === reconciliationFormik.values.account
+                        ) || null
+                      }
+                      onChange={(selectedOption) => {
+                        reconciliationFormik.setFieldValue(
+                          "account",
+                          selectedOption ? selectedOption.value : ""
+                        );
+                      }}
+                      onBlur={() => reconciliationFormik.setFieldTouched("account", true)}
+                      options={BANK_ACCOUNTS}
+                      placeholder="Sélectionnez un compte"
+                      isClearable={false}
+                      className={`w-100 ${reconciliationFormik.touched.account && reconciliationFormik.errors.account ? 'is-invalid' : ''}`}
+                    />
                     {reconciliationFormik.touched.account &&
                       reconciliationFormik.errors.account && (
                         <FormFeedback>
@@ -1232,14 +1231,12 @@ const RapprochementBancaire = () => {
                     <div className="mb-3">
                       <h6 className="text-muted mb-1">Statut</h6>
                       <span
-                        className={`fw-medium ${
-                          getStatusInfo(selectedReconciliation.status).color
-                        }`}
+                        className={`fw-medium ${getStatusInfo(selectedReconciliation.status).color
+                          }`}
                       >
                         <i
-                          className={`${
-                            getStatusInfo(selectedReconciliation.status).icon
-                          } me-1`}
+                          className={`${getStatusInfo(selectedReconciliation.status).icon
+                            } me-1`}
                         ></i>
                         {getStatusInfo(selectedReconciliation.status).label}
                       </span>
@@ -1292,13 +1289,12 @@ const RapprochementBancaire = () => {
                     <div className="text-center p-3 border rounded-pill bg-light">
                       <p className="text-muted mb-1">Écart</p>
                       <h4
-                        className={`fw-bold ${
-                          selectedReconciliation.difference > 0
+                        className={`fw-bold ${selectedReconciliation.difference > 0
                             ? "text-success"
                             : selectedReconciliation.difference < 0
-                            ? "text-danger"
-                            : "text-muted"
-                        }`}
+                              ? "text-danger"
+                              : "text-muted"
+                          }`}
                       >
                         {formatAmount(selectedReconciliation.difference)}
                       </h4>

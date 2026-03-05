@@ -190,29 +190,29 @@ const FicheAdd = () => {
                                     </Row>
                                 </CardBody>
                             </Card>
-                             <div className="d-flex justify-content-end gap-2 mt-4">
-                                                                    <Button
-                                                                        color="secondary"
-                                                                        type="button"
-                                                                        style={{ borderRadius: "20px" }}
-                                                                        onClick={() => navigate(-1)}
-                                                                    >
-                                                                        Annuler
-                                                                    </Button>
-                                                                    <Button
-                                                                        color="primary"
-                                                                        type="submit"
-                                                                        style={{ borderRadius: "20px" }}
-                                                                    >
-                                                                        Enregistrer
-                                                                    </Button>
-                                                                </div>
+                            <div className="d-flex justify-content-end gap-2 mt-4">
+                                <Button
+                                    color="secondary"
+                                    type="button"
+                                    style={{ borderRadius: "20px" }}
+                                    onClick={() => navigate(-1)}
+                                >
+                                    Annuler
+                                </Button>
+                                <Button
+                                    color="primary"
+                                    type="submit"
+                                    style={{ borderRadius: "20px" }}
+                                >
+                                    Enregistrer
+                                </Button>
+                            </div>
                         </Col>
                     </Row>
 
-                    
-                          
-                    
+
+
+
                 </Form>
             </Container>
         </div>

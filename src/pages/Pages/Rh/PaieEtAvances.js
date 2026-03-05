@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from "react";
+import React, { useState, useMemo, useCallback, useEffect } from "react";
 import { Col, Container, Row, Badge, Modal, ModalHeader, ModalBody, ModalFooter, Button, Form, FormGroup, Label, Input } from "reactstrap";
 import { Link, useParams } from "react-router-dom";
 import BreadCrumb from "../../../Components/Common/BreadCrumb";
@@ -11,10 +11,15 @@ import EmptyDataCard from "../../../Components/Common/EmptyDataCard";
 import Pagination from "../../../Components/Common/Pagination";
 import DeleteModal from "../../../Components/Common/DeleteModal";
 import { useTranslation } from "react-i18next";
+import { useProfile } from "../../../Components/Hooks/UserHooks";
+import jsPDF from "jspdf";
+import logoDark from "../../../assets/images/logo-dark.png";
+import { BaseUrl } from "../../APIKey/ApiKey";
 
 const PaieEtAvances = () => {
     const { entreprise } = useParams();
     const { t } = useTranslation();
+    const { userProfile, token } = useProfile();
 
     // ========== ÉTATS GÉNÉRAUX ==========
     const [isExportCSV, setIsExportCSV] = useState(false);
@@ -29,6 +34,7 @@ const PaieEtAvances = () => {
     const [selectedItem, setSelectedItem] = useState(null);
     const [deleteModal, setDeleteModal] = useState(false);
     const [itemToDelete, setItemToDelete] = useState(null);
+    const [entrepriseInfo, setEntrepriseInfo] = useState(null);
 
     // ========== DONNÉES STATIQUES ==========
     // Données pour Fiche de paie
@@ -37,6 +43,7 @@ const PaieEtAvances = () => {
             id: 1,
             nom: "Dupont",
             prenom: "Jean",
+            fonction: "Comptable",
             periode: "Mai",
             lot_de_paie: "Lot 1",
             remuneration_totale: "500 000",
@@ -47,6 +54,7 @@ const PaieEtAvances = () => {
             id: 2,
             nom: "Martin",
             prenom: "Marie",
+            fonction: "Responsable RH",
             periode: "Juin",
             lot_de_paie: "Lot 2",
             remuneration_totale: "600 000",
@@ -57,6 +65,7 @@ const PaieEtAvances = () => {
             id: 3,
             nom: "Durant",
             prenom: "Pierre",
+            fonction: "Commercial",
             periode: "Juillet",
             lot_de_paie: "Lot 3",
             remuneration_totale: "550 000",
@@ -139,7 +148,9 @@ const PaieEtAvances = () => {
         return new Intl.NumberFormat('fr-FR', {
             minimumFractionDigits: 0,
             maximumFractionDigits: 0
-        }).format(montant);
+        })
+            .format(montant)
+            .replace(/[\u202F\u00A0]/g, " ");
     };
 
     const formatDate = (date) => {
@@ -154,6 +165,265 @@ const PaieEtAvances = () => {
     const formatPeriode = (debut, fin) => {
         return `${formatDate(debut)} - ${formatDate(fin)}`;
     };
+
+    const parseAmount = useCallback((value) => {
+        if (typeof value === "number") return value;
+        if (!value) return 0;
+        const normalized = String(value).replace(/\s/g, "").replace(/,/g, ".").replace(/[^\d.\-]/g, "");
+        const parsed = parseFloat(normalized);
+        return Number.isFinite(parsed) ? parsed : 0;
+    }, []);
+
+    const buildFileUrl = useCallback((path) => {
+        if (!path) return null;
+        if (String(path).startsWith("http")) return path;
+        return `${BaseUrl}${String(path).startsWith("/") ? "" : "/"}${path}`;
+    }, []);
+
+    useEffect(() => {
+        const fetchEntrepriseInfo = async () => {
+            if (!userProfile?.id || !token) return;
+
+            try {
+                const response = await fetch(`${BaseUrl}/utilisateurs/update-profile/${userProfile.id}/`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+
+                if (!response.ok) return;
+
+                const data = await response.json();
+                setEntrepriseInfo(data?.entreprise || null);
+            } catch (error) {
+                console.warn("Impossible de récupérer les infos entreprise pour le bulletin:", error);
+            }
+        };
+
+        fetchEntrepriseInfo();
+    }, [token, userProfile?.id]);
+
+    const computeITS = useCallback((baseImposable) => {
+        const taxable = Math.max(0, Math.round(baseImposable));
+        const brackets = [
+            { limit: 60000, rate: 0 },
+            { limit: 150000, rate: 0.1 },
+            { limit: 250000, rate: 0.15 },
+            { limit: 500000, rate: 0.19 },
+            { limit: Number.POSITIVE_INFINITY, rate: 0.3 },
+        ];
+
+        let previousLimit = 0;
+        let total = 0;
+
+        brackets.forEach(({ limit, rate }) => {
+            if (taxable <= previousLimit) return;
+            const tranche = Math.min(taxable, limit) - previousLimit;
+            if (tranche > 0) total += tranche * rate;
+            previousLimit = limit;
+        });
+
+        return Math.round(total);
+    }, []);
+
+    const computeTaxeRadiophonique = useCallback((salaireBrut, periode) => {
+        const monthMap = {
+            janvier: 1,
+            fevrier: 2,
+            "février": 2,
+            mars: 3,
+            avril: 4,
+            mai: 5,
+            juin: 6,
+            juillet: 7,
+            aout: 8,
+            "août": 8,
+            septembre: 9,
+            octobre: 10,
+            novembre: 11,
+            decembre: 12,
+            "décembre": 12,
+        };
+
+        const month = monthMap[String(periode || "").trim().toLowerCase()] || null;
+        if (month === 3) return 1000;
+        if (month === 6) return salaireBrut <= 60000 ? 0 : 3000;
+        return 0;
+    }, []);
+
+    const loadImageAsDataUrl = useCallback((src) => {
+        return new Promise((resolve, reject) => {
+            const image = new Image();
+            image.crossOrigin = "anonymous";
+            image.onload = () => {
+                const canvas = document.createElement("canvas");
+                canvas.width = image.width;
+                canvas.height = image.height;
+                const context = canvas.getContext("2d");
+                if (!context) {
+                    reject(new Error("Canvas indisponible"));
+                    return;
+                }
+                context.drawImage(image, 0, 0);
+                resolve(canvas.toDataURL("image/png"));
+            };
+            image.onerror = () => reject(new Error("Impossible de charger le logo"));
+            image.src = src;
+        });
+    }, []);
+
+    const generatePayslipPdf = useCallback(async (collab) => {
+        const headerBlue = { r: 14, g: 63, b: 135 };
+        const salaireBase = parseAmount(collab?.salaire_base);
+        const remunerationTotale = parseAmount(collab?.remuneration_totale);
+        const prime = Math.max(remunerationTotale - salaireBase, 0);
+        const indemnites = 0;
+        const heuresSupplementaires = 0;
+        const autresAvantages = 0;
+
+        const salaireBrut = salaireBase + prime + indemnites + heuresSupplementaires + autresAvantages;
+        const cnss = Math.round(salaireBrut * 0.036);
+        const baseImposable = Math.max(salaireBrut - cnss, 0);
+        const its = computeITS(baseImposable);
+        const salaireNet = Math.max(0, salaireBrut - cnss - its);
+        const taxeRadiophonique = computeTaxeRadiophonique(salaireBrut, collab?.periode);
+        const entrepriseNom = entrepriseInfo?.nom || "INAWO";
+        const entrepriseAdresse = entrepriseInfo?.adresse || "Kindonou, Cotonou";
+        const entrepriseTelephone = entrepriseInfo?.telephone || "+229 01 61 00 00 00";
+        const entrepriseIfu = entrepriseInfo?.ifu || entrepriseInfo?.nif || "INW000000000";
+        const entrepriseLogo = buildFileUrl(entrepriseInfo?.logo) || logoDark;
+
+        const doc = new jsPDF({ unit: "mm", format: "a4" });
+
+        try {
+            const logoDataUrl = await loadImageAsDataUrl(entrepriseLogo);
+            doc.addImage(logoDataUrl, "PNG", 14, 9, 34, 14);
+        } catch (e) {
+            console.warn("Logo Inawo indisponible pour le PDF:", e);
+        }
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.text(`${entrepriseNom} - ${entrepriseAdresse}`, 14, 28);
+        doc.text(`Téléphone : ${entrepriseTelephone}`, 14, 33);
+        doc.text(`IFU : ${entrepriseIfu}`, 14, 38);
+
+        doc.setFillColor(headerBlue.r, headerBlue.g, headerBlue.b);
+        doc.rect(110, 20, 86, 10, "F");
+        doc.setTextColor(255, 255, 255);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(12);
+        doc.text("BULLETIN DE PAIE", 153, 27, { align: "center" });
+
+        doc.setTextColor(0, 0, 0);
+        doc.setFontSize(9);
+        doc.setFont("helvetica", "normal");
+
+        doc.rect(14, 44, 58, 24);
+        doc.setFillColor(headerBlue.r, headerBlue.g, headerBlue.b);
+        doc.rect(14, 44, 58, 5, "F");
+        doc.setTextColor(255, 255, 255);
+        doc.setFont("helvetica", "bold");
+        doc.text("Type de contrat", 16, 48);
+        doc.text("CDI", 67, 48, { align: "right" });
+        doc.setTextColor(0, 0, 0);
+        doc.setFont("helvetica", "normal");
+        doc.text("Ancienneté :", 16, 54);
+        doc.text("7 mois", 67, 54, { align: "right" });
+        doc.text("Mode de paiement :", 16, 60);
+        doc.text("Espèces", 67, 60, { align: "right" });
+        doc.text("Date de paiement :", 16, 66);
+        doc.text(new Date().toLocaleDateString("fr-FR"), 67, 66, { align: "right" });
+
+        doc.rect(110, 35, 86, 33);
+        doc.setFillColor(headerBlue.r, headerBlue.g, headerBlue.b);
+        doc.rect(110, 35, 86, 5, "F");
+        doc.setTextColor(255, 255, 255);
+        doc.setFont("helvetica", "bold");
+        doc.text("Nom et prénom(s)", 112, 39);
+        doc.text(`${collab?.nom || ""} ${collab?.prenom || ""}`.trim() || "N/A", 194, 39, { align: "right" });
+        doc.setTextColor(0, 0, 0);
+        doc.setFont("helvetica", "normal");
+        doc.text("Matricule :", 112, 46);
+        doc.text(String(collab?.id || ""), 194, 46, { align: "right" });
+        doc.text("N° CNSS :", 112, 52);
+        doc.text("-", 194, 52, { align: "right" });
+        doc.text("Fonction :", 112, 58);
+        doc.text(collab?.fonction || "Employé", 194, 58, { align: "right" });
+        doc.text("Période :", 112, 64);
+        doc.text(String(collab?.periode || "-"), 194, 64, { align: "right" });
+
+        const tableX = 14;
+        const tableY = 78;
+        const tableWidth = 182;
+        const rowHeight = 7;
+
+        const col1 = tableX;
+        const col2 = tableX + 84;
+        const col3 = tableX + 126;
+        const col4 = tableX + 154;
+        const colEnd = tableX + tableWidth;
+
+        doc.setFillColor(headerBlue.r, headerBlue.g, headerBlue.b);
+        doc.rect(tableX, tableY, tableWidth, 7, "F");
+        doc.setTextColor(255, 255, 255);
+        doc.setFont("helvetica", "bold");
+        doc.text("LIBELLÉS", col1 + 24, tableY + 4.7, { align: "center" });
+        doc.text("Base", col2 + 21, tableY + 4.7, { align: "center" });
+        doc.text("Taux", col3 + 14, tableY + 4.7, { align: "center" });
+        doc.text("Montant", col4 + 19, tableY + 4.7, { align: "center" });
+
+        doc.setTextColor(0, 0, 0);
+        doc.setFont("helvetica", "normal");
+
+        const rows = [
+            { label: "Salaire de base", base: salaireBase, taux: "", montant: salaireBase },
+            { label: "Primes", base: "", taux: "", montant: prime },
+            { label: "Indemnités", base: "", taux: "", montant: indemnites },
+            { label: "Heures supplémentaires", base: "", taux: "", montant: heuresSupplementaires },
+            { label: "Autres avantages", base: "", taux: "", montant: autresAvantages },
+            { label: "Salaire brut", base: salaireBrut, taux: "", montant: salaireBrut, highlight: true },
+            { label: "Cotisation CNSS", base: salaireBrut, taux: "3,6%", montant: cnss },
+            { label: "ITS", base: baseImposable, taux: "Progressif", montant: its },
+            { label: "Taxe radiophonique", base: "", taux: "", montant: taxeRadiophonique },
+            { label: "Salaire net", base: "", taux: "", montant: salaireNet, highlight: true },
+        ];
+
+        rows.forEach((row, index) => {
+            const y = tableY + 7 + index * rowHeight;
+            if (row.highlight) {
+                doc.setFillColor(205, 205, 205);
+                doc.rect(tableX, y, tableWidth, rowHeight, "F");
+            }
+
+            doc.text(row.label, col1 + 1.5, y + 4.5);
+            doc.text(row.base === "" ? "" : formatMontant(row.base), col3 - 1.5, y + 4.5, { align: "right" });
+            doc.text(String(row.taux || ""), col4 - 1.5, y + 4.5, { align: "right" });
+            doc.text(formatMontant(row.montant), colEnd - 1.5, y + 4.5, { align: "right" });
+        });
+
+        const tableBottom = tableY + 7 + rows.length * rowHeight;
+        [col1, col2, col3, col4, colEnd].forEach((x) => doc.line(x, tableY, x, tableBottom));
+        doc.line(tableX, tableY, colEnd, tableY);
+        doc.line(tableX, tableBottom, colEnd, tableBottom);
+        for (let i = 0; i <= rows.length; i += 1) {
+            const y = tableY + 7 + i * rowHeight;
+            doc.line(tableX, y, colEnd, y);
+        }
+
+        const signatureTitleY = tableBottom + 10;
+        const signatureLineY = signatureTitleY + 10;
+        const signatureNameY = signatureLineY + 7;
+
+        doc.setFontSize(10);
+        doc.setTextColor(0, 0, 0);
+        doc.text("Employeur", 194, signatureTitleY, { align: "right" });
+        doc.line(146, signatureLineY, 194, signatureLineY);
+        doc.setFontSize(9);
+        doc.text(String(entrepriseNom), 194, signatureNameY, { align: "right" });
+
+        doc.save(`bulletin_paie_${(collab?.nom || "employe").toLowerCase()}_${collab?.id || ""}.pdf`);
+    }, [buildFileUrl, computeITS, computeTaxeRadiophonique, entrepriseInfo, formatMontant, loadImageAsDataUrl, parseAmount]);
 
     // ✅ Fonction pour obtenir le label du statut
     const getStatusLabel = useCallback((statusValue) => {
@@ -375,7 +645,16 @@ const PaieEtAvances = () => {
                                     to="#"
                                     className="text-info p-2"
                                     title={t("Exporter")}
-                                    onClick={() => toast.info(t("Export non implémenté"))}
+                                    onClick={async (e) => {
+                                        e.preventDefault();
+                                        try {
+                                            await generatePayslipPdf(item);
+                                            toast.success(t("Bulletin de paie téléchargé avec succès"));
+                                        } catch (error) {
+                                            console.error("Erreur génération bulletin:", error);
+                                            toast.error(t("Erreur lors de la génération du bulletin de paie"));
+                                        }
+                                    }}
                                 >
                                     <i className="ri-file-download-line fs-16"></i>
                                 </Link>
@@ -506,7 +785,7 @@ const PaieEtAvances = () => {
                 },
             ];
         }
-    }, [activeTab, currentPage, itemsPerPage, entreprise]);
+    }, [activeTab, currentPage, itemsPerPage, entreprise, t, getStatusColor, getStatusLabel, generatePayslipPdf]);
 
     // ========== RENDU ==========
     document.title = t("Paie et Avances");
