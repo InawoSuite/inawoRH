@@ -652,14 +652,16 @@ const PaieEtAvances = () => {
                                         : "Détails de l'avance/prêt"}
                                 </h5>
                                 <p className="text-muted mb-0">
-                                    {activeTab === "1" ? "Fiche #" : "N° "}{selectedItem?.numero || selectedItem?.id}
+                                    {activeTab === "1" 
+                                        ? `Fiche #${selectedItem?.id}` 
+                                        : `N° ${selectedItem?.numero}`}
                                 </p>
                             </div>
                         </div>
                     </ModalHeader>
 
                     <ModalBody className="p-4">
-                        {selectedItem && activeTab === "1" && (
+                         {selectedItem && activeTab === "1" && (
                             <Row className="g-4">
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
@@ -769,12 +771,28 @@ const PaieEtAvances = () => {
                     </ModalBody>
 
                     <ModalFooter className="border-0 pt-0 pb-4 px-4">
+                        {activeTab === "1" ? (
+                            <Link
+                                to={`/${entreprise}/fiche-edit/${selectedItem?.id}`}
+                                className="btn btn-primary rounded-4 px-4"
+                                style={{ borderRadius: "20px" }}
+                            >
+                                Modifier
+                            </Link>
+                        ) : (
+                            <Link
+                                to={`/${entreprise}/avance-et-pret-edit/${selectedItem?.id}`}
+                                className="btn btn-primary rounded-4 px-4"
+                                style={{ borderRadius: "20px" }}
+                            >
+                                Modifier
+                            </Link>
+                        )}
                         <Button
                             color="secondary"
                             onClick={() => toggleViewModal()}
-                            className="rounded-3 px-4"
+                            className="rounded-4 px-4"
                         >
-                            <i className="ri-close-line me-1"></i>
                             Fermer
                         </Button>
                     </ModalFooter>

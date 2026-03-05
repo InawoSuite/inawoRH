@@ -276,6 +276,11 @@ import EvaluationEdit from "../pages/Pages/Rh/evaluations/EvaluationEdit";
 import PaieEtAvances from "../pages/Pages/Rh/PaieEtAvances";
 import PresenceEtAbsence from "../pages/Pages/Rh/PresenceEtAbsence";
 
+import Poste from "../pages/Pages/Rh/postes/Poste";
+import PosteForm from "../pages/Pages/Rh/postes/PosteForm";
+import PosteAdd from "../pages/Pages/Rh/postes/PosteAdd";
+import PosteEdit from "../pages/Pages/Rh/postes/PosteEdit"; 
+
 import AddContract from "../pages/Pages/Rh/Contrats/AddContract";
 import EditContract from "../pages/Pages/Rh/Contrats/EditContract";
 import Pointage from "../pages/Pages/Rh/Pointage/Pointage";
@@ -955,6 +960,39 @@ const authProtectedRoutes = [
     component: (
       <RouteWrapper>
         <EvaluationEdit />
+      </RouteWrapper>
+    ),
+  },
+
+  {
+    path: "/:entreprise/postes",
+    component: (
+      <RouteWrapper>
+        <Poste />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/poste-form",
+    component: (
+      <RouteWrapper>
+        <PosteForm />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/poste-add",
+    component: (
+      <RouteWrapper>
+        <PosteAdd />
+      </RouteWrapper>
+    ),
+  },
+  {
+    path: "/:entreprise/poste-edit/:id",
+    component: (
+      <RouteWrapper>
+        <PosteEdit />
       </RouteWrapper>
     ),
   },

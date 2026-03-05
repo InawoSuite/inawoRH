@@ -412,7 +412,18 @@ const Navdata = () => {
           modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
           utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
           onClick: handleMobileMenuClose,
-        }
+        },
+
+        {
+          id: "poste",
+          icon: "ri-briefcase-line",
+          label: "Poste",
+          link: generatePath("/postes"),
+          parentId: "HumanResources",
+          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+          utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+          onClick: handleMobileMenuClose,
+        },
       ],
     },
     
