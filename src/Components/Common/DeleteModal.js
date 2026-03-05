@@ -1,9 +1,12 @@
 import styles from "./DeleteModal.module.css";
 import PropTypes from "prop-types";
 import React from "react";
+import { useTranslation } from "react-i18next";
 import { Modal, ModalBody } from "reactstrap";
 
 const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
+  const { t } = useTranslation(); 
+
   return (
   <Modal fade={true} isOpen={show} toggle={onCloseClick} centered={true} contentClassName="custom-rounded-modal">
       <ModalBody className="py-3 px-5">
@@ -15,9 +18,9 @@ const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
             style={{ width: "100px", height: "100px" }}
           ></lord-icon>
           <div className="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
-            <h4>Êtes-vous sûr ?</h4>
+            <h4>{t('Êtes-vous sûr ?')}</h4>
             <p className="text-muted mx-4 mb-0">
-               Êtes-vous sûr de vouloir supprimer cet enregistrement ?
+               {t('Êtes-vous sûr de vouloir supprimer cet enregistrement ?')}
             </p>
           </div>
         </div>
@@ -28,7 +31,7 @@ const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
             data-bs-dismiss="modal"
             onClick={onCloseClick}
           >
-            Fermer 
+            {t('Fermer')}
           </button>
           <button
             type="button"
@@ -36,7 +39,7 @@ const DeleteModal = ({ show, onDeleteClick, onCloseClick }) => {
             id="delete-record"
             onClick={onDeleteClick}
           >
-            Oui, supprimez-le !!
+            {t('Oui, supprimez-le !!')}
           </button>
         </div>
       </ModalBody>
