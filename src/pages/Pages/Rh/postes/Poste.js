@@ -240,6 +240,7 @@ const Poste = () => {
                         <SearchAndActionBar
                             searchTerm={searchTerm}
                             setSearchTerm={setSearchTerm}
+                            searchPlaceholder={t("Chercher un poste...")}
                             addButtonLink="/:entreprise/poste-add"
                             addButtonText={t("Ajouter un nouveau poste")}
                             addButtonIcon="ri-file-add-line"

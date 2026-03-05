@@ -678,7 +678,7 @@ const PosteForm = ({ mode = "add" }) => {
                                                     className="rounded-4"
                                                     name="avantages" 
                                                     type="text" 
-                                                    placeholder="Ex: Véhicule, Téléphone, Mutuelle" 
+                                                    placeholder={t('Ex: Véhicule, Téléphone, Mutuelle')} 
                                                     defaultValue={formData.avantages}
                                                     onChange={handleChange}
                                                 />
