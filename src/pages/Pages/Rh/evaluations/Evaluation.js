@@ -7,8 +7,11 @@ import DeleteModal from "../../../../Components/Common/DeleteModal";
 import Pagination from "../../../../Components/Common/Pagination";
 import { CustomSelect } from "../../../../Components/Common/CustomSelectStyles";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const Evaluation = () => {
+    const { t } = useTranslation();
+
     document.title = "Evaluation";
 
     // États généraux
@@ -44,16 +47,16 @@ const Evaluation = () => {
 
     // Options pour les selects
     const modeOptions = [
-        { value: "employe", label: "Par employé" },
-        { value: "entreprise", label: "Par entreprise" },
-        { value: "departement", label: "Par département" }
+        { value: "employe", label: t("Par employé") },
+        { value: "entreprise", label: t("Par entreprise") },
+        { value: "departement", label: t("Par département") }
     ];
 
     const modeEvaluationOptions = [
-        { value: "auto", label: "Auto-évaluation" },
-        { value: "manager", label: "Évaluation par manager" },
-        { value: "collaborateur", label: "Évaluation par collaborateur" },
-        { value: "360", label: "Évaluation 360°" }
+        { value: "auto", label: t("Auto-évaluation") },
+        { value: "manager", label: t("Évaluation par manager") },
+        { value: "collaborateur", label: t("Évaluation par collaborateur") },
+        { value: "360", label: t("Évaluation 360°") }
     ];
 
     // Données mockées pour les campagnes
@@ -62,7 +65,7 @@ const Evaluation = () => {
             id: 1,
             numero: "EVAL-2024-001",
             titre: "Évaluation annuelle 2024",
-            mode: "Par employé",
+            mode: t("Par employé"),
             responsable: "Marie Martin",
             dateEvaluation: "2024-12-15",
             statut: "en_cours",
@@ -72,7 +75,7 @@ const Evaluation = () => {
             id: 2,
             numero: "EVAL-2024-002",
             titre: "Évaluation des compétences",
-            mode: "Par département",
+            mode: t("Par département"),
             responsable: "Jean Dupont",
             dateEvaluation: "2024-11-30",
             statut: "planifié",
@@ -82,7 +85,7 @@ const Evaluation = () => {
             id: 3,
             numero: "EVAL-2024-003",
             titre: "Feedback 360°",
-            mode: "Par entreprise",
+            mode: t("Par entreprise"),
             responsable: "Sophie Bernard",
             dateEvaluation: "2024-10-20",
             statut: "terminé",
@@ -258,11 +261,11 @@ const Evaluation = () => {
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-                    title="&nbsp;Évaluation"
+                    title={t("Évaluations")}
                     pageTitle={
                         <>
                             <i className="ri-bar-chart-grouped-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>&nbsp;&gt;
+                            &nbsp;&gt;&nbsp;<Link to="/"> {t("Tableau de Bord")} </Link>&nbsp;&gt;
                         </>
                     }
                 />
@@ -272,15 +275,15 @@ const Evaluation = () => {
                         <SearchAndActionBar
                             searchTerm={searchTerm}
                             onSearchChange={setSearchTerm}
-                            searchPlaceholder="Chercher une campagne..."
+                            searchPlaceholder={t("Chercher une campagne...")}
                             showSearch={true}
                             addButtonLink="/:entreprise/evaluation-add"
-                            addButtonText="Nouvelle campagne d'évaluation"
+                            addButtonText={t("Nouvelle campagne d'évaluation")}
                             addButtonIcon="ri-file-add-line"
                             showAddButton={true}
                             onAddClick={toggleCreateModal}
                             onExportClick={() => setIsExportCSV(true)}
-                            exportButtonText="Exporter"
+                            exportButtonText={t("Exporter")}
                             exportButtonIcon="ri-file-upload-line"
                             showExportButton={true}
                         />
@@ -294,13 +297,13 @@ const Evaluation = () => {
                                         <thead className="text-muted">
                                             <tr>
                                                 <th>N°</th>
-                                                <th>Titre</th>
-                                                <th>Mode</th>
-                                                <th>Responsable</th>
-                                                <th>Date</th>
-                                                <th>Progression</th>
-                                                <th>Statut</th>
-                                                <th>Actions</th>
+                                                <th>{t("Titre")}</th>
+                                                <th>{t("Mode")}</th>
+                                                <th>{t("Responsable")}</th>
+                                                <th>{t("Date")}</th>
+                                                <th>{t("Progression")}</th>
+                                                <th>{t("Statut")}</th>
+                                                <th>{t("Actions")}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -342,7 +345,7 @@ const Evaluation = () => {
                                                                     <Link
                                                                         to="#"
                                                                         className="text-success p-2"
-                                                                        title="Démarrer"
+                                                                        title={t("Démarrer")}
                                                                         onClick={(e) => {
                                                                             e.preventDefault();
                                                                             toggleQuizModal(item);
@@ -355,7 +358,7 @@ const Evaluation = () => {
                                                                     <Link
                                                                         to="#"
                                                                         className="text-warning p-2"
-                                                                        title="Continuer"
+                                                                        title={t("Continuer")}
                                                                         onClick={(e) => {
                                                                             e.preventDefault();
                                                                             toggleQuizModal(item);
@@ -367,7 +370,7 @@ const Evaluation = () => {
                                                                 <Link
                                                                     to="#"
                                                                     className="text-info p-2"
-                                                                    title="Voir détails"
+                                                                    title={t("Voir détails")}
                                                                     onClick={(e) => {
                                                                         e.preventDefault();
                                                                         toggleViewModal(item);
@@ -378,14 +381,14 @@ const Evaluation = () => {
                                                                 <Link
                                                                     to="/:entreprise/evaluation-edit/:id"
                                                                     className="text-primary p-2"
-                                                                    title="Modifier"
+                                                                    title={t("Modifier")}
                                                                 >
                                                                     <i className="ri-pencil-fill fs-16"></i>
                                                                 </Link>
                                                                 <Link
                                                                     to="#"
                                                                     className="text-danger p-2"
-                                                                    title="Supprimer"
+                                                                    title={t("Supprimer")}
                                                                     onClick={(e) => {
                                                                         e.preventDefault();
                                                                         handleDeleteClick(item);
@@ -402,8 +405,8 @@ const Evaluation = () => {
                                                     <td colSpan="8" className="text-center py-5">
                                                         <div className="text-muted">
                                                             <i className="ri-inbox-line" style={{ fontSize: "3rem" }}></i>
-                                                            <h5 className="mt-3">Aucune campagne trouvée</h5>
-                                                            <p className="mb-0">Commencez par créer une nouvelle campagne</p>
+                                                            <h5 className="mt-3">{t("Aucune campagne trouvée")}</h5>
+                                                            <p className="mb-0">{t("Commencez par créer une nouvelle campagne")}</p>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -443,10 +446,10 @@ const Evaluation = () => {
                             <Row>
                                 <Col md={12}>
                                     <FormGroup className="mb-3">
-                                        <Label>Titre de la campagne <span className="text-danger">*</span></Label>
+                                        <Label>{t("Titre de la campagne")} <span className="text-danger">*</span></Label>
                                         <Input
                                             type="text"
-                                            placeholder="Ex: Évaluation annuelle 2024"
+                                            placeholder={t("Ex: Évaluation annuelle 2024")}
                                             value={formData.titre}
                                             onChange={(e) => setFormData({...formData, titre: e.target.value})}
                                             required
@@ -458,21 +461,21 @@ const Evaluation = () => {
                             <Row>
                                 <Col md={6}>
                                     <FormGroup className="mb-3">
-                                        <Label>Mode d'évaluation <span className="text-danger">*</span></Label>
+                                        <Label>{t("Mode d'évaluation")} <span className="text-danger">*</span></Label>
                                         <CustomSelect
                                             options={modeOptions}
                                             value={modeOptions.find(opt => opt.value === formData.mode)}
                                             onChange={(opt) => setFormData({...formData, mode: opt.value})}
-                                            placeholder="Sélectionner un mode"
+                                            placeholder={t("Sélectionner un mode")}
                                         />
                                     </FormGroup>
                                 </Col>
                                 <Col md={6}>
                                     <FormGroup className="mb-3">
-                                        <Label>Responsable <span className="text-danger">*</span></Label>
+                                        <Label>{t("Responsable")} <span className="text-danger">*</span></Label>
                                         <Input
                                             type="text"
-                                            placeholder="Nom du responsable"
+                                            placeholder={t("Nom du responsable")}
                                             value={formData.responsable}
                                             onChange={(e) => setFormData({...formData, responsable: e.target.value})}
                                             required
@@ -484,18 +487,18 @@ const Evaluation = () => {
                             <Row>
                                 <Col md={6}>
                                     <FormGroup className="mb-3">
-                                        <Label>Mode d'évaluation <span className="text-danger">*</span></Label>
+                                        <Label>{t("Mode d'évaluation")} <span className="text-danger">*</span></Label>
                                         <CustomSelect
                                             options={modeEvaluationOptions}
                                             value={modeEvaluationOptions.find(opt => opt.value === formData.modeEvaluation)}
                                             onChange={(opt) => setFormData({...formData, modeEvaluation: opt.value})}
-                                            placeholder="Sélectionner le mode"
+                                            placeholder={t("Sélectionner un mode")}
                                         />
                                     </FormGroup>
                                 </Col>
                                 <Col md={6}>
                                     <FormGroup className="mb-3">
-                                        <Label>Date d'évaluation <span className="text-danger">*</span></Label>
+                                        <Label>{t("Date d'évaluation")} <span className="text-danger">*</span></Label>
                                         <Input
                                             type="date"
                                             value={formData.dateEvaluation}
@@ -509,11 +512,11 @@ const Evaluation = () => {
                             <Row>
                                 <Col md={12}>
                                     <FormGroup className="mb-3">
-                                        <Label>Description</Label>
+                                        <Label>{t("Description")}</Label>
                                         <Input
                                             type="textarea"
                                             rows="3"
-                                            placeholder="Description de la campagne..."
+                                            placeholder={t("Description de la campagne...")}
                                             value={formData.description}
                                             onChange={(e) => setFormData({...formData, description: e.target.value})}
                                             className="rounded-4"
@@ -528,14 +531,14 @@ const Evaluation = () => {
                                 color="secondary" 
                                 onClick={toggleCreateModal}
                             >
-                                Annuler
+                                {t("Annuler")}
                             </Button>
                             <Button 
                                 className="rounded-4" 
                                 color="primary" 
                                 type="submit"
                             >
-                                Créer la campagne
+                                {t("Créer la campagne")}
                             </Button>
                         </ModalFooter>
                     </Form>
@@ -571,21 +574,21 @@ const Evaluation = () => {
                                         <i className="ri-questionnaire-line"></i>
                                     </span>
                                 </div>
-                                <h4>Prêt à commencer ?</h4>
+                                <h4>{t("Prêt à commencer ?")}</h4>
                                 <p className="text-muted mb-4">
-                                    Cette évaluation contient {quizQuestions.length} questions.<br />
-                                    Vous aurez 60 minutes pour la compléter.
+                                    {t("Cette évaluation contient")} {quizQuestions.length} {t("questions").toLowerCase()}.<br />
+                                    {t("Vous aurez 60 minutes pour la compléter.")}
                                 </p>
                                 <Button color="primary" onClick={startQuiz} size="lg" className="rounded-pill px-5">
                                     <i className="ri-play-fill me-2"></i>
-                                    Commencer l'évaluation
+                                    {t("Commencer l'évaluation")}
                                 </Button>
                             </div>
                         ) : (
                             <div>
                                 <div className="mb-4">
                                     <div className="d-flex justify-content-between mb-2">
-                                        <span>Question {currentQuestion + 1}/{quizQuestions.length}</span>
+                                        <span>{t("Question")} {currentQuestion + 1}/{quizQuestions.length}</span>
                                         <span>{Math.round(((currentQuestion + 1) / quizQuestions.length) * 100)}%</span>
                                     </div>
                                     <Progress 
@@ -624,7 +627,7 @@ const Evaluation = () => {
                                         disabled={currentQuestion === 0}
                                     >
                                         <i className="ri-arrow-left-line me-2"></i>
-                                        Précédent
+                                        {t("Précédent")}
                                     </Button>
                                     {currentQuestion < quizQuestions.length - 1 ? (
                                         <Button
@@ -633,7 +636,7 @@ const Evaluation = () => {
                                             onClick={nextQuestion}
                                             disabled={!answers[quizQuestions[currentQuestion].id]}
                                         >
-                                            Suivant
+                                            {t("Suivant")}
                                             <i className="ri-arrow-right-line ms-2"></i>
                                         </Button>
                                     ) : (
@@ -644,7 +647,7 @@ const Evaluation = () => {
                                             disabled={!answers[quizQuestions[currentQuestion].id]}
                                         >
                                             <i className="ri-check-line me-2"></i>
-                                            Soumettre
+                                            {t("Soumettre")}
                                         </Button>
                                     )}
                                 </div>
@@ -663,7 +666,7 @@ const Evaluation = () => {
                 >
                     <ModalHeader toggle={() => toggleViewModal()} className="border-0">
                         <i className="ri-eye-line me-2"></i>
-                        Détails de la campagne
+                        {t("Détails de la campagne")}
                     </ModalHeader>
                     <ModalBody>
                         {selectedItem && (
@@ -671,13 +674,13 @@ const Evaluation = () => {
                                 <Row>
                                     <Col md={6}>
                                         <p><strong>N°:</strong> {selectedItem.numero}</p>
-                                        <p><strong>Titre:</strong> {selectedItem.titre}</p>
-                                        <p><strong>Mode:</strong> {selectedItem.mode}</p>
+                                        <p><strong>{t("Titre")}:</strong> {selectedItem.titre}</p>
+                                        <p><strong>{t("Mode")}:</strong> {selectedItem.mode}</p>
                                     </Col>
                                     <Col md={6}>
-                                        <p><strong>Responsable:</strong> {selectedItem.responsable}</p>
-                                        <p><strong>Date:</strong> {formatDate(selectedItem.dateEvaluation)}</p>
-                                        <p><strong>Statut:</strong> {getStatutBadge(selectedItem.statut)}</p>
+                                        <p><strong>{t("Responsable")}:</strong> {selectedItem.responsable}</p>
+                                        <p><strong>{t("Date")}:</strong> {formatDate(selectedItem.dateEvaluation)}</p>
+                                        <p><strong>{t("Statut")}:</strong> {getStatutBadge(selectedItem.statut)}</p>
                                     </Col>
                                 </Row>
                             </div>
@@ -689,14 +692,14 @@ const Evaluation = () => {
                             className="btn btn-primary rounded-4 px-4"
                             style={{ borderRadius: "20px" }}
                         >
-                            Modifier
+                            {t("Modifier")}
                         </Link>
                         <Button 
                             className="rounded-4"
                             color="secondary"
                             onClick={() => toggleViewModal()}
                         >
-                            Fermer
+                            {t("Fermer")}
                         </Button>
                     </ModalFooter>
                 </Modal>
