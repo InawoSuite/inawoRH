@@ -2341,8 +2341,15 @@ const Pointage = () => {
             </Modal>
 
             {/* Modal Pointage Manuel */}
-            <Modal isOpen={manualModal} toggle={() => setManualModal(false)} size="lg">
-                <ModalHeader toggle={() => setManualModal(false)}>
+            <Modal
+                isOpen={manualModal}
+                toggle={() => setManualModal(false)}
+                size="lg"
+                centered
+                className="modal-dialog-centered"
+                contentClassName="rounded-4 border-0"
+            >
+                <ModalHeader toggle={() => setManualModal(false)} className="border-0 pt-4 px-4">
                     <i className="ri-pencil-line me-2"></i>
                     {t('Pointage manuel')}
                 </ModalHeader>
@@ -2422,12 +2429,13 @@ const Pointage = () => {
                         </Col>
                     </Row>
                 </ModalBody>
-                <ModalFooter>
-                    <Button color="light" onClick={() => setManualModal(false)}>
+                <ModalFooter className="border-0 pt-0 pb-4 px-4">
+                    <Button color="light" className="rounded-pill px-4" onClick={() => setManualModal(false)}>
                         {t('Annuler')}
                     </Button>
                     <Button
                         color="primary"
+                        className="rounded-pill px-4"
                         onClick={handleManualPointage}
                         disabled={!manualEntry.employee || !manualEntry.date}
                     >

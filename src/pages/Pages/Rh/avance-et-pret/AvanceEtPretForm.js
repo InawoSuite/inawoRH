@@ -3,6 +3,7 @@ import { Container, Row, Col, Card, CardBody, Form, FormGroup, Label, Input, But
 import { Link, useNavigate, useParams } from "react-router-dom";
 import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 import { CustomSelect } from "../../../../Components/Common/CustomSelectStyles";
+import { useTranslation } from "react-i18next";
 
 const mockData = {
     "1": {
@@ -46,7 +47,8 @@ const mockData = {
 const AvanceEtPretForm = ({ mode = "add" }) => {
     const navigate = useNavigate();
     const { id } = useParams();
-    
+    const { t } = useTranslation();
+
     const [formData, setFormData] = useState({
         nomEmploye: "",
         salaireNet: "",
@@ -97,73 +99,73 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
     const [selectedStatut, setSelectedStatut] = useState(null);
     const statutOptions = useMemo(
         () => [
-            { value: "actif", label: "Actif" },
-            { value: "payé", label: "Payé" },
-            { value: "dépassé", label: "Dépassé" },
+            { value: "actif", label: t("Actif") },
+            { value: "payé", label: t("Payé") },
+            { value: "dépassé", label: t("Dépassé") },
         ],
-        []
+        [t]
     );
 
-    document.title = mode === "add" ? "Ajouter Avance/Prêt" : "Modifier Avance/Prêt";
+    document.title = mode === "add" ? t("Ajouter une avance/prêt") : t("Modifier l'avance/prêt");
 
     return (
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-                    title={mode === "add" ? "Ajouter une avance/prêt" : "Modifier l'avance/prêt"}
+                    title={mode === "add" ? t("Ajouter une avance/prêt") : t("Modifier l'avance/prêt")}
                     pageTitle={
                         <>
                             <i className="ri-money-dollar-circle-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>
-                            &nbsp;&gt;&nbsp;<Link to="/:entreprise/paie-et-avances">Paie et Avances</Link>&nbsp;&gt;&nbsp;
+                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>
+                            &nbsp;&gt;&nbsp;<Link to="/:entreprise/paie-et-avances">{t("Paie et Avances")}</Link>&nbsp;&gt;&nbsp;
                         </>
                     }
                 />
-                
+
                 <Row>
                     <Col lg={12}>
                         <Card className="border-0" style={cardStyle}>
                             <CardBody className="p-4">
                                 <h5 className="mb-4">
-                                    {mode === "add" ? "Nouvelle avance/prêt" : "Modification avance/prêt"}
+                                    {mode === "add" ? t("Nouvelle avance/prêt") : t("Modification avance/prêt")}
                                 </h5>
-                                
+
                                 <Form onSubmit={handleSubmit}>
                                     <Row>
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="nomEmploye">
-                                                    Nom de l'employé <span className="text-danger">*</span>
+                                                    {t("Nom de l'employé")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="nomEmploye"
                                                     className="rounded-4"
-                                                    name="nomEmploye" 
-                                                    type="text" 
-                                                    placeholder="Ex: Jean Dupont" 
+                                                    name="nomEmploye"
+                                                    type="text"
+                                                    placeholder={t("Ex: Jean Dupont")}
                                                     value={formData.nomEmploye}
                                                     onChange={handleChange}
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        
+
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="salaireNet">
-                                                    Salaire net <span className="text-danger">*</span>
+                                                    {t("Salaire net")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="salaireNet"
                                                     className="rounded-4"
-                                                    name="salaireNet" 
-                                                    type="number" 
-                                                    placeholder="Ex: 250000" 
+                                                    name="salaireNet"
+                                                    type="number"
+                                                    placeholder={t("Ex: 250000")}
                                                     value={formData.salaireNet}
                                                     onChange={handleChange}
                                                     step="1000"
                                                     min="0"
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -173,36 +175,36 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="montantPret">
-                                                    Montant du prêt <span className="text-danger">*</span>
+                                                    {t("Montant du prêt")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="montantPret"
                                                     className="rounded-4"
-                                                    name="montantPret" 
-                                                    type="number" 
-                                                    placeholder="Ex: 50000" 
+                                                    name="montantPret"
+                                                    type="number"
+                                                    placeholder={t("Ex: 50000")}
                                                     value={formData.montantPret}
                                                     onChange={handleChange}
                                                     step="1000"
                                                     min="0"
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        
+
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="periode">
-                                                    Période <span className="text-danger">*</span>
+                                                    {t("Période")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="periode"
                                                     className="rounded-4"
-                                                    name="periode" 
-                                                    type="month" 
+                                                    name="periode"
+                                                    type="month"
                                                     value={formData.periode}
                                                     onChange={handleChange}
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -212,16 +214,16 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="dateRemboursement">
-                                                    Date de remboursement <span className="text-danger">*</span>
+                                                    {t("Date de remboursement")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="dateRemboursement"
                                                     className="rounded-4"
-                                                    name="dateRemboursement" 
-                                                    type="date" 
+                                                    name="dateRemboursement"
+                                                    type="date"
                                                     value={formData.dateRemboursement}
                                                     onChange={handleChange}
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -229,19 +231,19 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
 
                                     {mode === "edit" && (
                                         <>
-                                            <h6 className="text-primary mt-4 mb-3">Informations de suivi</h6>
+                                            <h6 className="text-primary mt-4 mb-3">{t("Informations de suivi")}</h6>
                                             <Row>
                                                 <Col md={4}>
                                                     <FormGroup className="mb-3">
                                                         <Label for="montantRembourse">
-                                                            Montant remboursé 
+                                                            {t("Montant remboursé")}
                                                         </Label>
-                                                        <Input 
+                                                        <Input
                                                             id="montantRembourse"
                                                             className="rounded-4"
-                                                            name="montantRembourse" 
-                                                            type="number" 
-                                                            placeholder="Ex: 20000" 
+                                                            name="montantRembourse"
+                                                            type="number"
+                                                            placeholder={t("Ex: 20000")}
                                                             value={formData.montantRembourse}
                                                             onChange={handleChange}
                                                             step="1000"
@@ -249,39 +251,39 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                                         />
                                                     </FormGroup>
                                                 </Col>
-                                                
+
                                                 <Col md={4}>
                                                     <FormGroup className="mb-3">
                                                         <Label for="solde">
-                                                            Solde restant 
+                                                            {t("Solde restant")}
                                                         </Label>
-                                                        <Input 
+                                                        <Input
                                                             id="solde"
                                                             className="rounded-4"
-                                                            name="solde" 
-                                                            type="number" 
-                                                            placeholder="Ex: 30000" 
+                                                            name="solde"
+                                                            type="number"
+                                                            placeholder={t("Ex: 30000")}
                                                             value={formData.solde}
                                                             onChange={handleChange}
                                                             step="1000"
                                                             min="0"
                                                             readOnly={mode === "edit"}
                                                         />
-                                                        <small className="text-muted">Montant prêt - Montant remboursé</small>
+                                                        <small className="text-muted">{t("Montant prêt - Montant remboursé")}</small>
                                                     </FormGroup>
                                                 </Col>
-                                                
+
                                                 <Col md={4}>
                                                     <FormGroup className="mb-3">
                                                         <Label htmlFor="statut">
-                                                            Statut
+                                                            {t("Statut")}
                                                         </Label>
                                                         <CustomSelect
                                                             inputId="statut"
                                                             value={selectedStatut}
                                                             onChange={(option) => setSelectedStatut(option)}
                                                             options={statutOptions}
-                                                            placeholder="Select Statut"
+                                                            placeholder={t("Sélectionner le statut")}
                                                         />
                                                     </FormGroup>
                                                 </Col>
@@ -298,14 +300,14 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
                                                     onClick={() => navigate(-1)}
                                                 >
-                                                    Annuler
+                                                    {t("Annuler")}
                                                 </Button>
                                                 <Button
                                                     className="btn btn-success rounded-4"
                                                     type="submit"
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
                                                 >
-                                                    {mode === "add" ? "Enregistrer" : "Mettre à jour"}
+                                                    {mode === "add" ? t("Enregistrer") : t("Mettre à jour")}
                                                 </Button>
                                             </div>
                                         </Col>

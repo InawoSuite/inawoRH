@@ -20,7 +20,7 @@ import { useTranslation } from "react-i18next";
 
 const OffreAdd = () => {
     const navigate = useNavigate();
-    const { t } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     // États pour les selects
     const [selectedJobCategory, setSelectedJobCategory] = useState(null);
@@ -40,37 +40,37 @@ const OffreAdd = () => {
     // Options pour les selects (traduites en français)
     const jobCategoryOptions = useMemo(
         () => [
-            { value: "Accounting & Finance", label: "Comptabilité & Finance" },
-            { value: "Purchasing Manager", label: "Acheteur / Responsable achats" },
-            { value: "Education & training", label: "Éducation & Formation" },
-            { value: "Marketing & Advertising", label: "Marketing & Publicité" },
-            { value: "It / Software Jobs", label: "IT / Développement logiciel" },
-            { value: "Digital Marketing", label: "Marketing digital" },
-            { value: "Administrative Officer", label: "Agent administratif" },
-            { value: "Government Jobs", label: "Fonction publique" },
+            { value: "Accounting & Finance", label: t("Comptabilité & Finance") },
+            { value: "Purchasing Manager", label: t("Acheteur / Responsable achats") },
+            { value: "Education & training", label: t("Éducation & Formation") },
+            { value: "Marketing & Advertising", label: t("Marketing & Publicité") },
+            { value: "It / Software Jobs", label: t("IT / Développement logiciel") },
+            { value: "Digital Marketing", label: t("Marketing digital") },
+            { value: "Administrative Officer", label: t("Agent administratif") },
+            { value: "Government Jobs", label: t("Fonction publique") },
         ],
-        []
+        [t]
     );
 
     const jobTypeOptions = useMemo(
         () => [
-            { value: "Full Time", label: "Temps plein" },
-            { value: "Part Time", label: "Temps partiel" },
-            { value: "Freelance", label: "Freelance" },
-            { value: "Intership", label: "Stage" },
+            { value: "Full Time", label: t("Temps plein") },
+            { value: "Part Time", label: t("Temps partiel") },
+            { value: "Freelance", label: t("Freelance") },
+            { value: "Intership", label: t("Stage") },
         ],
-        []
+        [t]
     );
 
     const experienceOptions = useMemo(
         () => [
-            { value: "0 Year", label: "0 an" },
-            { value: "2 Years", label: "2 ans" },
-            { value: "3 Years", label: "3 ans" },
-            { value: "4 Years", label: "4 ans" },
-            { value: "5 Years", label: "5 ans" },
+            { value: "0 Year", label: t("0 an") },
+            { value: "2 Years", label: t("2 ans") },
+            { value: "3 Years", label: t("3 ans") },
+            { value: "4 Years", label: t("4 ans") },
+            { value: "5 Years", label: t("5 ans") },
         ],
-        []
+        [t]
     );
 
     // Initialisation de Quill
@@ -78,7 +78,7 @@ const OffreAdd = () => {
         if (!quillRef.current) return;
 
         const quillInstance = new Quill(quillRef.current, {
-            placeholder: "Description détaillée de l'offre d'emploi...",
+            placeholder: t("Description détaillée de l'offre d'emploi..."),
             theme: "snow",
             modules: {
                 toolbar: [
@@ -95,7 +95,7 @@ const OffreAdd = () => {
         setQuill(quillInstance);
 
         return () => { };
-    }, []);
+    }, [t]);
 
     // Gérer les changements de Quill
     useEffect(() => {
@@ -118,7 +118,7 @@ const OffreAdd = () => {
         if (!tagsQuillRef.current) return;
 
         const quillInstance = new Quill(tagsQuillRef.current, {
-            placeholder: "Ex: React, JavaScript, Senior",
+            placeholder: t("Ex: React, JavaScript, Senior"),
             theme: "snow",
             modules: {
                 toolbar: [
@@ -133,7 +133,7 @@ const OffreAdd = () => {
         setTagsQuill(quillInstance);
 
         return () => { };
-    }, []);
+    }, [t]);
 
     // Gérer les changements de Quill pour les tags
     useEffect(() => {
@@ -205,14 +205,14 @@ const OffreAdd = () => {
                                             <Col lg={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="job-title-Input">
-                                                        Titre du poste <span className="text-danger">*</span>
+                                                        {t("Titre du poste")} <span className="text-danger">*</span>
                                                     </Label>
                                                     <Input
                                                         className="rounded-4"
                                                         type="text"
                                                         name="job-title-Input"
                                                         id="job-title-Input"
-                                                        placeholder="Ex: Développeur Full Stack"
+                                                        placeholder={t("Ex: Développeur Full Stack")}
                                                         required
                                                     />
                                                 </FormGroup>
@@ -222,14 +222,14 @@ const OffreAdd = () => {
                                             <Col lg={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="job-position-Input">
-                                                        Intitulé exact <span className="text-danger">*</span>
+                                                        {t("Intitulé exact")} <span className="text-danger">*</span>
                                                     </Label>
                                                     <Input
                                                         className="rounded-4"
                                                         type="text"
                                                         name="job-position-Input"
                                                         id="job-position-Input"
-                                                        placeholder="Ex: Développeur Full Stack Senior"
+                                                        placeholder={t("Ex: Développeur Full Stack Senior")}
                                                         required
                                                     />
                                                 </FormGroup>
@@ -239,14 +239,14 @@ const OffreAdd = () => {
                                             <Col lg={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="job-category-Input">
-                                                        Catégorie d'emploi <span className="text-danger">*</span>
+                                                        {t("Catégorie d'emploi")} <span className="text-danger">*</span>
                                                     </Label>
                                                     <CustomSelect
                                                         inputId="job-category-Input"
                                                         value={selectedJobCategory}
                                                         onChange={(option) => setSelectedJobCategory(option)}
                                                         options={jobCategoryOptions}
-                                                        placeholder="Sélectionner une catégorie"
+                                                        placeholder={t("Sélectionner une catégorie")}
                                                     />
                                                 </FormGroup>
                                             </Col>
@@ -255,14 +255,14 @@ const OffreAdd = () => {
                                             <Col lg={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="job-type-Input">
-                                                        Type d'emploi <span className="text-danger">*</span>
+                                                        {t("Type d'emploi")} <span className="text-danger">*</span>
                                                     </Label>
                                                     <CustomSelect
                                                         inputId="job-type-Input"
                                                         value={selectedJobType}
                                                         onChange={(option) => setSelectedJobType(option)}
                                                         options={jobTypeOptions}
-                                                        placeholder="Sélectionner un type"
+                                                        placeholder={t("Sélectionner un type")}
                                                     />
                                                 </FormGroup>
                                             </Col>
@@ -271,7 +271,7 @@ const OffreAdd = () => {
                                             <Col lg={12}>
                                                 <FormGroup>
                                                     <Label>
-                                                        Description <span className="text-danger">*</span>
+                                                        {t("Description")} <span className="text-danger">*</span>
                                                     </Label>
                                                     <div
                                                         className="snow-editor"
@@ -291,14 +291,14 @@ const OffreAdd = () => {
                                             <Col md={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="vancancy-Input">
-                                                        Nombre de postes <span className="text-danger">*</span>
+                                                        {t("Nombre de postes")} <span className="text-danger">*</span>
                                                     </Label>
                                                     <Input
                                                         className="rounded-4"
                                                         type="number"
                                                         name="vancancy-Input"
                                                         id="vancancy-Input"
-                                                        placeholder="Ex: 3"
+                                                        placeholder={t("Ex: 3")}
                                                         required
                                                     />
                                                 </FormGroup>
@@ -308,14 +308,14 @@ const OffreAdd = () => {
                                             <Col md={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="experience-Input">
-                                                        Expérience requise <span className="text-danger">*</span>
+                                                        {t("Expérience requise")} <span className="text-danger">*</span>
                                                     </Label>
                                                     <CustomSelect
                                                         inputId="experience-Input"
                                                         value={selectedExperience}
                                                         onChange={(option) => setSelectedExperience(option)}
                                                         options={experienceOptions}
-                                                        placeholder="Sélectionner l'expérience"
+                                                        placeholder={t("Sélectionner l'expérience")}
                                                     />
                                                 </FormGroup>
                                             </Col>
@@ -324,19 +324,19 @@ const OffreAdd = () => {
                                             <Col lg={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="last-apply-date-Input">
-                                                        Date limite de candidature <span className="text-danger">*</span>
+                                                        {t("Date limite de candidature")} <span className="text-danger">*</span>
                                                     </Label>
                                                     <Flatpickr
                                                         className="rounded-4 form-control"
                                                         id="last-apply-date-Input"
                                                         name="last-apply-date-Input"
-                                                        placeholder="Sélectionner une date"
+                                                        placeholder={t("Sélectionner une date")}
                                                         options={{
                                                             altInput: true,
                                                             altFormat: "d F Y",
                                                             mode: "single",
                                                             dateFormat: "Y-m-d",
-                                                            locale: "fr"
+                                                            locale: i18n.language?.startsWith("fr") ? "fr" : undefined
                                                         }}
                                                     />
                                                 </FormGroup>
@@ -346,19 +346,19 @@ const OffreAdd = () => {
                                             <Col lg={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="close-date-Input">
-                                                        Date de clôture <span className="text-danger">*</span>
+                                                        {t("Date de clôture")} <span className="text-danger">*</span>
                                                     </Label>
                                                     <Flatpickr
                                                         className="rounded-4 form-control"
                                                         id="close-date-Input"
                                                         name="close-date-Input"
-                                                        placeholder="Sélectionner une date"
+                                                        placeholder={t("Sélectionner une date")}
                                                         options={{
                                                             altInput: true,
                                                             altFormat: "d F Y",
                                                             mode: "single",
                                                             dateFormat: "Y-m-d",
-                                                            locale: "fr"
+                                                            locale: i18n.language?.startsWith("fr") ? "fr" : undefined
                                                         }}
                                                     />
                                                 </FormGroup>
@@ -368,14 +368,14 @@ const OffreAdd = () => {
                                             <Col md={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="start-salary-Input">
-                                                        Salaire minimum (FCFA)
+                                                        {t("Salaire minimum (FCFA)")}
                                                     </Label>
                                                     <Input
                                                         className="rounded-4"
                                                         type="number"
                                                         name="start-salary-Input"
                                                         id="start-salary-Input"
-                                                        placeholder="Ex: 300000"
+                                                        placeholder={t("Ex: 300000")}
                                                     />
                                                 </FormGroup>
                                             </Col>
@@ -384,14 +384,14 @@ const OffreAdd = () => {
                                             <Col md={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="last-salary-Input">
-                                                        Salaire maximum (FCFA)
+                                                        {t("Salaire maximum (FCFA)")}
                                                     </Label>
                                                     <Input
                                                         className="rounded-4"
                                                         type="number"
                                                         name="last-salary-Input"
                                                         id="last-salary-Input"
-                                                        placeholder="Ex: 800000"
+                                                        placeholder={t("Ex: 800000")}
                                                     />
                                                 </FormGroup>
                                             </Col>
@@ -400,14 +400,14 @@ const OffreAdd = () => {
                                             <Col md={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="country-Input">
-                                                        Pays <span className="text-danger">*</span>
+                                                        {t("Pays")} <span className="text-danger">*</span>
                                                     </Label>
                                                     <Input
                                                         className="rounded-4"
                                                         type="text"
                                                         name="country-Input"
                                                         id="country-Input"
-                                                        placeholder="Ex: France"
+                                                        placeholder={t("Ex: France")}
                                                         required
                                                     />
                                                 </FormGroup>
@@ -417,14 +417,14 @@ const OffreAdd = () => {
                                             <Col md={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="city-Input">
-                                                        Ville <span className="text-danger">*</span>
+                                                        {t("Ville")} <span className="text-danger">*</span>
                                                     </Label>
                                                     <Input
                                                         className="rounded-4"
                                                         type="text"
                                                         name="city-Input"
                                                         id="city-Input"
-                                                        placeholder="Ex: Paris"
+                                                        placeholder={t("Ex: Paris")}
                                                         required
                                                     />
                                                 </FormGroup>
@@ -434,7 +434,7 @@ const OffreAdd = () => {
                                             <Col lg={12}>
                                                 <FormGroup>
                                                     <Label htmlFor="tags-field">
-                                                        Tags / Mots-clés
+                                                        {t("Tags / Mots-clés")}
                                                     </Label>
                                                     <div
                                                         className="snow-editor"
@@ -451,7 +451,7 @@ const OffreAdd = () => {
                                                         />
                                                     </div>
                                                     <small className="text-muted d-block mt-1">
-                                                        Saisissez vos tags (chaque ligne = un tag)
+                                                        {t("Saisissez vos tags (chaque ligne = un tag)")}
                                                     </small>
                                                 </FormGroup>
                                             </Col>
