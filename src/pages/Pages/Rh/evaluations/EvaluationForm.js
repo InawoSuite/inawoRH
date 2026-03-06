@@ -40,23 +40,32 @@ const EvaluationForm = ({ mode = "add" }) => {
     const [explicationQuills, setExplicationQuills] = useState({}); // NOUVEAU
 
     // Options pour les selects
-    const modeOptions = [
-        { value: "employe", label: t("Par employé") },
-        { value: "entreprise", label: t("Par entreprise") },
-        { value: "departement", label: t("Par département") }
-    ];
+    const modeOptions = useMemo(
+        () => [
+            { value: "employe", label: t("Par employé") },
+            { value: "entreprise", label: t("Par entreprise") },
+            { value: "departement", label: t("Par département") }
+        ],
+        [t]
+    );
 
-    const modeEvaluationOptions = [
-        { value: "auto", label: t("Auto-évaluation") },
-        { value: "manager", label: t("Évaluation par manager") },
-        { value: "collaborateur", label: t("Évaluation par collaborateur") },
-        { value: "360", label: t("Évaluation 360°") }
-    ];
+    const modeEvaluationOptions = useMemo(
+        () => [
+            { value: "auto", label: t("Auto-évaluation") },
+            { value: "manager", label: t("Évaluation par manager") },
+            { value: "collaborateur", label: t("Évaluation par collaborateur") },
+            { value: "360", label: t("Évaluation 360°") }
+        ],
+        [t]
+    );
 
-    const typeQuestionOptions = [
-        { value: "choix_unique", label: t("Choix unique") },
-        { value: "choix_multiple", label: t("Choix multiple") }
-    ];
+    const typeQuestionOptions = useMemo(
+        () => [
+            { value: "choix_unique", label: t("Choix unique") },
+            { value: "choix_multiple", label: t("Choix multiple") }
+        ],
+        [t]
+    );
 
     // Initialisation de Quill pour la description principale
     useEffect(() => {
@@ -283,7 +292,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                 ...prev.quizzes,
                 {
                     titre: "",
-                    type: "choix_unique",
+                    type: t("Choix unique"),
                     pourcentageRequis: 80,
                     description: "",
                     questions: []
@@ -314,7 +323,7 @@ const EvaluationForm = ({ mode = "add" }) => {
     const addQuestion = (quizIndex) => {
         const updated = [...formData.quizzes];
         updated[quizIndex].questions.push({
-            type: "choix_unique",
+            type: t("Choix unique"),
             enonce: "",
             explication: "",
             image: null,
@@ -424,8 +433,8 @@ const EvaluationForm = ({ mode = "add" }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log("Données soumises:", JSON.stringify(formData, null, 2));
-        alert("Formulaire soumis ! Voir la console pour les données.");
+        console.log(t("Données soumises:"), JSON.stringify(formData, null, 2));
+        alert(t("Formulaire soumis ! Voir la console pour les données."));
     };
 
     const cardStyle = {
@@ -434,7 +443,11 @@ const EvaluationForm = ({ mode = "add" }) => {
         boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
     };
 
-    document.title = mode === "add" ? t("Ajouter une campagne d'évaluation") : t("Modifier la campagne d'évaluation");
+    useEffect(() => {
+        document.title = mode === "add" 
+            ? t("Ajouter une campagne d'évaluation")
+            : t("Modifier la campagne d'évaluation");
+    }, [mode, t]);
 
     return (
         <div className="page-content">
@@ -444,8 +457,8 @@ const EvaluationForm = ({ mode = "add" }) => {
                     pageTitle={
                         <>
                             <i className="ri-bar-chart-grouped-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>
-                            &nbsp;&gt;&nbsp;<Link to="/evaluation">{t("Évaluations")}</Link>&nbsp;&gt;&nbsp;
+                            &nbsp;&gt;&nbsp;<Link to="/"> {t("Tableau de bord")} </Link>
+                            &nbsp;&gt;&nbsp;<Link to="/evaluation"> {t("Évaluations")} </Link>&nbsp;&gt;&nbsp;
                         </>
                     }
                 />
@@ -455,7 +468,9 @@ const EvaluationForm = ({ mode = "add" }) => {
                         <Card className="border-0" style={cardStyle}>
                             <CardBody className="p-4">
                                 <h5 className="mb-4">
-                                    {mode === "add" ? t("Nouvelle campagne d'évaluation") : t("Modification de la campagne")}
+                                    {mode === "add" 
+                                        ? t("Nouvelle campagne d'évaluation") 
+                                        : t("Modification de la campagne")}
                                 </h5>
 
                                 <Form onSubmit={handleSubmit}>
@@ -469,8 +484,8 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                 <Input
                                                     id="titre"
                                                     className="rounded-4"
-                                                    name="titre"
-                                                    type="text"
+                                                    name="titre" 
+                                                    type="text" 
                                                     placeholder={t("Ex: Évaluation annuelle 2024")}
                                                     value={formData.titre}
                                                     onChange={handleChange}
@@ -508,9 +523,9 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                 <Input
                                                     id="responsable"
                                                     className="rounded-4"
-                                                    name="responsable"
-                                                    type="text"
-                                                    placeholder={t("Nom du responsable")}
+                                                    name="responsable" 
+                                                    type="text" 
+                                                    placeholder={t("Nom du responsable")} 
                                                     value={formData.responsable}
                                                     onChange={handleChange}
                                                     required
@@ -582,15 +597,15 @@ const EvaluationForm = ({ mode = "add" }) => {
                                     {/* ========== SECTION QUIZZES ========== */}
                                     <div className="mb-4">
                                         <div className="d-flex justify-content-between align-items-center mb-3">
-                                            <h5 className="mb-0">Quizzes</h5>
+                                            <h5 className="mb-0">{t("Quizzes")}</h5>
                                             <Button color="primary" onClick={addQuiz} className="rounded-4">
-                                                Ajouter un quiz
+                                                {t("Ajouter un quiz")}
                                             </Button>
                                         </div>
 
                                         {formData.quizzes.length === 0 && (
                                             <p className="text-muted text-center py-4 bg-light rounded-4">
-                                                Aucun quiz ajouté. Cliquez sur "Ajouter un quiz" pour commencer.
+                                                {t("Aucun quiz ajouté. Cliquez sur \"Ajouter un quiz\" pour commencer.")}
                                             </p>
                                         )}
 
@@ -598,7 +613,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                             <Card key={quizIndex} className="mb-4 border-0 shadow-sm rounded-4">
                                                 <CardBody>
                                                     <div className="d-flex justify-content-between align-items-center mb-3">
-                                                        <h6 className="mb-0">Quiz {quizIndex + 1}</h6>
+                                                        <h6 className="mb-0">{t("Quiz")} {quizIndex + 1}</h6>
                                                         <Badge color="danger" pill className="p-2" style={{ cursor: "pointer" }} onClick={() => removeQuiz(quizIndex)}>
                                                             <i className="ri-delete-bin-line"></i>
                                                         </Badge>
@@ -607,7 +622,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                     <Row>
                                                         <Col md={4}>
                                                             <FormGroup className="mb-3">
-                                                                <Label>Titre du quiz</Label>
+                                                                <Label>{t("Titre du quiz")}</Label>
                                                                 <Input
                                                                     className="rounded-4"
                                                                     value={quiz.titre}
@@ -618,18 +633,18 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                         </Col>
                                                         <Col md={4}>
                                                             <FormGroup className="mb-3">
-                                                                <Label>Type</Label>
+                                                                <Label>{t("Type")}</Label>
                                                                 <CustomSelect
                                                                     value={typeQuestionOptions.find(opt => opt.value === quiz.type)}
                                                                     onChange={(opt) => handleQuizChange(quizIndex, "type", opt.value)}
                                                                     options={typeQuestionOptions}
-                                                                    placeholder="Type de quiz"
+                                                                    placeholder={t("Sélectionner le type")}
                                                                 />
                                                             </FormGroup>
                                                         </Col>
                                                         <Col md={4}>
                                                             <FormGroup className="mb-3">
-                                                                <Label>% requis</Label>
+                                                                <Label>{t("% requis")}</Label>
                                                                 <Input
                                                                     type="number"
                                                                     className="rounded-4"
@@ -644,10 +659,10 @@ const EvaluationForm = ({ mode = "add" }) => {
 
                                                     {/* Description du quiz avec Quill */}
                                                     <FormGroup className="mb-3">
-                                                        <Label>Description du quiz</Label>
-                                                        <div
-                                                            className="snow-editor"
-                                                            style={{
+                                                        <Label>{t("Description du quiz")}</Label>
+                                                        <div 
+                                                            className="snow-editor" 
+                                                            style={{ 
                                                                 border: '1px solid #ced4da',
                                                                 borderRadius: '20px',
                                                                 background: '#fff',
@@ -664,9 +679,9 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                     {/* ========== QUESTIONS ========== */}
                                                     <div className="mt-4">
                                                         <div className="d-flex justify-content-between align-items-center mb-3">
-                                                            <h6 className="mb-0">Questions</h6>
+                                                            <h6 className="mb-0">{t("Questions")}</h6>
                                                             <Button color="success" size="sm" onClick={() => addQuestion(quizIndex)} className="rounded-4">
-                                                                Ajouter une question
+                                                                {t("Ajouter une question")}
                                                             </Button>
                                                         </div>
 
@@ -674,7 +689,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                             <Card key={questionIndex} className="mb-3 border-0 bg-light rounded-4">
                                                                 <CardBody>
                                                                     <div className="d-flex justify-content-between align-items-center mb-3">
-                                                                        <h6 className="mb-0">Question {questionIndex + 1}</h6>
+                                                                        <h6 className="mb-0">{t("Question")} {questionIndex + 1}</h6>
                                                                         <Badge color="danger" pill style={{ cursor: "pointer" }} onClick={() => removeQuestion(quizIndex, questionIndex)}>
                                                                             <i className="ri-delete-bin-line"></i>
                                                                         </Badge>
@@ -683,12 +698,12 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                     <Row>
                                                                         <Col md={12}>
                                                                             <FormGroup className="mb-3">
-                                                                                <Label>Type de question</Label>
+                                                                                <Label>{t("Type de question")}</Label>
                                                                                 <CustomSelect
                                                                                     value={typeQuestionOptions.find(opt => opt.value === question.type)}
                                                                                     onChange={(opt) => handleQuestionChange(quizIndex, questionIndex, "type", opt.value)}
                                                                                     options={typeQuestionOptions}
-                                                                                    placeholder="Type de question"
+                                                                                    placeholder={t("Type de question")}
                                                                                 />
                                                                             </FormGroup>
                                                                         </Col>
@@ -696,10 +711,10 @@ const EvaluationForm = ({ mode = "add" }) => {
 
                                                                     {/* Énoncé de la question avec Quill */}
                                                                     <FormGroup className="mb-3">
-                                                                        <Label>Énoncé de la question</Label>
-                                                                        <div
-                                                                            className="snow-editor"
-                                                                            style={{
+                                                                        <Label>{t("Énoncé de la question")}</Label>
+                                                                        <div 
+                                                                            className="snow-editor" 
+                                                                            style={{ 
                                                                                 border: '1px solid #ced4da',
                                                                                 borderRadius: '20px',
                                                                                 background: '#fff',
@@ -715,7 +730,7 @@ const EvaluationForm = ({ mode = "add" }) => {
 
                                                                     {/* ========== CHAMP IMAGE ========== */}
                                                                     <div className="mb-3">
-                                                                        <Label>Image (optionnel)</Label>
+                                                                        <Label>{t("Image (optionnel)")}</Label>
                                                                         <div className="d-flex align-items-center gap-3">
                                                                             <div
                                                                                 className="border rounded-4 d-flex align-items-center justify-content-center bg-light"
@@ -762,7 +777,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                                         onClick={() => document.getElementById(`image-upload-${quizIndex}-${questionIndex}`).click()}
                                                                                     >
                                                                                         <i className="ri-upload-2-line me-1"></i>
-                                                                                        Parcourir
+                                                                                        {t("Parcourir")}
                                                                                     </Button>
 
                                                                                     {question.image && (
@@ -775,12 +790,12 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                                             onClick={() => handleQuestionChange(quizIndex, questionIndex, "image", null)}
                                                                                         >
                                                                                             <i className="ri-delete-bin-line me-1"></i>
-                                                                                            Supprimer
+                                                                                            {t("Supprimer")}
                                                                                         </Button>
                                                                                     )}
                                                                                 </div>
                                                                                 <small className="text-muted d-block mt-1">
-                                                                                    JPG, PNG ou GIF (max. 2MB)
+                                                                                    {t("JPG, PNG ou GIF (max. 2MB)")}
                                                                                 </small>
                                                                             </div>
                                                                         </div>
@@ -789,16 +804,16 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                     {/* ========== OPTIONS ========== */}
                                                                     <div className="mt-3">
                                                                         <div className="d-flex justify-content-between align-items-center mb-3">
-                                                                            <Label className="mb-0 fw-bold">Options</Label>
-                                                                            <Button
-                                                                                color="primary"
-                                                                                size="sm"
-                                                                                onClick={() => addOption(quizIndex, questionIndex)}
+                                                                            <Label className="mb-0 fw-bold">{t("Options")}</Label>
+                                                                            <Button 
+                                                                                color="primary" 
+                                                                                size="sm" 
+                                                                                onClick={() => addOption(quizIndex, questionIndex)} 
                                                                                 className="rounded-4 px-3"
                                                                                 style={{ backgroundColor: '#405189', borderColor: '#405189' }}
                                                                             >
                                                                                 <i className="ri-add-line me-1"></i>
-                                                                                Ajouter une option
+                                                                                {t("Ajouter une option")}
                                                                             </Button>
                                                                         </div>
 
@@ -893,7 +908,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                                                 borderRadius: '50%'
                                                                                             }}
                                                                                             onClick={() => removeOption(quizIndex, questionIndex, optionIndex)}
-                                                                                            title="Supprimer cette option"
+                                                                                            title={t("Supprimer cette option")}
                                                                                         >
                                                                                             <i className="ri-close-line" style={{ fontSize: '20px' }}></i>
                                                                                         </div>
@@ -907,9 +922,9 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                             <div className="text-muted small mt-2 d-flex align-items-center">
                                                                                 <i className="ri-information-line me-1"></i>
                                                                                 <span>
-                                                                                    {question.type === 'choix_unique'
-                                                                                        ? "Cliquez sur le bouton radio pour définir la bonne réponse. Ajoutez plus d'options si nécessaire."
-                                                                                        : "Cochez les cases pour définir les bonnes réponses. Ajoutez plus d'options si nécessaire."}
+                                                                                    {question.type === 'choix_unique' 
+                                                                                        ? t("Cliquez sur le bouton radio pour définir la bonne réponse. Ajoutez plus d'options si nécessaire.")
+                                                                                        : t("Cochez les cases pour définir les bonnes réponses. Ajoutez plus d'options si nécessaire.")}
                                                                                 </span>
                                                                             </div>
                                                                         )}
@@ -917,10 +932,10 @@ const EvaluationForm = ({ mode = "add" }) => {
 
                                                                     {/* ========== EXPLICATION ========== */}
                                                                     <FormGroup className="mt-3">
-                                                                        <Label>Explication (optionnel)</Label>
-                                                                        <div
-                                                                            className="snow-editor"
-                                                                            style={{
+                                                                        <Label>{t("Explication (optionnel)")}</Label>
+                                                                        <div 
+                                                                            className="snow-editor" 
+                                                                            style={{ 
                                                                                 border: '1px solid #ced4da',
                                                                                 borderRadius: '20px',
                                                                                 background: '#fff',

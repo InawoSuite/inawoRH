@@ -11,7 +11,8 @@ import { useTranslation } from "react-i18next";
 
 const Evaluation = () => {
     const { t } = useTranslation();
-    document.title = t("Evaluation");
+
+    document.title = "Evaluation";
 
     // États généraux
     const [isExportCSV, setIsExportCSV] = useState(false);
@@ -46,16 +47,16 @@ const Evaluation = () => {
 
     // Options pour les selects
     const modeOptions = [
-        { value: "employe", label: "Par employé" },
-        { value: "entreprise", label: "Par entreprise" },
-        { value: "departement", label: "Par département" }
+        { value: "employe", label: t("Par employé") },
+        { value: "entreprise", label: t("Par entreprise") },
+        { value: "departement", label: t("Par département") }
     ];
 
     const modeEvaluationOptions = [
-        { value: "auto", label: "Auto-évaluation" },
-        { value: "manager", label: "Évaluation par manager" },
-        { value: "collaborateur", label: "Évaluation par collaborateur" },
-        { value: "360", label: "Évaluation 360°" }
+        { value: "auto", label: t("Auto-évaluation") },
+        { value: "manager", label: t("Évaluation par manager") },
+        { value: "collaborateur", label: t("Évaluation par collaborateur") },
+        { value: "360", label: t("Évaluation 360°") }
     ];
 
     // Données mockées pour les campagnes
@@ -64,7 +65,7 @@ const Evaluation = () => {
             id: 1,
             numero: "EVAL-2024-001",
             titre: "Évaluation annuelle 2024",
-            mode: "Par employé",
+            mode: t("Par employé"),
             responsable: "Marie Martin",
             dateEvaluation: "2024-12-15",
             statut: "en_cours",
@@ -74,7 +75,7 @@ const Evaluation = () => {
             id: 2,
             numero: "EVAL-2024-002",
             titre: "Évaluation des compétences",
-            mode: "Par département",
+            mode: t("Par département"),
             responsable: "Jean Dupont",
             dateEvaluation: "2024-11-30",
             statut: "planifié",
@@ -84,7 +85,7 @@ const Evaluation = () => {
             id: 3,
             numero: "EVAL-2024-003",
             titre: "Feedback 360°",
-            mode: "Par entreprise",
+            mode: t("Par entreprise"),
             responsable: "Sophie Bernard",
             dateEvaluation: "2024-10-20",
             statut: "terminé",
@@ -260,11 +261,11 @@ const Evaluation = () => {
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-                    title={`\u00a0${t("Évaluation")}`}
+                    title={t("Évaluations")}
                     pageTitle={
                         <>
                             <i className="ri-bar-chart-grouped-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>&nbsp;&gt;
+                            &nbsp;&gt;&nbsp;<Link to="/"> {t("Tableau de Bord")} </Link>&nbsp;&gt;
                         </>
                     }
                 />
@@ -445,10 +446,10 @@ const Evaluation = () => {
                             <Row>
                                 <Col md={12}>
                                     <FormGroup className="mb-3">
-                                        <Label>Titre de la campagne <span className="text-danger">*</span></Label>
+                                        <Label>{t("Titre de la campagne")} <span className="text-danger">*</span></Label>
                                         <Input
                                             type="text"
-                                            placeholder="Ex: Évaluation annuelle 2024"
+                                            placeholder={t("Ex: Évaluation annuelle 2024")}
                                             value={formData.titre}
                                             onChange={(e) => setFormData({ ...formData, titre: e.target.value })}
                                             required
@@ -460,21 +461,21 @@ const Evaluation = () => {
                             <Row>
                                 <Col md={6}>
                                     <FormGroup className="mb-3">
-                                        <Label>Mode d'évaluation <span className="text-danger">*</span></Label>
+                                        <Label>{t("Mode d'évaluation")} <span className="text-danger">*</span></Label>
                                         <CustomSelect
                                             options={modeOptions}
                                             value={modeOptions.find(opt => opt.value === formData.mode)}
-                                            onChange={(opt) => setFormData({ ...formData, mode: opt.value })}
-                                            placeholder="Sélectionner un mode"
+                                            onChange={(opt) => setFormData({...formData, mode: opt.value})}
+                                            placeholder={t("Sélectionner un mode")}
                                         />
                                     </FormGroup>
                                 </Col>
                                 <Col md={6}>
                                     <FormGroup className="mb-3">
-                                        <Label>Responsable <span className="text-danger">*</span></Label>
+                                        <Label>{t("Responsable")} <span className="text-danger">*</span></Label>
                                         <Input
                                             type="text"
-                                            placeholder="Nom du responsable"
+                                            placeholder={t("Nom du responsable")}
                                             value={formData.responsable}
                                             onChange={(e) => setFormData({ ...formData, responsable: e.target.value })}
                                             required
@@ -486,18 +487,18 @@ const Evaluation = () => {
                             <Row>
                                 <Col md={6}>
                                     <FormGroup className="mb-3">
-                                        <Label>Mode d'évaluation <span className="text-danger">*</span></Label>
+                                        <Label>{t("Mode d'évaluation")} <span className="text-danger">*</span></Label>
                                         <CustomSelect
                                             options={modeEvaluationOptions}
                                             value={modeEvaluationOptions.find(opt => opt.value === formData.modeEvaluation)}
-                                            onChange={(opt) => setFormData({ ...formData, modeEvaluation: opt.value })}
-                                            placeholder="Sélectionner le mode"
+                                            onChange={(opt) => setFormData({...formData, modeEvaluation: opt.value})}
+                                            placeholder={t("Sélectionner un mode")}
                                         />
                                     </FormGroup>
                                 </Col>
                                 <Col md={6}>
                                     <FormGroup className="mb-3">
-                                        <Label>Date d'évaluation <span className="text-danger">*</span></Label>
+                                        <Label>{t("Date d'évaluation")} <span className="text-danger">*</span></Label>
                                         <Input
                                             type="date"
                                             value={formData.dateEvaluation}
@@ -511,11 +512,11 @@ const Evaluation = () => {
                             <Row>
                                 <Col md={12}>
                                     <FormGroup className="mb-3">
-                                        <Label>Description</Label>
+                                        <Label>{t("Description")}</Label>
                                         <Input
                                             type="textarea"
                                             rows="3"
-                                            placeholder="Description de la campagne..."
+                                            placeholder={t("Description de la campagne...")}
                                             value={formData.description}
                                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                             className="rounded-4"
@@ -575,7 +576,7 @@ const Evaluation = () => {
                                 </div>
                                 <h4>{t("Prêt à commencer ?")}</h4>
                                 <p className="text-muted mb-4">
-                                    {t("Cette évaluation contient")} {quizQuestions.length} {t("questions")}.<br />
+                                    {t("Cette évaluation contient")} {quizQuestions.length} {t("questions").toLowerCase()}.<br />
                                     {t("Vous aurez 60 minutes pour la compléter.")}
                                 </p>
                                 <Button color="primary" onClick={startQuiz} size="lg" className="rounded-pill px-5">
@@ -673,13 +674,13 @@ const Evaluation = () => {
                                 <Row>
                                     <Col md={6}>
                                         <p><strong>N°:</strong> {selectedItem.numero}</p>
-                                        <p><strong>Titre:</strong> {selectedItem.titre}</p>
-                                        <p><strong>Mode:</strong> {selectedItem.mode}</p>
+                                        <p><strong>{t("Titre")}:</strong> {selectedItem.titre}</p>
+                                        <p><strong>{t("Mode")}:</strong> {selectedItem.mode}</p>
                                     </Col>
                                     <Col md={6}>
-                                        <p><strong>Responsable:</strong> {selectedItem.responsable}</p>
-                                        <p><strong>Date:</strong> {formatDate(selectedItem.dateEvaluation)}</p>
-                                        <p><strong>Statut:</strong> {getStatutBadge(selectedItem.statut)}</p>
+                                        <p><strong>{t("Responsable")}:</strong> {selectedItem.responsable}</p>
+                                        <p><strong>{t("Date")}:</strong> {formatDate(selectedItem.dateEvaluation)}</p>
+                                        <p><strong>{t("Statut")}:</strong> {getStatutBadge(selectedItem.statut)}</p>
                                     </Col>
                                 </Row>
                             </div>
@@ -691,7 +692,7 @@ const Evaluation = () => {
                             className="btn btn-primary rounded-4 px-4"
                             style={{ borderRadius: "20px" }}
                         >
-                            Modifier
+                            {t("Modifier")}
                         </Link>
                         <Button 
                             className="rounded-4"
