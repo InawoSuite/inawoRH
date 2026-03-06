@@ -189,18 +189,18 @@ const DetailsCollaborateur = () => {
 
   const tabContents = {
     "informations-contractuelles":
-      "Section dédiée aux informations contractuelles du collaborateur.",
+      t("Section dédiée aux informations contractuelles du collaborateur."),
     "experience-affectation":
-      "Section dédiée à l'expérience et aux affectations du collaborateur.",
-    affectation: "Section dédiée aux affectations du collaborateur.",
+      t("Section dédiée à l'expérience et aux affectations du collaborateur."),
+    affectation: t("Section dédiée aux affectations du collaborateur."),
     "historique-salaire":
-      "Section dédiée à l'historique des salaires du collaborateur.",
-    "fiche-de-paie": "Section dédiée aux fiches de paie du collaborateur.",
+      t("Section dédiée à l'historique des salaires du collaborateur."),
+    "fiche-de-paie": t("Section dédiée aux fiches de paie du collaborateur."),
     "historique-depense":
-      "Section dédiée à l'historique des dépenses du collaborateur.",
-    presence: "Section dédiée à l'historique de présence du collaborateur.",
+      t("Section dédiée à l'historique des dépenses du collaborateur."),
+    presence: t("Section dédiée à l'historique de présence du collaborateur."),
     "informations-pointages":
-      "Section dédiée aux informations de pointages du collaborateur.",
+      t("Section dédiée aux informations de pointages du collaborateur."),
   };
 
   return (
@@ -514,14 +514,14 @@ const DetailsCollaborateur = () => {
                                   htmlFor="contractNom"
                                   className="form-label fw-semibold"
                                 >
-                                  Nom
+                                  {t("Nom")}
                                 </Label>
                                 <Input
                                   id="contractNom"
                                   type="text"
                                   className="rounded-pill"
                                   value={selectedCollaborateur?.nom || ""}
-                                  placeholder="Nom"
+                                  placeholder={t("Nom")}
                                   disabled
                                 />
                               </div>
@@ -532,14 +532,14 @@ const DetailsCollaborateur = () => {
                                   htmlFor="contractPrenom"
                                   className="form-label fw-semibold"
                                 >
-                                  Prénom
+                                  {t("Prénom")}
                                 </Label>
                                 <Input
                                   id="contractPrenom"
                                   type="text"
                                   className="rounded-pill"
                                   value={selectedCollaborateur?.prenom || ""}
-                                  placeholder="Prénom"
+                                  placeholder={t("Prénom")}
                                   disabled
                                 />
                               </div>
@@ -550,14 +550,14 @@ const DetailsCollaborateur = () => {
                                   htmlFor="contractPoste"
                                   className="form-label fw-semibold"
                                 >
-                                  Poste
+                                  {t("Poste")}
                                 </Label>
                                 <Input
                                   id="contractPoste"
                                   type="text"
                                   className="rounded-pill"
                                   value={selectedCollaborateur?.poste || ""}
-                                  placeholder="Poste"
+                                  placeholder={t("Poste")}
                                   disabled
                                 />
                               </div>
@@ -568,7 +568,7 @@ const DetailsCollaborateur = () => {
                                   htmlFor="contractDepartement"
                                   className="form-label fw-semibold"
                                 >
-                                  Département
+                                  {t("Département")}
                                 </Label>
                                 <Input
                                   id="contractDepartement"
@@ -577,7 +577,7 @@ const DetailsCollaborateur = () => {
                                   value={
                                     selectedCollaborateur?.departement || ""
                                   }
-                                  placeholder="Département"
+                                  placeholder={t("Département")}
                                   disabled
                                 />
                               </div>
@@ -594,14 +594,14 @@ const DetailsCollaborateur = () => {
                                   htmlFor="contractNom"
                                   className="form-label fw-semibold"
                                 >
-                                  Nom
+                                  {t("Nom")}
                                 </Label>
                                 <Input
                                   id="contractNom"
                                   type="text"
                                   className="rounded-pill"
                                   value={selectedCollaborateur?.nom || ""}
-                                  placeholder="Nom"
+                                  placeholder={t("Nom")}
                                   disabled
                                 />
                               </div>
@@ -612,14 +612,14 @@ const DetailsCollaborateur = () => {
                                   htmlFor="contractPrenom"
                                   className="form-label fw-semibold"
                                 >
-                                  Prénom
+                                  {t("Prénom")}
                                 </Label>
                                 <Input
                                   id="contractPrenom"
                                   type="text"
                                   className="rounded-pill"
                                   value={selectedCollaborateur?.prenom || ""}
-                                  placeholder="Prénom"
+                                  placeholder={t("Prénom")}
                                   disabled
                                 />
                               </div>
@@ -630,7 +630,7 @@ const DetailsCollaborateur = () => {
                                   htmlFor="contractPoste"
                                   className="form-label fw-semibold"
                                 >
-                                  Type de contrat
+                                  {t("Type de contrat")}
                                 </Label>
                                 <Input
                                   id="contractPoste"
@@ -639,7 +639,7 @@ const DetailsCollaborateur = () => {
                                   value={
                                     selectedCollaborateur?.typecontrat || ""
                                   }
-                                  placeholder="Type de contrat"
+                                  placeholder={t("Type de contrat")}
                                   disabled
                                 />
                               </div>

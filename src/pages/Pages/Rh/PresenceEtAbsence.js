@@ -176,7 +176,7 @@ const PresenceEtAbsence = () => {
     // ========== COLONNES DU TABLEAU POUR CONGÉS ==========
     const congeColumns = useMemo(() => [
         {
-            header: "N°",
+            header: t("N°"),
             accessorKey: "numero",
             enableColumnFilter: false,
             cell: (cell) => <span className="fw-medium">{cell.getValue()}</span>,

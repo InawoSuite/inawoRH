@@ -891,7 +891,7 @@ const PaieEtAvances = () => {
                                     >
                                         <i className="ri-user-add-line me-1"></i>
                                         {activeTab === "1"
-                                            ? "Ajouter une fiche de paie"
+                                            ? t("Ajouter une fiche de paie")
                                             : t("Ajouter une avance ou un prêt")}
                                     </Link>
                                 }
@@ -929,11 +929,11 @@ const PaieEtAvances = () => {
                             <div>
                                 <h5 className="modal-title mb-0">
                                     {activeTab === "1"
-                                        ? "Détails de la fiche de paie"
-                                        : "Détails de l'avance/prêt"}
+                                        ? t("Détails de la fiche de paie")
+                                        : t("Détails de l'avance/prêt")}
                                 </h5>
                                 <p className="text-muted mb-0">
-                                    {activeTab === "1" ? "Fiche #" : "N° "}{selectedItem?.numero || selectedItem?.id}
+                                    {activeTab === "1" ? t("Fiche #") : `${t("N°")} `}{selectedItem?.numero || selectedItem?.id}
                                 </p>
                             </div>
                         </div>
@@ -944,7 +944,7 @@ const PaieEtAvances = () => {
                             <Row className="g-4">
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Nom complet</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Nom complet")}</Label>
                                         <p className="fw-semibold fs-5 mb-0">
                                             {selectedItem.prenom} {selectedItem.nom}
                                         </p>
@@ -952,31 +952,31 @@ const PaieEtAvances = () => {
                                 </Col>
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Période</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Période")}</Label>
                                         <p className="fw-semibold mb-0">{selectedItem.periode}</p>
                                     </div>
                                 </Col>
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Lot de paie</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Lot de paie")}</Label>
                                         <p className="fw-semibold mb-0">{selectedItem.lot_de_paie}</p>
                                     </div>
                                 </Col>
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Rémunération totale</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Rémunération totale")}</Label>
                                         <p className="fw-semibold text-success mb-0">{selectedItem.remuneration_totale}</p>
                                     </div>
                                 </Col>
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Salaire de base</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Salaire de base")}</Label>
                                         <p className="fw-semibold text-primary mb-0">{selectedItem.salaire_base}</p>
                                     </div>
                                 </Col>
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Statut</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Statut")}</Label>
                                         <div>
                                             <Badge
                                                 color={getStatusColor(selectedItem.statut)}
@@ -993,19 +993,19 @@ const PaieEtAvances = () => {
                             <Row className="g-4">
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Nom de l'employé</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Nom de l'employé")}</Label>
                                         <p className="fw-semibold fs-5 mb-0">{selectedItem.employe}</p>
                                     </div>
                                 </Col>
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Salaire net</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Salaire net")}</Label>
                                         <p className="fw-semibold fs-5 text-success mb-0">{formatMontant(selectedItem.salaireNet)}</p>
                                     </div>
                                 </Col>
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Période</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Période")}</Label>
                                         <p className="fw-semibold mb-0">
                                             <i className="ri-calendar-line me-2 text-primary"></i>
                                             {formatPeriode(selectedItem.periodeDebut, selectedItem.periodeFin)}
@@ -1014,13 +1014,13 @@ const PaieEtAvances = () => {
                                 </Col>
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Montant du prêt</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Montant du prêt")}</Label>
                                         <p className="fw-semibold fs-5 text-danger mb-0">{formatMontant(selectedItem.montantPret)}</p>
                                     </div>
                                 </Col>
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Date de remboursement</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Date de remboursement")}</Label>
                                         <p className="fw-semibold mb-0">
                                             <i className="ri-calendar-event-line me-2 text-warning"></i>
                                             {formatDate(selectedItem.dateRemboursement)}
@@ -1029,19 +1029,19 @@ const PaieEtAvances = () => {
                                 </Col>
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Montant remboursé</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Montant remboursé")}</Label>
                                         <p className="fw-semibold text-info mb-0">{formatMontant(selectedItem.montantRembourse || 0)}</p>
                                     </div>
                                 </Col>
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Solde restant</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Solde restant")}</Label>
                                         <p className="fw-semibold text-warning mb-0">{formatMontant(selectedItem.solde || 0)}</p>
                                     </div>
                                 </Col>
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
-                                        <Label className="form-label text-muted small mb-1">Statut</Label>
+                                        <Label className="form-label text-muted small mb-1">{t("Statut")}</Label>
                                         <div>{getStatutBadge(selectedItem.statut)}</div>
                                     </div>
                                 </Col>
@@ -1056,7 +1056,7 @@ const PaieEtAvances = () => {
                             className="rounded-3 px-4"
                         >
                             <i className="ri-close-line me-1"></i>
-                            Fermer
+                            {t("Fermer")}
                         </Button>
                     </ModalFooter>
                 </Modal>
