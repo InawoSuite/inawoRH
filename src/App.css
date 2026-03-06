@@ -15,14 +15,18 @@
 .collaborateur-modal textarea {
   border-radius: 999px;
 }
+
 .badge {
   display: inline-block;
-  padding: 0.25em 0.5em; /* Réduit la taille du badge */
-  font-size: 0.75rem; /* Réduit la taille du texte */
+  padding: 0.25em 0.5em;
+  /* Réduit la taille du badge */
+  font-size: 0.75rem;
+  /* Réduit la taille du texte */
   font-weight: 600;
   border-radius: 0.25rem;
   text-align: center;
-  opacity: 0.9; /* Ajoute une opacité raisonnable */
+  opacity: 0.9;
+  /* Ajoute une opacité raisonnable */
 }
 
 .badge-sm {
@@ -60,7 +64,8 @@
 }
 
 .pagination-container {
-  background-color: yellow; /* Pour voir où se trouve la pagination */
+  background-color: yellow;
+  /* Pour voir où se trouve la pagination */
   padding: 10px;
 }
 
@@ -69,7 +74,8 @@
   border-collapse: collapse;
 }
 
-.table th, .table td {
+.table th,
+.table td {
   padding: 0.75rem;
   text-align: left;
   vertical-align: top;
@@ -77,14 +83,18 @@
 }
 
 .table tbody tr {
-  display: table-row; /* Assure que chaque contact est sur une ligne distincte */
+  display: table-row;
+  /* Assure que chaque contact est sur une ligne distincte */
 }
 
 /* Dans votre fichier CSS global ou module */
 .react-tel-input .form-control {
-  background-color: inherit; /* Hérite de la couleur parente */
-  color: inherit; /* Hérite de la couleur du texte parent */
-  width: 100%; /* Ajuste la largeur si nécessaire */
+  background-color: inherit;
+  /* Hérite de la couleur parente */
+  color: inherit;
+  /* Hérite de la couleur du texte parent */
+  width: 100%;
+  /* Ajuste la largeur si nécessaire */
 }
 
 /* Optionnel : Style pour le dropdown des pays */
@@ -104,7 +114,7 @@
 }
 
 /* Style pour les éléments actifs */
-.nav-tabs .nav-link.active, 
+.nav-tabs .nav-link.active,
 .sidebar .menu-item.active {
   color: #fff;
   background-color: #405189;
@@ -162,7 +172,7 @@
   z-index: 99999 !important;
   width: auto !important;
   /* border-radius: 10px !important; */
-  box-shadow: 0 0 10px rgba(0,0,0,0.1) !important;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1) !important;
 }
 
 .profile-dropdown {
@@ -192,7 +202,8 @@
 /* Coins arrondis pour tout le modal */
 .rounded-modal-20 {
   border-radius: 20px !important;
-  overflow: hidden; /* Cache tout contenu qui dépasse */
+  overflow: hidden;
+  /* Cache tout contenu qui dépasse */
 }
 
 /* Optionnel: Style pour le bouton de fermeture */
@@ -284,8 +295,21 @@
   line-height: 1.2;
 }
 
+.file-manager-sidebar .file-manager-menu .sub-menu {
+  margin-top: 10px;
+  margin-bottom: 12px;
+}
+
+.file-manager-sidebar .file-manager-menu .sub-menu>li {
+  margin-bottom: 8px;
+}
+
+.file-manager-sidebar .file-manager-menu>li+li {
+  margin-top: 12px;
+}
+
 .square-picker {
-    border-radius: 0 !important;
+  border-radius: 0 !important;
 }
 
 .App {
@@ -363,11 +387,12 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 
-  
+
 }
 
 
@@ -418,7 +443,8 @@
 
 /* 🌙 Dark Mode - Transforme bg-white en couleur sombre */
 [data-layout-mode="dark"] .bg-white {
-  background-color: #1b2838 !important; /* ou var(--vz-dark) selon votre thème */
+  background-color: #1b2838 !important;
+  /* ou var(--vz-dark) selon votre thème */
 }
 
 /* Optionnel : ajuster les bordures en dark mode */
@@ -443,9 +469,3 @@
 .grouped-table-row {
   border-left: 2px solid #e9ecef;
 }
-
-
-
-
-
-

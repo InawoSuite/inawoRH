@@ -176,7 +176,7 @@ const PresenceEtAbsence = () => {
     // ========== COLONNES DU TABLEAU POUR CONGÉS ==========
     const congeColumns = useMemo(() => [
         {
-            header: "N°",
+            header: t("N°"),
             accessorKey: "numero",
             enableColumnFilter: false,
             cell: (cell) => <span className="fw-medium">{cell.getValue()}</span>,
@@ -312,8 +312,8 @@ const PresenceEtAbsence = () => {
                                     key={tab.key}
                                     to="#"
                                     className={`btn ${activeTab === tab.key
-                                            ? "btn-primary"
-                                            : "btn-soft-secondary"
+                                        ? "btn-primary"
+                                        : "btn-soft-secondary"
                                         } rounded-4 px-4 py-2`}
                                     onClick={() => handleTabChange(tab.key)}
                                 >

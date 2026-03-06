@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 
 const AddContract = () => {
     const { t } = useTranslation();
-   
+
 
     return (
         <div className="page-content">
@@ -22,7 +22,7 @@ const AddContract = () => {
                     }
                 />
 
-               
+
             </Container>
         </div>
     );

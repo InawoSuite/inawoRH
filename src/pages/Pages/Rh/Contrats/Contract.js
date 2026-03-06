@@ -1785,12 +1785,12 @@ const Contrat = () => {
                                 </div>
                                 <SimpleBar className="mt-3 mx-n4 px-4 file-menu-sidebar-scroll">
                                     <ul className="list-unstyled file-manager-menu">
-                                        <li>
+                                        <li className="mb-2">
                                             <a data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="true" aria-controls="collapseExample">
                                                 <i className="ri-folder-2-line align-bottom me-2"></i> <span className="file-list-link">{t("Mon espace")}</span>
                                             </a>
                                             <div className="collapse show" id="collapseExample">
-                                                <ul className="sub-menu list-unstyled">
+                                                <ul className="sub-menu list-unstyled d-grid" style={{ rowGap: "8px" }}>
                                                     <li>
                                                         <Link to="#">{t("Ressources")}</Link>
                                                     </li>
@@ -1809,19 +1809,19 @@ const Contrat = () => {
                                                 </ul>
                                             </div>
                                         </li>
-                                        <li>
+                                        <li className="mb-2 mt-2">
                                             <Link to="#" className={filterActive === "Documents" ? "active" : ""} onClick={() => fileCategory("Documents", "Documents")}><i className="ri-file-list-2-line align-bottom me-2"></i> <span className="file-list-link">{t("Documents")}</span></Link>
                                         </li>
-                                        <li>
+                                        <li className="mb-2">
                                             <Link to="#" className={filterActive === "Media" ? "active" : ""} onClick={() => fileCategory("Media", "Media")}><i className="ri-image-2-line align-bottom me-2"></i> <span className="file-list-link">{t("Médias")}</span></Link>
                                         </li>
-                                        <li>
+                                        <li className="mb-2">
                                             <Link to="#" className={filterActive === "Recents" ? "active" : ""} onClick={() => fileCategory("Media", "Recents")}><i className="ri-history-line align-bottom me-2"></i> <span className="file-list-link">{t("Récents")}</span></Link>
                                         </li>
-                                        <li>
+                                        <li className="mb-2">
                                             <Link to="#" className={filterActive === "Important" ? "active" : ""} onClick={() => fileCategory("Documents", "Important")}><i className="ri-star-line align-bottom me-2"></i> <span className="file-list-link">{t("Importants")}</span></Link>
                                         </li>
-                                        <li>
+                                        <li className="mb-2">
                                             <Link to="#" className={filterActive === "Deleted" ? "active" : ""} onClick={() => fileCategory("Deleted", "Deleted")}><i className="ri-delete-bin-line align-bottom me-2"></i> <span className="file-list-link">{t("Supprimés")}</span></Link>
                                         </li>
                                     </ul>
@@ -1837,7 +1837,7 @@ const Contrat = () => {
                                             <div className="progress mb-2 progress-sm">
                                                 <div className="progress-bar bg-success" role="progressbar" style={{ width: "25%" }} aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
                                             </div>
-                                            <span className="text-muted fs-12 d-block text-truncate"><b>47,52</b> Go utilisés sur <b>119</b> Go</span>
+                                            <span className="text-muted fs-12 d-block text-truncate"><b>47,52</b> {t("Go utilisés sur")} <b>119</b> Go</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1856,22 +1856,22 @@ const Contrat = () => {
                                                     </button>
                                                 </div>
                                                 <div className="flex-grow-1">
-                                                    <h5 className="fs-16 mb-0">Dossiers</h5>
+                                                    <h5 className="fs-16 mb-0">{t("Dossiers")}</h5>
                                                 </div>
                                             </div>
                                         </Col>
                                         <Col className="col-auto">
                                             <div className="d-flex gap-2 align-items-start">
                                                 <select className="form-control rounded-pill" data-choices data-choices-search-false name="choices-single-default" id="file-type">
-                                                    <option value="">Type de fichier</option>
-                                                    <option value="All" defaultValue>Tous</option>
-                                                    <option value="Video">Vidéos</option>
-                                                    <option value="Images">Images</option>
-                                                    <option value="Music">Musique</option>
+                                                    <option value="">{t("Type de fichier")}</option>
+                                                    <option value="All" defaultValue>{t("Tous")}</option>
+                                                    <option value="Video">{t("Vidéos")}</option>
+                                                    <option value="Images">{t("Images")}</option>
+                                                    <option value="Music">{t("Musique")}</option>
                                                     <option value="Documents">Documents</option>
                                                 </select>
 
-                                                <button className="btn btn-primary text-nowrap create-folder-modal flex-shrink-0 rounded-pill" onClick={() => handleFolderClicks()}><i className="ri-file-add-line align-bottom me-1"></i> Créer des dossiers</button>
+                                                <button className="btn btn-primary text-nowrap create-folder-modal flex-shrink-0 rounded-pill" onClick={() => handleFolderClicks()}><i className="ri-file-add-line align-bottom me-1"></i> {t("Créer des dossiers")}</button>
                                             </div>
                                         </Col>
                                     </Row>
@@ -1893,9 +1893,9 @@ const Contrat = () => {
                                                                     <i className="ri-more-2-fill fs-16 align-bottom" />
                                                                 </DropdownToggle>
                                                                 <DropdownMenu className="dropdown-menu-end">
-                                                                    <DropdownItem className="view-item-btn">Ouvrir</DropdownItem>
-                                                                    <DropdownItem className="edit-folder-list" onClick={() => handleFolderClick(item)}>Renommer</DropdownItem>
-                                                                    <DropdownItem onClick={() => { onClickFolderDelete(item); setDeleteAlt(true); }}>Supprimer</DropdownItem>
+                                                                    <DropdownItem className="view-item-btn">{t("Ouvrir")}</DropdownItem>
+                                                                    <DropdownItem className="edit-folder-list" onClick={() => handleFolderClick(item)}>{t("Renommer")}</DropdownItem>
+                                                                    <DropdownItem onClick={() => { onClickFolderDelete(item); setDeleteAlt(true); }}>{t("Supprimer")}</DropdownItem>
                                                                 </DropdownMenu>
                                                             </UncontrolledDropdown>
 
@@ -1908,7 +1908,7 @@ const Contrat = () => {
                                                             <h6 className="fs-15 folder-name">{item.folderName}</h6>
                                                         </div>
                                                         <div className="hstack mt-4 text-muted">
-                                                            <span className="me-auto"><b>{item.folderFile}</b> fichiers</span>
+                                                            <span className="me-auto"><b>{item.folderFile}</b> {t("fichiers")}</span>
                                                             <span><b>{item.size}</b> Go</span>
                                                         </div>
                                                     </CardBody>
@@ -1918,9 +1918,9 @@ const Contrat = () => {
                                 </div>
                                 <div>
                                     <div className="d-flex align-items-center mb-3">
-                                        <h5 className="flex-grow-1 fs-16 mb-0" id="filetype-title">Fichiers récents</h5>
+                                        <h5 className="flex-grow-1 fs-16 mb-0" id="filetype-title">{t("Fichiers récents")}</h5>
                                         <div className="flex-shrink-0">
-                                            <button className="btn btn-primary createFile-modal rounded-pill" onClick={() => handleFileClicks()}><i className="ri-file-add-line align-bottom me-1"></i> Créer un fichier</button>
+                                            <button className="btn btn-primary createFile-modal rounded-pill" onClick={() => handleFileClicks()}><i className="ri-file-add-line align-bottom me-1"></i> {t("Créer un fichier")}</button>
                                         </div>
                                     </div>
                                     <TableContainer
@@ -1940,7 +1940,7 @@ const Contrat = () => {
                             <SimpleBar className="mx-n3 pt-3 px-3 file-detail-content-scroll">
                                 <div id="folder-overview">
                                     <div className="d-flex align-items-center pb-3 border-bottom border-bottom-dashed">
-                                        <h5 className="flex-grow-1 fw-semibold mb-0">Vue d’ensemble</h5>
+                                        <h5 className="flex-grow-1 fw-semibold mb-0">{t("Vue d'ensemble")}</h5>
                                         <div>
                                             <button type="button" className="btn btn-soft-danger btn-icon btn-sm fs-16 close-btn-overview rounded-pill" onClick={() => sidebarClose("file-detail-show")}>
                                                 <i className="ri-close-fill align-bottom"></i>
@@ -1960,8 +1960,8 @@ const Contrat = () => {
                                                         </div>
                                                     </div>
                                                     <div className="flex-grow-1 ms-3">
-                                                        <h5 className="mb-1 fs-15">Documents</h5>
-                                                        <p className="mb-0 fs-12 text-muted">2348 fichiers</p>
+                                                        <h5 className="mb-1 fs-15">{t("Documents")}</h5>
+                                                        <p className="mb-0 fs-12 text-muted">2348 {t("fichiers")}</p>
                                                     </div>
                                                     <b>27.01 Go</b>
                                                 </div>
@@ -1976,8 +1976,8 @@ const Contrat = () => {
                                                         </div>
                                                     </div>
                                                     <div className="flex-grow-1 ms-3">
-                                                        <h5 className="mb-1 fs-15">Médias</h5>
-                                                        <p className="mb-0 fs-12 text-muted">12480 fichiers</p>
+                                                        <h5 className="mb-1 fs-15">{t("Médias")}</h5>
+                                                        <p className="mb-0 fs-12 text-muted">12480 {t("fichiers")}</p>
                                                     </div>
                                                     <b>20.87 Go</b>
                                                 </div>
@@ -1992,8 +1992,8 @@ const Contrat = () => {
                                                         </div>
                                                     </div>
                                                     <div className="flex-grow-1 ms-3">
-                                                        <h5 className="mb-1 fs-15">Projets</h5>
-                                                        <p className="mb-0 fs-12 text-muted">349 fichiers</p>
+                                                        <h5 className="mb-1 fs-15">{t("Projets")}</h5>
+                                                        <p className="mb-0 fs-12 text-muted">349 {t("fichiers")}</p>
                                                     </div>
                                                     <b>4.10 Go</b>
                                                 </div>
@@ -2008,8 +2008,8 @@ const Contrat = () => {
                                                         </div>
                                                     </div>
                                                     <div className="flex-grow-1 ms-3">
-                                                        <h5 className="mb-1 fs-15">Autres</h5>
-                                                        <p className="mb-0 fs-12 text-muted">9873 fichiers</p>
+                                                        <h5 className="mb-1 fs-15">{t("Autres")}</h5>
+                                                        <p className="mb-0 fs-12 text-muted">9873 {t("fichiers")}</p>
                                                     </div>
                                                     <b>33.54 Go</b>
                                                 </div>
@@ -2022,9 +2022,9 @@ const Contrat = () => {
                                                 <i className="ri-cloud-line text-danger align-bottom display-5"></i>
                                             </div>
                                             <div className="flex-grow-1 ms-3">
-                                                <h5 className="text-danger fs-14">Passer à Pro</h5>
-                                                <p className="text-muted mb-2">Obtenez plus d’espace pour vos fichiers...</p>
-                                                <button className="btn btn-sm btn-danger rounded-pill"><i className="ri-upload-cloud-line align-bottom"></i> Mettre à niveau</button>
+                                                <h5 className="text-danger fs-14">{t("Passer à Pro")}</h5>
+                                                <p className="text-muted mb-2">{t("Obtenez plus d’espace pour vos fichiers...")}</p>
+                                                <button className="btn btn-sm btn-danger rounded-pill"><i className="ri-upload-cloud-line align-bottom"></i> {t("Mettre à niveau")}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -2147,8 +2147,8 @@ const Contrat = () => {
 
                         </div>
                         <div className="hstack gap-2 justify-content-end">
-                            <button type="button" className="btn btn-ghost-success rounded-pill" onClick={() => setModalFolder(false)}><i className="ri-close-line align-bottom"></i> Fermer</button>
-                            <button type="submit" className="btn btn-primary rounded-pill" id="addNewFolder">{isEdit ? "Enregistrer" : "Ajouter un dossier"}</button>
+                            <button type="button" className="btn btn-ghost-success rounded-pill" onClick={() => setModalFolder(false)}><i className="ri-close-line align-bottom"></i> {t("Fermer")}</button>
+                            <button type="submit" className="btn btn-primary rounded-pill" id="addNewFolder">{isEdit ? t("Enregistrer") : t("Ajouter un dossier")}</button>
                         </div>
                     </form>
                 </ModalBody>
@@ -2156,7 +2156,7 @@ const Contrat = () => {
 
             {/* File Modal */}
             <Modal id="createFileModal" isOpen={modalFile} toggle={fileToggle} modalClassName="zoomIn" contentClassName="rounded-4 border-0" centered tabIndex="-1">
-                <ModalHeader toggle={fileToggle} className="p-3 bg-success-subtle rounded-top-4">{!!isEdit ? "Renommer le fichier" : "Créer un fichier"}</ModalHeader>
+                <ModalHeader toggle={fileToggle} className="p-3 bg-success-subtle rounded-top-4">{!!isEdit ? t("Renommer le fichier") : t("Créer un fichier")}</ModalHeader>
                 <ModalBody>
                     <form className="needs-validation createfile-form" id="createfile-form"
                         onSubmit={(e) => {
@@ -2166,10 +2166,10 @@ const Contrat = () => {
                         }}
                     >
                         <div className="mb-4">
-                            <label htmlFor="filename-input" className="form-label">Nom du fichier</label>
+                            <label htmlFor="filename-input" className="form-label">{t("Nom du fichier")}</label>
                             <input type="text" className="form-control rounded-pill" id="filename-input"
                                 name="fileName"
-                                placeholder="Saisir le nom du fichier"
+                                placeholder={t("Saisir le nom du fichier")}
                                 // validate={{
                                 //     required: { value: true },
                                 // }}
@@ -2183,8 +2183,8 @@ const Contrat = () => {
                             ) : null}
                         </div>
                         <div className="hstack gap-2 justify-content-end">
-                            <button type="button" className="btn btn-ghost-success rounded-pill" onClick={() => setModalFile(false)}><i className="ri-close-line align-bottom"></i> Fermer</button>
-                            <button type="submit" className="btn btn-primary rounded-pill" id="addNewFile">{!!isEdit ? "Enregistrer" : "Créer"}</button>
+                            <button type="button" className="btn btn-ghost-success rounded-pill" onClick={() => setModalFile(false)}><i className="ri-close-line align-bottom"></i> {t("Fermer")}</button>
+                            <button type="submit" className="btn btn-primary rounded-pill" id="addNewFile">{!!isEdit ? t("Enregistrer") : t("Créer")}</button>
                         </div>
                     </form>
                 </ModalBody>
