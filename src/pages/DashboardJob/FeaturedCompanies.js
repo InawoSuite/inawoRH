@@ -1,18 +1,21 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Card, CardBody, CardHeader, Col, Table } from "reactstrap";
+import { useTranslation } from "react-i18next";
 import { featuredCompany } from "../../common/data/dashboardJobs";
 
 const FeaturedCompanies = () => {
+  const { t } = useTranslation();
+
   return (
     <React.Fragment>
       <Col xl={6}>
         <Card className="card-height-100" style={{ borderRadius: "20px", overflow: "hidden" }}>
           <CardHeader className="align-items-center d-flex"  >
-            <h4 className="card-title mb-0 flex-grow-1">Liste des employés/Collaborateurs</h4>
+            <h4 className="card-title mb-0 flex-grow-1">{t("Liste des employés/Collaborateurs")}</h4>
             <div className="flex-shrink-0">
               <Link to="#" className="btn btn-soft-primary btn-sm">
-                Voir tous{" "}
+                {t("Voir tous")}{" "}
                 <i className="ri-arrow-right-line align-bottom"></i>
               </Link>
             </div>
@@ -64,7 +67,7 @@ const FeaturedCompanies = () => {
                       </td>
                       <td>
                         <Link to="#" className="btn btn-link btn-sm">
-                          Voir plus{" "}
+                          {t("Voir plus")}{" "}
                           <i className="ri-arrow-right-line align-bottom"></i>
                         </Link>
                       </td>

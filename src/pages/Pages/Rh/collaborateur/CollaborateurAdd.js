@@ -6,8 +6,10 @@ import PhoneInput from "../../../../Components/ContactDeleteModal/CountryPhoneIn
 import { country } from "../../../../common/data";
 import { CustomSelect } from "../../../../Components/Common/CustomSelectStyles";
 import dummyImg from "../../../../assets/images/users/user-dummy-img.jpg";
+import { useTranslation } from "react-i18next";
 
 const CollaborateurAdd = () => {
+	const { t } = useTranslation();
 	const navigate = useNavigate();
 	const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
 	const [historyItems, setHistoryItems] = useState([]);
@@ -83,7 +85,7 @@ const CollaborateurAdd = () => {
 			{ value: "stage", label: "Stage professionnelle" },
 			{ value: "stage_academique", label: "Stage académique" },
 			{ value: "interim", label: "Alternatif" },
-			
+
 		],
 		[]
 	);
@@ -159,8 +161,8 @@ const CollaborateurAdd = () => {
 		}
 
 		const periode = historyForm.posteActuel
-			? `${historyForm.dateDebutMois} ${historyForm.dateDebutAnnee} - Aujourd'hui`
-			: `${historyForm.dateDebutMois} ${historyForm.dateDebutAnnee} - ${historyForm.dateFinMois || ""} ${historyForm.dateFinAnnee || ""}`.trim();
+			? `${t(historyForm.dateDebutMois)} ${historyForm.dateDebutAnnee} - ${t("Aujourd'hui")}`
+			: `${t(historyForm.dateDebutMois)} ${historyForm.dateDebutAnnee} - ${historyForm.dateFinMois ? t(historyForm.dateFinMois) : ""} ${historyForm.dateFinAnnee || ""}`.trim();
 
 		setHistoryItems((prev) => [
 			...prev,
@@ -192,8 +194,8 @@ const CollaborateurAdd = () => {
 		});
 		setIsHistoryModalOpen(false);
 	};
-	
-	
+
+
 
 
 
@@ -221,54 +223,54 @@ const CollaborateurAdd = () => {
 	const handleHoraireChange = (index, field, value) => {
 		const newHoraires = [...horaires];
 		newHoraires[index][field] = value;
-		
+
 		// Si on active "ouvert24h", mettre les heures à 00:00-00:00
 		if (field === "ouvert24h" && value === true) {
 			newHoraires[index].heureDebut = "00:00";
 			newHoraires[index].heureFin = "00:00";
 			newHoraires[index].ouvert = true;
 		}
-		
+
 		// Si on ferme, désactiver ouvert24h
 		if (field === "ouvert" && value === false) {
 			newHoraires[index].ouvert24h = false;
 		}
-		
+
 		setHoraires(newHoraires);
 	};
 
 	const getHoraireSummary = () => {
 		const joursOuverts = horaires.filter(h => h.ouvert);
-		if (joursOuverts.length === 0) return "Aucun horaire défini";
+		if (joursOuverts.length === 0) return t("Aucun horaire défini");
 		if (joursOuverts.length === 7) {
 			const tous24h = joursOuverts.every(h => h.ouvert24h);
-			if (tous24h) return "Ouvert 24h/24 - 7j/7";
+			if (tous24h) return t("Ouvert 24h/24 - 7j/7");
 		}
-		return `${joursOuverts.length} jour(s) ouvert(s)`;
+		return `${joursOuverts.length} ${t("jour(s) ouvert(s)")}`;
 	};
 
 	return (
 		<div className="page-content">
 			<Container fluid>
 				<BreadCrumb
-					title="&nbsp;Ajouter un collaborateur"
+					title={`\u00a0${t("Ajouter un collaborateur")}`}
 					pageTitle={
 						<>
 							<i className="ri-team-line"></i>
-							&nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>&nbsp;&gt;
+							&nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>&nbsp;&gt;
 						</>
 					}
 				/>
 				<Row>
 					<Col lg={12}>
 						<Form className="collaborateur-form" onSubmit={(event) => event.preventDefault()}>
-						<Row className="mb-2">
+							<Row className="mb-2">
 								<Col lg={12}>
 									<Card className="border-0" style={cardStyle}>
 										<CardBody className="p-6">
 											<Row className="mb-3">
 												<Col>
-													<h6 className="text-uppercase text-muted mb-0">Informations personnelles</h6>
+													<h6 className="text-uppercase text-muted mb-0">{t("Informations personnelles")}</h6>
 												</Col>
 											</Row>
 											<Row className="gx-3 gy-0">
@@ -314,60 +316,60 @@ const CollaborateurAdd = () => {
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="nom">Nom <span className="text-danger">*</span></Label>
-														<Input id="nom" name="nom" type="text" placeholder="Nom" required />
+														<Label style={{ marginBottom: "0" }} for="nom">{t("Nom")} <span className="text-danger">*</span></Label>
+														<Input id="nom" name="nom" type="text" placeholder={t("Nom")} required />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="prenom">Prenom <span className="text-danger">*</span></Label>
-														<Input id="prenom" name="prenom" type="text" placeholder="Prenom" required />
+														<Label style={{ marginBottom: "0" }} for="prenom">{t("Prenom")} <span className="text-danger">*</span></Label>
+														<Input id="prenom" name="prenom" type="text" placeholder={t("Prenom")} required />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="dateNaissance">Date de naissance <span className="text-danger">*</span></Label>
+														<Label style={{ marginBottom: "0" }} for="dateNaissance">{t("Date de naissance")} <span className="text-danger">*</span></Label>
 														<Input id="dateNaissance" name="dateNaissance" type="date" required />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="lieuNaissance">Lieu de naissance (pays) <span className="text-danger">*</span></Label>
-														<Input id="lieuNaissance" name="lieuNaissance" type="text" placeholder="Pays" required />
+														<Label style={{ marginBottom: "0" }} for="lieuNaissance">{t("Lieu de naissance (pays)")} <span className="text-danger">*</span></Label>
+														<Input id="lieuNaissance" name="lieuNaissance" type="text" placeholder={t("Pays")} required />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="enfants">Nombre d'enfants a charge <span className="text-danger">*</span></Label>
+														<Label style={{ marginBottom: "0" }} for="enfants">{t("Nombre d'enfants a charge")} <span className="text-danger">*</span></Label>
 														<Input id="enfants" name="enfants" type="number" min="0" placeholder="0" required />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="statutMatrimonial">Statut matrimonial <span className="text-danger">*</span></Label>
+														<Label style={{ marginBottom: "0" }} for="statutMatrimonial">{t("Statut matrimonial")} <span className="text-danger">*</span></Label>
 														<CustomSelect
 															inputId="statutMatrimonial"
 															value={selectedStatutMatrimonial}
 															onChange={(option) => setSelectedStatutMatrimonial(option)}
 															options={statutMatrimonialOptions}
-															placeholder="Selectionner"
+															placeholder={t("Selectionner")}
 														/>
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="adresse">Adresse <span className="text-danger">*</span></Label>
-														<Input id="adresse" name="adresse" type="text" placeholder="Adresse" required />
+														<Label style={{ marginBottom: "0" }} for="adresse">{t("Adresse")} <span className="text-danger">*</span></Label>
+														<Input id="adresse" name="adresse" type="text" placeholder={t("Adresse")} required />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="pays">Pays <span className="text-danger">*</span></Label>
+														<Label style={{ marginBottom: "0" }} for="pays">{t("Pays")} <span className="text-danger">*</span></Label>
 														<CustomSelect
 															value={selectedPays}
 															onChange={(option) => setSelectedPays(option)}
 															options={paysOptions}
-															placeholder="Selectionner un pays"
+															placeholder={t("Selectionner un pays")}
 															formatOptionLabel={(option) => (
 																<div className="d-flex align-items-center">
 																	<img
@@ -384,7 +386,7 @@ const CollaborateurAdd = () => {
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="contact">Contact <span className="text-danger">*</span></Label>
+														<Label style={{ marginBottom: "0" }} for="contact">{t("Contact")} <span className="text-danger">*</span></Label>
 														<PhoneInput
 															name="contact"
 															value={contactValue}
@@ -400,13 +402,13 @@ const CollaborateurAdd = () => {
 								</Col>
 							</Row>
 
-						<Row className="mb-1">
+							<Row className="mb-1">
 								<Col lg={12}>
 									<Card className="border-0" style={cardStyle}>
 										<CardBody className="p-4">
 											<Row className="mb-3">
 												<Col>
-													<h6 className="text-uppercase text-muted mb-3">Contact d'urgence</h6>
+													<h6 className="text-uppercase text-muted mb-3">{t("Contact d'urgence")}</h6>
 												</Col>
 												<Col className="text-end">
 													<Button
@@ -415,22 +417,22 @@ const CollaborateurAdd = () => {
 														style={{ borderRadius: "20px" }}
 														onClick={() => setIsContactModalOpen(true)}
 													>
-														Ajouter un contact d'urgence
+														{t("Ajouter un contact d'urgence")}
 													</Button>
 												</Col>
 											</Row>
 
-												<Row className="mb-0 mx-n4">
-													<Col className="px-0">
+											<Row className="mb-0 mx-n4">
+												<Col className="px-0">
 													{contactItems.length > 0 ? (
-															<Table responsive className="align-middle mb-0">
+														<Table responsive className="align-middle mb-0">
 															<thead>
 																<tr>
-																	<th>Nom</th>
-																	<th>Prenom</th>
-																	<th>Contact</th>
-																	<th>Affiliation</th>
-																	<th>Ville</th>
+																	<th>{t("Nom")}</th>
+																	<th>{t("Prenom")}</th>
+																	<th>{t("Contact")}</th>
+																	<th>{t("Affiliation")}</th>
+																	<th>{t("Ville")}</th>
 																	{/* <th>Actions</th> */}
 																</tr>
 															</thead>
@@ -442,13 +444,13 @@ const CollaborateurAdd = () => {
 																		<td>{item.contact}</td>
 																		<td>{item.lien}</td>
 																		<td>{item.ville}</td>
-																	
+
 																	</tr>
 																))}
 															</tbody>
 														</Table>
 													) : (
-														<p className="text-muted mb-0">Aucun contact d'urgence.</p>
+														<p className="text-muted mb-0">{t("Aucun contact d'urgence.")}</p>
 													)}
 												</Col>
 											</Row>
@@ -458,7 +460,7 @@ const CollaborateurAdd = () => {
 														<Label style={{marginBottom: "0"}} for="urgenceNom">Nom</Label>
 														<Input id="urgenceNom" name="urgenceNom" type="text" placeholder="Nom" />
 													</FormGroup> */}
-												{/* </Col>
+											{/* </Col>
 												<Col md={6}>
 													<FormGroup>
 														<Label style={{marginBottom: "0"}} for="urgencePrenom">Prenom</Label>
@@ -470,7 +472,7 @@ const CollaborateurAdd = () => {
 														<Label style={{marginBottom: "0"}} for="urgenceAffiliation">Affiliation</Label>
 														<Input id="urgenceAffiliation" name="urgenceAffiliation" type="text" placeholder="Mari, parents, enfant, femme" />
 													</FormGroup> */}
-												{/* </Col>
+											{/* </Col>
 												<Col md={6}>
 													<FormGroup>
 														<Label style={{marginBottom: "0"}} for="urgenceTelephone">Telephone</Label>
@@ -482,7 +484,7 @@ const CollaborateurAdd = () => {
 															defaultCountry="BJ"
 														/>
 														<Input id="urgenceTelephone" name="urgenceTelephone" type="text" placeholder="Telephone" /> */}
-													{/* </FormGroup>
+											{/* </FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup>
@@ -496,93 +498,93 @@ const CollaborateurAdd = () => {
 								</Col>
 							</Row>
 
-						<Row className="mb-1">
+							<Row className="mb-1">
 								<Col lg={12}>
 									<Card className="border-0" style={cardStyle}>
 										<CardBody className="p-4">
 											<Row className="mb-3">
 												<Col>
-													<h6 className="text-uppercase text-muted mb-3">Poste et departement</h6>
+													<h6 className="text-uppercase text-muted mb-3">{t("Poste et departement")}</h6>
 												</Col>
 											</Row>
 											<Row className="gx-3 gy-0">
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="poste">Poste</Label>
-														<Input id="poste" name="poste" type="text" placeholder="Poste" />
+														<Label style={{ marginBottom: "0" }} for="poste">{t("Poste")}</Label>
+														<Input id="poste" name="poste" type="text" placeholder={t("Poste")} />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="departement">Departement</Label>
-														<Input id="departement" name="departement" type="text" placeholder="Departement" />
+														<Label style={{ marginBottom: "0" }} for="departement">{t("Departement")}</Label>
+														<Input id="departement" name="departement" type="text" placeholder={t("Departement")} />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="datePrise">Date de prise de fonction <span className="text-danger">*</span></Label>
+														<Label style={{ marginBottom: "0" }} for="datePrise">{t("Date de prise de fonction")} <span className="text-danger">*</span></Label>
 														<Input id="datePrise" name="datePrise" type="date" required />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="dateFin">Date de fin <span className="text-danger">*</span></Label>
+														<Label style={{ marginBottom: "0" }} for="dateFin">{t("Date de fin")} <span className="text-danger">*</span></Label>
 														<Input id="dateFin" name="dateFin" type="date" required />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="typeContrat">Type de contrat <span className="text-danger">*</span></Label>
+														<Label style={{ marginBottom: "0" }} for="typeContrat">{t("Type de contrat")} <span className="text-danger">*</span></Label>
 														<CustomSelect
 															inputId="typeContrat"
 															value={selectedTypeContrat}
 															onChange={(option) => setSelectedTypeContrat(option)}
 															options={typeContratOptions}
-															placeholder="Selectionner"
+															placeholder={t("Selectionner")}
 														/>
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="salaireBase">Salaire de base</Label>
-														<Input id="salaireBase" name="salaireBase" type="number" placeholder="Salaire de base" step="0.01" />
+														<Label style={{ marginBottom: "0" }} for="salaireBase">{t("Salaire de base")}</Label>
+														<Input id="salaireBase" name="salaireBase" type="number" placeholder={t("Salaire de base")} step="0.01" />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="salaireNet">Salaire net</Label>
-														<Input id="salaireNet" name="salaireNet" type="number" placeholder="Salaire net" step="0.01" />
+														<Label style={{ marginBottom: "0" }} for="salaireNet">{t("Salaire net")}</Label>
+														<Input id="salaireNet" name="salaireNet" type="number" placeholder={t("Salaire net")} step="0.01" />
 													</FormGroup>
 												</Col>
 												<Col md={6}>
-<FormGroup className="mb-0">
-<Label style={{marginBottom: "0"}} for="horaire">Horaire</Label>
-<div className="d-flex gap-2">
-<Input 
-id="horaire" 
-name="horaire" 
-type="text" 
-placeholder="Cliquez pour d�finir" 
-value={getHoraireSummary()}
-readOnly
-style={{ cursor: "pointer" }}
-onClick={() => setIsHoraireModalOpen(true)}
-/>
-<Button 
-color="primary" 
-type="button"
-onClick={() => setIsHoraireModalOpen(true)}
-style={{ borderRadius: "8px" }}
->
-<i className="ri-calendar-line"></i>
-</Button>
-</div>
-</FormGroup>
-</Col>
+													<FormGroup className="mb-0">
+														<Label style={{ marginBottom: "0" }} for="horaire">{t("Horaire")}</Label>
+														<div className="d-flex gap-2">
+															<Input
+																id="horaire"
+																name="horaire"
+																type="text"
+																placeholder={t("Cliquez pour définir")}
+																value={getHoraireSummary()}
+																readOnly
+																style={{ cursor: "pointer" }}
+																onClick={() => setIsHoraireModalOpen(true)}
+															/>
+															<Button
+																color="primary"
+																type="button"
+																onClick={() => setIsHoraireModalOpen(true)}
+																style={{ borderRadius: "8px" }}
+															>
+																<i className="ri-calendar-line"></i>
+															</Button>
+														</div>
+													</FormGroup>
+												</Col>
 												<Col md={6}>
 													<FormGroup className="mb-0">
-														<Label style={{marginBottom: "0"}} for="fichier">Fichier</Label>
-														<Input id="fichier" name="fichier" type="file" />
+														<Label style={{ marginBottom: "0" }} for="fichier">{t("Fichier")}</Label>
+														<Input id="fichier" name="fichier" type="file" lang="en" />
 													</FormGroup>
 												</Col>
 											</Row>
@@ -597,7 +599,7 @@ style={{ borderRadius: "8px" }}
 										<CardBody className="p-4">
 											<Row className="mb-3 align-items-center">
 												<Col>
-													<h6 className="text-uppercase text-muted mb-0">Ajouter une historique professionelle</h6>
+													<h6 className="text-uppercase text-muted mb-0">{t("Ajouter un historique professionnel")}</h6>
 												</Col>
 												<Col className="text-end">
 													<Button
@@ -606,7 +608,7 @@ style={{ borderRadius: "8px" }}
 														style={{ borderRadius: "20px" }}
 														onClick={() => setIsHistoryModalOpen(true)}
 													>
-														Ajouter une expérence professionelle
+														{t("Ajouter une expérience professionnelle")}
 													</Button>
 												</Col>
 											</Row>
@@ -616,12 +618,12 @@ style={{ borderRadius: "8px" }}
 														<Table responsive className="align-middle mb-0">
 															<thead>
 																<tr>
-																	<th>Période</th>
-																	<th>Intitulé du poste</th>
-																	<th>Type d'emploi</th>
-																	<th>Entreprise</th>
-																	<th>Lieu</th>
-																	<th>Description</th>
+																	<th>{t("Période")}</th>
+																	<th>{t("Intitulé du poste")}</th>
+																	<th>{t("Type d'emploi")}</th>
+																	<th>{t("Entreprise")}</th>
+																	<th>{t("Lieu")}</th>
+																	<th>{t("Description")}</th>
 																	{/* <th>Actions</th> */}
 																</tr>
 															</thead>
@@ -630,9 +632,9 @@ style={{ borderRadius: "8px" }}
 																	<tr key={item.id}>
 																		<td>{item.periode}</td>
 																		<td>{item.poste}</td>
-																		<td>{item.typeEmploi}</td>
+																		<td>{t(item.typeEmploi)}</td>
 																		<td>{item.entreprise}</td>
-																		<td>{item.lieu || "-"}</td>
+																		<td>{item.lieu || t("-")}</td>
 																		<td>{item.description}</td>
 																		{/* <td>
 																			<button type="button" className="btn btn-sm btn-soft-danger">Supprimer</button>
@@ -642,30 +644,30 @@ style={{ borderRadius: "8px" }}
 															</tbody>
 														</Table>
 													) : (
-														<p className="text-muted mb-0">Aucune historique professionnelle.</p>
+														<p className="text-muted mb-0">{t("Aucun historique professionnel.")}</p>
 													)}
 												</Col>
 											</Row>
-									
+
 										</CardBody>
 									</Card>
-											<div className="d-flex justify-content-end gap-2 mt-4">
-												<Button
-													color="secondary"
-													type="button"
-													style={{ borderRadius: "20px" }}
-													onClick={() => navigate(-1)}
-												>
-													Annuler
-												</Button>
-												<Button
-													color="primary"
-													type="submit"
-													style={{ borderRadius: "20px" }}
-												>
-													Enregistrer
-												</Button>
-											</div>
+									<div className="d-flex justify-content-end gap-2 mt-4">
+										<Button
+											color="secondary"
+											type="button"
+											style={{ borderRadius: "20px" }}
+											onClick={() => navigate(-1)}
+										>
+											{t("Annuler")}
+										</Button>
+										<Button
+											color="primary"
+											type="submit"
+											style={{ borderRadius: "20px" }}
+										>
+											{t("Enregistrer")}
+										</Button>
+									</div>
 								</Col>
 							</Row>
 						</Form>
@@ -674,55 +676,55 @@ style={{ borderRadius: "8px" }}
 			</Container>
 
 			<Modal isOpen={isHistoryModalOpen} toggle={() => setIsHistoryModalOpen(false)} centered size="lg" className="collaborateur-modal">
-				<ModalHeader toggle={() => setIsHistoryModalOpen(false)}>Ajouter une expérience professionnelle</ModalHeader>
+				<ModalHeader toggle={() => setIsHistoryModalOpen(false)}>{t("Ajouter une expérience professionnelle")}</ModalHeader>
 				<Form onSubmit={handleAddHistory}>
 					<ModalBody style={{ maxHeight: "75vh", overflowY: "auto" }}>
-						<p className="text-muted mb-3"><small>* Indique un champ obligatoire</small></p>
+						<p className="text-muted mb-3"><small>* {t("Indique un champ obligatoire")}</small></p>
 						<Row className="gx-3 gy-0">
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="intitulePoste">Intitulé de poste <span className="text-danger">*</span></Label>
-									<Input id="intitulePoste" name="intitulePoste" type="text" placeholder="Ex : chef des ventes au détail" value={historyForm.intitulePoste} onChange={handleHistoryChange} required />
+									<Label style={{ marginBottom: "0" }} for="intitulePoste">{t("Intitulé de poste")} <span className="text-danger">*</span></Label>
+									<Input id="intitulePoste" name="intitulePoste" type="text" placeholder={t("Ex : chef des ventes au détail")} value={historyForm.intitulePoste} onChange={handleHistoryChange} required />
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="typeEmploi">Type d'emploi</Label>
+									<Label style={{ marginBottom: "0" }} for="typeEmploi">{t("Type d'emploi")}</Label>
 									<Input id="typeEmploi" name="typeEmploi" type="select" value={historyForm.typeEmploi} onChange={handleHistoryChange}>
 										{typeEmploiOptions.map((option) => (
-											<option key={option} value={option}>{option}</option>
+											<option key={option} value={option}>{t(option)}</option>
 										))}
 									</Input>
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="entrepriseHistorique">Entreprise ou organisation</Label>
-									<Input id="entrepriseHistorique" name="entreprise" type="text" placeholder="Ex : Microsoft" value={historyForm.entreprise} onChange={handleHistoryChange} required />
+									<Label style={{ marginBottom: "0" }} for="entrepriseHistorique">{t("Entreprise ou organisation")}</Label>
+									<Input id="entrepriseHistorique" name="entreprise" type="text" placeholder={t("Ex : Microsoft")} value={historyForm.entreprise} onChange={handleHistoryChange} required />
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup check className="mb-3 mt-1">
 									<Input id="posteActuel" name="posteActuel" type="checkbox" checked={historyForm.posteActuel} onChange={handleHistoryChange} />
-									<Label check for="posteActuel">J&apos;occupe actuellement ce poste</Label>
+									<Label check for="posteActuel">{t("J'occupe actuellement ce poste")}</Label>
 								</FormGroup>
 							</Col>
 							<Col md={6}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="dateDebutMois">Date de début <span className="text-danger">*</span></Label>
+									<Label style={{ marginBottom: "0" }} for="dateDebutMois">{t("Date de début")} <span className="text-danger">*</span></Label>
 									<Input id="dateDebutMois" name="dateDebutMois" type="select" value={historyForm.dateDebutMois} onChange={handleHistoryChange} required>
-										<option value="">Mois</option>
+										<option value="">{t("Mois")}</option>
 										{moisOptions.map((mois) => (
-											<option key={mois} value={mois}>{mois}</option>
+											<option key={mois} value={mois}>{t(mois)}</option>
 										))}
 									</Input>
 								</FormGroup>
 							</Col>
 							<Col md={6}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="dateDebutAnnee">&nbsp;</Label>
+									<Label style={{ marginBottom: "0" }} for="dateDebutAnnee">&nbsp;</Label>
 									<Input id="dateDebutAnnee" name="dateDebutAnnee" type="select" value={historyForm.dateDebutAnnee} onChange={handleHistoryChange} required>
-										<option value="">Année</option>
+										<option value="">{t("Année")}</option>
 										{anneeOptions.map((annee) => (
 											<option key={annee} value={annee}>{annee}</option>
 										))}
@@ -731,20 +733,20 @@ style={{ borderRadius: "8px" }}
 							</Col>
 							<Col md={6}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="dateFinMois">Date de fin <span className="text-danger">*</span></Label>
+									<Label style={{ marginBottom: "0" }} for="dateFinMois">{t("Date de fin")} <span className="text-danger">*</span></Label>
 									<Input id="dateFinMois" name="dateFinMois" type="select" value={historyForm.dateFinMois} onChange={handleHistoryChange} disabled={historyForm.posteActuel}>
-										<option value="">Mois</option>
+										<option value="">{t("Mois")}</option>
 										{moisOptions.map((mois) => (
-											<option key={mois} value={mois}>{mois}</option>
+											<option key={mois} value={mois}>{t(mois)}</option>
 										))}
 									</Input>
 								</FormGroup>
 							</Col>
 							<Col md={6}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="dateFinAnnee">&nbsp;</Label>
+									<Label style={{ marginBottom: "0" }} for="dateFinAnnee">&nbsp;</Label>
 									<Input id="dateFinAnnee" name="dateFinAnnee" type="select" value={historyForm.dateFinAnnee} onChange={handleHistoryChange} disabled={historyForm.posteActuel}>
-										<option value="">Année</option>
+										<option value="">{t("Année")}</option>
 										{anneeOptions.map((annee) => (
 											<option key={annee} value={annee}>{annee}</option>
 										))}
@@ -754,89 +756,89 @@ style={{ borderRadius: "8px" }}
 							<Col md={12}>
 								<FormGroup check className="mb-3">
 									<Input id="terminerPosteActuel" name="terminerPosteActuel" type="checkbox" checked={historyForm.terminerPosteActuel} onChange={handleHistoryChange} />
-									<Label check for="terminerPosteActuel">Terminer le poste actuel à ce jour</Label>
+									<Label check for="terminerPosteActuel">{t("Terminer le poste actuel à ce jour")}</Label>
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="lieuExperience">Lieu</Label>
-									<Input id="lieuExperience" name="lieu" type="text" placeholder="Ex : Paris, France" value={historyForm.lieu} onChange={handleHistoryChange} />
+									<Label style={{ marginBottom: "0" }} for="lieuExperience">{t("Lieu")}</Label>
+									<Input id="lieuExperience" name="lieu" type="text" placeholder={t("Ex : Paris, France")} value={historyForm.lieu} onChange={handleHistoryChange} />
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="typeLieu">Type de lieu</Label>
+									<Label style={{ marginBottom: "0" }} for="typeLieu">{t("Type de lieu")}</Label>
 									<Input id="typeLieu" name="typeLieu" type="select" value={historyForm.typeLieu} onChange={handleHistoryChange}>
-										<option value="">Veuillez sélectionner</option>
+										<option value="">{t("Veuillez sélectionner")}</option>
 										{typeLieuOptions.map((option) => (
-											<option key={option} value={option}>{option}</option>
+											<option key={option} value={option}>{t(option)}</option>
 										))}
 									</Input>
-									<small className="text-muted">Choisissez un type de lieu (ex : à distance)</small>
+									<small className="text-muted">{t("Choisissez un type de lieu (ex : à distance)")}</small>
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="descriptionHistorique">Descriptif</Label>
-									<Input id="descriptionHistorique" name="descriptif" type="textarea" rows="1" maxLength="2000" placeholder="Décrivez votre expérience" value={historyForm.descriptif} onChange={handleHistoryChange} />
+									<Label style={{ marginBottom: "0" }} for="descriptionHistorique">{t("Descriptif")}</Label>
+									<Input id="descriptionHistorique" name="descriptif" type="textarea" rows="1" maxLength="2000" placeholder={t("Décrivez votre expérience")} value={historyForm.descriptif} onChange={handleHistoryChange} />
 									{/* <div className="text-end text-muted"><small>{historyForm.descriptif.length}/2000</small></div> */}
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="titreProfil">Titre du profil</Label>
-									<Input id="titreProfil" name="titreProfil" type="text" placeholder="Ex : CEO chez INAWO" value={historyForm.titreProfil} onChange={handleHistoryChange} />
-									<small className="text-muted">Apparaît en dessous de votre nom en haut du profil</small>
+									<Label style={{ marginBottom: "0" }} for="titreProfil">{t("Titre du profil")}</Label>
+									<Input id="titreProfil" name="titreProfil" type="text" placeholder={t("Ex : CEO chez INAWO")} value={historyForm.titreProfil} onChange={handleHistoryChange} />
+									<small className="text-muted">{t("Apparaît en dessous de votre nom en haut du profil")}</small>
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="sourceOffre">Où avez-vous trouvé cette offre d'emploi ?</Label>
+									<Label style={{ marginBottom: "0" }} for="sourceOffre">{t("Où avez-vous trouvé cette offre d'emploi ?")}</Label>
 									<Input id="sourceOffre" name="sourceOffre" type="select" value={historyForm.sourceOffre} onChange={handleHistoryChange}>
-										<option value="">Veuillez sélectionner</option>
+										<option value="">{t("Veuillez sélectionner")}</option>
 										{sourceOffreOptions.map((option) => (
-											<option key={option} value={option}>{option}</option>
+											<option key={option} value={option}>{t(option)}</option>
 										))}
 									</Input>
-									<small className="text-muted">Ces informations sont utilisées pour améliorer l'expérience de recherche d'emploi.</small>
+									<small className="text-muted">{t("Ces informations sont utilisées pour améliorer l'expérience de recherche d'emploi.")}</small>
 								</FormGroup>
 							</Col>
 						</Row>
 					</ModalBody>
-				<ModalFooter>
-					<Button color="primary" type="submit" style={{ borderRadius: "20px" }}>
-						Enregistrer
-					</Button>
-				</ModalFooter>
-			</Form>
-		</Modal>
+					<ModalFooter>
+						<Button color="primary" type="submit" style={{ borderRadius: "20px" }}>
+							{t("Enregistrer")}
+						</Button>
+					</ModalFooter>
+				</Form>
+			</Modal>
 
-		<Modal isOpen={isContactModalOpen} toggle={() => setIsContactModalOpen(false)} centered className="collaborateur-modal">
-				<ModalHeader toggle={() => setIsContactModalOpen(false)}>Ajouter un contact d'urgence </ModalHeader>
+			<Modal isOpen={isContactModalOpen} toggle={() => setIsContactModalOpen(false)} centered className="collaborateur-modal">
+				<ModalHeader toggle={() => setIsContactModalOpen(false)}>{t("Ajouter un contact d'urgence")}</ModalHeader>
 				<Form onSubmit={handleAddContact}>
 					<ModalBody>
 						<Row className="gx-3 gy-0">
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="nom">Nom</Label>
-									<Input id="nom" name="nom" type="text" placeholder="Nom" value={contactForm.nom} onChange={handleContactChange} required />
+									<Label style={{ marginBottom: "0" }} for="nom">{t("Nom")}</Label>
+									<Input id="nom" name="nom" type="text" placeholder={t("Nom")} value={contactForm.nom} onChange={handleContactChange} required />
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="prenom">Prenom</Label>
-									<Input id="prenom" name="prenom" type="text" placeholder="Prenom" value={contactForm.prenom} onChange={handleContactChange} required />
+									<Label style={{ marginBottom: "0" }} for="prenom">{t("Prenom")}</Label>
+									<Input id="prenom" name="prenom" type="text" placeholder={t("Prenom")} value={contactForm.prenom} onChange={handleContactChange} required />
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="lien">Affiliation</Label>
-									<Input id="lien" name="lien" type="text" placeholder="Mari, parents, enfant, femme" value={contactForm.lien} onChange={handleContactChange} required />
+									<Label style={{ marginBottom: "0" }} for="lien">{t("Affiliation")}</Label>
+									<Input id="lien" name="lien" type="text" placeholder={t("Mari, parents, enfant, femme")} value={contactForm.lien} onChange={handleContactChange} required />
 								</FormGroup>
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="contact">Telephone</Label>
+									<Label style={{ marginBottom: "0" }} for="contact">{t("Téléphone")}</Label>
 									<PhoneInput
 										name="contact"
 										value={contactForm.contact}
@@ -848,36 +850,36 @@ style={{ borderRadius: "8px" }}
 							</Col>
 							<Col md={12}>
 								<FormGroup>
-									<Label style={{marginBottom: "0"}} for="ville">Ville</Label>
-									<Input id="ville" name="ville" type="text" placeholder="Ville" value={contactForm.ville} onChange={handleContactChange} required />
+									<Label style={{ marginBottom: "0" }} for="ville">{t("Ville")}</Label>
+									<Input id="ville" name="ville" type="text" placeholder={t("Ville")} value={contactForm.ville} onChange={handleContactChange} required />
 								</FormGroup>
 							</Col>
 						</Row>
 					</ModalBody>
 					<ModalFooter>
 						<Button color="secondary" type="button" style={{ borderRadius: "20px" }} onClick={() => setIsContactModalOpen(false)}>
-							Annuler
+							{t("Annuler")}
 						</Button>
 						<Button color="primary" type="submit" style={{ borderRadius: "20px" }}>
-							Enregistrer
+							{t("Enregistrer")}
 						</Button>
 					</ModalFooter>
 				</Form>
 			</Modal>
 
 			<Modal isOpen={isHoraireModalOpen} toggle={() => setIsHoraireModalOpen(false)} centered size="lg" className="collaborateur-modal">
-				<ModalHeader toggle={() => setIsHoraireModalOpen(false)}>Définir les horaires de travail</ModalHeader>
+				<ModalHeader toggle={() => setIsHoraireModalOpen(false)}>{t("Définir les horaires de travail")}</ModalHeader>
 				<ModalBody>
-					<div style={{ 
-						border: "1px solid #e9ecef", 
-						borderRadius: "8px", 
+					<div style={{
+						border: "1px solid #e9ecef",
+						borderRadius: "8px",
 						padding: "15px",
 						backgroundColor: "#f8f9fa"
 					}}>
 						{horaires.map((horaire, index) => (
 							<Row key={index} className="gx-3 gy-0 align-items-center mb-2 pb-2" style={{ borderBottom: index < horaires.length - 1 ? "1px solid #e9ecef" : "none" }}>
 								<Col xs={12} sm={3}>
-									<div style={{ 
+									<div style={{
 										fontWeight: "600",
 										color: horaire.ouvert ? "#000" : "#6c757d",
 										textTransform: "capitalize",
@@ -895,8 +897,8 @@ style={{ borderRadius: "8px" }}
 													value={horaire.heureDebut}
 													onChange={(e) => handleHoraireChange(index, "heureDebut", e.target.value)}
 													disabled={horaire.ouvert24h}
-													style={{ 
-														width: "110px", 
+													style={{
+														width: "110px",
 														fontSize: "13px",
 														padding: "4px 8px"
 													}}
@@ -911,8 +913,8 @@ style={{ borderRadius: "8px" }}
 													value={horaire.heureFin}
 													onChange={(e) => handleHoraireChange(index, "heureFin", e.target.value)}
 													disabled={horaire.ouvert24h}
-													style={{ 
-														width: "110px", 
+													style={{
+														width: "110px",
 														fontSize: "13px",
 														padding: "4px 8px"
 													}}
@@ -934,25 +936,25 @@ style={{ borderRadius: "8px" }}
 													color="link"
 													size="sm"
 													onClick={() => handleHoraireChange(index, "ouvert", false)}
-													style={{ 
+													style={{
 														fontSize: "13px",
 														padding: "2px 8px",
 														color: "#dc3545"
 													}}
 												>
-													Fermé
+													{t("Fermé")}
 												</Button>
 											</Col>
 										</Row>
 									) : (
 										<Row className="gx-2 gy-0 align-items-center">
 											<Col xs="auto">
-												<span style={{ 
-													fontSize: "14px", 
+												<span style={{
+													fontSize: "14px",
 													color: "#6c757d",
 													fontWeight: "500"
 												}}>
-													Fermé
+													{t("Fermé")}
 												</span>
 											</Col>
 											<Col xs="auto">
@@ -960,13 +962,13 @@ style={{ borderRadius: "8px" }}
 													color="link"
 													size="sm"
 													onClick={() => handleHoraireChange(index, "ouvert", true)}
-													style={{ 
+													style={{
 														fontSize: "13px",
 														padding: "2px 8px",
 														color: "#0ab39c"
 													}}
 												>
-													Ouvrir
+													{t("Ouvrir")}
 												</Button>
 											</Col>
 										</Row>
@@ -978,10 +980,10 @@ style={{ borderRadius: "8px" }}
 				</ModalBody>
 				<ModalFooter>
 					<Button color="secondary" type="button" style={{ borderRadius: "20px" }} onClick={() => setIsHoraireModalOpen(false)}>
-						Annuler
+						{t("Annuler")}
 					</Button>
 					<Button color="primary" type="button" style={{ borderRadius: "20px" }} onClick={() => setIsHoraireModalOpen(false)}>
-						Enregistrer
+						{t("Enregistrer")}
 					</Button>
 				</ModalFooter>
 			</Modal>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Col, Container, Row } from "reactstrap";
+import { useTranslation } from "react-i18next";
 import Section from "../../../DashboardEcommerce/Section";
 import StatsDashboard from "../../../DashboardEcommerce/StatsDashboard";
 import ApplicationsStatistic from "../../../DashboardJob/ApplicationsStatistic";
@@ -13,6 +14,7 @@ import Tache from "./Tache";
 
 
 const DashboardRH = () => {
+  const { t } = useTranslation();
   document.title = "Dashboard | INAWO - Suite de Gestion";
 
   const [rightColumn, setRightColumn] = useState(true);
@@ -28,7 +30,7 @@ const DashboardRH = () => {
             <div className="col-12">
               <div className="page-title-box d-sm-flex align-items-center justify-content-between">
                 <h4 className="mb-sm-0" style={{ color: "rgb(98,116,142)" }}>
-                  Tableau de bord
+                  {t("Tableau de bord")}
                 </h4>
                 <div className="page-title-right">
                   <ol className="breadcrumb m-0">
@@ -41,7 +43,7 @@ const DashboardRH = () => {
                         <span>&gt;</span>{" "}
                       </a>
                     </li>
-                    <li className="breadcrumb-item active">Tableau de bord</li>
+                    <li className="breadcrumb-item active">{t("Tableau de bord")}</li>
                   </ol>
                 </div>
               </div>
@@ -52,10 +54,10 @@ const DashboardRH = () => {
               <div className="h-100">
                 {/* <Section rightClickBtn={toggleRightColumn} /> */}
                 <Row>
-                   <Row>
-            <Widgets />
-            <FeaturedCompanies />
-          </Row>
+                  <Row>
+                    <Widgets />
+                    <FeaturedCompanies />
+                  </Row>
                 </Row>
                 {/* <Card style={{ borderRadius: "20px" }}>
                   <CardBody>
@@ -64,13 +66,13 @@ const DashboardRH = () => {
                 </Card> */}
                 <Row>
                   {/* <ApplicationsStatistic xxl={12} dataColors='["--vz-success", "--vz-info", "--vz-primary"]' /> */}
-                    <StoreVisitsCharts dataColors='["--vz-success", "--vz-info", "--vz-primary", "--vz-warning", "--vz-danger"]' />
+                  <StoreVisitsCharts dataColors='["--vz-success", "--vz-info", "--vz-primary", "--vz-warning", "--vz-danger"]' />
                   {/* <Candidates /> */}
                 </Row>
                 <Row>
                   <AgendaTable />
                   <Graphe dataColors='["--vz-success", "--vz-info", "--vz-primary", "--vz-warning", "--vz-danger"]' />
-                
+
                 </Row>
                 <Row>
                   <Tache />
@@ -78,10 +80,10 @@ const DashboardRH = () => {
 
               </div>
             </Col>
-            
+
             {/* <RecentActivity rightColumn={rightColumn} hideRightColumn={toggleRightColumn} /> */}
           </Row>
-           
+
         </Container>
       </div>
     </React.Fragment>

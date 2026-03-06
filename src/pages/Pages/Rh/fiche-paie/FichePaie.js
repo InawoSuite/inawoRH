@@ -13,9 +13,11 @@ import { useMenuLinks } from "../../../../Components/Hooks/useMenuLinks";
 import DeleteModal from "../../../../Components/Common/DeleteModal";
 import jsPDF from "jspdf";
 import logoDark from "../../../../assets/images/logo-dark.png";
+import { useTranslation } from "react-i18next";
 
 
 const FichePaie = () => {
+  const { t } = useTranslation();
   const { entreprise } = useParams();
   const { generatePath } = useMenuLinks();
 
@@ -557,7 +559,7 @@ const FichePaie = () => {
                 to={`/${entreprise}/fiche-details/${collab.id}`}
                 state={{ fichePaie: collab }}
                 className="text-info"
-                title="Voir détails"
+                title={t("Voir détails")}
               >
                 <i className="ri-eye-fill fs-16"></i>
               </Link>
@@ -565,22 +567,22 @@ const FichePaie = () => {
                 to={`/${entreprise}/fiche-edit/${collab.id}`}
                 state={{ fichePaie: collab }}
                 className="text-primary p-2"
-                title="Modifier"
+                title={t("Modifier")}
               >
                 <i className="ri-pencil-fill fs-16"></i>
               </Link>
               <Link
                 to="#"
                 className="text-info p-2"
-                title="Exporter"
+                title={t("Exporter")}
                 onClick={async (e) => {
                   e.preventDefault();
                   try {
                     await generatePayslipPdf(collab);
-                    toast.success("Bulletin de paie téléchargé avec succès");
+                    toast.success(t("Bulletin de paie téléchargé avec succès"));
                   } catch (err) {
                     console.error("Erreur lors de la génération du bulletin:", err);
-                    toast.error("Erreur lors de la génération du bulletin de paie");
+                    toast.error(t("Erreur lors de la génération du bulletin de paie"));
                   }
                 }}
               >
@@ -590,7 +592,7 @@ const FichePaie = () => {
 
                 to="#"
                 className="text-danger p-2"
-                title="Supprimer"
+                title={t("Supprimer")}
                 onClick={(e) => {
                   e.preventDefault();
                   handleDeleteClick(cellProps.row.original);
@@ -617,11 +619,11 @@ const FichePaie = () => {
       />
       <Container fluid>
         <BreadCrumb
-          title="&nbsp;Fiche de paie"
+          title={`\u00a0${t("Fiche de paie")}`}
           pageTitle={
             <>
               <i className="ri-team-line"></i>
-              &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>&nbsp;&gt;
+              &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>&nbsp;&gt;
             </>
           }
         />
@@ -630,19 +632,19 @@ const FichePaie = () => {
             <SearchAndActionBar
               searchTerm={searchTerm}
               onSearchChange={setSearchTerm}
-              searchPlaceholder="Chercher une fiche de paie..."
+              searchPlaceholder={t("Chercher une fiche de paie...")}
               showSearch={true}
               customButtons={[
                 {
-                  text: "Lot de paie",
+                  text: t("Lot de paie"),
                   icon: "ri-stack-line",
                   className: "btn btn-info d-inline-flex align-items-center",
-                  onClick: () => toast.info("Fonctionnalité Lot de paie bientôt disponible"),
+                  onClick: () => toast.info(t("Fonctionnalité Lot de paie bientôt disponible")),
                 },
               ]}
               // onExportClick={() => setIsExportCSV(true)}
               addButtonLink={generatePath("/:entreprise/fiche-add")}
-              addButtonText="Nouvelle fiche de paie"
+              addButtonText={t("Nouvelle fiche de paie")}
               addButtonIcon="ri-file-add-line"
               // showExportButton={true}
               showAddButton={true}
@@ -680,8 +682,8 @@ const FichePaie = () => {
               </TableContainer>
             ) : (
               <EmptyDataCard
-                title="Aucune fiche de paie trouvée"
-                description="Commencez par ajouter une fiche de paie ."
+                title={t("Aucune fiche de paie trouvée")}
+                description={t("Commencez par ajouter une fiche de paie")}
                 actionButton={
                   <Link
                     to={generatePath("/:entreprise/fiche-add")}
@@ -689,7 +691,7 @@ const FichePaie = () => {
                     style={{ borderRadius: "20px" }}
                   >
                     <i className="ri-user-add-line me-1"></i>
-                    Ajouter une fiche de paie
+                    {t("Ajouter une fiche de paie")}
                   </Link>
                 }
               />

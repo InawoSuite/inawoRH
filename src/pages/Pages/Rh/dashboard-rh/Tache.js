@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardBody, CardHeader, Col, DropdownItem, DropdownMenu, DropdownToggle, UncontrolledDropdown } from 'reactstrap';
- 
+import { useTranslation } from 'react-i18next';
+
 
 const taches = [
     {
@@ -50,31 +51,33 @@ const taches = [
     },
 ];
 
- const cardStyle = {
-		borderRadius: "20px",
-		background: "#fff",
-		boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
-		overflow: "hidden",
-	};
+const cardStyle = {
+    borderRadius: "20px",
+    background: "#fff",
+    boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
+    overflow: "hidden",
+};
 
 
 
 const Tache = ({ xxl = 12, xl = 12 }) => {
+    const { t } = useTranslation();
+
     return (
         <React.Fragment>
             <Col xxl={xxl} xl={xl}>
                 <Card style={cardStyle}>
                     <CardHeader className="align-items-center d-flex" >
-                        <h4 className="card-title mb-0 flex-grow-1">Liste des tâches</h4>
+                        <h4 className="card-title mb-0 flex-grow-1">{t("Liste des tâches")}</h4>
                         <div className="flex-shrink-0">
                             <UncontrolledDropdown className="card-header-dropdown">
                                 <DropdownToggle tag="a" className="text-reset" role="button">
-                                    <span className="fw-semibold text-uppercase fs-12">Filtrer: </span><span className="text-muted">Cette semaine<i className="mdi mdi-chevron-down ms-1"></i></span>
+                                    <span className="fw-semibold text-uppercase fs-12">{t("Filtrer:")} </span><span className="text-muted">{t("Cette semaine")}<i className="mdi mdi-chevron-down ms-1"></i></span>
                                 </DropdownToggle>
                                 <DropdownMenu className="dropdown-menu-end">
-                                    <DropdownItem>Cette semaine</DropdownItem>
-                                    <DropdownItem>Ce mois</DropdownItem>
-                                    <DropdownItem>Toutes</DropdownItem>
+                                    <DropdownItem>{t("Cette semaine")}</DropdownItem>
+                                    <DropdownItem>{t("Ce mois")}</DropdownItem>
+                                    <DropdownItem>{t("Toutes")}</DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
                         </div>
@@ -85,23 +88,23 @@ const Tache = ({ xxl = 12, xl = 12 }) => {
                             <table className="table table-hover table-centered align-middle table-nowrap mb-0">
                                 <thead className="text-muted table-light">
                                     <tr>
-                                        <th>Tâche</th>
-                                        <th>Responsable</th>
-                                        <th>Échéance</th>
-                                        <th>Priorité</th>
-                                        <th>Statut</th>
+                                        <th>{t("Tâche")}</th>
+                                        <th>{t("Responsable")}</th>
+                                        <th>{t("Échéance")}</th>
+                                        <th>{t("Priorité")}</th>
+                                        <th>{t("Statut")}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {(taches || []).map((item) => (
                                         <tr key={item.id}>
-                                            <td>{item.titre}</td>
+                                            <td>{t(item.titre)}</td>
                                             <td>{item.responsable}</td>
                                             <td>{item.echeance}</td>
-                                            <td>{item.priorite}</td>
+                                            <td>{t(item.priorite)}</td>
                                             <td>
                                                 <span className={`badge bg-${item.statutClass}-subtle text-${item.statutClass}`}>
-                                                    {item.statut}
+                                                    {t(item.statut)}
                                                 </span>
                                             </td>
                                         </tr>
@@ -111,7 +114,7 @@ const Tache = ({ xxl = 12, xl = 12 }) => {
                         </div>
 
                         <div className="text-muted mt-3">
-                            {taches.length} tâches affichées
+                            {taches.length} {t("tâches affichées")}
                         </div>
 
                     </CardBody>

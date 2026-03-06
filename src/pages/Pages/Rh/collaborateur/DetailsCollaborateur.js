@@ -16,8 +16,10 @@ import {
 } from "reactstrap";
 import { Link, useLocation, useParams } from "react-router-dom";
 import BreadCrumb from "../../../../Components/Common/BreadCrumb";
+import { useTranslation } from "react-i18next";
 
 const DetailsCollaborateur = () => {
+  const { t } = useTranslation();
   const { id, entreprise } = useParams();
   const { state } = useLocation();
   const [activeTab, setActiveTab] = useState("informations-personnelles");
@@ -119,35 +121,35 @@ const DetailsCollaborateur = () => {
   const tabs = [
     {
       id: "informations-personnelles",
-      label: "Informations personnelles",
+      label: t("Informations personnelles"),
       icon: "ri-user-3-line",
     },
     {
       id: "informations-contractuelles",
-      label: "Informations contractuelles",
+      label: t("Informations contractuelles"),
       icon: "ri-file-list-3-line",
     },
     {
       id: "experience-affectation",
-      label: "Expérience ",
+      label: t("Expérience"),
       icon: "ri-briefcase-4-line",
     },
-    { id: "affectation", label: "Affectation ", icon: "ri-briefcase-4-line" },
+    { id: "affectation", label: t("Affectation"), icon: "ri-briefcase-4-line" },
     {
       id: "historique-salaire",
-      label: "Historique salaire",
+      label: t("Historique salaire"),
       icon: "ri-money-dollar-circle-line",
     },
-    { id: "fiche-de-paie", label: "Fiche de paie", icon: "ri-file-text-line" },
+    { id: "fiche-de-paie", label: t("Fiche de paie"), icon: "ri-file-text-line" },
     {
       id: "historique-depense",
-      label: "Historique dépense",
+      label: t("Historique dépense"),
       icon: "ri-wallet-3-line",
     },
-    { id: "presence", label: "Présence", icon: "ri-user-follow-line" },
+    { id: "presence", label: t("Présence"), icon: "ri-user-follow-line" },
     {
       id: "informations-pointages",
-      label: "Informations de pointages",
+      label: t("Informations de pointages"),
       icon: "ri-time-line",
     },
   ];
@@ -205,11 +207,11 @@ const DetailsCollaborateur = () => {
     <div className="page-content">
       <Container fluid>
         <BreadCrumb
-          title="&nbsp; Détails Collaborateurs"
+          title={`\u00a0${t("Détails Collaborateurs")}`}
           pageTitle={
             <>
               <i className="ri-team-line"></i>
-              &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>&nbsp;&gt;
+              &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>&nbsp;&gt;
             </>
           }
         />
@@ -286,14 +288,14 @@ const DetailsCollaborateur = () => {
                                   htmlFor="collabNom"
                                   className="form-label fw-semibold"
                                 >
-                                  Nom
+                                  {t("Nom")}
                                 </Label>
                                 <Input
                                   id="collabNom"
                                   type="text"
                                   className="rounded-pill"
                                   value={selectedCollaborateur?.nom || ""}
-                                  placeholder="Nom"
+                                  placeholder={t("Nom")}
                                   disabled
                                 />
                               </div>
@@ -304,14 +306,14 @@ const DetailsCollaborateur = () => {
                                   htmlFor="collabPrenom"
                                   className="form-label fw-semibold"
                                 >
-                                  Prénom
+                                  {t("Prénom")}
                                 </Label>
                                 <Input
                                   id="collabPrenom"
                                   type="text"
                                   className="rounded-pill"
                                   value={selectedCollaborateur?.prenom || ""}
-                                  placeholder="Prénom"
+                                  placeholder={t("Prénom")}
                                   disabled
                                 />
                               </div>
@@ -322,7 +324,7 @@ const DetailsCollaborateur = () => {
                                   htmlFor="collabDateNaissance"
                                   className="form-label fw-semibold"
                                 >
-                                  Date de naissance
+                                  {t("Date de naissance")}
                                 </Label>
                                 <Input
                                   id="collabDateNaissance"
@@ -333,7 +335,7 @@ const DetailsCollaborateur = () => {
                                     selectedCollaborateur?.date_naissance ||
                                     ""
                                   }
-                                  placeholder="Date de naissance"
+                                  placeholder={t("Date de naissance")}
                                   disabled
                                 />
                               </div>
@@ -344,7 +346,7 @@ const DetailsCollaborateur = () => {
                                   htmlFor="collabLieuNaissance"
                                   className="form-label fw-semibold"
                                 >
-                                  Lieu de naissance
+                                  {t("Lieu de naissance")}
                                 </Label>
                                 <Input
                                   id="collabLieuNaissance"
@@ -355,7 +357,7 @@ const DetailsCollaborateur = () => {
                                     selectedCollaborateur?.lieu_naissance ||
                                     ""
                                   }
-                                  placeholder="Lieu de naissance"
+                                  placeholder={t("Lieu de naissance")}
                                   disabled
                                 />
                               </div>
@@ -366,7 +368,7 @@ const DetailsCollaborateur = () => {
                                   htmlFor="collabEnfants"
                                   className="form-label fw-semibold"
                                 >
-                                  Nombre d&apos;enfants à charge
+                                  {t("Nombre d'enfants à charge")}
                                 </Label>
                                 <Input
                                   id="collabEnfants"
@@ -377,7 +379,7 @@ const DetailsCollaborateur = () => {
                                     selectedCollaborateur?.nombreEnfants ||
                                     ""
                                   }
-                                  placeholder="Nombre d'enfants à charge"
+                                  placeholder={t("Nombre d'enfants à charge")}
                                   disabled
                                 />
                               </div>
@@ -388,7 +390,7 @@ const DetailsCollaborateur = () => {
                                   htmlFor="collabStatutMatrimonial"
                                   className="form-label fw-semibold"
                                 >
-                                  Statut matrimonial
+                                  {t("Statut matrimonial")}
                                 </Label>
                                 <Input
                                   id="collabStatutMatrimonial"
@@ -399,7 +401,7 @@ const DetailsCollaborateur = () => {
                                     selectedCollaborateur?.statut_matrimonial ||
                                     ""
                                   }
-                                  placeholder="Statut matrimonial"
+                                  placeholder={t("Statut matrimonial")}
                                   disabled
                                 />
                               </div>
@@ -410,14 +412,14 @@ const DetailsCollaborateur = () => {
                                   htmlFor="collabAdresse"
                                   className="form-label fw-semibold"
                                 >
-                                  Adresse
+                                  {t("Adresse")}
                                 </Label>
                                 <Input
                                   id="collabAdresse"
                                   type="text"
                                   className="rounded-pill"
                                   value={selectedCollaborateur?.adresse || ""}
-                                  placeholder="Adresse"
+                                  placeholder={t("Adresse")}
                                   disabled
                                 />
                               </div>
@@ -428,14 +430,14 @@ const DetailsCollaborateur = () => {
                                   htmlFor="collabPays"
                                   className="form-label fw-semibold"
                                 >
-                                  Pays
+                                  {t("Pays")}
                                 </Label>
                                 <Input
                                   id="collabPays"
                                   type="text"
                                   className="rounded-pill"
                                   value={selectedCollaborateur?.pays || ""}
-                                  placeholder="Pays"
+                                  placeholder={t("Pays")}
                                   disabled
                                 />
                               </div>
@@ -446,7 +448,7 @@ const DetailsCollaborateur = () => {
                                   htmlFor="collabTelephone"
                                   className="form-label fw-semibold"
                                 >
-                                  Contact
+                                  {t("Contact")}
                                 </Label>
                                 <Input
                                   id="collabTelephone"
@@ -457,7 +459,7 @@ const DetailsCollaborateur = () => {
                                     selectedCollaborateur?.contact ||
                                     ""
                                   }
-                                  placeholder="Contact"
+                                  placeholder={t("Contact")}
                                   disabled
                                 />
                               </div>
@@ -467,17 +469,17 @@ const DetailsCollaborateur = () => {
                           <Row className="mt-4">
                             <Col lg={12}>
                               <h6 className="text-uppercase text-muted mb-3">
-                                Contact d'urgence
+                                {t("Contact d'urgence")}
                               </h6>
                               {contactUrgenceRows.length > 0 ? (
                                 <Table responsive className="align-middle mb-0">
                                   <thead>
                                     <tr>
-                                      <th>Nom</th>
-                                      <th>Prenom</th>
-                                      <th>Contact</th>
-                                      <th>Affiliation</th>
-                                      <th>Ville</th>
+                                      <th>{t("Nom")}</th>
+                                      <th>{t("Prenom")}</th>
+                                      <th>{t("Contact")}</th>
+                                      <th>{t("Affiliation")}</th>
+                                      <th>{t("Ville")}</th>
                                     </tr>
                                   </thead>
                                   <tbody>
@@ -496,7 +498,7 @@ const DetailsCollaborateur = () => {
                                 </Table>
                               ) : (
                                 <p className="text-muted mb-0">
-                                  Aucun contact d'urgence.
+                                  {t("Aucun contact d'urgence.")}
                                 </p>
                               )}
                             </Col>
@@ -669,7 +671,7 @@ const DetailsCollaborateur = () => {
               style={{ borderRadius: "20px" }}
             >
               <i className="ri-pencil-line me-1"></i>
-              Modifier
+              {t("Modifier")}
             </Link>
             <Link
               to={`/${entreprise}/collaborateurs`}
@@ -677,7 +679,7 @@ const DetailsCollaborateur = () => {
               style={{ borderRadius: "20px" }}
             >
               <i className="ri-arrow-left-line me-1"></i>
-              Retour
+              {t("Retour")}
             </Link>
           </Col>
         </Row>

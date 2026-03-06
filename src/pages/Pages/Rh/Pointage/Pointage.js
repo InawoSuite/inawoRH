@@ -1169,10 +1169,10 @@ const Pointage = () => {
 
     const getStatusBadge = (status) => {
         const badges = {
-            present: { color: 'success', label: 'Présent' },
-            working: { color: 'info', label: 'En cours' },
-            absent: { color: 'danger', label: 'Absent' },
-            late: { color: 'warning', label: 'Retard' }
+            present: { color: 'success', label: t('Présent') },
+            working: { color: 'info', label: t('En cours') },
+            absent: { color: 'danger', label: t('Absent') },
+            late: { color: 'warning', label: t('Retard') }
         };
         const badge = badges[status] || badges.present;
         return <Badge color={badge.color} pill>{badge.label}</Badge>;
@@ -1185,15 +1185,15 @@ const Pointage = () => {
 
     const getMethodLabel = (method) => {
         const labels = {
-            geolocation: '📍 Géolocalisation',
-            facial: '👤 Reconnaissance faciale',
+            geolocation: `📍 ${t('Géolocalisation')}`,
+            facial: `👤 ${t('Reconnaissance faciale')}`,
             wifi: '📡 WiFi',
             bluetooth: '📱 Bluetooth',
             nfc: '💳 NFC',
-            voice: '🎤 Reconnaissance vocale',
-            badge_scan: '💳 Badge',
-            manual: '✍️ Manuel',
-            mobile: '📱 Mobile'
+            voice: `🎤 ${t('Reconnaissance vocale')}`,
+            badge_scan: `💳 ${t('Badge')}`,
+            manual: `✍️ ${t('Manuel')}`,
+            mobile: `📱 ${t('Mobile')}`
         };
         return labels[method] || method;
     };
@@ -1312,7 +1312,7 @@ const Pointage = () => {
                                             <i className={`ri-${online ? 'wifi' : 'cloud-off'}-line fs-4 text-${online ? 'success' : 'danger'}`}></i>
                                         </div>
                                         <div>
-                                            <small className="text-muted d-block">Statut</small>
+                                            <small className="text-muted d-block">{t('Statut')}</small>
                                             <strong>{online ? t('Connecté') : t('Hors ligne')}</strong>
                                         </div>
                                     </div>
@@ -1324,7 +1324,7 @@ const Pointage = () => {
                                             <i className={`ri-${geolocation.insideOffice ? 'home' : 'map-pin'}-line fs-4 text-${geolocation.insideOffice ? 'success' : 'warning'}`}></i>
                                         </div>
                                         <div>
-                                            <small className="text-muted d-block">Localisation</small>
+                                            <small className="text-muted d-block">{t('Localisation')}</small>
                                             <strong>{geolocation.insideOffice ? t('Dans le bureau') : t('Hors bureau')}</strong>
                                         </div>
                                     </div>
@@ -1336,7 +1336,7 @@ const Pointage = () => {
                                             <i className={`ri-${currentSession ? 'door-open' : 'door-closed'}-line fs-4 text-${currentSession ? 'success' : 'secondary'}`}></i>
                                         </div>
                                         <div>
-                                            <small className="text-muted d-block">Session</small>
+                                            <small className="text-muted d-block">{t('Session')}</small>
                                             <strong>{currentSession ? t('Active') : t('Inactive')}</strong>
                                         </div>
                                     </div>
@@ -1348,7 +1348,7 @@ const Pointage = () => {
                                             <i className="ri-timer-line fs-4 text-info"></i>
                                         </div>
                                         <div>
-                                            <small className="text-muted d-block">Temps réel</small>
+                                            <small className="text-muted d-block">{t('Temps réel')}</small>
                                             <strong>{activeSessions.length} {t('employé(s) présent(s)')}</strong>
                                         </div>
                                     </div>
@@ -1383,7 +1383,7 @@ const Pointage = () => {
                                         target="autoMode"
                                         toggle={() => setTooltipOpen({ ...tooltipOpen, autoMode: !tooltipOpen.autoMode })}
                                     >
-                                        {autoMode.enabled ? 'Désactiver' : 'Activer'} le mode automatique
+                                        {autoMode.enabled ? t('Désactiver') : t('Activer')} {t('le mode automatique')}
                                     </Tooltip>
                                 </Col>
                             </Row>
@@ -1401,14 +1401,14 @@ const Pointage = () => {
                                 <div className="d-flex align-items-center justify-content-between">
                                     <div>
                                         <i className="ri-notification-3-line me-2 text-warning"></i>
-                                        <span className="fw-medium">Notifications en temps réel</span>
+                                        <span className="fw-medium">{t('Notifications en temps réel')}</span>
                                     </div>
                                     <Button
                                         color="link"
                                         size="sm"
                                         onClick={() => setNotifications([])}
                                     >
-                                        Tout effacer
+                                        {t('Tout effacer')}
                                     </Button>
                                 </div>
                                 <div className="mt-2">
@@ -1439,14 +1439,14 @@ const Pointage = () => {
                             <CardBody className="py-2">
                                 <div className="d-flex align-items-center">
                                     <i className="ri-alert-line text-warning me-2 fs-5"></i>
-                                    <span className="fw-medium">{anomalies.length} anomalie(s) détectée(s)</span>
+                                    <span className="fw-medium">{anomalies.length} {t('anomalie(s) détectée(s)')}</span>
                                     <Button
                                         color="link"
                                         size="sm"
                                         className="ms-2"
                                         id="anomaliesPopover"
                                     >
-                                        Voir détails
+                                        {t('Voir détails')}
                                     </Button>
                                     <Popover
                                         placement="bottom"
@@ -1454,7 +1454,7 @@ const Pointage = () => {
                                         target="anomaliesPopover"
                                         toggle={() => setPopoverOpen({ ...popoverOpen, anomalies: !popoverOpen.anomalies })}
                                     >
-                                        <PopoverHeader>Anomalies détectées</PopoverHeader>
+                                        <PopoverHeader>{t('Anomalies détectées')}</PopoverHeader>
                                         <PopoverBody>
                                             {anomalies.map(anomaly => (
                                                 <div key={anomaly.id} className="mb-2">
@@ -1488,12 +1488,12 @@ const Pointage = () => {
                                         >
                                             {loading ? (
                                                 <Spinner size="sm" className="me-2">
-                                                    Chargement...
+                                                    {t('Chargement...')}
                                                 </Spinner>
                                             ) : (
                                                 <i className="ri-qr-scan-2-line me-1"></i>
                                             )}
-                                            Mode Kiosque
+                                            {t("Mode Kiosque")}
                                         </Button>
                                         <Button
                                             color="info"
@@ -1516,16 +1516,16 @@ const Pointage = () => {
                                 <Col md={2}>
                                     <Select
                                         options={[
-                                            { value: 'geolocation', label: '📍 Géolocalisation' },
-                                            { value: 'facial', label: '👤 Reconnaissance faciale' },
+                                            { value: 'geolocation', label: `📍 ${t('Géolocalisation')}` },
+                                            { value: 'facial', label: `👤 ${t('Reconnaissance faciale')}` },
                                             { value: 'wifi', label: '📡 WiFi' },
                                             { value: 'bluetooth', label: '📱 Bluetooth' },
                                             { value: 'nfc', label: '💳 NFC' },
-                                            { value: 'voice', label: '🎤 Reconnaissance vocale' }
+                                            { value: 'voice', label: `🎤 ${t('Reconnaissance vocale')}` }
                                         ]}
                                         value={{ value: autoMode.method, label: getMethodLabel(autoMode.method) }}
                                         onChange={(opt) => setAutoMode({ ...autoMode, method: opt.value })}
-                                        placeholder="Méthode auto"
+                                        placeholder={t("Méthode auto")}
                                         className="react-select-container"
                                         classNamePrefix="react-select"
                                         isDisabled={!autoMode.enabled}
@@ -1538,7 +1538,7 @@ const Pointage = () => {
                                             <i className="ri-shield-check-line text-success"></i>
                                         </div>
                                         <div>
-                                            <small className="text-muted">Confiance</small>
+                                            <small className="text-muted">{t("Confiance")}</small>
                                             <div className="d-flex align-items-center">
                                                 <Progress
                                                     value={autoMode.confidence * 100}
@@ -1607,7 +1607,7 @@ const Pointage = () => {
                                             onClick={() => setActiveTab('1')}
                                         >
                                             <i className="ri-calendar-line me-2"></i>
-                                            Journalier
+                                            {t("Journalier")}
                                         </NavLink>
                                     </NavItem>
                                     <NavItem>
@@ -1616,7 +1616,7 @@ const Pointage = () => {
                                             onClick={() => setActiveTab('2')}
                                         >
                                             <i className="ri-calendar-todo-line me-2"></i>
-                                            Hebdomadaire
+                                            {t("Hebdomadaire")}
                                         </NavLink>
                                     </NavItem>
                                     <NavItem>
@@ -1625,7 +1625,7 @@ const Pointage = () => {
                                             onClick={() => setActiveTab('3')}
                                         >
                                             <i className="ri-group-line me-2"></i>
-                                            Par équipe
+                                            {t("Par équipe")}
                                         </NavLink>
                                     </NavItem>
                                 </Nav>
@@ -1636,16 +1636,16 @@ const Pointage = () => {
                                             <Table className="table-nowrap align-middle mb-0">
                                                 <thead className="table-light">
                                                     <tr>
-                                                        <th>Employé</th>
-                                                        <th>Département</th>
-                                                        <th>Arrivée</th>
-                                                        <th>Départ</th>
-                                                        <th>Heures</th>
-                                                        <th>Suppl.</th>
-                                                        <th>Statut</th>
-                                                        <th>Type</th>
-                                                        <th>Méthode</th>
-                                                        <th>Actions</th>
+                                                        <th>{t("Employé")}</th>
+                                                        <th>{t("Département")}</th>
+                                                        <th>{t("Arrivée")}</th>
+                                                        <th>{t("Départ")}</th>
+                                                        <th>{t("Heures")}</th>
+                                                        <th>{t("Suppl.")}</th>
+                                                        <th>{t("Statut")}</th>
+                                                        <th>{t("Type")}</th>
+                                                        <th>{t("Méthode")}</th>
+                                                        <th>{t("Actions")}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1698,7 +1698,7 @@ const Pointage = () => {
                                                                         <Link
                                                                             to="#"
                                                                             className="text-info"
-                                                                            title="Voir détails"
+                                                                            title={t('Voir détails')}
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
                                                                                 setSelectedRecord(record);
@@ -1709,7 +1709,7 @@ const Pointage = () => {
                                                                         <Link
                                                                             to="#"
                                                                             className="text-primary"
-                                                                            title="Modifier"
+                                                                            title={t('Modifier')}
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
                                                                             }}
@@ -1719,7 +1719,7 @@ const Pointage = () => {
                                                                         <Link
                                                                             to="#"
                                                                             className="text-danger"
-                                                                            title="Supprimer"
+                                                                            title={t('Supprimer')}
                                                                             onClick={(e) => {
                                                                                 e.preventDefault();
                                                                                 handleDeleteClick(record);
@@ -1739,7 +1739,7 @@ const Pointage = () => {
                                             <Row className="align-items-center mt-3 pt-3 border-top">
                                                 <Col sm={6}>
                                                     <div className="text-muted">
-                                                        {attendanceData.filter(record => record.date === formatDate(currentDate)).length} pointage(s) pour cette date
+                                                        {attendanceData.filter(record => record.date === formatDate(currentDate)).length} {t("pointage(s) pour cette date")}
                                                     </div>
                                                 </Col>
                                             </Row>
@@ -1748,29 +1748,29 @@ const Pointage = () => {
 
                                     <TabPane tabId="2">
                                         <div className="text-center py-4">
-                                            <h5 className="mb-3">Résumé hebdomadaire</h5>
+                                            <h5 className="mb-3">{t("Résumé hebdomadaire")}</h5>
                                             <Row className="g-3">
                                                 <Col md={3}>
                                                     <div className="p-3 bg-soft-primary rounded-3">
-                                                        <h6>Heures totales</h6>
+                                                        <h6>{t("Heures totales")}</h6>
                                                         <h3>{weeklyStats.totalHours}</h3>
                                                     </div>
                                                 </Col>
                                                 <Col md={3}>
                                                     <div className="p-3 bg-soft-success rounded-3">
-                                                        <h6>Heures prévues</h6>
+                                                        <h6>{t("Heures prévues")}</h6>
                                                         <h3>{weeklyStats.expectedHours}</h3>
                                                     </div>
                                                 </Col>
                                                 <Col md={3}>
                                                     <div className="p-3 bg-soft-warning rounded-3">
-                                                        <h6>Heures sup.</h6>
+                                                        <h6>{t("Heures sup.")}</h6>
                                                         <h3>{weeklyStats.overtime}</h3>
                                                     </div>
                                                 </Col>
                                                 <Col md={3}>
                                                     <div className="p-3 bg-soft-info rounded-3">
-                                                        <h6>Présence</h6>
+                                                        <h6>{t("Présence")}</h6>
                                                         <h3>{weeklyStats.presentDays}/5</h3>
                                                     </div>
                                                 </Col>
@@ -1783,12 +1783,12 @@ const Pointage = () => {
                                             <Table>
                                                 <thead>
                                                     <tr>
-                                                        <th>Département</th>
-                                                        <th>Présents</th>
-                                                        <th>Absents</th>
-                                                        <th>Retards</th>
-                                                        <th>Total</th>
-                                                        <th>Taux présence</th>
+                                                        <th>{t("Département")}</th>
+                                                        <th>{t("Présents")}</th>
+                                                        <th>{t("Absents")}</th>
+                                                        <th>{t("Retards")}</th>
+                                                        <th>{t("Total")}</th>
+                                                        <th>{t("Taux présence")}</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1865,30 +1865,30 @@ const Pointage = () => {
                                             }}
                                             disabled={!badgeNumber}
                                         >
-                                            Valider
+                                            {t('Valider')}
                                         </Button>
                                     </div>
                                 </div>
 
                                 <div className="mt-4">
-                                    <h6 className="mb-3">Employés en cours</h6>
+                                    <h6 className="mb-3">{t("Employés en cours")}</h6>
                                     {activeSessions.length > 0 ? (
                                         activeSessions.slice(0, 3).map(record => (
                                             <div key={record.id} className="d-flex justify-content-between align-items-center mb-2 p-2 border rounded-3">
                                                 <div>
                                                     <div className="fw-medium">{record.employee}</div>
-                                                    <small className="text-muted">Arrivée: {record.checkIn}</small>
+                                                    <small className="text-muted">{t("Arrivée")}: {record.checkIn}</small>
                                                 </div>
-                                                <Badge color="info" pill>En cours</Badge>
+                                                <Badge color="info" pill>{t("En cours")}</Badge>
                                             </div>
                                         ))
                                     ) : (
-                                        <p className="text-muted text-center py-3">Aucun employé en cours</p>
+                                        <p className="text-muted text-center py-3">{t("Aucun employé en cours")}</p>
                                     )}
                                 </div>
 
                                 <div className="mt-4">
-                                    <h6 className="mb-3">Prédictions aujourd'hui</h6>
+                                    <h6 className="mb-3">{t("Prédictions aujourd'hui")}</h6>
                                     {Object.entries(predictions).slice(0, 3).map(([empId, pred]) => {
                                         const emp = employeesData.find(e => e.value === empId);
                                         return (
@@ -1896,7 +1896,7 @@ const Pointage = () => {
                                                 <div className="d-flex justify-content-between">
                                                     <span>{emp?.label}</span>
                                                     <small className="text-muted">
-                                                        {pred.predictedCheckout || 'N/A'}
+                                                        {pred.predictedCheckout || t('N/A')}
                                                     </small>
                                                 </div>
                                                 <Progress
@@ -1926,17 +1926,17 @@ const Pointage = () => {
                                         <thead className="table-light">
                                             <tr>
 
-                                                <th>Employé</th>
-                                                <th>Département</th>
-                                                <th>Date</th>
-                                                <th>Arrivée</th>
-                                                <th>Départ</th>
-                                                <th>Heures</th>
-                                                <th>Suppl.</th>
-                                                <th>Statut</th>
-                                                <th>Type</th>
-                                                <th>Méthode</th>
-                                                <th>Actions</th>
+                                                <th>{t('Employé')}</th>
+                                                <th>{t('Département')}</th>
+                                                <th>{t('Date')}</th>
+                                                <th>{t('Arrivée')}</th>
+                                                <th>{t('Départ')}</th>
+                                                <th>{t('Heures')}</th>
+                                                <th>{t('Suppl.')}</th>
+                                                <th>{t('Statut')}</th>
+                                                <th>{t('Type')}</th>
+                                                <th>{t('Méthode')}</th>
+                                                <th>{t('Actions')}</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -1969,7 +1969,7 @@ const Pointage = () => {
                                                     <td>{getStatusBadge(record.status)}</td>
                                                     <td>{getTypeBadge(record.type)}</td>
                                                     <td>
-                                                        <small className="text-muted" title={`Confiance: ${Math.round(record.confidence * 100)}%`}>
+                                                        <small className="text-muted" title={`${t('Confiance')}: ${Math.round(record.confidence * 100)}%`}>
                                                             {getMethodLabel(record.method)}
                                                         </small>
                                                     </td>
@@ -1978,7 +1978,7 @@ const Pointage = () => {
                                                             <Link
                                                                 to="#"
                                                                 className="text-info"
-                                                                title="Voir détails"
+                                                                title={t('Voir détails')}
                                                                 onClick={(e) => {
                                                                     e.preventDefault();
                                                                     setSelectedRecord(record);
@@ -1989,7 +1989,7 @@ const Pointage = () => {
                                                             <Link
                                                                 to="#"
                                                                 className="text-primary"
-                                                                title="Modifier"
+                                                                title={t('Modifier')}
                                                                 onClick={(e) => {
                                                                     e.preventDefault();
                                                                 }}
@@ -1999,7 +1999,7 @@ const Pointage = () => {
                                                             <Link
                                                                 to="#"
                                                                 className="text-danger"
-                                                                title="Supprimer"
+                                                                title={t('Supprimer')}
                                                                 onClick={(e) => {
                                                                     e.preventDefault();
                                                                     handleDeleteClick(record);
@@ -2018,7 +2018,7 @@ const Pointage = () => {
                                 {attendanceData.length === 0 && (
                                     <div className="text-center py-5">
                                         <i className="ri-calendar-todo-line display-4 text-muted"></i>
-                                        <p className="text-muted mt-3">Aucune donnée de présence disponible</p>
+                                        <p className="text-muted mt-3">{t('Aucune donnée de présence disponible')}</p>
                                     </div>
                                 )}
 
@@ -2044,11 +2044,11 @@ const Pointage = () => {
                     <Col lg={4}>
                         <Card className="rounded-4">
                             <CardBody>
-                                <h5 className="card-title mb-4">Taux de présence</h5>
+                                <h5 className="card-title mb-4">{t('Taux de présence')}</h5>
                                 <div className="text-center">
                                     <div className="mb-4">
                                         <h1 className="display-4">87%</h1>
-                                        <p className="text-muted">Moyenne sur 30 jours</p>
+                                        <p className="text-muted">{t('Moyenne sur 30 jours')}</p>
                                     </div>
                                     <Progress multi style={{ height: '20px' }}>
                                         <Progress bar color="success" value="70">70%</Progress>
@@ -2056,9 +2056,9 @@ const Pointage = () => {
                                         <Progress bar color="danger" value="15">15%</Progress>
                                     </Progress>
                                     <div className="d-flex justify-content-between mt-2">
-                                        <small>Présent</small>
-                                        <small>Retard</small>
-                                        <small>Absent</small>
+                                        <small>{t('Présent')}</small>
+                                        <small>{t('Retard')}</small>
+                                        <small>{t('Absent')}</small>
                                     </div>
                                 </div>
                             </CardBody>
@@ -2066,10 +2066,10 @@ const Pointage = () => {
 
                         <Card className="mt-3 rounded-4">
                             <CardBody>
-                                <h5 className="card-title mb-4">Méthodes de pointage</h5>
+                                <h5 className="card-title mb-4">{t('Méthodes de pointage')}</h5>
                                 <div className="mb-3">
                                     <div className="d-flex justify-content-between mb-1">
-                                        <span>Reconnaissance faciale</span>
+                                        <span>{t('Reconnaissance faciale')}</span>
                                         <span className="text-muted">45%</span>
                                     </div>
                                     <Progress value={45} color="primary" style={{ height: '8px' }} />
@@ -2090,7 +2090,7 @@ const Pointage = () => {
                                 </div>
                                 <div className="mb-3">
                                     <div className="d-flex justify-content-between mb-1">
-                                        <span>Manuel</span>
+                                        <span>{t('Manuel')}</span>
                                         <span className="text-muted">10%</span>
                                     </div>
                                     <Progress value={10} color="warning" style={{ height: '8px' }} />
@@ -2102,13 +2102,13 @@ const Pointage = () => {
                     <Col lg={8}>
                         <Card className="rounded-4">
                             <CardBody>
-                                <h5 className="card-title mb-4">Répartition des pointages</h5>
+                                <h5 className="card-title mb-4">{t('Répartition des pointages')}</h5>
                                 <Row className="g-4">
                                     <Col md={4}>
                                         <div className="text-center p-3 border rounded-3">
                                             <i className="ri-user-star-line fs-1 text-primary"></i>
                                             <h3 className="mt-2">{employeesData.length}</h3>
-                                            <p className="text-muted">Employés actifs</p>
+                                            <p className="text-muted">{t('Employés actifs')}</p>
                                         </div>
                                     </Col>
                                     <Col md={4}>
@@ -2117,7 +2117,7 @@ const Pointage = () => {
                                             <h3 className="mt-2">{
                                                 attendanceData.filter(r => r.date === formatDate(new Date()) && r.type === 'retard').length
                                             }</h3>
-                                            <p className="text-muted">En retard aujourd'hui</p>
+                                            <p className="text-muted">{t("En retard aujourd'hui")}</p>
                                         </div>
                                     </Col>
                                     <Col md={4}>
@@ -2126,14 +2126,14 @@ const Pointage = () => {
                                             <h3 className="mt-2">{
                                                 attendanceData.filter(r => r.date === formatDate(new Date()) && r.checkIn).length
                                             }</h3>
-                                            <p className="text-muted">Déjà pointés</p>
+                                            <p className="text-muted">{t('Déjà pointés')}</p>
                                         </div>
                                     </Col>
                                 </Row>
 
                                 <Row className="mt-4">
                                     <Col md={12}>
-                                        <h6 className="mb-3">Tendance des présences (7 derniers jours)</h6>
+                                        <h6 className="mb-3">{t('Tendance des présences (7 derniers jours)')}</h6>
                                         <div className="d-flex align-items-end justify-content-between" style={{ height: '150px' }}>
                                             {['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'].map((day, i) => {
                                                 const height = 40 + Math.random() * 80;
@@ -2158,7 +2158,7 @@ const Pointage = () => {
 
                         <Card className="mt-3 rounded-4">
                             <CardBody>
-                                <h5 className="card-title mb-3">Anomalies récentes</h5>
+                                <h5 className="card-title mb-3">{t('Anomalies récentes')}</h5>
                                 {anomalies.length > 0 ? (
                                     anomalies.slice(0, 3).map(anomaly => (
                                         <div key={anomaly.id} className="d-flex align-items-center mb-2 p-2 border rounded-3">
@@ -2173,7 +2173,7 @@ const Pointage = () => {
                                         </div>
                                     ))
                                 ) : (
-                                    <p className="text-muted text-center py-3">Aucune anomalie détectée</p>
+                                    <p className="text-muted text-center py-3">{t('Aucune anomalie détectée')}</p>
                                 )}
                             </CardBody>
                         </Card>
@@ -2446,42 +2446,42 @@ const Pointage = () => {
                     <ModalBody>
                         <Row>
                             <Col md={6}>
-                                <h6 className="text-muted mb-3">Informations employé</h6>
-                                <p><strong>Nom:</strong> {selectedRecord.employee}</p>
-                                <p><strong>Département:</strong> {selectedRecord.department}</p>
-                                <p><strong>Méthode:</strong> {getMethodLabel(selectedRecord.method)}</p>
-                                <p><strong>Confiance:</strong> {Math.round(selectedRecord.confidence * 100)}%</p>
+                                <h6 className="text-muted mb-3">{t("Informations employé")}</h6>
+                                <p><strong>{t("Nom")}:</strong> {selectedRecord.employee}</p>
+                                <p><strong>{t("Département")}:</strong> {selectedRecord.department}</p>
+                                <p><strong>{t("Méthode")}:</strong> {getMethodLabel(selectedRecord.method)}</p>
+                                <p><strong>{t("Confiance")}:</strong> {Math.round(selectedRecord.confidence * 100)}%</p>
                             </Col>
                             <Col md={6}>
-                                <h6 className="text-muted mb-3">Horaires</h6>
-                                <p><strong>Date:</strong> {selectedRecord.date}</p>
-                                <p><strong>Arrivée:</strong> {selectedRecord.checkIn || 'Non pointé'}</p>
-                                <p><strong>Départ:</strong> {selectedRecord.checkOut || 'Non pointé'}</p>
-                                <p><strong>Heures travaillées:</strong> {selectedRecord.hoursWorked}</p>
-                                <p><strong>Heures supplémentaires:</strong> {selectedRecord.overtime}</p>
+                                <h6 className="text-muted mb-3">{t("Horaires")}</h6>
+                                <p><strong>{t("Date")}:</strong> {selectedRecord.date}</p>
+                                <p><strong>{t("Arrivée")}:</strong> {selectedRecord.checkIn || t('Non pointé')}</p>
+                                <p><strong>{t("Départ")}:</strong> {selectedRecord.checkOut || t('Non pointé')}</p>
+                                <p><strong>{t("Heures travaillées")}:</strong> {selectedRecord.hoursWorked}</p>
+                                <p><strong>{t("Heures supplémentaires")}:</strong> {selectedRecord.overtime}</p>
                             </Col>
                         </Row>
                         <Row className="mt-3">
                             <Col md={6}>
-                                <h6 className="text-muted mb-3">Statut</h6>
+                                <h6 className="text-muted mb-3">{t('Statut')}</h6>
                                 <p>{getStatusBadge(selectedRecord.status)} {getTypeBadge(selectedRecord.type)}</p>
                             </Col>
                             <Col md={6}>
-                                <h6 className="text-muted mb-3">Informations supplémentaires</h6>
-                                <p><strong>Appareil:</strong> {selectedRecord.device || '-'}</p>
-                                <p><strong>Localisation:</strong> {selectedRecord.location ?
+                                <h6 className="text-muted mb-3">{t('Informations supplémentaires')}</h6>
+                                <p><strong>{t('Appareil')}:</strong> {selectedRecord.device || '-'}</p>
+                                <p><strong>{t('Localisation')}:</strong> {selectedRecord.location ?
                                     `${selectedRecord.location.lat}, ${selectedRecord.location.lng}` : '-'}</p>
-                                <p><strong>Notes:</strong> {selectedRecord.notes || 'Aucune note'}</p>
+                                <p><strong>{t('Notes')}:</strong> {selectedRecord.notes || t('Aucune note')}</p>
                             </Col>
                         </Row>
                     </ModalBody>
                     <ModalFooter>
                         <Button color="secondary" onClick={() => setSelectedRecord(null)}>
-                            Fermer
+                            {t('Fermer')}
                         </Button>
                         <Button color="primary">
                             <i className="ri-printer-line me-2"></i>
-                            Imprimer
+                            {t('Imprimer')}
                         </Button>
                     </ModalFooter>
                 </Modal>
@@ -2491,12 +2491,12 @@ const Pointage = () => {
             <Modal isOpen={settingsModal} toggle={() => setSettingsModal(false)} size="lg">
                 <ModalHeader toggle={() => setSettingsModal(false)}>
                     <i className="ri-robot-line me-2"></i>
-                    Paramètres d'automatisation
+                    {t("Paramètres d'automatisation")}
                 </ModalHeader>
                 <ModalBody>
                     <Row>
                         <Col md={6}>
-                            <h6 className="mb-3">Méthodes de détection</h6>
+                            <h6 className="mb-3">{t('Méthodes de détection')}</h6>
                             <div className="mb-3">
                                 <div className="form-check form-switch mb-2">
                                     <Input
@@ -2506,10 +2506,10 @@ const Pointage = () => {
                                         onChange={() => setAutoMode({ ...autoMode, method: 'geolocation' })}
                                     />
                                     <label className="form-check-label" htmlFor="geoSwitch">
-                                        📍 Géolocalisation
+                                        📍 {t('Géolocalisation')}
                                     </label>
                                     <small className="text-muted d-block">
-                                        Détection automatique par position GPS
+                                        {t('Détection automatique par position GPS')}
                                     </small>
                                 </div>
 
@@ -2521,10 +2521,10 @@ const Pointage = () => {
                                         onChange={() => setAutoMode({ ...autoMode, method: 'facial' })}
                                     />
                                     <label className="form-check-label" htmlFor="facialSwitch">
-                                        👤 Reconnaissance faciale
+                                        👤 {t('Reconnaissance faciale')}
                                     </label>
                                     <small className="text-muted d-block">
-                                        Utilise la caméra pour identifier l'employé
+                                        {t("Utilise la caméra pour identifier l'employé")}
                                     </small>
                                 </div>
 
@@ -2539,7 +2539,7 @@ const Pointage = () => {
                                         📡 WiFi
                                     </label>
                                     <small className="text-muted d-block">
-                                        Détection par réseau WiFi d'entreprise
+                                        {t("Détection par réseau WiFi d'entreprise")}
                                     </small>
                                 </div>
 
@@ -2554,7 +2554,7 @@ const Pointage = () => {
                                         📱 Bluetooth
                                     </label>
                                     <small className="text-muted d-block">
-                                        Détection par balises Bluetooth
+                                        {t('Détection par balises Bluetooth')}
                                     </small>
                                 </div>
 
@@ -2569,7 +2569,7 @@ const Pointage = () => {
                                         💳 NFC
                                     </label>
                                     <small className="text-muted d-block">
-                                        Badge NFC ou smartphone
+                                        {t('Badge NFC ou smartphone')}
                                     </small>
                                 </div>
 
@@ -2581,17 +2581,17 @@ const Pointage = () => {
                                         onChange={() => setAutoMode({ ...autoMode, method: 'voice' })}
                                     />
                                     <label className="form-check-label" htmlFor="voiceSwitch">
-                                        🎤 Reconnaissance vocale
+                                        🎤 {t('Reconnaissance vocale')}
                                     </label>
                                     <small className="text-muted d-block">
-                                        Identification par commande vocale
+                                        {t('Identification par commande vocale')}
                                     </small>
                                 </div>
                             </div>
                         </Col>
 
                         <Col md={6}>
-                            <h6 className="mb-3">Règles d'automatisation</h6>
+                            <h6 className="mb-3">{t("Règles d'automatisation")}</h6>
                             <div className="mb-3">
                                 <div className="form-check form-switch mb-2">
                                     <Input
@@ -2601,10 +2601,10 @@ const Pointage = () => {
                                         onChange={() => setAutoMode({ ...autoMode, continuousScan: !autoMode.continuousScan })}
                                     />
                                     <label className="form-check-label" htmlFor="continuousScan">
-                                        Scan continu
+                                        {t('Scan continu')}
                                     </label>
                                     <small className="text-muted d-block">
-                                        Détection automatique en arrière-plan
+                                        {t('Détection automatique en arrière-plan')}
                                     </small>
                                 </div>
 
@@ -2616,10 +2616,10 @@ const Pointage = () => {
                                         onChange={() => setAutoMode({ ...autoMode, notifications: !autoMode.notifications })}
                                     />
                                     <label className="form-check-label" htmlFor="notifications">
-                                        Notifications
+                                        {t('Notifications')}
                                     </label>
                                     <small className="text-muted d-block">
-                                        Alertes pour les pointages automatiques
+                                        {t('Alertes pour les pointages automatiques')}
                                     </small>
                                 </div>
 
@@ -2631,10 +2631,10 @@ const Pointage = () => {
                                         onChange={() => setAutoMode({ ...autoMode, reminders: !autoMode.reminders })}
                                     />
                                     <label className="form-check-label" htmlFor="reminders">
-                                        Rappels intelligents
+                                        {t('Rappels intelligents')}
                                     </label>
                                     <small className="text-muted d-block">
-                                        Rappels pour les retardataires
+                                        {t('Rappels pour les retardataires')}
                                     </small>
                                 </div>
 
@@ -2646,17 +2646,17 @@ const Pointage = () => {
                                         onChange={() => setAutoMode({ ...autoMode, autoCheckout: !autoMode.autoCheckout })}
                                     />
                                     <label className="form-check-label" htmlFor="autoCheckout">
-                                        Départ automatique
+                                        {t('Départ automatique')}
                                     </label>
                                     <small className="text-muted d-block">
-                                        Check-out automatique à {CONFIG.AUTO_CHECKOUT_TIME}
+                                        {t('Check-out automatique à')} {CONFIG.AUTO_CHECKOUT_TIME}
                                     </small>
                                 </div>
                             </div>
 
-                            <h6 className="mb-3 mt-4">Seuils de détection</h6>
+                            <h6 className="mb-3 mt-4">{t('Seuils de détection')}</h6>
                             <div className="mb-3">
-                                <label className="form-label">Confiance minimale</label>
+                                <label className="form-label">{t('Confiance minimale')}</label>
                                 <Input
                                     type="range"
                                     min="0.5"
@@ -2673,7 +2673,7 @@ const Pointage = () => {
                             </div>
 
                             <div className="mb-3">
-                                <label className="form-label">Rayon de détection (mètres)</label>
+                                <label className="form-label">{t('Rayon de détection (mètres)')}</label>
                                 <Input
                                     type="number"
                                     value={CONFIG.DETECTION_RADIUS}
@@ -2687,26 +2687,26 @@ const Pointage = () => {
                         <Col md={12}>
                             <Card className="bg-light">
                                 <CardBody>
-                                    <h6>État actuel du système</h6>
+                                    <h6>{t('État actuel du système')}</h6>
                                     <div className="d-flex flex-wrap gap-3">
                                         <div>
                                             <Badge color={geolocation.enabled ? 'success' : 'secondary'} pill>
-                                                📍 GPS: {geolocation.enabled ? 'Actif' : 'Inactif'}
+                                                📍 GPS: {geolocation.enabled ? t('Actif') : t('Inactif')}
                                             </Badge>
                                         </div>
                                         <div>
                                             <Badge color={biometrics.facialEnabled ? 'success' : 'secondary'} pill>
-                                                👤 Facial: {biometrics.facialEnabled ? 'Actif' : 'Inactif'}
+                                                👤 Facial: {biometrics.facialEnabled ? t('Actif') : t('Inactif')}
                                             </Badge>
                                         </div>
                                         <div>
                                             <Badge color={online ? 'success' : 'danger'} pill>
-                                                📡 Connecté
+                                                📡 {t('Connecté')}
                                             </Badge>
                                         </div>
                                         <div>
                                             <Badge color={currentSession ? 'success' : 'secondary'} pill>
-                                                🕐 Session active
+                                                🕐 {t('Session active')}
                                             </Badge>
                                         </div>
                                     </div>
@@ -2720,7 +2720,7 @@ const Pointage = () => {
                         Fermer
                     </Button>
                     <Button color="primary" onClick={() => setSettingsModal(false)}>
-                        Sauvegarder
+                        {t('Sauvegarder')}
                     </Button>
                 </ModalFooter>
             </Modal>
@@ -2729,36 +2729,36 @@ const Pointage = () => {
             <Modal isOpen={reportModal} toggle={() => setReportModal(false)}>
                 <ModalHeader toggle={() => setReportModal(false)}>
                     <i className="ri-file-chart-line me-2"></i>
-                    Générer un rapport
+                    {t('Générer un rapport')}
                 </ModalHeader>
                 <ModalBody>
                     <div className="mb-3">
-                        <label className="form-label">Type de rapport</label>
+                        <label className="form-label">{t('Type de rapport')}</label>
                         <Select
                             options={[
-                                { value: 'daily', label: 'Journalier' },
-                                { value: 'weekly', label: 'Hebdomadaire' },
-                                { value: 'monthly', label: 'Mensuel' },
-                                { value: 'custom', label: 'Personnalisé' }
+                                { value: 'daily', label: t('Journalier') },
+                                { value: 'weekly', label: t('Hebdomadaire') },
+                                { value: 'monthly', label: t('Mensuel') },
+                                { value: 'custom', label: t('Personnalisé') }
                             ]}
-                            placeholder="Sélectionner"
+                            placeholder={t('Sélectionner')}
                         />
                     </div>
 
                     <div className="mb-3">
-                        <label className="form-label">Période</label>
+                        <label className="form-label">{t('Période')}</label>
                         <Row>
                             <Col md={6}>
-                                <Input type="date" placeholder="Date début" />
+                                <Input type="date" placeholder={t('Date début')} />
                             </Col>
                             <Col md={6}>
-                                <Input type="date" placeholder="Date fin" />
+                                <Input type="date" placeholder={t('Date fin')} />
                             </Col>
                         </Row>
                     </div>
 
                     <div className="mb-3">
-                        <label className="form-label">Format</label>
+                        <label className="form-label">{t('Format')}</label>
                         <ButtonGroup>
                             <Button color="light">
                                 <i className="ri-file-pdf-line me-1"></i>
@@ -2776,32 +2776,32 @@ const Pointage = () => {
                     </div>
 
                     <div className="mb-3">
-                        <label className="form-label">Inclure</label>
+                        <label className="form-label">{t('Inclure')}</label>
                         <div className="form-check">
                             <Input type="checkbox" id="includeStats" defaultChecked />
-                            <label htmlFor="includeStats">Statistiques</label>
+                            <label htmlFor="includeStats">{t('Statistiques')}</label>
                         </div>
                         <div className="form-check">
                             <Input type="checkbox" id="includeDetails" defaultChecked />
-                            <label htmlFor="includeDetails">Détails des pointages</label>
+                            <label htmlFor="includeDetails">{t('Détails des pointages')}</label>
                         </div>
                         <div className="form-check">
                             <Input type="checkbox" id="includeAnomalies" defaultChecked />
-                            <label htmlFor="includeAnomalies">Anomalies détectées</label>
+                            <label htmlFor="includeAnomalies">{t('Anomalies détectées')}</label>
                         </div>
                         <div className="form-check">
                             <Input type="checkbox" id="includePredictions" />
-                            <label htmlFor="includePredictions">Prédictions IA</label>
+                            <label htmlFor="includePredictions">{t('Prédictions IA')}</label>
                         </div>
                     </div>
                 </ModalBody>
                 <ModalFooter>
                     <Button color="light" onClick={() => setReportModal(false)}>
-                        Annuler
+                        {t('Annuler')}
                     </Button>
                     <Button color="primary" onClick={() => generateReport('pdf')}>
                         {loading ? <Spinner size="sm" className="me-2" /> : null}
-                        Générer
+                        {t('Générer')}
                     </Button>
                 </ModalFooter>
             </Modal>
