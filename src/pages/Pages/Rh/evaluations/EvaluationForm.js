@@ -5,11 +5,13 @@ import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 import { CustomSelect } from "../../../../Components/Common/CustomSelectStyles";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
+import { useTranslation } from "react-i18next";
 
 const EvaluationForm = ({ mode = "add" }) => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { id } = useParams();
-    
+
     // État du formulaire avec quizzes
     const [formData, setFormData] = useState({
         titre: "",
@@ -28,7 +30,7 @@ const EvaluationForm = ({ mode = "add" }) => {
     // Références pour Quill
     const quillRef = useRef(null);
     const [quill, setQuill] = useState(null);
-    
+
     // Maps pour stocker les références Quill des quiz et questions
     const quizQuillRefs = useRef({});
     const questionQuillRefs = useRef({});
@@ -39,21 +41,21 @@ const EvaluationForm = ({ mode = "add" }) => {
 
     // Options pour les selects
     const modeOptions = [
-        { value: "employe", label: "Par employé" },
-        { value: "entreprise", label: "Par entreprise" },
-        { value: "departement", label: "Par département" }
+        { value: "employe", label: t("Par employé") },
+        { value: "entreprise", label: t("Par entreprise") },
+        { value: "departement", label: t("Par département") }
     ];
 
     const modeEvaluationOptions = [
-        { value: "auto", label: "Auto-évaluation" },
-        { value: "manager", label: "Évaluation par manager" },
-        { value: "collaborateur", label: "Évaluation par collaborateur" },
-        { value: "360", label: "Évaluation 360°" }
+        { value: "auto", label: t("Auto-évaluation") },
+        { value: "manager", label: t("Évaluation par manager") },
+        { value: "collaborateur", label: t("Évaluation par collaborateur") },
+        { value: "360", label: t("Évaluation 360°") }
     ];
 
     const typeQuestionOptions = [
-        { value: "choix_unique", label: "Choix unique" },
-        { value: "choix_multiple", label: "Choix multiple" }
+        { value: "choix_unique", label: t("Choix unique") },
+        { value: "choix_multiple", label: t("Choix multiple") }
     ];
 
     // Initialisation de Quill pour la description principale
@@ -61,13 +63,13 @@ const EvaluationForm = ({ mode = "add" }) => {
         if (!quillRef.current) return;
 
         const quillInstance = new Quill(quillRef.current, {
-            placeholder: "Rédigez la description de la campagne ici...",
+            placeholder: t("Rédigez la description de la campagne ici..."),
             theme: "snow",
             modules: {
                 toolbar: [
                     ['bold', 'italic', 'underline', 'strike'],
                     [{ 'header': [1, 2, 3, false] }],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                     ['link'],
                     ['clean']
                 ]
@@ -76,7 +78,7 @@ const EvaluationForm = ({ mode = "add" }) => {
 
         setQuill(quillInstance);
 
-        return () => {};
+        return () => { };
     }, []);
 
     // Initialisation dynamique des Quill pour les descriptions de quiz
@@ -85,12 +87,12 @@ const EvaluationForm = ({ mode = "add" }) => {
             const refKey = `quiz-${quizIndex}`;
             if (quizQuillRefs.current[refKey] && !quizQuills[refKey]) {
                 const quillInstance = new Quill(quizQuillRefs.current[refKey], {
-                    placeholder: "Description du quiz...",
+                    placeholder: t("Description du quiz..."),
                     theme: "snow",
                     modules: {
                         toolbar: [
                             ['bold', 'italic', 'underline', 'strike'],
-                            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                             ['link'],
                             ['clean']
                         ]
@@ -118,12 +120,12 @@ const EvaluationForm = ({ mode = "add" }) => {
                 const refKey = `question-${quizIndex}-${questionIndex}`;
                 if (questionQuillRefs.current[refKey] && !questionQuills[refKey]) {
                     const quillInstance = new Quill(questionQuillRefs.current[refKey], {
-                        placeholder: "Énoncé de la question...",
+                        placeholder: t("Énoncé de la question..."),
                         theme: "snow",
                         modules: {
                             toolbar: [
                                 ['bold', 'italic', 'underline', 'strike'],
-                                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                                 ['link'],
                                 ['clean']
                             ]
@@ -152,12 +154,12 @@ const EvaluationForm = ({ mode = "add" }) => {
                 const refKey = `explication-${quizIndex}-${questionIndex}`;
                 if (explicationQuillRefs.current[refKey] && !explicationQuills[refKey]) {
                     const quillInstance = new Quill(explicationQuillRefs.current[refKey], {
-                        placeholder: "Explication de la réponse (optionnel)...",
+                        placeholder: t("Explication de la réponse (optionnel)..."),
                         theme: "snow",
                         modules: {
                             toolbar: [
                                 ['bold', 'italic', 'underline', 'strike'],
-                                [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                                 ['link'],
                                 ['clean']
                             ]
@@ -374,7 +376,7 @@ const EvaluationForm = ({ mode = "add" }) => {
 
     const removeOption = (quizIndex, questionIndex, optionIndex) => {
         const updated = [...formData.quizzes];
-        updated[quizIndex].questions[questionIndex].options = 
+        updated[quizIndex].questions[questionIndex].options =
             updated[quizIndex].questions[questionIndex].options.filter((_, index) => index !== optionIndex);
         setFormData(prev => ({
             ...prev,
@@ -394,7 +396,7 @@ const EvaluationForm = ({ mode = "add" }) => {
     const setCorrectOption = (quizIndex, questionIndex, optionIndex) => {
         const updated = [...formData.quizzes];
         const options = updated[quizIndex].questions[questionIndex].options;
-        
+
         options.forEach((opt, idx) => {
             opt.isCorrect = idx === optionIndex;
         });
@@ -432,47 +434,47 @@ const EvaluationForm = ({ mode = "add" }) => {
         boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
     };
 
-    document.title = mode === "add" ? "Ajouter une campagne d'évaluation" : "Modifier la campagne d'évaluation";
+    document.title = mode === "add" ? t("Ajouter une campagne d'évaluation") : t("Modifier la campagne d'évaluation");
 
     return (
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-                    title={mode === "add" ? "Ajouter une campagne d'évaluation" : "Modifier la campagne d'évaluation"}
+                    title={mode === "add" ? t("Ajouter une campagne d'évaluation") : t("Modifier la campagne d'évaluation")}
                     pageTitle={
                         <>
                             <i className="ri-bar-chart-grouped-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>
-                            &nbsp;&gt;&nbsp;<Link to="/evaluation">Évaluations</Link>&nbsp;&gt;&nbsp;
+                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>
+                            &nbsp;&gt;&nbsp;<Link to="/evaluation">{t("Évaluations")}</Link>&nbsp;&gt;&nbsp;
                         </>
                     }
                 />
-                
+
                 <Row>
                     <Col lg={12}>
                         <Card className="border-0" style={cardStyle}>
                             <CardBody className="p-4">
                                 <h5 className="mb-4">
-                                    {mode === "add" ? "Nouvelle campagne d'évaluation" : "Modification de la campagne"}
+                                    {mode === "add" ? t("Nouvelle campagne d'évaluation") : t("Modification de la campagne")}
                                 </h5>
-                                
+
                                 <Form onSubmit={handleSubmit}>
                                     {/* ========== INFOS GÉNÉRALES ========== */}
                                     <Row>
                                         <Col md={12}>
                                             <FormGroup className="mb-3">
                                                 <Label for="titre">
-                                                    Titre de la campagne <span className="text-danger">*</span>
+                                                    {t("Titre de la campagne")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="titre"
                                                     className="rounded-4"
-                                                    name="titre" 
-                                                    type="text" 
-                                                    placeholder="Ex: Évaluation annuelle 2024" 
+                                                    name="titre"
+                                                    type="text"
+                                                    placeholder={t("Ex: Évaluation annuelle 2024")}
                                                     value={formData.titre}
                                                     onChange={handleChange}
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -482,7 +484,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="mode">
-                                                    Mode d'évaluation <span className="text-danger">*</span>
+                                                    {t("Mode d'évaluation")} <span className="text-danger">*</span>
                                                 </Label>
                                                 <CustomSelect
                                                     inputId="mode"
@@ -492,26 +494,26 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                         handleSelectChange("mode", option);
                                                     }}
                                                     options={modeOptions}
-                                                    placeholder="Sélectionner un mode"
+                                                    placeholder={t("Sélectionner un mode")}
                                                     className="rounded-4"
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        
+
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="responsable">
-                                                    Responsable <span className="text-danger">*</span>
+                                                    {t("Responsable")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="responsable"
                                                     className="rounded-4"
-                                                    name="responsable" 
-                                                    type="text" 
-                                                    placeholder="Nom du responsable" 
+                                                    name="responsable"
+                                                    type="text"
+                                                    placeholder={t("Nom du responsable")}
                                                     value={formData.responsable}
                                                     onChange={handleChange}
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -521,7 +523,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="modeEvaluation">
-                                                    Type d'évaluation <span className="text-danger">*</span>
+                                                    {t("Type d'évaluation")} <span className="text-danger">*</span>
                                                 </Label>
                                                 <CustomSelect
                                                     inputId="modeEvaluation"
@@ -531,25 +533,25 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                         handleSelectChange("modeEvaluation", option);
                                                     }}
                                                     options={modeEvaluationOptions}
-                                                    placeholder="Sélectionner le type"
+                                                    placeholder={t("Sélectionner le type")}
                                                     className="rounded-4"
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        
+
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="dateEvaluation">
-                                                    Date d'évaluation <span className="text-danger">*</span>
+                                                    {t("Date d'évaluation")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="dateEvaluation"
                                                     className="rounded-4"
-                                                    name="dateEvaluation" 
-                                                    type="date" 
+                                                    name="dateEvaluation"
+                                                    type="date"
                                                     value={formData.dateEvaluation}
                                                     onChange={handleChange}
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -560,11 +562,11 @@ const EvaluationForm = ({ mode = "add" }) => {
                                         <Col md={12}>
                                             <FormGroup className="mb-4">
                                                 <Label for="description">
-                                                    Description de la campagne
+                                                    {t("Description de la campagne")}
                                                 </Label>
-                                                <div 
-                                                    className="snow-editor" 
-                                                    style={{ 
+                                                <div
+                                                    className="snow-editor"
+                                                    style={{
                                                         border: '1px solid #ced4da',
                                                         borderRadius: '20px',
                                                         background: '#fff',
@@ -643,18 +645,18 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                     {/* Description du quiz avec Quill */}
                                                     <FormGroup className="mb-3">
                                                         <Label>Description du quiz</Label>
-                                                        <div 
-                                                            className="snow-editor" 
-                                                            style={{ 
+                                                        <div
+                                                            className="snow-editor"
+                                                            style={{
                                                                 border: '1px solid #ced4da',
                                                                 borderRadius: '20px',
                                                                 background: '#fff',
                                                                 overflow: 'hidden'
                                                             }}
                                                         >
-                                                            <div 
-                                                                ref={el => quizQuillRefs.current[`quiz-${quizIndex}`] = el} 
-                                                                style={{ minHeight: '100px' }} 
+                                                            <div
+                                                                ref={el => quizQuillRefs.current[`quiz-${quizIndex}`] = el}
+                                                                style={{ minHeight: '100px' }}
                                                             />
                                                         </div>
                                                     </FormGroup>
@@ -695,18 +697,18 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                     {/* Énoncé de la question avec Quill */}
                                                                     <FormGroup className="mb-3">
                                                                         <Label>Énoncé de la question</Label>
-                                                                        <div 
-                                                                            className="snow-editor" 
-                                                                            style={{ 
+                                                                        <div
+                                                                            className="snow-editor"
+                                                                            style={{
                                                                                 border: '1px solid #ced4da',
                                                                                 borderRadius: '20px',
                                                                                 background: '#fff',
                                                                                 overflow: 'hidden'
                                                                             }}
                                                                         >
-                                                                            <div 
-                                                                                ref={el => questionQuillRefs.current[`question-${quizIndex}-${questionIndex}`] = el} 
-                                                                                style={{ minHeight: '100px' }} 
+                                                                            <div
+                                                                                ref={el => questionQuillRefs.current[`question-${quizIndex}-${questionIndex}`] = el}
+                                                                                style={{ minHeight: '100px' }}
                                                                             />
                                                                         </div>
                                                                     </FormGroup>
@@ -715,10 +717,10 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                     <div className="mb-3">
                                                                         <Label>Image (optionnel)</Label>
                                                                         <div className="d-flex align-items-center gap-3">
-                                                                            <div 
+                                                                            <div
                                                                                 className="border rounded-4 d-flex align-items-center justify-content-center bg-light"
-                                                                                style={{ 
-                                                                                    width: '60px', 
+                                                                                style={{
+                                                                                    width: '60px',
                                                                                     height: '60px',
                                                                                     border: '1px dashed #ced4da',
                                                                                     cursor: 'pointer',
@@ -727,20 +729,20 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                                 onClick={() => document.getElementById(`image-upload-${quizIndex}-${questionIndex}`).click()}
                                                                             >
                                                                                 {question.image ? (
-                                                                                    <img 
-                                                                                        src={question.image} 
-                                                                                        alt="aperçu" 
-                                                                                        style={{ 
-                                                                                            width: '100%', 
-                                                                                            height: '100%', 
-                                                                                            objectFit: 'cover' 
-                                                                                        }} 
+                                                                                    <img
+                                                                                        src={question.image}
+                                                                                        alt="aperçu"
+                                                                                        style={{
+                                                                                            width: '100%',
+                                                                                            height: '100%',
+                                                                                            objectFit: 'cover'
+                                                                                        }}
                                                                                     />
                                                                                 ) : (
                                                                                     <i className="ri-image-add-line fs-3 text-muted"></i>
                                                                                 )}
                                                                             </div>
-                                                                            
+
                                                                             <Input
                                                                                 id={`image-upload-${quizIndex}-${questionIndex}`}
                                                                                 type="file"
@@ -748,7 +750,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                                 onChange={(e) => handleImageUpload(quizIndex, questionIndex, e)}
                                                                                 className="d-none"
                                                                             />
-                                                                            
+
                                                                             <div className="flex-grow-1">
                                                                                 <div className="d-flex gap-2">
                                                                                     <Button
@@ -762,7 +764,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                                         <i className="ri-upload-2-line me-1"></i>
                                                                                         Parcourir
                                                                                     </Button>
-                                                                                    
+
                                                                                     {question.image && (
                                                                                         <Button
                                                                                             type="button"
@@ -788,10 +790,10 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                     <div className="mt-3">
                                                                         <div className="d-flex justify-content-between align-items-center mb-3">
                                                                             <Label className="mb-0 fw-bold">Options</Label>
-                                                                            <Button 
-                                                                                color="primary" 
-                                                                                size="sm" 
-                                                                                onClick={() => addOption(quizIndex, questionIndex)} 
+                                                                            <Button
+                                                                                color="primary"
+                                                                                size="sm"
+                                                                                onClick={() => addOption(quizIndex, questionIndex)}
                                                                                 className="rounded-4 px-3"
                                                                                 style={{ backgroundColor: '#405189', borderColor: '#405189' }}
                                                                             >
@@ -802,10 +804,10 @@ const EvaluationForm = ({ mode = "add" }) => {
 
                                                                         <div className="options-container">
                                                                             {question.options.map((option, optionIndex) => (
-                                                                                <div 
-                                                                                    key={optionIndex} 
+                                                                                <div
+                                                                                    key={optionIndex}
                                                                                     className="d-flex align-items-center mb-4 pb-2"
-                                                                                    style={{ 
+                                                                                    style={{
                                                                                         borderBottom: '1px dashed #e0e0e0',
                                                                                         transition: 'all 0.2s'
                                                                                     }}
@@ -814,10 +816,10 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                                     <div className="me-3">
                                                                                         {question.type === 'choix_unique' ? (
                                                                                             // Bouton radio pour choix unique
-                                                                                            <div 
+                                                                                            <div
                                                                                                 className="rounded-circle d-flex align-items-center justify-content-center"
-                                                                                                style={{ 
-                                                                                                    width: '22px', 
+                                                                                                style={{
+                                                                                                    width: '22px',
                                                                                                     height: '22px',
                                                                                                     border: `2px solid ${option.isCorrect ? '#405189' : '#adb5bd'}`,
                                                                                                     backgroundColor: option.isCorrect ? '#405189' : 'transparent',
@@ -832,10 +834,10 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                                             </div>
                                                                                         ) : (
                                                                                             // Checkbox pour choix multiple
-                                                                                            <div 
+                                                                                            <div
                                                                                                 className="rounded d-flex align-items-center justify-content-center"
-                                                                                                style={{ 
-                                                                                                    width: '22px', 
+                                                                                                style={{
+                                                                                                    width: '22px',
                                                                                                     height: '22px',
                                                                                                     border: `2px solid ${option.isCorrect ? '#405189' : '#adb5bd'}`,
                                                                                                     backgroundColor: option.isCorrect ? '#405189' : 'transparent',
@@ -866,7 +868,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                                             value={option.texte}
                                                                                             onChange={(e) => handleOptionChange(quizIndex, questionIndex, optionIndex, e.target.value)}
                                                                                             placeholder={`Option ${optionIndex + 1}`}
-                                                                                            style={{ 
+                                                                                            style={{
                                                                                                 padding: '8px 0',
                                                                                                 fontSize: '1rem',
                                                                                                 boxShadow: 'none',
@@ -881,10 +883,10 @@ const EvaluationForm = ({ mode = "add" }) => {
 
                                                                                     {/* Bouton de suppression (si plus de 2 options) */}
                                                                                     {question.options.length > 2 && (
-                                                                                        <div 
+                                                                                        <div
                                                                                             className="d-flex align-items-center justify-content-center text-danger"
-                                                                                            style={{ 
-                                                                                                width: '32px', 
+                                                                                            style={{
+                                                                                                width: '32px',
                                                                                                 height: '32px',
                                                                                                 cursor: 'pointer',
                                                                                                 transition: 'all 0.2s',
@@ -905,7 +907,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                             <div className="text-muted small mt-2 d-flex align-items-center">
                                                                                 <i className="ri-information-line me-1"></i>
                                                                                 <span>
-                                                                                    {question.type === 'choix_unique' 
+                                                                                    {question.type === 'choix_unique'
                                                                                         ? "Cliquez sur le bouton radio pour définir la bonne réponse. Ajoutez plus d'options si nécessaire."
                                                                                         : "Cochez les cases pour définir les bonnes réponses. Ajoutez plus d'options si nécessaire."}
                                                                                 </span>
@@ -916,18 +918,18 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                                     {/* ========== EXPLICATION ========== */}
                                                                     <FormGroup className="mt-3">
                                                                         <Label>Explication (optionnel)</Label>
-                                                                        <div 
-                                                                            className="snow-editor" 
-                                                                            style={{ 
+                                                                        <div
+                                                                            className="snow-editor"
+                                                                            style={{
                                                                                 border: '1px solid #ced4da',
                                                                                 borderRadius: '20px',
                                                                                 background: '#fff',
                                                                                 overflow: 'hidden'
                                                                             }}
                                                                         >
-                                                                            <div 
-                                                                                ref={el => explicationQuillRefs.current[`explication-${quizIndex}-${questionIndex}`] = el} 
-                                                                                style={{ minHeight: '100px' }} 
+                                                                            <div
+                                                                                ref={el => explicationQuillRefs.current[`explication-${quizIndex}-${questionIndex}`] = el}
+                                                                                style={{ minHeight: '100px' }}
                                                                             />
                                                                         </div>
                                                                     </FormGroup>
@@ -950,14 +952,14 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
                                                     onClick={() => navigate("/:entreprise/evaluation")}
                                                 >
-                                                    Annuler
+                                                    {t("Annuler")}
                                                 </Button>
                                                 <Button
                                                     className="btn btn-success rounded-4"
                                                     type="submit"
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
                                                 >
-                                                    {mode === "add" ? "Créer la campagne" : "Mettre à jour"}
+                                                    {mode === "add" ? t("Créer la campagne") : t("Mettre à jour")}
                                                 </Button>
                                             </div>
                                         </Col>

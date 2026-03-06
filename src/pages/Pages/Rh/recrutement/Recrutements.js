@@ -168,7 +168,7 @@ const Recrutements = () => {
                   </div>
 
                   <Link to="#">
-                    <h5>{item.jobTitle}</h5>
+                    <h5>{t(item.jobTitle)}</h5>
                   </Link>
 
                   <p className="text-muted">{item.companyName}</p>
@@ -176,25 +176,27 @@ const Recrutements = () => {
                   <div className="d-flex gap-4 mb-3">
                     <div>
                       <i className="ri-map-pin-2-line text-primary me-1 align-bottom"></i>{" "}
-                      {item.location}
+                      {t(item.location)}
                     </div>
                     <div>
                       <i className="ri-time-line text-primary me-1 align-bottom"></i>{" "}
-                      {item.postDate}
+                      {t(item.postDate)}
                     </div>
                   </div>
 
-                  <p className="text-muted">{item.description}</p>
+                  <p className="text-muted">{t(item.description)}</p>
 
                   <div className="hstack gap-2">
                     {item.requirement.map((subItem, key) => (
                       <React.Fragment key={key}>
-                        {subItem === "Full Time" ? (
+                        {subItem === "Full Time" || subItem === "Temps plein" ? (
                           <span className="badge bg-success-subtle text-success">{t("Temps plein")}</span>
                         ) : subItem === "Freelance" ? (
-                          <span className="badge bg-primary-subtle text-primary">Freelance</span>
+                          <span className="badge bg-primary-subtle text-primary">{t("Freelance")}</span>
+                        ) : subItem === "Temps partiel" || subItem === "Part Time" ? (
+                          <span className="badge bg-warning-subtle text-warning">{t("Temps partiel")}</span>
                         ) : (
-                          <span className="badge bg-danger-subtle text-danger">{subItem}</span>
+                          <span className="badge bg-danger-subtle text-danger">{t(subItem)}</span>
                         )}
                       </React.Fragment>
                     ))}

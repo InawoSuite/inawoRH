@@ -814,7 +814,7 @@ const PaieEtAvances = () => {
                             onSearchChange={setSearchTerm}
                             searchPlaceholder={
                                 activeTab === "1"
-                                    ? "Chercher une fiche de paie..."
+                                    ? t("Chercher une fiche de paie...")
                                     : t("Chercher une avance ou un prêt...")
                             }
                             showSearch={true}
@@ -825,7 +825,7 @@ const PaieEtAvances = () => {
                             }
                             addButtonText={
                                 activeTab === "1"
-                                    ? "Nouvelle fiche de paie"
+                                    ? t("Nouvelle fiche de paie")
                                     : t("Faire une demande d'avance ou de prêt")
                             }
                             addButtonIcon="ri-file-add-line"
@@ -871,7 +871,7 @@ const PaieEtAvances = () => {
                             <EmptyDataCard
                                 title={
                                     activeTab === "1"
-                                        ? "Aucune fiche de paie trouvée"
+                                        ? t("Aucune fiche de paie trouvée")
                                         : t("Aucune avance ou prêt trouvé")
                                 }
                                 description={

@@ -2,8 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Container, Row, Col, Card, CardBody, Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { Link, useLocation, useParams } from "react-router-dom";
 import BreadCrumb from "../../../../Components/Common/BreadCrumb";
+import { useTranslation } from "react-i18next";
 
 const FicheDetail = () => {
+    const { t } = useTranslation();
     const { id } = useParams();
     const { state } = useLocation();
     const [formData, setFormData] = useState({
@@ -105,11 +107,11 @@ const FicheDetail = () => {
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-                    title="&nbsp;Détails de la fiche de paie"
+                    title={`\u00a0${t("Détails de la fiche de paie")}`}
                     pageTitle={
                         <>
                             <i className="ri-team-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>&nbsp;&gt;
+                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>&nbsp;&gt;
                         </>
                     }
                 />
@@ -121,31 +123,31 @@ const FicheDetail = () => {
                                 <CardBody className="p-4">
                                     <Row className="mb-3">
                                         <Col>
-                                            <h6 className="text-uppercase text-muted mb-0">Informations générales</h6>
+                                            <h6 className="text-uppercase text-muted mb-0">{t("Informations générales")}</h6>
                                         </Col>
                                     </Row>
                                     <Row className="gx-3 gy-2">
                                         <Col md={4}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="entreprise">Entreprise</Label>
+                                                <Label style={{ marginBottom: "0" }} for="entreprise">{t("Entreprise")}</Label>
                                                 <Input id="entreprise" name="entreprise" type="text" value={formData.entreprise} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={4}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="numero">N°</Label>
+                                                <Label style={{ marginBottom: "0" }} for="numero">{t("N°")}</Label>
                                                 <Input id="numero" name="numero" type="text" value={formData.numero} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={4}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="mois">Mois</Label>
+                                                <Label style={{ marginBottom: "0" }} for="mois">{t("Mois")}</Label>
                                                 <Input id="mois" name="mois" type="text" value={formData.mois} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={4}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="datePaie">Date de paie</Label>
+                                                <Label style={{ marginBottom: "0" }} for="datePaie">{t("Date de paie")}</Label>
                                                 <Input id="datePaie" name="datePaie" type="date" value={formData.datePaie} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
@@ -161,91 +163,91 @@ const FicheDetail = () => {
                                 <CardBody className="p-4">
                                     <Row className="mb-3">
                                         <Col>
-                                            <h6 className="text-uppercase text-muted mb-0">Informations de la fiche de paie</h6>
+                                            <h6 className="text-uppercase text-muted mb-0">{t("Informations de la fiche de paie")}</h6>
                                         </Col>
                                     </Row>
                                     <Row className="gx-3 gy-2">
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="nomPrenoms">Nom et Prénoms</Label>
+                                                <Label style={{ marginBottom: "0" }} for="nomPrenoms">{t("Nom et Prénoms")}</Label>
                                                 <Input id="nomPrenoms" name="nomPrenoms" type="text" value={formData.nomPrenoms} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="emplois">Emplois</Label>
+                                                <Label style={{ marginBottom: "0" }} for="emplois">{t("Emplois")}</Label>
                                                 <Input id="emplois" name="emplois" type="text" value={formData.emplois} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="matricule">N° Matricule</Label>
+                                                <Label style={{ marginBottom: "0" }} for="matricule">{t("N° Matricule")}</Label>
                                                 <Input id="matricule" name="matricule" type="text" value={formData.matricule} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="categorie">Catégorie</Label>
+                                                <Label style={{ marginBottom: "0" }} for="categorie">{t("Catégorie")}</Label>
                                                 <Input id="categorie" name="categorie" type="text" value={formData.categorie} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="situationFamiliale">Situation Familiale</Label>
+                                                <Label style={{ marginBottom: "0" }} for="situationFamiliale">{t("Situation Familiale")}</Label>
                                                 <Input id="situationFamiliale" name="situationFamiliale" type="text" value={formData.situationFamiliale} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="salaireBase">Salaire de base</Label>
+                                                <Label style={{ marginBottom: "0" }} for="salaireBase">{t("Salaire de base")}</Label>
                                                 <Input id="salaireBase" name="salaireBase" type="text" value={formData.salaireBase} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="primeAnciennete">Prime d'ancienneté</Label>
+                                                <Label style={{ marginBottom: "0" }} for="primeAnciennete">{t("Prime d'ancienneté")}</Label>
                                                 <Input id="primeAnciennete" name="primeAnciennete" type="text" value={formData.primeAnciennete} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="conges">Congés</Label>
+                                                <Label style={{ marginBottom: "0" }} for="conges">{t("Congés")}</Label>
                                                 <Input id="conges" name="conges" type="text" value={formData.conges} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="rappelsSalaire">Rappels sur salaire</Label>
+                                                <Label style={{ marginBottom: "0" }} for="rappelsSalaire">{t("Rappels sur salaire")}</Label>
                                                 <Input id="rappelsSalaire" name="rappelsSalaire" type="text" value={formData.rappelsSalaire} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="salaireBrut">Salaire Brut</Label>
+                                                <Label style={{ marginBottom: "0" }} for="salaireBrut">{t("Salaire Brut")}</Label>
                                                 <Input id="salaireBrut" name="salaireBrut" type="text" value={formData.salaireBrut} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="cnss">CNSS (3,6%)</Label>
+                                                <Label style={{ marginBottom: "0" }} for="cnss">{t("CNSS (3,6%)")}</Label>
                                                 <Input id="cnss" name="cnss" type="text" value={formData.cnss} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="its">ITS</Label>
+                                                <Label style={{ marginBottom: "0" }} for="its">{t("ITS")}</Label>
                                                 <Input id="its" name="its" type="text" value={formData.its} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="totalRetenues">Total Retenues</Label>
+                                                <Label style={{ marginBottom: "0" }} for="totalRetenues">{t("Total Retenues")}</Label>
                                                 <Input id="totalRetenues" name="totalRetenues" type="text" value={formData.totalRetenues} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>
                                         <Col md={6}>
                                             <FormGroup className="mb-0">
-                                                <Label style={{ marginBottom: "0" }} for="salaireNetPayer">Salaire Net à Payer</Label>
+                                                <Label style={{ marginBottom: "0" }} for="salaireNetPayer">{t("Salaire Net à Payer")}</Label>
                                                 <Input id="salaireNetPayer" name="salaireNetPayer" type="text" value={formData.salaireNetPayer} readOnly className="rounded-pill" />
                                             </FormGroup>
                                         </Col>

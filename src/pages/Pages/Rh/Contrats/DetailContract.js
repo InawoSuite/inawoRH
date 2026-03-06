@@ -2,8 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import { Container, Row, Col, Card, CardBody, Form, FormGroup, Label, Input, Button } from "reactstrap";
 import { Link, useLocation, useParams } from "react-router-dom";
 import BreadCrumb from "../../../../Components/Common/BreadCrumb";
+import { useTranslation } from "react-i18next";
 
 const DetailContract = () => {
+    const { t } = useTranslation();
     // const { id } = useParams();
     // const { state } = useLocation();
     // const [formData, setFormData] = useState({
@@ -105,11 +107,11 @@ const DetailContract = () => {
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-                    title="&nbsp;Détails du contrat"
+                    title={`\u00a0${t("Détails du contrat")}`}
                     pageTitle={
                         <>
                             <i className="ri-team-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>&nbsp;&gt;
+                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>&nbsp;&gt;
                         </>
                     }
                 />

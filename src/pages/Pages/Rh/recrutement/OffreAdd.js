@@ -1,14 +1,14 @@
 import React, { useMemo, useState, useRef, useEffect } from "react";
 import {
-  Card,
-  CardBody,
-  Col,
-  Container,
-  Form,
-  Input,
-  Label,
-  Row,
-  FormGroup,
+    Card,
+    CardBody,
+    Col,
+    Container,
+    Form,
+    Input,
+    Label,
+    Row,
+    FormGroup,
 } from "reactstrap";
 import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 import { CustomSelect } from "../../../../Components/Common/CustomSelectStyles";
@@ -16,10 +16,12 @@ import Flatpickr from "react-flatpickr";
 import Quill from "quill";
 import "quill/dist/quill.snow.css";
 import { Link, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const OffreAdd = () => {
     const navigate = useNavigate();
-    
+    const { t } = useTranslation();
+
     // États pour les selects
     const [selectedJobCategory, setSelectedJobCategory] = useState(null);
     const [selectedJobType, setSelectedJobType] = useState(null);
@@ -29,7 +31,7 @@ const OffreAdd = () => {
     const tagsQuillRef = useRef(null);
     const [tagsQuill, setTagsQuill] = useState(null);
     const [tags, setTags] = useState("");
-    
+
     // État pour la description avec Quill
     const [description, setDescription] = useState("");
     const quillRef = useRef(null);
@@ -37,38 +39,38 @@ const OffreAdd = () => {
 
     // Options pour les selects (traduites en français)
     const jobCategoryOptions = useMemo(
-      () => [
-        { value: "Accounting & Finance", label: "Comptabilité & Finance" },
-        { value: "Purchasing Manager", label: "Acheteur / Responsable achats" },
-        { value: "Education & training", label: "Éducation & Formation" },
-        { value: "Marketing & Advertising", label: "Marketing & Publicité" },
-        { value: "It / Software Jobs", label: "IT / Développement logiciel" },
-        { value: "Digital Marketing", label: "Marketing digital" },
-        { value: "Administrative Officer", label: "Agent administratif" },
-        { value: "Government Jobs", label: "Fonction publique" },
-      ],
-      []
+        () => [
+            { value: "Accounting & Finance", label: "Comptabilité & Finance" },
+            { value: "Purchasing Manager", label: "Acheteur / Responsable achats" },
+            { value: "Education & training", label: "Éducation & Formation" },
+            { value: "Marketing & Advertising", label: "Marketing & Publicité" },
+            { value: "It / Software Jobs", label: "IT / Développement logiciel" },
+            { value: "Digital Marketing", label: "Marketing digital" },
+            { value: "Administrative Officer", label: "Agent administratif" },
+            { value: "Government Jobs", label: "Fonction publique" },
+        ],
+        []
     );
 
     const jobTypeOptions = useMemo(
-      () => [
-        { value: "Full Time", label: "Temps plein" },
-        { value: "Part Time", label: "Temps partiel" },
-        { value: "Freelance", label: "Freelance" },
-        { value: "Intership", label: "Stage" },
-      ],
-      []
+        () => [
+            { value: "Full Time", label: "Temps plein" },
+            { value: "Part Time", label: "Temps partiel" },
+            { value: "Freelance", label: "Freelance" },
+            { value: "Intership", label: "Stage" },
+        ],
+        []
     );
 
     const experienceOptions = useMemo(
-      () => [
-        { value: "0 Year", label: "0 an" },
-        { value: "2 Years", label: "2 ans" },
-        { value: "3 Years", label: "3 ans" },
-        { value: "4 Years", label: "4 ans" },
-        { value: "5 Years", label: "5 ans" },
-      ],
-      []
+        () => [
+            { value: "0 Year", label: "0 an" },
+            { value: "2 Years", label: "2 ans" },
+            { value: "3 Years", label: "3 ans" },
+            { value: "4 Years", label: "4 ans" },
+            { value: "5 Years", label: "5 ans" },
+        ],
+        []
     );
 
     // Initialisation de Quill
@@ -82,7 +84,7 @@ const OffreAdd = () => {
                 toolbar: [
                     ['bold', 'italic', 'underline', 'strike'],
                     [{ 'header': [1, 2, 3, false] }],
-                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'list': 'ordered' }, { 'list': 'bullet' }],
                     [{ 'align': [] }],
                     ['link'],
                     ['clean']
@@ -92,7 +94,7 @@ const OffreAdd = () => {
 
         setQuill(quillInstance);
 
-        return () => {};
+        return () => { };
     }, []);
 
     // Gérer les changements de Quill
@@ -130,7 +132,7 @@ const OffreAdd = () => {
 
         setTagsQuill(quillInstance);
 
-        return () => {};
+        return () => { };
     }, []);
 
     // Gérer les changements de Quill pour les tags
@@ -176,22 +178,22 @@ const OffreAdd = () => {
         background: "#fff",
         boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
     };
-    
-    document.title = "Ajouter une offre d'emploi";
+
+    document.title = t("Ajouter une offre d'emploi");
 
     return (
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-                    title="&nbsp;Ajouter une offre d'emploi"
+                    title={`\u00a0${t("Ajouter une offre d'emploi")}`}
                     pageTitle={
                         <>
                             <i className="ri-team-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>&nbsp;&gt;
+                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>&nbsp;&gt;
                         </>
                     }
                 />
-                
+
                 <Container fluid className="container-fluid">
                     <Row className="row">
                         <Col className="col-lg-12">
@@ -271,9 +273,9 @@ const OffreAdd = () => {
                                                     <Label>
                                                         Description <span className="text-danger">*</span>
                                                     </Label>
-                                                    <div 
-                                                        className="snow-editor" 
-                                                        style={{ 
+                                                    <div
+                                                        className="snow-editor"
+                                                        style={{
                                                             border: '1px solid #ced4da',
                                                             borderRadius: '20px',
                                                             background: '#fff',
@@ -434,18 +436,18 @@ const OffreAdd = () => {
                                                     <Label htmlFor="tags-field">
                                                         Tags / Mots-clés
                                                     </Label>
-                                                    <div 
-                                                        className="snow-editor" 
-                                                        style={{ 
+                                                    <div
+                                                        className="snow-editor"
+                                                        style={{
                                                             border: '1px solid #ced4da',
                                                             borderRadius: '20px',
                                                             background: '#fff',
                                                             overflow: 'hidden'
                                                         }}
                                                     >
-                                                        <div 
-                                                            ref={tagsQuillRef} 
-                                                            style={{ minHeight: '100px' }} 
+                                                        <div
+                                                            ref={tagsQuillRef}
+                                                            style={{ minHeight: '100px' }}
                                                         />
                                                     </div>
                                                     <small className="text-muted d-block mt-1">
@@ -462,14 +464,14 @@ const OffreAdd = () => {
                                                         className="btn btn-light rounded-4"
                                                         onClick={() => navigate("/:entreprise/recrutements")}
                                                     >
-                                                        Annuler
+                                                        {t("Annuler")}
                                                     </button>
                                                     <button
                                                         style={{ borderRadius: "20px" }}
-                                                        type="submit" 
+                                                        type="submit"
                                                         className="btn btn-success rounded-4"
                                                     >
-                                                        Ajouter l'offre d'emploi
+                                                        {t("Ajouter l'offre d'emploi")}
                                                     </button>
                                                 </div>
                                             </Col>

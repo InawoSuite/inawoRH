@@ -3,11 +3,13 @@ import { Container, Row, Col, Card, CardBody, Form, FormGroup, Label, Input, But
 import { Link, useNavigate, useParams } from "react-router-dom";
 import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 import { CustomSelect } from "../../../../Components/Common/CustomSelectStyles";
+import { useTranslation } from "react-i18next";
 
 const CongeEtAbsenceForm = ({ mode = "add" }) => {
+    const { t } = useTranslation();
     const navigate = useNavigate();
     const { id } = useParams();
-    
+
     const [formData, setFormData] = useState({
         nomEmploye: "",
         dateDemande: "",
@@ -55,50 +57,50 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
 
     const [selectedStatut, setSelectedStatut] = useState(null);
     const statutOptions = [
-        { value: "envoyé", label: "Envoyé" },
-        { value: "validé", label: "Validé" }
+        { value: "envoyé", label: t("Envoyé") },
+        { value: "validé", label: t("Validé") }
     ];
 
-    document.title = mode === "add" ? "Ajouter Congé/Absence" : "Modifier Congé/Absence";
+    document.title = mode === "add" ? t("Ajouter Congé/Absence") : t("Modifier Congé/Absence");
 
     return (
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-                    title={mode === "add" ? "Ajouter un congé/absence" : "Modifier le congé/absence"}
+                    title={mode === "add" ? t("Ajouter un congé/absence") : t("Modifier le congé/absence")}
                     pageTitle={
                         <>
                             <i className="ri-calendar-check-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>
-                            &nbsp;&gt;&nbsp;<Link to="/:entreprise/presence-et-absence">Présence et Absences</Link>&nbsp;&gt;&nbsp;
+                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>
+                            &nbsp;&gt;&nbsp;<Link to="/:entreprise/presence-et-absence">{t("Présence et Absences")}</Link>&nbsp;&gt;&nbsp;
                         </>
                     }
                 />
-                
+
                 <Row>
                     <Col lg={12}>
                         <Card className="border-0" style={cardStyle}>
                             <CardBody className="p-4">
                                 <h5 className="mb-4">
-                                    {mode === "add" ? "Nouveau congé/absence" : "Modification congé/absence"}
+                                    {mode === "add" ? t("Nouveau congé/absence") : t("Modification congé/absence")}
                                 </h5>
-                                
+
                                 <Form onSubmit={handleSubmit}>
                                     <Row>
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="nomEmploye">
-                                                    Nom employé <span className="text-danger">*</span>
+                                                    {t("Nom employé")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="nomEmploye"
                                                     className="rounded-4"
-                                                    name="nomEmploye" 
-                                                    type="text" 
-                                                    placeholder="Ex: Jean Dupont" 
+                                                    name="nomEmploye"
+                                                    type="text"
+                                                    placeholder={t("Ex: Jean Dupont")}
                                                     value={formData.nomEmploye}
                                                     onChange={handleChange}
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -106,16 +108,16 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="dateDemande">
-                                                    Date de la demande <span className="text-danger">*</span>
+                                                    {t("Date de la demande")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="dateDemande"
                                                     className="rounded-4"
-                                                    name="dateDemande" 
-                                                    type="date" 
+                                                    name="dateDemande"
+                                                    type="date"
                                                     value={formData.dateDemande}
                                                     onChange={handleChange}
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -125,33 +127,33 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="periodeDebut">
-                                                    Date début <span className="text-danger">*</span>
+                                                    {t("Date début")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="periodeDebut"
                                                     className="rounded-4"
-                                                    name="periodeDebut" 
-                                                    type="date" 
+                                                    name="periodeDebut"
+                                                    type="date"
                                                     value={formData.periodeDebut}
                                                     onChange={handleChange}
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
-                                        
+
                                         <Col md={6}>
                                             <FormGroup className="mb-3">
                                                 <Label for="periodeFin">
-                                                    Date fin <span className="text-danger">*</span>
+                                                    {t("Date fin")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="periodeFin"
                                                     className="rounded-4"
-                                                    name="periodeFin" 
-                                                    type="date" 
+                                                    name="periodeFin"
+                                                    type="date"
                                                     value={formData.periodeFin}
                                                     onChange={handleChange}
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -161,18 +163,18 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                         <Col md={4}>
                                             <FormGroup className="mb-3">
                                                 <Label for="nombreJour">
-                                                    Nombre de jour <span className="text-danger">*</span>
+                                                    {t("Nombre de jour")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="nombreJour"
                                                     className="rounded-4"
-                                                    name="nombreJour" 
-                                                    type="number" 
-                                                    placeholder="Ex: 15" 
+                                                    name="nombreJour"
+                                                    type="number"
+                                                    placeholder={t("Ex: 15")}
                                                     value={formData.nombreJour}
                                                     onChange={handleChange}
                                                     min="1"
-                                                    required 
+                                                    required
                                                 />
                                             </FormGroup>
                                         </Col>
@@ -180,7 +182,7 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                         <Col md={4}>
                                             <FormGroup className="mb-3">
                                                 <Label htmlFor="statut">
-                                                    Statut <span className="text-danger">*</span>
+                                                    {t("Statut")} <span className="text-danger">*</span>
                                                 </Label>
                                                 <CustomSelect
                                                     inputId="statut"
@@ -196,11 +198,11 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                                     }}
                                                     options={statutOptions}
                                                     isDisabled={mode === "add"}
-                                                    placeholder="Sélectionner un statut"
+                                                    placeholder={t("Sélectionner un statut")}
                                                     className="rounded-4"
                                                 />
                                                 {mode === "add" && (
-                                                    <small className="text-muted">Le statut sera automatiquement "Envoyé"</small>
+                                                    <small className="text-muted">{t("Le statut sera automatiquement \"Envoyé\"")}</small>
                                                 )}
                                             </FormGroup>
                                         </Col>
@@ -208,20 +210,20 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                         <Col md={4}>
                                             <FormGroup className="mb-3">
                                                 <Label for="nombreJourTotal">
-                                                    Nombre de jour total <span className="text-danger">*</span>
+                                                    {t("Nombre de jour total")} <span className="text-danger">*</span>
                                                 </Label>
-                                                <Input 
+                                                <Input
                                                     id="nombreJourTotal"
                                                     className="rounded-4"
-                                                    name="nombreJourTotal" 
-                                                    type="number" 
-                                                    placeholder="Ex: 25" 
+                                                    name="nombreJourTotal"
+                                                    type="number"
+                                                    placeholder={t("Ex: 25")}
                                                     value={formData.nombreJourTotal}
                                                     onChange={handleChange}
                                                     min="0"
-                                                    required 
+                                                    required
                                                 />
-                                                <small className="text-muted">Total de jours disponibles</small>
+                                                <small className="text-muted">{t("Total de jours disponibles")}</small>
                                             </FormGroup>
                                         </Col>
                                     </Row>
@@ -235,14 +237,14 @@ const CongeEtAbsenceForm = ({ mode = "add" }) => {
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
                                                     onClick={() => navigate(-1)}
                                                 >
-                                                    Annuler
+                                                    {t("Annuler")}
                                                 </Button>
                                                 <Button
                                                     className="btn btn-success rounded-4"
                                                     type="submit"
                                                     style={{ borderRadius: "20px", padding: "10px 30px" }}
                                                 >
-                                                    {mode === "add" ? "Enregistrer" : "Mettre à jour"}
+                                                    {mode === "add" ? t("Enregistrer") : t("Mettre à jour")}
                                                 </Button>
                                             </div>
                                         </Col>
