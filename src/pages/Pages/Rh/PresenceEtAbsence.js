@@ -312,8 +312,8 @@ const PresenceEtAbsence = () => {
                                     key={tab.key}
                                     to="#"
                                     className={`btn ${activeTab === tab.key
-                                            ? "btn-primary"
-                                            : "btn-soft-secondary"
+                                        ? "btn-primary"
+                                        : "btn-soft-secondary"
                                         } rounded-4 px-4 py-2`}
                                     onClick={() => handleTabChange(tab.key)}
                                 >
