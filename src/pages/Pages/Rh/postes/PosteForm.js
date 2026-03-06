@@ -23,8 +23,8 @@ const mockData = {
         code: "POSTE-001",
         nomTitre: "Directeur Commercial",
         departementService: "Direction Commerciale",
-        missions: "Développer la stratégie commerciale<br>Manager l'équipe commerciale (15 personnes)<br>Atteindre les objectifs de vente",
-        responsabilites: "Gestion du chiffre d'affaires<br>Fidélisation des clients stratégiques<br>Reporting mensuel à la direction générale",
+        missions: "<p><strong>Développer la stratégie commerciale</strong></p><p><br></p><p>Manager l'équipe commerciale (15 personnes)</p><p><br></p><p>Atteindre les objectifs de vente</p>",
+        responsabilites: "<p>Gestion du chiffre d'affaires</p><p><br></p><p>Fidélisation des clients stratégiques</p><p><br></p><p>Reporting mensuel à la direction générale</p>",
         superieurHierarchique: "Directeur Général",
         subordonnes: "Chefs des ventes, Chargés de clientèle",
         niveauOrganigramme: "Niveau 2",
@@ -32,7 +32,7 @@ const mockData = {
         lieuAffectation: "Siège - Abidjan",
         type: "Cadre",
         statut: "Actif",
-        objectifsAssignes: "Atteindre 15% de croissance du CA<br>Développer 3 nouveaux marchés régionaux",
+        objectifsAssignes: "<p>Atteindre 15% de croissance du CA</p><p><br></p><p>Développer 3 nouveaux marchés régionaux</p>",
         typeContrat: ["CDI"],
         tempsTravail: "Temps plein",
         avantages: "Véhicule de fonction, Téléphone, Prime sur objectifs",
@@ -47,8 +47,8 @@ const mockData = {
         code: "POSTE-002",
         nomTitre: "Chef Comptable",
         departementService: "Finance et Comptabilité",
-        missions: "Superviser la comptabilité générale<br>Établir les états financiers<br>Gérer les clôtures mensuelles",
-        responsabilites: "Fiabilité des comptes<br>Respect des délais légaux<br>Supervision d'une équipe",
+        missions: "<p>Superviser la comptabilité générale</p><p><br></p><p>Établir les états financiers</p><p><br></p><p>Gérer les clôtures mensuelles</p>",
+        responsabilites: "<p>Fiabilité des comptes</p><p><br></p><p>Respect des délais légaux</p><p><br></p><p>Supervision d'une équipe</p>",
         superieurHierarchique: "Directeur Financier",
         subordonnes: "Comptables, Assistants comptables",
         niveauOrganigramme: "Niveau 3",
@@ -56,7 +56,7 @@ const mockData = {
         lieuAffectation: "Siège - Abidjan",
         type: "Cadre",
         statut: "Actif",
-        objectifsAssignes: "Clôtures mensuelles en 5 jours<br>Optimisation fiscale",
+        objectifsAssignes: "<p>Clôtures mensuelles en 5 jours</p><p><br></p><p>Optimisation fiscale</p>",
         typeContrat: ["CDI"],
         tempsTravail: "Temps plein",
         avantages: "Prime de performance, Mutuelle famille",
@@ -115,6 +115,11 @@ const PosteForm = ({ mode = "add" }) => {
     const [selectedTempsTravail, setSelectedTempsTravail] = useState(null);
     const [selectedPosteStrategique, setSelectedPosteStrategique] = useState(null);
 
+    // États pour savoir si les éditeurs ont été initialisés
+    const [missionsInitialized, setMissionsInitialized] = useState(false);
+    const [responsabilitesInitialized, setResponsabilitesInitialized] = useState(false);
+    const [objectifsInitialized, setObjectifsInitialized] = useState(false);
+
     // Références pour Quill
     const missionsQuillRef = useRef(null);
     const responsabilitesQuillRef = useRef(null);
@@ -172,9 +177,25 @@ const PosteForm = ({ mode = "add" }) => {
         [t]
     );
 
+    // ============================================
+    // INITIALISATION DES ÉDITEURS QUILL
+    // ============================================
+
     // Initialisation de Quill pour Missions
     useEffect(() => {
         if (!missionsQuillRef.current) return;
+
+        // Détruire l'ancienne instance Quill si elle existe
+        if (missionsQuill) {
+            missionsQuill.enable(false);
+        }
+
+        // Nettoyer le DOM des éléments Quill existants
+        const editorElement = missionsQuillRef.current;
+        const existingToolbar = editorElement.parentElement?.querySelector('.ql-toolbar');
+        if (existingToolbar) {
+            existingToolbar.remove();
+        }
 
         const quillInstance = new Quill(missionsQuillRef.current, {
             placeholder: t("Décrivez les missions principales du poste..."),
@@ -190,13 +211,29 @@ const PosteForm = ({ mode = "add" }) => {
         });
 
         setMissionsQuill(quillInstance);
+        setMissionsInitialized(false); // Réinitialiser le flag quand une nouvelle instance est créée
 
-        return () => {};
-    }, [t]);
+        return () => {
+            // Nettoyer proprement
+            if (quillInstance) {
+                quillInstance.enable(false);
+            }
+        };
+    }, [t]); // Ne dépend que de t pour éviter les réinitialisations intempestives
 
     // Initialisation de Quill pour Responsabilités
     useEffect(() => {
         if (!responsabilitesQuillRef.current) return;
+
+        if (responsabilitesQuill) {
+            responsabilitesQuill.enable(false);
+        }
+
+        const editorElement = responsabilitesQuillRef.current;
+        const existingToolbar = editorElement.parentElement?.querySelector('.ql-toolbar');
+        if (existingToolbar) {
+            existingToolbar.remove();
+        }
 
         const quillInstance = new Quill(responsabilitesQuillRef.current, {
             placeholder: t("Décrivez les responsabilités du poste..."),
@@ -212,16 +249,31 @@ const PosteForm = ({ mode = "add" }) => {
         });
 
         setResponsabilitesQuill(quillInstance);
+        setResponsabilitesInitialized(false);
 
-        return () => {};
+        return () => {
+            if (quillInstance) {
+                quillInstance.enable(false);
+            }
+        };
     }, [t]);
 
     // Initialisation de Quill pour Objectifs
     useEffect(() => {
         if (!objectifsQuillRef.current) return;
 
+        if (objectifsQuill) {
+            objectifsQuill.enable(false);
+        }
+
+        const editorElement = objectifsQuillRef.current;
+        const existingToolbar = editorElement.parentElement?.querySelector('.ql-toolbar');
+        if (existingToolbar) {
+            existingToolbar.remove();
+        }
+
         const quillInstance = new Quill(objectifsQuillRef.current, {
-            placeholder: t("Définissez les objectifs assignés à ce poste..."),
+            placeholder: t("Décrivez les objectifs assignés au poste..."),
             theme: "snow",
             modules: {
                 toolbar: [
@@ -233,9 +285,18 @@ const PosteForm = ({ mode = "add" }) => {
         });
 
         setObjectifsQuill(quillInstance);
+        setObjectifsInitialized(false);
 
-        return () => {};
+        return () => {
+            if (quillInstance) {
+                quillInstance.enable(false);
+            }
+        };
     }, [t]);
+
+    // ============================================
+    // CHARGEMENT DES DONNÉES EN MODE ÉDITION
+    // ============================================
 
     // Charger les données en mode édition
     useEffect(() => {
@@ -271,71 +332,118 @@ const PosteForm = ({ mode = "add" }) => {
             setSelectedTypeContrat(typeContratOptions.filter(opt => data.typeContrat.includes(opt.value)));
             setSelectedTempsTravail(tempsTravailOptions.find(opt => opt.value === data.tempsTravail));
             setSelectedPosteStrategique(posteStrategiqueOptions.find(opt => opt.value === data.posteStrategique));
+            
+            // Réinitialiser les flags de chargement
+            setMissionsInitialized(false);
+            setResponsabilitesInitialized(false);
+            setObjectifsInitialized(false);
         }
     }, [mode, id, typeOptions, statutOptions, typeContratOptions, tempsTravailOptions, posteStrategiqueOptions]);
 
+    // ============================================
+    // CHARGEMENT DU CONTENU DANS LES ÉDITEURS
+    // ============================================
+
+    // Charger le contenu dans Missions
+    useEffect(() => {
+        if (!missionsQuill || !formData.missions || missionsInitialized) return;
+        
+        if (mode === "edit") {
+            // Utiliser requestAnimationFrame pour s'assurer que le DOM est prêt
+            const timer = setTimeout(() => {
+                if (missionsQuill && !missionsQuill.getText().trim()) {
+                    missionsQuill.clipboard.dangerouslyPasteHTML(0, formData.missions);
+                    setMissionsInitialized(true);
+                }
+            }, 100);
+
+            return () => clearTimeout(timer);
+        }
+    }, [missionsQuill, mode, formData.missions, missionsInitialized]);
+
+    // Charger le contenu dans Responsabilités
+    useEffect(() => {
+        if (!responsabilitesQuill || !formData.responsabilites || responsabilitesInitialized) return;
+        
+        if (mode === "edit") {
+            const timer = setTimeout(() => {
+                if (responsabilitesQuill && !responsabilitesQuill.getText().trim()) {
+                    responsabilitesQuill.clipboard.dangerouslyPasteHTML(0, formData.responsabilites);
+                    setResponsabilitesInitialized(true);
+                }
+            }, 100);
+
+            return () => clearTimeout(timer);
+        }
+    }, [responsabilitesQuill, mode, formData.responsabilites, responsabilitesInitialized]);
+
+    // Charger le contenu dans Objectifs
+    useEffect(() => {
+        if (!objectifsQuill || !formData.objectifsAssignes || objectifsInitialized) return;
+        
+        if (mode === "edit") {
+            const timer = setTimeout(() => {
+                if (objectifsQuill && !objectifsQuill.getText().trim()) {
+                    objectifsQuill.clipboard.dangerouslyPasteHTML(0, formData.objectifsAssignes);
+                    setObjectifsInitialized(true);
+                }
+            }, 100);
+
+            return () => clearTimeout(timer);
+        }
+    }, [objectifsQuill, mode, formData.objectifsAssignes, objectifsInitialized]);
+
+    // ============================================
+    // GESTION DES CHANGEMENTS DANS LES ÉDITEURS
+    // ============================================
+
     // Gérer les changements de Quill pour Missions
     useEffect(() => {
-        if (missionsQuill) {
-            const handleTextChange = () => {
-                const html = missionsQuill.root.innerHTML;
-                setFormData(prev => ({ ...prev, missions: html }));
-            };
+        if (!missionsQuill) return;
 
-            missionsQuill.on('text-change', handleTextChange);
+        const handleTextChange = () => {
+            const html = missionsQuill.root.innerHTML;
+            setFormData(prev => ({ ...prev, missions: html }));
+        };
 
-            // Charger le contenu initial en mode édition
-            if (mode === "edit" && formData.missions && missionsQuill.root.innerHTML !== formData.missions) {
-                missionsQuill.root.innerHTML = formData.missions;
-            }
+        missionsQuill.on('text-change', handleTextChange);
 
-            return () => {
-                missionsQuill.off('text-change', handleTextChange);
-            };
-        }
-    }, [missionsQuill, mode, formData.missions]);
+        return () => {
+            missionsQuill.off('text-change', handleTextChange);
+        };
+    }, [missionsQuill]);
 
     // Gérer les changements de Quill pour Responsabilités
     useEffect(() => {
-        if (responsabilitesQuill) {
-            const handleTextChange = () => {
-                const html = responsabilitesQuill.root.innerHTML;
-                setFormData(prev => ({ ...prev, responsabilites: html }));
-            };
+        if (!responsabilitesQuill) return;
 
-            responsabilitesQuill.on('text-change', handleTextChange);
+        const handleTextChange = () => {
+            const html = responsabilitesQuill.root.innerHTML;
+            setFormData(prev => ({ ...prev, responsabilites: html }));
+        };
 
-            // Charger le contenu initial en mode édition
-            if (mode === "edit" && formData.responsabilites && responsabilitesQuill.root.innerHTML !== formData.responsabilites) {
-                responsabilitesQuill.root.innerHTML = formData.responsabilites;
-            }
+        responsabilitesQuill.on('text-change', handleTextChange);
 
-            return () => {
-                responsabilitesQuill.off('text-change', handleTextChange);
-            };
-        }
-    }, [responsabilitesQuill, mode, formData.responsabilites]);
+        return () => {
+            responsabilitesQuill.off('text-change', handleTextChange);
+        };
+    }, [responsabilitesQuill]);
 
     // Gérer les changements de Quill pour Objectifs
     useEffect(() => {
-        if (objectifsQuill) {
-            const handleTextChange = () => {
-                const html = objectifsQuill.root.innerHTML;
-                setFormData(prev => ({ ...prev, objectifsAssignes: html }));
-            };
+        if (!objectifsQuill) return;
 
-            objectifsQuill.on('text-change', handleTextChange);
+        const handleTextChange = () => {
+            const html = objectifsQuill.root.innerHTML;
+            setFormData(prev => ({ ...prev, objectifsAssignes: html }));
+        };
 
-            // Charger le contenu initial en mode édition
-            if (mode === "edit" && formData.objectifsAssignes && objectifsQuill.root.innerHTML !== formData.objectifsAssignes) {
-                objectifsQuill.root.innerHTML = formData.objectifsAssignes;
-            }
+        objectifsQuill.on('text-change', handleTextChange);
 
-            return () => {
-                objectifsQuill.off('text-change', handleTextChange);
-            };
-        }
-    }, [objectifsQuill, mode, formData.objectifsAssignes]);
+        return () => {
+            objectifsQuill.off('text-change', handleTextChange);
+        };
+    }, [objectifsQuill]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
