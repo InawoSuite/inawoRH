@@ -447,10 +447,8 @@ const EditProfile = () => {
                                                     </Col>
                                                     <Col lg={12}>
                                                         <div className="hstack gap-2 justify-content-end">
-                                                            <button type="button"
-                                                                className="btn btn-secondary rounded-4">Mettre à jour</button>
-                                                            <button type="button"
-                                                                className="btn btn-soft-danger rounded-4">Annuler</button>
+                                                            <Link to="#" className="btn btn-secondary rounded-4">Mettre à jour</Link>
+                                                            <Link to="/:entreprise/candidature-details/:id" className="btn btn-light rounded-4">Annuler</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>
@@ -785,7 +783,7 @@ const EditProfile = () => {
                                                 </div>
                                                 <div className="hstack gap-2 mt-3">
                                                     <Link to="#" className="btn btn-soft-danger rounded-4">Fermer et supprimer ce compte</Link>
-                                                    <Link to="#" className="btn btn-light rounded-4">Annuler</Link>
+                                                    <Link to="/:entreprise/candidature-details/:id" className="btn btn-light rounded-4">Annuler</Link>
                                                 </div>
                                             </div>
                                         </TabPane>

@@ -656,7 +656,7 @@ const PaieEtAvances = () => {
                                         }
                                     }}
                                 >
-                                    <i className="ri-file-download-line fs-16"></i>
+                                    <i className="ri-download-2-fill fs-16"></i>
                                 </Link>
                                 <Link
                                     to="#"
