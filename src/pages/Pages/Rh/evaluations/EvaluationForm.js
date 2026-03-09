@@ -750,7 +750,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                       <Button
                         color="primary"
                         onClick={addQuiz}
-                        className="rounded-4"
+                        className="rounded-5"
                       >
                         {t("Ajouter un quiz")}
                       </Button>
@@ -873,7 +873,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                 color="success"
                                 size="sm"
                                 onClick={() => addQuestion(quizIndex)}
-                                className="rounded-4"
+                                className="rounded-5"
                               >
                                 {t("Ajouter une question")}
                               </Button>
@@ -1005,7 +1005,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                             color="primary"
                                             outline
                                             size="sm"
-                                            className="rounded-4"
+                                            className="rounded-5"
                                             onClick={() =>
                                               document
                                                 .getElementById(
@@ -1025,7 +1025,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                               color="danger"
                                               outline
                                               size="sm"
-                                              className="rounded-4"
+                                              className="rounded-5"
                                               onClick={() =>
                                                 handleQuestionChange(
                                                   quizIndex,
@@ -1059,7 +1059,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                         onClick={() =>
                                           addOption(quizIndex, questionIndex)
                                         }
-                                        className="rounded-4 px-3"
+                                        className="rounded-5 px-3"
                                         style={{
                                           backgroundColor: "#405189",
                                           borderColor: "#405189",
@@ -1602,22 +1602,24 @@ const EvaluationForm = ({ mode = "add" }) => {
                     <Col md={12}>
                       <div className="d-flex justify-content-end gap-2">
                         <Button
-                          className="btn btn-light rounded-4"
+                          className="btn btn-secondary rounded-5"
                           type="button"
-                          style={{ borderRadius: "20px", padding: "10px 30px" }}
+                          style={{ borderRadius: "70px", padding: "10px 30px" }}
                           onClick={() => navigate("/:entreprise/evaluation")}
                         >
                           {t("Annuler")}
                         </Button>
-                        <Button
-                          className="btn btn-success rounded-4"
+                        <Link
+                          to="#"
                           type="submit"
-                          style={{ borderRadius: "20px", padding: "10px 30px" }}
+                          className="btn btn-primary rounded-5"
+                          style={{ borderRadius: "70px", padding: "10px 30px" }}
                         >
                           {mode === "add"
                             ? t("Créer la campagne")
-                            : t("Mettre à jour")}
-                        </Button>
+                            : t("Mettre à jour")
+                          }
+                        </Link>
                       </div>
                     </Col>
                   </Row>

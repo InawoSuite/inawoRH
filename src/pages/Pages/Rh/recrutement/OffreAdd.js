@@ -9,6 +9,7 @@ import {
     Label,
     Row,
     FormGroup,
+    Button,
 } from "reactstrap";
 import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 import { CustomSelect } from "../../../../Components/Common/CustomSelectStyles";
@@ -459,20 +460,22 @@ const OffreAdd = () => {
                                             {/* Boutons */}
                                             <Col lg={12}>
                                                 <div className="hstack justify-content-end gap-2">
-                                                    <button
+                                                    <Button
+                                                        className="btn btn-secondary rounded-5"
                                                         type="button"
-                                                        className="btn btn-light rounded-4"
+                                                        style={{ borderRadius: "70px", padding: "10px 30px" }}
                                                         onClick={() => navigate("/:entreprise/recrutements")}
                                                     >
                                                         {t("Annuler")}
-                                                    </button>
-                                                    <button
-                                                        style={{ borderRadius: "20px" }}
+                                                    </Button>
+                                                    <Link
+                                                        to="#"
                                                         type="submit"
-                                                        className="btn btn-success rounded-4"
+                                                        className="btn btn-primary rounded-5"
+                                                        style={{ borderRadius: "70px", padding: "10px 30px" }}
                                                     >
                                                         {t("Ajouter l'offre d'emploi")}
-                                                    </button>
+                                                    </Link>
                                                 </div>
                                             </Col>
                                         </Row>

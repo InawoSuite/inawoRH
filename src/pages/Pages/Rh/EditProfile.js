@@ -465,11 +465,8 @@ const EditProfile = () => {
                                                     </Col>
                                                     <Col lg={12}>
                                                         <div className="hstack gap-2 justify-content-end">
-                                                            <button type="button" className="btn btn-secondary rounded-4">
-                                                                {tr("Mettre à jour", "Update")}
-                                                            </button>
-                                                            <button type="button"
-                                                                className="btn btn-soft-danger rounded-4">{tr("Annuler", "Cancel")}</button>
+                                                            <Link to="#" className="btn btn-secondary rounded-4">{tr("Mettre à jour", "Update")}</Link>
+                                                            <Link to="/:entreprise/candidature-details/:id" className="btn btn-light rounded-4">{tr("Annuler", "Cancel")}</Link>
                                                         </div>
                                                     </Col>
                                                 </Row>

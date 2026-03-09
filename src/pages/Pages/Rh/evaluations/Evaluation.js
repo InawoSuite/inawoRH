@@ -686,15 +686,22 @@ const Evaluation = () => {
                         )}
                     </ModalBody>
                     <ModalFooter className="border-0 pb-4">
-                        <Button
-                            className="rounded-4"
+                        <Button 
+                            className="rounded-5"
                             color="secondary"
                             onClick={() => toggleViewModal()}
                         >
                             {t("Fermer")}
                         </Button>
-                    </ModalFooter >
-                </Modal >
+                        <Link
+                            to="/:entreprise/evaluation-edit/:id"
+                            className="btn btn-primary rounded-5 px-4"
+                            style={{ borderRadius: "70px" }}
+                        >
+                            {t("Modifier")}
+                        </Link>
+                    </ModalFooter>
+                </Modal>
 
                 {/* MODAL DE SUPPRESSION */}
                 < DeleteModal
