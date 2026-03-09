@@ -1619,7 +1619,7 @@ const Contrat = () => {
             size: (folder && folder.size) || '',
         },
         validationSchema: Yup.object({
-            folderName: Yup.string().required("Veuillez saisir le nom du dossier"),
+            folderName: Yup.string().required(t("Veuillez saisir le nom du dossier")),
         }),
         onSubmit: (values) => {
             if (isEdit) {
@@ -1667,7 +1667,7 @@ const Contrat = () => {
             size: (file && file.size) || '',
         },
         validationSchema: Yup.object({
-            fileName: Yup.string().required("Veuillez saisir le nom du fichier"),
+            fileName: Yup.string().required(t("Veuillez saisir le nom du fichier")),
         }),
         onSubmit: (values) => {
             if (isEdit) {
@@ -2033,7 +2033,7 @@ const Contrat = () => {
                                 <div id="file-overview" className="h-100" style={{ display: 'none' }}>
                                     <div className="d-flex h-100 flex-column">
                                         <div className="d-flex align-items-center pb-3 border-bottom border-bottom-dashed mb-3 gap-2">
-                                            <h5 className="flex-grow-1 fw-semibold mb-0">Aperçu du fichier</h5>
+                                            <h5 className="flex-grow-1 fw-semibold mb-0">{t("Aperçu du fichier")}</h5>
                                             <div>
                                                 <button type="button" className="btn btn-ghost-primary btn-icon btn-sm fs-16 favourite-btn rounded-pill">
                                                     <i className="ri-star-fill align-bottom"></i>
@@ -2055,29 +2055,29 @@ const Contrat = () => {
                                             <p className="text-muted mb-0 fs-12"><span className="file-size">{sidebarData.size}</span>, <span className="create-date">{sidebarData.createDate}</span></p>
                                         </div>
                                         <div>
-                                            <h5 className="fs-12 text-uppercase text-muted mb-3">Description du fichier :</h5>
+                                            <h5 className="fs-12 text-uppercase text-muted mb-3">{t("Description du fichier")} :</h5>
 
                                             <div className="table-responsive">
                                                 <table className="table table-borderless table-nowrap table-sm">
                                                     <tbody>
                                                         <tr>
-                                                            <th scope="row" style={{ width: "35%" }}>Nom du fichier :</th>
+                                                            <th scope="row" style={{ width: "35%" }}>{t("Nom du fichier")} :</th>
                                                             <td className="file-name">{sidebarData.fileName}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">Type de fichier :</th>
+                                                            <th scope="row">{t("Type de fichier")} :</th>
                                                             <td className="file-type">{sidebarData.fileType}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">Taille :</th>
+                                                            <th scope="row">{t("Taille")} :</th>
                                                             <td className="file-size">{sidebarData.size}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">Créé le :</th>
+                                                            <th scope="row">{t("Créé le")} :</th>
                                                             <td className="create-date">{sidebarData.createDate}</td>
                                                         </tr>
                                                         <tr>
-                                                            <th scope="row">Chemin :</th>
+                                                            <th scope="row">{t("Chemin")} :</th>
                                                             <td className="file-path"><div className="user-select-all text-truncate">*:\projects\src\assets\images</div></td>
                                                         </tr>
                                                     </tbody>
@@ -2085,16 +2085,16 @@ const Contrat = () => {
                                             </div>
 
                                             <div>
-                                                <h5 className="fs-12 text-uppercase text-muted mb-3">Informations de partage :</h5>
+                                                <h5 className="fs-12 text-uppercase text-muted mb-3">{t("Informations de partage")} :</h5>
                                                 <div className="table-responsive">
                                                     <table className="table table-borderless table-nowrap table-sm">
                                                         <tbody>
                                                             <tr>
-                                                                <th scope="row" style={{ width: "35%" }}>Nom du partage :</th>
+                                                                <th scope="row" style={{ width: "35%" }}>{t("Nom du partage")} :</th>
                                                                 <td className="share-name">\\*\Projects</td>
                                                             </tr>
                                                             <tr>
-                                                                <th scope="row">Chemin du partage :</th>
+                                                                <th scope="row">{t("Chemin du partage")} :</th>
                                                                 <td className="share-path">velzon:\Documents\</td>
                                                             </tr>
                                                         </tbody>
@@ -2105,8 +2105,8 @@ const Contrat = () => {
 
                                         <div className="mt-auto border-top border-top-dashed py-3">
                                             <div className="hstack gap-2">
-                                                <button type="button" className="btn btn-soft-primary w-100 rounded-pill"><i className="ri-download-2-line align-bottom me-1"></i> Télécharger</button>
-                                                <button type="button" className="btn btn-soft-danger w-100 remove-file-overview rounded-pill" onClick={() => onClickFileDelete(sidebarData)}><i className="ri-close-fill align-bottom me-1"></i> Supprimer</button>
+                                                <button type="button" className="btn btn-soft-primary w-100 rounded-pill"><i className="ri-download-2-line align-bottom me-1"></i> {t("Télécharger")}</button>
+                                                <button type="button" className="btn btn-soft-danger w-100 remove-file-overview rounded-pill" onClick={() => onClickFileDelete(sidebarData)}><i className="ri-close-fill align-bottom me-1"></i> {t("Supprimer")}</button>
                                             </div>
                                         </div>
                                     </div>
@@ -2119,7 +2119,7 @@ const Contrat = () => {
 
             {/* Folder Modal */}
             <Modal className="fade zoomIn" isOpen={modalFolder} toggle={() => setModalFolder(!modalFolder)} id="createFolderModal" modalClassName="zoomIn" contentClassName="rounded-4 border-0" centered tabIndex="-1">
-                <ModalHeader className="p-3 bg-success-subtle rounded-top-4" id="createFolderModalLabel" toggle={() => setModalFolder(!modalFolder)}> {isEdit ? "Renommer le dossier" : "Créer un dossier"} </ModalHeader>
+                <ModalHeader className="p-3 bg-success-subtle rounded-top-4" id="createFolderModalLabel" toggle={() => setModalFolder(!modalFolder)}> {isEdit ? t("Renommer le dossier") : t("Créer un dossier")} </ModalHeader>
                 <ModalBody>
                     <form autoComplete="off" className="needs-validation createfolder-form" id="createfolder-form" noValidate=""
                         onSubmit={(e) => {
@@ -2129,10 +2129,10 @@ const Contrat = () => {
                         }}
                     >
                         <div className="mb-4">
-                            <label htmlFor="foldername-input" className="form-label">Nom du dossier</label>
+                            <label htmlFor="foldername-input" className="form-label">{t("Nom du dossier")}</label>
                             <input type="text" className="form-control rounded-pill" id="foldername-input"
                                 name='folderName'
-                                placeholder="Saisir le nom du dossier"
+                                placeholder={t("Saisir le nom du dossier")}
                                 // validate={{
                                 //     required: { value: true },
                                 // }}

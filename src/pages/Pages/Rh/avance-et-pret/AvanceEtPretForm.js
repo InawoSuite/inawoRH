@@ -295,20 +295,21 @@ const AvanceEtPretForm = ({ mode = "add" }) => {
                                         <Col md={12}>
                                             <div className="d-flex justify-content-end gap-2">
                                                 <Button
-                                                    className="btn btn-light rounded-4"
+                                                    className="btn btn-secondary rounded-5"
                                                     type="button"
-                                                    style={{ borderRadius: "20px", padding: "10px 30px" }}
+                                                    style={{ borderRadius: "70px", padding: "10px 30px" }}
                                                     onClick={() => navigate(-1)}
                                                 >
                                                     {t("Annuler")}
                                                 </Button>
-                                                <Button
-                                                    className="btn btn-success rounded-4"
+                                                <Link
+                                                    to="#"
                                                     type="submit"
-                                                    style={{ borderRadius: "20px", padding: "10px 30px" }}
+                                                    className="btn btn-primary rounded-5"
+                                                    style={{ borderRadius: "70px", padding: "10px 30px" }}
                                                 >
                                                     {mode === "add" ? t("Enregistrer") : t("Mettre à jour")}
-                                                </Button>
+                                                </Link>
                                             </div>
                                         </Col>
                                     </Row>

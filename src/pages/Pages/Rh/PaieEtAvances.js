@@ -1050,31 +1050,31 @@ const PaieEtAvances = () => {
                     </ModalBody>
 
                     <ModalFooter className="border-0 pt-0 pb-4 px-4">
+                        <Button
+                            color="secondary"
+                            onClick={() => toggleViewModal()}
+                            className="rounded-5 px-4"
+                        >
+                            {t("Fermer")}
+                        </Button>
                         {activeTab === "1" ? (
                             <Link
                                 to={`/${entreprise}/fiche-edit/${selectedItem?.id}`}
-                                className="btn btn-primary rounded-4 px-4"
-                                style={{ borderRadius: "20px" }}
+                                className="btn btn-primary rounded-5 px-4"
+                                style={{ borderRadius: "70px" }}
                             >
-                                Modifier
+                                {t("Modifier")}
                             </Link>
                         ) : (
                             <Link
                                 to={`/${entreprise}/avance-et-pret-edit/${selectedItem?.id}`}
-                                className="btn btn-primary rounded-4 px-4"
-                                style={{ borderRadius: "20px" }}
+                                className="btn btn-primary rounded-5 px-4"
+                                style={{ borderRadius: "70px" }}
                             >
-                                Modifier
+                                {t("Modifier")}
                             </Link>
                         )}
-                        <Button
-                            color="secondary"
-                            onClick={() => toggleViewModal()}
-                            className="rounded-4 px-4"
-                        >
-                            <i className="ri-close-line me-1"></i>
-                            {t("Fermer")}
-                        </Button>
+                        
                     </ModalFooter>
                 </Modal>
             </Container>

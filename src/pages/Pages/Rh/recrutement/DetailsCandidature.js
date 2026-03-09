@@ -3,6 +3,7 @@ import { Card, CardBody, CardHeader, Col, Container, Row, Nav, NavItem, NavLink,
 import { Link } from 'react-router-dom';
 import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 import classnames from "classnames";
+import { useTranslation } from "react-i18next";
 
 import progileBg from "../../../../assets/images/profile-bg.jpg";
 import avatar1 from "../../../../assets/images/users/avatar-1.jpg";
@@ -30,7 +31,7 @@ const USER_DATA = {
 };
 
 const SKILLS = [
-    "Photoshop", "Illustrator", "HTML", "CSS", 
+    "Photoshop", "Illustrator", "HTML", "CSS",
     "JavaScript", "PHP", "Python", "React", "Node.js"
 ];
 
@@ -42,27 +43,27 @@ const SUGGESTIONS = [
 ];
 
 const POPULAR_POSTS = [
-    { 
-        id: 1, 
-        title: "10 conseils de design UI pour débutants", 
+    {
+        id: 1,
+        title: "10 conseils de design UI pour débutants",
         image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
         date: "15 janv. 2024",
         author: "Anna Adame",
         likes: 234,
         comments: 45
     },
-    { 
-        id: 2, 
-        title: "Meilleures pratiques React 2024", 
+    {
+        id: 2,
+        title: "Meilleures pratiques React 2024",
         image: "https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
         date: "12 janv. 2024",
         author: "Anna Adame",
         likes: 189,
         comments: 32
     },
-    { 
-        id: 3, 
-        title: "Maîtriser les composants Figma", 
+    {
+        id: 3,
+        title: "Maîtriser les composants Figma",
         image: "https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?ixlib=rb-1.2.1&auto=format&fit=crop&w=200&q=80",
         date: "8 janv. 2024",
         author: "Anna Adame",
@@ -102,11 +103,12 @@ const DOCUMENTS = [
 ];
 
 const ProfileHeader = ({ user }) => {
+    const { t } = useTranslation();
     return (
         <>
             <div className="profile-foreground position-relative mx-n4 mt-n4">
                 <div className="profile-wid-bg">
-                    <img src={progileBg} className="profile-wid-img" alt="Fond de profil" />
+                    <img src={progileBg} className="profile-wid-img" alt={t("Fond de profil")} />
                 </div>
             </div>
             <div className="pt-4 mb-4 mb-lg-3 pb-lg-4 profile-wrapper">
@@ -119,11 +121,11 @@ const ProfileHeader = ({ user }) => {
                     <div className="col">
                         <div className="p-2">
                             <h1 className="text-white mb-1 fs-2">{user.name}</h1>
-                            <p className="text-white fs-5">{user.role}</p>
+                            <p className="text-white fs-5">{t(user.role)}</p>
                             <div className="hstack text-white gap-1">
                                 <div className="me-2">
                                     <i className="ri-map-pin-user-line me-1 text-white text-opacity-75 fs-16 align-middle" />
-                                    {user.location}
+                                    {t(user.location)}
                                 </div>
                                 <div>
                                     <i className="ri-building-line me-1 text-opacity-75 text-white fs-16 align-middle" />
@@ -137,13 +139,13 @@ const ProfileHeader = ({ user }) => {
                             <div className="col-lg-6 col-4">
                                 <div className="p-2">
                                     <h4 className="text-white mb-1">{user.followers}</h4>
-                                    <p className="text-white-50 mb-0">Abonnés</p>
+                                    <p className="text-white-50 mb-0">{t("Abonnés")}</p>
                                 </div>
                             </div>
                             <div className="col-lg-6 col-4">
                                 <div className="p-2">
                                     <h4 className="text-white mb-1">{user.following}</h4>
-                                    <p className="text-white-50 mb-0">Abonnements</p>
+                                    <p className="text-white-50 mb-0">{t("Abonnements")}</p>
                                 </div>
                             </div>
                         </div>
@@ -156,28 +158,30 @@ const ProfileHeader = ({ user }) => {
 
 const OptionDropdown = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
-    
+    const { t } = useTranslation();
+
     return (
         <Dropdown isOpen={dropdownOpen} toggle={() => setDropdownOpen(!dropdownOpen)} direction="start">
             <DropdownToggle tag="button" className="btn btn-soft-secondary rounded-4 btn-sm">
                 <i className="ri-more-fill"></i>
             </DropdownToggle>
             <DropdownMenu>
-                <DropdownItem><i className="ri-eye-line me-2"></i>Voir</DropdownItem>
-                <DropdownItem><i className="ri-pencil-line me-2"></i>Modifier</DropdownItem>
-                <DropdownItem><i className="ri-delete-bin-line me-2"></i>Supprimer</DropdownItem>
+                <DropdownItem><i className="ri-eye-line me-2"></i>{t("Voir")}</DropdownItem>
+                <DropdownItem><i className="ri-pencil-line me-2"></i>{t("Modifier")}</DropdownItem>
+                <DropdownItem><i className="ri-delete-bin-line me-2"></i>{t("Supprimer")}</DropdownItem>
             </DropdownMenu>
         </Dropdown>
     );
 };
 
 const CompleteProfileCard = () => {
+    const { t } = useTranslation();
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
-                        <h5 className="card-title mb-0">Complétez votre profil</h5>
+                        <h5 className="card-title mb-0">{t("Complétez votre profil")}</h5>
                     </div>
                 </div>
                 <div className="progress animated-progress custom-progress progress-label mb-3">
@@ -186,37 +190,37 @@ const CompleteProfileCard = () => {
                         <div className="label">30%</div>
                     </div>
                 </div>
-                
-                <h6 className="mt-4 mb-3">Informations personnelles</h6>
+
+                <h6 className="mt-4 mb-3">{t("Informations personnelles")}</h6>
                 <Row>
                     <Col md={6}>
                         <div className="mb-3">
-                            <Label className="form-label text-muted">Nom complet</Label>
+                            <Label className="form-label text-muted">{t("Nom complet")}</Label>
                             <p className="fw-semibold">{USER_DATA.fullName}</p>
                         </div>
                     </Col>
                     <Col md={6}>
                         <div className="mb-3">
-                            <Label className="form-label text-muted">Téléphone</Label>
+                            <Label className="form-label text-muted">{t("Téléphone")}</Label>
                             <p className="fw-semibold">{USER_DATA.mobile}</p>
                         </div>
                     </Col>
                     <Col md={6}>
                         <div className="mb-3">
-                            <Label className="form-label text-muted">Email</Label>
+                            <Label className="form-label text-muted">{t("Email")}</Label>
                             <p className="fw-semibold">{USER_DATA.email}</p>
                         </div>
                     </Col>
                     <Col md={6}>
                         <div className="mb-3">
-                            <Label className="form-label text-muted">Localisation</Label>
-                            <p className="fw-semibold">{USER_DATA.location}</p>
+                            <Label className="form-label text-muted">{t("Localisation")}</Label>
+                            <p className="fw-semibold">{t(USER_DATA.location)}</p>
                         </div>
                     </Col>
                     <Col md={6}>
                         <div className="mb-3">
-                            <Label className="form-label text-muted">Date d'arrivée</Label>
-                            <p className="fw-semibold">{USER_DATA.joiningDate}</p>
+                            <Label className="form-label text-muted">{t("Date d'arrivée")}</Label>
+                            <p className="fw-semibold">{t(USER_DATA.joiningDate)}</p>
                         </div>
                     </Col>
                 </Row>
@@ -226,6 +230,7 @@ const CompleteProfileCard = () => {
 };
 
 const PortfolioCard = () => {
+    const { t } = useTranslation();
     const links = [
         { icon: "ri-github-fill", bg: "dark", color: "light" },
         { icon: "ri-global-fill", bg: "primary", color: "white" },
@@ -238,7 +243,7 @@ const PortfolioCard = () => {
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
-                        <h5 className="card-title mb-0">Portfolio</h5>
+                        <h5 className="card-title mb-0">{t("Portfolio")}</h5>
                     </div>
                 </div>
                 <div className="mb-3 d-flex flex-wrap gap-2">
@@ -256,12 +261,13 @@ const PortfolioCard = () => {
 };
 
 const SkillsCard = ({ skills }) => {
+    const { t } = useTranslation();
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
-                        <h5 className="card-title mb-0">Compétences</h5>
+                        <h5 className="card-title mb-0">{t("Compétences")}</h5>
                     </div>
                     <OptionDropdown />
                 </div>
@@ -278,12 +284,13 @@ const SkillsCard = ({ skills }) => {
 };
 
 const SuggestionsCard = ({ suggestions }) => {
+    const { t } = useTranslation();
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
-                        <h5 className="card-title mb-0">Suggestions</h5>
+                        <h5 className="card-title mb-0">{t("Suggestions")}</h5>
                     </div>
                     <OptionDropdown />
                 </div>
@@ -295,7 +302,7 @@ const SuggestionsCard = ({ suggestions }) => {
                             </div>
                             <div className="flex-grow-1 ms-2">
                                 <h6 className="mb-0">{suggestion.name}</h6>
-                                <p className="text-muted mb-0 small">{suggestion.role} • {suggestion.mutual} en commun</p>
+                                <p className="text-muted mb-0 small">{t(suggestion.role)} • {suggestion.mutual} {t("en commun")}</p>
                             </div>
                             <Button className="rounded-4" color="soft-primary" size="sm">
                                 <i className="ri-add-line"></i>
@@ -309,27 +316,28 @@ const SuggestionsCard = ({ suggestions }) => {
 };
 
 const PopularPostsCard = ({ posts }) => {
+    const { t } = useTranslation();
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardBody>
                 <div className="d-flex align-items-center mb-4">
                     <div className="flex-grow-1">
-                        <h5 className="card-title mb-0">Articles populaires</h5>
+                        <h5 className="card-title mb-0">{t("Articles populaires")}</h5>
                     </div>
                     <OptionDropdown />
                 </div>
                 <div className="mb-3">
                     {posts.map(post => (
-                        <a 
-                            href="#!" 
-                            key={post.id} 
+                        <a
+                            href="#!"
+                            key={post.id}
                             className="text-decoration-none text-body"
                             onClick={(e) => e.preventDefault()}
                         >
                             <div className="d-flex align-items-center mb-3 pb-2 border-bottom">
                                 <div className="flex-shrink-0">
-                                    <img 
-                                        src={post.image} 
+                                    <img
+                                        src={post.image}
                                         alt={post.title}
                                         className="rounded-3"
                                         style={{ width: "70px", height: "70px", objectFit: "cover" }}
@@ -364,15 +372,22 @@ const PopularPostsCard = ({ posts }) => {
 };
 
 const AboutSection = ({ user }) => {
+    const { t, i18n } = useTranslation();
+    const aboutText = (i18n.language || "fr").startsWith("en")
+        ? "Hello, I am Anna Adame. It will be as simple as Western; in fact, it will be Western. For an English speaker, it will look like simplified English, as a skeptical friend from Cambridge told me about what Western is: European languages are members of the same family."
+        : user.about;
+    const aboutExtendedText = (i18n.language || "fr").startsWith("en")
+        ? "You always want to make sure your fonts work well together and try to limit the number of fonts you use to three or fewer. Experiment and play with the fonts you already have in your software using reputable font websites."
+        : user.aboutExtended;
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardHeader className="rounded-top-4">
-                <h5 className="card-title mb-0">À propos</h5>
+                <h5 className="card-title mb-0">{t("À propos")}</h5>
             </CardHeader>
             <CardBody>
-                <p className="text-muted mb-3">{user.about}</p>
-                <p className="text-muted mb-4">{user.aboutExtended}</p>
-                
+                <p className="text-muted mb-3">{aboutText}</p>
+                <p className="text-muted mb-4">{aboutExtendedText}</p>
+
                 <div className="row">
                     <div className="col-6 col-md-4">
                         <div className="d-flex mt-2">
@@ -382,8 +397,8 @@ const AboutSection = ({ user }) => {
                                 </div>
                             </div>
                             <div className="flex-grow-1 overflow-hidden">
-                                <p className="mb-1">Poste :</p>
-                                <h6 className="text-truncate mb-0">{user.designation}</h6>
+                                <p className="mb-1">{t("Poste")} :</p>
+                                <h6 className="text-truncate mb-0">{t(user.designation)}</h6>
                             </div>
                         </div>
                     </div>
@@ -395,7 +410,7 @@ const AboutSection = ({ user }) => {
                                 </div>
                             </div>
                             <div className="flex-grow-1 overflow-hidden">
-                                <p className="mb-1">Site web :</p>
+                                <p className="mb-1">{t("Site web")} :</p>
                                 <a href={`https://${user.website}`} className="fw-semibold" target="_blank" rel="noopener noreferrer">
                                     {user.website}
                                 </a>
@@ -410,9 +425,10 @@ const AboutSection = ({ user }) => {
 
 const RecentActivityCard = ({ activities }) => {
     const [filter, setFilter] = useState("monthly");
-    
+    const { t } = useTranslation();
+
     const getFilteredActivities = () => {
-        switch(filter) {
+        switch (filter) {
             case "daily":
                 return activities.slice(0, 2);
             case "weekly":
@@ -423,36 +439,36 @@ const RecentActivityCard = ({ activities }) => {
                 return activities;
         }
     };
-    
+
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardHeader className="d-flex align-items-center rounded-top-4">
-                <h5 className="card-title mb-0 flex-grow-1">Activité récente</h5>
+                <h5 className="card-title mb-0 flex-grow-1">{t("Activité récente")}</h5>
                 <div className="flex-shrink-0">
                     <div className="btn-group" role="group">
                         <Button
-                            color="soft-primary" 
+                            color="soft-primary"
                             size="sm"
                             className={filter === "daily" ? "active" : ""}
                             onClick={() => setFilter("daily")}
                         >
-                            Jour
+                            {t("Jour")}
                         </Button>
-                        <Button 
-                            color="soft-primary" 
+                        <Button
+                            color="soft-primary"
                             size="sm"
                             className={filter === "weekly" ? "active" : ""}
                             onClick={() => setFilter("weekly")}
                         >
-                            Semaine
+                            {t("Semaine")}
                         </Button>
                         <Button
-                            color="soft-primary" 
+                            color="soft-primary"
                             size="sm"
                             className={filter === "monthly" ? "active" : ""}
                             onClick={() => setFilter("monthly")}
                         >
-                            Mois
+                            {t("Mois")}
                         </Button>
                     </div>
                 </div>
@@ -467,10 +483,10 @@ const RecentActivityCard = ({ activities }) => {
                         </div>
                         <div className="flex-grow-1 ms-3">
                             <h6 className="mb-1">
-                                <span className="fw-semibold">{activity.user}</span> {activity.action}{' '}
-                                <span className="fw-semibold text-primary">{activity.project}</span>
+                                <span className="fw-semibold">{activity.user}</span> {t(activity.action)}{' '}
+                                <span className="fw-semibold text-primary">{t(activity.project)}</span>
                             </h6>
-                            <p className="text-muted mb-0">{activity.time}</p>
+                            <p className="text-muted mb-0">{t(activity.time)}</p>
                         </div>
                     </div>
                 ))}
@@ -482,28 +498,29 @@ const RecentActivityCard = ({ activities }) => {
 const ProjectsOverviewCard = ({ projects }) => {
     const [currentPage, setCurrentPage] = useState(0);
     const projectsPerPage = 3;
-    
+    const { t } = useTranslation();
+
     const nextPage = () => {
         if ((currentPage + 1) * projectsPerPage < projects.length) {
             setCurrentPage(currentPage + 1);
         }
     };
-    
+
     const prevPage = () => {
         if (currentPage > 0) {
             setCurrentPage(currentPage - 1);
         }
     };
-    
+
     const displayedProjects = projects.slice(
         currentPage * projectsPerPage,
         (currentPage + 1) * projectsPerPage
     );
-    
+
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardHeader className="d-flex rounded-top-4 align-items-center">
-                <h5 className="card-title mb-0 flex-grow-1">Projets</h5>
+                <h5 className="card-title mb-0 flex-grow-1">{t("Projets")}</h5>
                 <div className="flex-shrink-0">
                     <div className="btn-group" role="group">
                         <Button color="soft-primary" size="sm" onClick={prevPage} disabled={currentPage === 0}>
@@ -523,16 +540,16 @@ const ProjectsOverviewCard = ({ projects }) => {
                                 <CardBody>
                                     <div className="d-flex mb-3">
                                         <div className="flex-grow-1">
-                                            <h6 className="mb-1">{project.name}</h6>
+                                            <h6 className="mb-1">{t(project.name)}</h6>
                                             <Badge color={project.color} className="mt-1">
-                                                {project.status}
+                                                {t(project.status)}
                                             </Badge>
                                         </div>
                                         <OptionDropdown />
                                     </div>
                                     <div className="mb-3">
                                         <div className="d-flex justify-content-between mb-2">
-                                            <span>Progression</span>
+                                            <span>{t("Progression")}</span>
                                             <span>{project.progress}%</span>
                                         </div>
                                         <div className="progress" style={{ height: "5px" }}>
@@ -543,12 +560,12 @@ const ProjectsOverviewCard = ({ projects }) => {
                                         <div className="avatar-group flex-grow-1">
                                             {project.members.map((member, idx) => (
                                                 <div key={idx} className="avatar-group-item">
-                                                    <img src={member} alt="Membre" className="avatar-xs rounded-circle" />
+                                                    <img src={member} alt={t("Membre")} className="avatar-xs rounded-circle" />
                                                 </div>
                                             ))}
                                         </div>
                                         <div>
-                                            <Badge color="light" pill>12 tâches</Badge>
+                                            <Badge color="light" pill>{t("12 tâches")}</Badge>
                                         </div>
                                     </div>
                                 </CardBody>
@@ -562,10 +579,11 @@ const ProjectsOverviewCard = ({ projects }) => {
 };
 
 const ActivitiesTab = ({ activities }) => {
+    const { t } = useTranslation();
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardHeader className="rounded-top-4">
-                <h5 className="card-title mb-0">Activités</h5>
+                <h5 className="card-title mb-0">{t("Activités")}</h5>
             </CardHeader>
             <CardBody>
                 {activities.map(activity => (
@@ -577,12 +595,12 @@ const ActivitiesTab = ({ activities }) => {
                         </div>
                         <div className="flex-grow-1 ms-3">
                             <h6 className="mb-1">
-                                <span className="fw-semibold">{activity.user}</span> {activity.action}{' '}
-                                <span className="fw-semibold text-primary">{activity.project}</span>
+                                <span className="fw-semibold">{activity.user}</span> {t(activity.action)}{' '}
+                                <span className="fw-semibold text-primary">{t(activity.project)}</span>
                             </h6>
                             <p className="text-muted mb-0">
                                 <i className="ri-time-line me-1"></i>
-                                {activity.time}
+                                {t(activity.time)}
                             </p>
                         </div>
                     </div>
@@ -593,13 +611,14 @@ const ActivitiesTab = ({ activities }) => {
 };
 
 const ProjectsTab = ({ projects }) => {
+    const { t } = useTranslation();
     return (
         <>
             <div className="d-flex align-items-center mb-4">
-                <h5 className="card-title mb-0 flex-grow-1">Projets (12)</h5>
+                <h5 className="card-title mb-0 flex-grow-1">{t("Projets")} (12)</h5>
                 <div className="flex-shrink-0">
                     <Button className="rounded-4" color="soft-primary" size="sm">
-                        <i className="ri-filter-3-line me-1"></i>Filtrer
+                        <i className="ri-filter-3-line me-1"></i>{t("Filtrer")}
                     </Button>
                 </div>
             </div>
@@ -610,16 +629,16 @@ const ProjectsTab = ({ projects }) => {
                             <CardBody>
                                 <div className="d-flex mb-3">
                                     <div className="flex-grow-1">
-                                        <h6 className="mb-1">{project.name}</h6>
+                                        <h6 className="mb-1">{t(project.name)}</h6>
                                         <Badge color={project.color} className="mt-1">
-                                            {project.status}
+                                            {t(project.status)}
                                         </Badge>
                                     </div>
                                     <OptionDropdown />
                                 </div>
                                 <div className="mb-3">
                                     <div className="d-flex justify-content-between mb-2">
-                                        <span>Progression</span>
+                                        <span>{t("Progression")}</span>
                                         <span>{project.progress}%</span>
                                     </div>
                                     <div className="progress" style={{ height: "5px" }}>
@@ -630,12 +649,12 @@ const ProjectsTab = ({ projects }) => {
                                     <div className="avatar-group flex-grow-1">
                                         {project.members.map((member, idx) => (
                                             <div key={idx} className="avatar-group-item">
-                                                <img src={member} alt="Membre" className="avatar-xs rounded-circle" />
+                                                <img src={member} alt={t("Membre")} className="avatar-xs rounded-circle" />
                                             </div>
                                         ))}
                                     </div>
                                     <div>
-                                        <Badge color="light" pill>12 tâches</Badge>
+                                        <Badge color="light" pill>{t("12 tâches")}</Badge>
                                     </div>
                                 </div>
                             </CardBody>
@@ -648,24 +667,25 @@ const ProjectsTab = ({ projects }) => {
 };
 
 const DocumentsTab = ({ documents }) => {
+    const { t } = useTranslation();
     const handleAction = (action, doc) => {
         console.log(`${action} document:`, doc);
     };
-    
+
     return (
         <Card className="rounded-4 border-0 shadow-sm">
             <CardHeader className="rounded-top-4">
-                <h5 className="card-title mb-0">Documents</h5>
+                <h5 className="card-title mb-0">{t("Documents")}</h5>
             </CardHeader>
             <CardBody>
                 <Table responsive className="align-middle">
                     <thead>
                         <tr>
-                            <th>Nom du fichier</th>
-                            <th>Type</th>
-                            <th>Taille</th>
-                            <th>Date d'upload</th>
-                            <th>Action</th>
+                            <th>{t("Nom du fichier")}</th>
+                            <th>{t("Type")}</th>
+                            <th>{t("Taille")}</th>
+                            <th>{t("Date d'upload")}</th>
+                            <th>{t("Action")}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -677,7 +697,7 @@ const DocumentsTab = ({ documents }) => {
                                         {doc.name}
                                     </div>
                                 </td>
-                                <td>{doc.type}</td>
+                                <td>{t(doc.type)}</td>
                                 <td>{doc.size}</td>
                                 <td>{doc.date}</td>
                                 <td>
@@ -687,14 +707,14 @@ const DocumentsTab = ({ documents }) => {
                                         </DropdownToggle>
                                         <DropdownMenu>
                                             <DropdownItem onClick={() => handleAction('view', doc)}>
-                                                <i className="ri-eye-line me-2"></i>Voir
+                                                <i className="ri-eye-line me-2"></i>{t("Voir")}
                                             </DropdownItem>
                                             <DropdownItem onClick={() => handleAction('download', doc)}>
-                                                <i className="ri-download-line me-2"></i>Télécharger
+                                                <i className="ri-download-line me-2"></i>{t("Télécharger")}
                                             </DropdownItem>
                                             <DropdownItem divider />
                                             <DropdownItem className="text-danger" onClick={() => handleAction('delete', doc)}>
-                                                <i className="ri-delete-bin-line me-2"></i>Supprimer
+                                                <i className="ri-delete-bin-line me-2"></i>{t("Supprimer")}
                                             </DropdownItem>
                                         </DropdownMenu>
                                     </UncontrolledDropdown>
@@ -710,22 +730,23 @@ const DocumentsTab = ({ documents }) => {
 
 const Preference = () => {
     const [activeMainTab, setActiveMainTab] = useState("overview");
+    const { t } = useTranslation();
 
     useEffect(() => {
-        document.title = "Détails Candidature";
-    }, []);
+        document.title = t("Détails Candidature");
+    }, [t]);
 
     const tabs = [
-        { id: "overview", label: "Aperçu", icon: "ri-airplay-fill" },
-        { id: "activities", label: "Activités", icon: "ri-list-unordered" },
-        { id: "projects", label: "Projets", icon: "ri-price-tag-line" },
-        { id: "documents", label: "Documents", icon: "ri-folder-4-line" }
+        { id: "overview", label: t("Aperçu"), icon: "ri-airplay-fill" },
+        { id: "activities", label: t("Activités"), icon: "ri-list-unordered" },
+        { id: "projects", label: t("Projets"), icon: "ri-price-tag-line" },
+        { id: "documents", label: t("Documents"), icon: "ri-folder-4-line" }
     ];
 
     return (
         <Container fluid>
             <ProfileHeader user={USER_DATA} />
-            
+
             <Row>
                 <Col xs={12}>
                     <div className="d-flex profile-wrapper mb-4">
@@ -746,7 +767,7 @@ const Preference = () => {
                         <div className="flex-shrink-0">
                             <Link to="/:entreprise/edit-profile" className="btn rounded-4 btn-success">
                                 <i className="ri-edit-box-line align-bottom me-1"></i>
-                                Modifier le profil
+                                {t("Modifier le profil")}
                             </Link>
                         </div>
                     </div>
@@ -771,15 +792,15 @@ const Preference = () => {
                             <RecentActivityCard activities={RECENT_ACTIVITIES} />
                             <ProjectsOverviewCard projects={PROJECTS_OVERVIEW.slice(0, 6)} />
                         </TabPane>
-                        
+
                         <TabPane tabId="activities">
                             <ActivitiesTab activities={RECENT_ACTIVITIES} />
                         </TabPane>
-                        
+
                         <TabPane tabId="projects">
                             <ProjectsTab projects={PROJECTS_OVERVIEW} />
                         </TabPane>
-                        
+
                         <TabPane tabId="documents">
                             <DocumentsTab documents={DOCUMENTS} />
                         </TabPane>
@@ -791,15 +812,16 @@ const Preference = () => {
 };
 
 const DetailsCandidature = () => {
+    const { t } = useTranslation();
     return (
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-                    title="Détails Candidature"
+                    title={t("Détails Candidature")}
                     pageTitle={
                         <>
                             <i className="ri-team-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/">Tableau de Bord</Link>&nbsp;&gt;
+                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>&nbsp;&gt;
                         </>
                     }
                 />

@@ -477,20 +477,20 @@ const PresenceEtAbsence = () => {
                     </ModalBody>
 
                     <ModalFooter className="border-0 pt-0 pb-4 px-4">
+                        <Button 
+                            color="secondary" 
+                            onClick={() => toggleViewModal()}
+                            className="rounded-5 px-4"
+                        >
+                            Fermer
+                        </Button>
                         <Link
                             to={`/${entreprise}/conge-et-absence-edit/${selectedItem?.id}`}
-                            className="btn btn-primary rounded-4 px-4"
+                            className="btn btn-primary rounded-5 px-4"
                             style={{ borderRadius: "20px" }}
                         >
                             Modifier
                         </Link>
-                        <Button 
-                            color="secondary" 
-                            onClick={() => toggleViewModal()}
-                            className="rounded-4 px-4"
-                        >
-                            Fermer
-                        </Button>
                     </ModalFooter>
                 </Modal>
             </Container>

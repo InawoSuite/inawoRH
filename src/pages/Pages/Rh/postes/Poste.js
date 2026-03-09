@@ -554,20 +554,20 @@ const Poste = () => {
                     </ModalBody>
                     
                     <ModalFooter className="border-0 pt-0 pb-4 px-4">
+                        <Button 
+                            color="secondary" 
+                            onClick={() => toggleViewModal()}
+                            className="rounded-5 px-4"
+                        >
+                            {t("Fermer")}
+                        </Button>
                         <Link
                             to="/:entreprise/poste-edit/:id"
-                            className="btn btn-primary rounded-4 px-4"
+                            className="btn btn-primary rounded-5 px-4"
                             style={{ borderRadius: "20px" }}
                         >
                             {t("Modifier")}
                         </Link>
-                        <Button 
-                            color="secondary" 
-                            onClick={() => toggleViewModal()}
-                            className="rounded-4 px-4"
-                        >
-                            {t("Fermer")}
-                        </Button>
                     </ModalFooter>
                 </Modal>
             </Container>

@@ -687,20 +687,20 @@ const Evaluation = () => {
                         )}
                     </ModalBody>
                     <ModalFooter className="border-0 pb-4">
-                        <Link
-                            to="/:entreprise/evaluation-edit/:id"
-                            className="btn btn-primary rounded-4 px-4"
-                            style={{ borderRadius: "20px" }}
-                        >
-                            {t("Modifier")}
-                        </Link>
                         <Button 
-                            className="rounded-4"
+                            className="rounded-5"
                             color="secondary"
                             onClick={() => toggleViewModal()}
                         >
                             {t("Fermer")}
                         </Button>
+                        <Link
+                            to="/:entreprise/evaluation-edit/:id"
+                            className="btn btn-primary rounded-5 px-4"
+                            style={{ borderRadius: "70px" }}
+                        >
+                            {t("Modifier")}
+                        </Link>
                     </ModalFooter>
                 </Modal>
 

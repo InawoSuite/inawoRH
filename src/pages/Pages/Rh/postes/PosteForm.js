@@ -10,6 +10,7 @@ import {
   Label,
   Row,
   FormGroup,
+  Button,
 } from "reactstrap";
 import BreadCrumb from "../../../../Components/Common/BreadCrumb";
 import { CustomSelect } from "../../../../Components/Common/CustomSelectStyles";
@@ -900,21 +901,22 @@ const PosteForm = ({ mode = "add" }) => {
                                     <Row className="mt-4">
                                         <Col md={12}>
                                             <div className="d-flex justify-content-end gap-2">
-                                                <button
+                                                <Button
+                                                    className="btn btn-secondary rounded-5"
                                                     type="button"
-                                                    className="btn btn-light rounded-4"
-                                                    style={{ borderRadius: "20px", padding: "10px 30px" }}
+                                                    style={{ borderRadius: "70px", padding: "10px 30px" }}
                                                     onClick={() => navigate("/:entreprise/postes")}
                                                 >
-                                                    {t('Annuler')}
-                                                </button>
-                                                <button
-                                                    style={{ borderRadius: "20px", padding: "10px 30px" }}
-                                                    type="submit" 
-                                                    className="btn btn-success rounded-4"
+                                                    {t("Annuler")}
+                                                </Button>
+                                                <Link
+                                                    to="#"
+                                                    type="submit"
+                                                    className="btn btn-primary rounded-5"
+                                                    style={{ borderRadius: "70px", padding: "10px 30px" }}
                                                 >
-                                                    {mode === "add" ? t('Enregistrer') : t('Mettre à jour')}
-                                                </button>
+                                                    {mode === "add" ? t("Enregistrer") : t("Mettre à jour")}
+                                                </Link>
                                             </div>
                                         </Col>
                                     </Row>
