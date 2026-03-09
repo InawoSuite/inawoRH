@@ -2,8 +2,10 @@ import React from "react";
 import { jobWidgets } from "../../../../common/data/appsJobs";
 import { Card, Col } from "reactstrap";
 import Charts from "./Charts";
+import { useTranslation } from "react-i18next";
 
 const Widgets = () => {
+  const { t } = useTranslation();
   return (
     <React.Fragment>
       {jobWidgets.map((item, key) => (
@@ -11,7 +13,7 @@ const Widgets = () => {
           <Card className="card card-height-100 rounded-4 border-0 shadow-sm">
             <div className="d-flex">
               <div className="flex-grow-1 p-3">
-                <h5 className="mb-3">{item.lable}</h5>
+                <h5 className="mb-3">{t(item.lable)}</h5>
                 <p className="mb-0 text-muted">
                   <span
                     className={"badge bg-light text-" + item.badgeColor + " mb-0 rounded-pill"}
@@ -19,7 +21,7 @@ const Widgets = () => {
                     {" "}
                     <i className={item.icon + "align-middle"}></i> {item.number}
                   </span>{" "}
-                  vs. mois précédent
+                  {t("vs. mois précédent")}
                 </p>
               </div>
               <div>

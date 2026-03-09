@@ -1071,6 +1071,7 @@
   "Chercher une campagne...": "Search for a campaign...",
   "Nouvelle campagne d'évaluation": "Add Campaign",
   "Mode": "Mode",
+  "vs. mois précédent": "vs. previous month",
   "Responsable": "Manager",
   "Progression": "Progress",
   "Démarrer": "Start",
@@ -1410,5 +1411,8 @@
   "Créer un dossier": "Create folder",
   "Renommer le dossier": "Rename folder",
   "Nom du dossier": "Folder name",
-  "Saisir le nom du dossier": "Enter folder name"
+  "Saisir le nom du dossier": "Enter folder name",
+  "Entretiens": "Interviews",
+  "Embauchés": "Hired",
+  "Rejetés": "Rejected"
 }
