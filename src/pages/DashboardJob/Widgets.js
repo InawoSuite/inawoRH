@@ -1,9 +1,22 @@
 import React from "react";
 import { Card, CardBody, Col, Row } from "reactstrap";
+import { useTranslation } from "react-i18next";
 import { jobWidgets } from "../../common/data/dashboardJobs";
 import DashboardCharts from "./DashboardCharts";
 
 const Widgets = () => {
+  const { t } = useTranslation();
+
+  const getWidgetLabel = (label) => {
+    if (label === "TOTAL JOBS") return t("Total postes");
+    if (label === "APPLY JOBS") return t("Candidatures");
+    if (label === "NEW JOBS") return t("Nouveaux postes");
+    if (label === "INTERVIEW") return t("Entretiens");
+    if (label === "HIRED") return t("Recrutes");
+    if (label === "REJECTED") return t("Rejetes");
+    return label;
+  };
+
   return (
     <React.Fragment>
       <Col xl={6}>
@@ -35,7 +48,7 @@ const Widgets = () => {
                       <div className="flex-grow-1 overflow-hidden">
                         <p className="text-uppercase fw-medium text-muted text-truncate mb-3">
                           {" "}
-                          {widget.lable}
+                          {getWidgetLabel(widget.lable)}
                         </p>
                         <h4 className="fs-22 fw-semibold ff-secondary mb-0">
                           <span className="counter-value" data-target="36894">

@@ -46,16 +46,16 @@ const Evaluation = () => {
 
     // Options pour les selects
     const modeOptions = [
-        { value: "employe", label: "Par employé" },
-        { value: "entreprise", label: "Par entreprise" },
-        { value: "departement", label: "Par département" }
+        { value: "employe", label: t("Par employé") },
+        { value: "entreprise", label: t("Par entreprise") },
+        { value: "departement", label: t("Par département") }
     ];
 
     const modeEvaluationOptions = [
-        { value: "auto", label: "Auto-évaluation" },
-        { value: "manager", label: "Évaluation par manager" },
-        { value: "collaborateur", label: "Évaluation par collaborateur" },
-        { value: "360", label: "Évaluation 360°" }
+        { value: "auto", label: t("Auto-évaluation") },
+        { value: "manager", label: t("Évaluation par manager") },
+        { value: "collaborateur", label: t("Évaluation par collaborateur") },
+        { value: "360", label: t("Évaluation 360°") }
     ];
 
     // Données mockées pour les campagnes
@@ -64,7 +64,7 @@ const Evaluation = () => {
             id: 1,
             numero: "EVAL-2024-001",
             titre: "Évaluation annuelle 2024",
-            mode: "Par employé",
+            mode: t("Par employé"),
             responsable: "Marie Martin",
             dateEvaluation: "2024-12-15",
             statut: "en_cours",
@@ -74,7 +74,7 @@ const Evaluation = () => {
             id: 2,
             numero: "EVAL-2024-002",
             titre: "Évaluation des compétences",
-            mode: "Par département",
+            mode: t("Par département"),
             responsable: "Jean Dupont",
             dateEvaluation: "2024-11-30",
             statut: "planifié",
@@ -84,7 +84,7 @@ const Evaluation = () => {
             id: 3,
             numero: "EVAL-2024-003",
             titre: "Feedback 360°",
-            mode: "Par entreprise",
+            mode: t("Par entreprise"),
             responsable: "Sophie Bernard",
             dateEvaluation: "2024-10-20",
             statut: "terminé",
@@ -445,10 +445,10 @@ const Evaluation = () => {
                             <Row>
                                 <Col md={12}>
                                     <FormGroup className="mb-3">
-                                        <Label>Titre de la campagne <span className="text-danger">*</span></Label>
+                                        <Label>{t("Titre de la campagne")} <span className="text-danger">*</span></Label>
                                         <Input
                                             type="text"
-                                            placeholder="Ex: Évaluation annuelle 2024"
+                                            placeholder={t("Ex: Évaluation annuelle 2024")}
                                             value={formData.titre}
                                             onChange={(e) => setFormData({ ...formData, titre: e.target.value })}
                                             required
@@ -460,7 +460,7 @@ const Evaluation = () => {
                             <Row>
                                 <Col md={6}>
                                     <FormGroup className="mb-3">
-                                        <Label>Mode d'évaluation <span className="text-danger">*</span></Label>
+                                        <Label>{t("Mode d'évaluation")} <span className="text-danger">*</span></Label>
                                         <CustomSelect
                                             options={modeOptions}
                                             value={modeOptions.find(opt => opt.value === formData.mode)}
@@ -471,10 +471,10 @@ const Evaluation = () => {
                                 </Col>
                                 <Col md={6}>
                                     <FormGroup className="mb-3">
-                                        <Label>Responsable <span className="text-danger">*</span></Label>
+                                        <Label>{t("Responsable")} <span className="text-danger">*</span></Label>
                                         <Input
                                             type="text"
-                                            placeholder="Nom du responsable"
+                                            placeholder={t("Nom du responsable")}
                                             value={formData.responsable}
                                             onChange={(e) => setFormData({ ...formData, responsable: e.target.value })}
                                             required
@@ -486,7 +486,7 @@ const Evaluation = () => {
                             <Row>
                                 <Col md={6}>
                                     <FormGroup className="mb-3">
-                                        <Label>Mode d'évaluation <span className="text-danger">*</span></Label>
+                                        <Label>{t("Mode d'évaluation")} <span className="text-danger">*</span></Label>
                                         <CustomSelect
                                             options={modeEvaluationOptions}
                                             value={modeEvaluationOptions.find(opt => opt.value === formData.modeEvaluation)}
@@ -497,7 +497,7 @@ const Evaluation = () => {
                                 </Col>
                                 <Col md={6}>
                                     <FormGroup className="mb-3">
-                                        <Label>Date d'évaluation <span className="text-danger">*</span></Label>
+                                        <Label>{t("Date d'évaluation")} <span className="text-danger">*</span></Label>
                                         <Input
                                             type="date"
                                             value={formData.dateEvaluation}
@@ -511,11 +511,11 @@ const Evaluation = () => {
                             <Row>
                                 <Col md={12}>
                                     <FormGroup className="mb-3">
-                                        <Label>Description</Label>
+                                        <Label>{t("Description")}</Label>
                                         <Input
                                             type="textarea"
                                             rows="3"
-                                            placeholder="Description de la campagne..."
+                                            placeholder={t("Description de la campagne...")}
                                             value={formData.description}
                                             onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                                             className="rounded-4"
@@ -577,12 +577,12 @@ const Evaluation = () => {
                                 <p className="text-muted mb-4">
                                     {t("Cette évaluation contient")} {quizQuestions.length} {t("questions")}.<br />
                                     {t("Vous aurez 60 minutes pour la compléter.")}
-                                </p>
+                                </p >
                                 <Button color="primary" onClick={startQuiz} size="lg" className="rounded-pill px-5">
                                     <i className="ri-play-fill me-2"></i>
                                     {t("Commencer l'évaluation")}
                                 </Button>
-                            </div>
+                            </div >
                         ) : (
                             <div>
                                 <div className="mb-4">
@@ -652,11 +652,11 @@ const Evaluation = () => {
                                 </div>
                             </div>
                         )}
-                    </ModalBody>
-                </Modal>
+                    </ModalBody >
+                </Modal >
 
                 {/* MODAL VOIR DÉTAILS */}
-                <Modal
+                < Modal
                     isOpen={viewModal}
                     toggle={() => toggleViewModal()}
                     size="md"
@@ -673,13 +673,13 @@ const Evaluation = () => {
                                 <Row>
                                     <Col md={6}>
                                         <p><strong>N°:</strong> {selectedItem.numero}</p>
-                                        <p><strong>Titre:</strong> {selectedItem.titre}</p>
-                                        <p><strong>Mode:</strong> {selectedItem.mode}</p>
+                                        <p><strong>{t("Titre")}:</strong> {selectedItem.titre}</p>
+                                        <p><strong>{t("Mode")}:</strong> {selectedItem.mode}</p>
                                     </Col>
                                     <Col md={6}>
-                                        <p><strong>Responsable:</strong> {selectedItem.responsable}</p>
-                                        <p><strong>Date:</strong> {formatDate(selectedItem.dateEvaluation)}</p>
-                                        <p><strong>Statut:</strong> {getStatutBadge(selectedItem.statut)}</p>
+                                        <p><strong>{t("Responsable")}:</strong> {selectedItem.responsable}</p>
+                                        <p><strong>{t("Date")}:</strong> {formatDate(selectedItem.dateEvaluation)}</p>
+                                        <p><strong>{t("Statut")}:</strong> {getStatutBadge(selectedItem.statut)}</p>
                                     </Col>
                                 </Row>
                             </div>
@@ -693,17 +693,17 @@ const Evaluation = () => {
                         >
                             {t("Fermer")}
                         </Button>
-                    </ModalFooter>
-                </Modal>
+                    </ModalFooter >
+                </Modal >
 
                 {/* MODAL DE SUPPRESSION */}
-                <DeleteModal
+                < DeleteModal
                     show={deleteModal}
                     onDeleteClick={handleDeleteConfirm}
                     onCloseClick={handleDeleteClose}
                 />
-            </Container>
-        </div>
+            </Container >
+        </div >
     );
 };
 

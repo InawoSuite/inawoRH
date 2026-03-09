@@ -3,6 +3,7 @@ import { Button, Card, CardBody, CardHeader, Col, Row } from "reactstrap";
 import ReactApexChart from "react-apexcharts";
 import getChartColorsArray from "../../../../Components/Common/ChartsDynamicColor";
 import CountUp from "react-countup";
+import { useTranslation } from "react-i18next";
 import { revenueWidgets } from "../../../../common/data/ecommerce";
 import {
   allRevenueData,
@@ -16,6 +17,7 @@ const StoreVisitsCharts = ({
   xxl = 12,
   xl = 12,
 }) => {
+  const { t } = useTranslation();
   const [period, setPeriod] = useState("ALL");
   const revenueChartColors = getChartColorsArray(dataColors);
 
@@ -27,11 +29,11 @@ const StoreVisitsCharts = ({
   }, [period]);
 
   const cardStyle = {
-		borderRadius: "20px",
-		background: "#fff",
-		boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
-		overflow: "hidden",
-	};
+    borderRadius: "20px",
+    background: "#fff",
+    boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
+    overflow: "hidden",
+  };
 
   const options = {
     chart: {
@@ -58,15 +60,15 @@ const StoreVisitsCharts = ({
     },
     xaxis: {
       categories: [
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
+        "Janv",
+        "Fevr",
+        "Mars",
+        "Avr",
+        "Mai",
+        "Juin",
+        "Juil",
+        "Aout",
+        "Sept",
         "Oct",
         "Nov",
         "Dec",
@@ -141,7 +143,7 @@ const StoreVisitsCharts = ({
         {
           formatter: function (y) {
             if (typeof y !== "undefined") {
-              return y.toFixed(0) + " Sales";
+              return y.toFixed(0) + " ventes";
             }
             return y;
           },
@@ -154,7 +156,7 @@ const StoreVisitsCharts = ({
     <Col xxl={xxl} xl={xl}>
       <Card className="card-height-100" style={cardStyle}>
         <CardHeader className="align-items-center d-flex"  >
-          <h4 className="card-title mb-0 flex-grow-1">Revenue</h4>
+          <h4 className="card-title mb-0 flex-grow-1">{t("Chiffre d'affaires")}</h4>
           <div className="d-flex gap-1" >
             {["ALL", "1M", "6M", "1Y"].map((item) => (
               <Button
@@ -165,7 +167,7 @@ const StoreVisitsCharts = ({
                 onClick={() => setPeriod(item)}
                 style={{ borderRadius: "20px" }}
               >
-                {item}
+                {item === "ALL" ? t("Tout") : item === "1Y" ? t("1A") : item}
               </Button>
             ))}
           </div>
@@ -189,7 +191,17 @@ const StoreVisitsCharts = ({
                       />
                     </span>
                   </h5>
-                  <p className="text-muted mb-0">{item.label}</p>
+                  <p className="text-muted mb-0">
+                    {item.label === "Orders"
+                      ? t("Commandes")
+                      : item.label === "Earnings"
+                        ? t("Gains")
+                        : item.label === "Refunds"
+                          ? t("Remboursements")
+                          : item.label === "Conversation Ratio"
+                            ? t("Taux de conversion")
+                            : item.label}
+                  </p>
                 </div>
               </div>
             ))}

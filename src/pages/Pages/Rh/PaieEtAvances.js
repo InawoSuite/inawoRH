@@ -1050,10 +1050,27 @@ const PaieEtAvances = () => {
                     </ModalBody>
 
                     <ModalFooter className="border-0 pt-0 pb-4 px-4">
+                        {activeTab === "1" ? (
+                            <Link
+                                to={`/${entreprise}/fiche-edit/${selectedItem?.id}`}
+                                className="btn btn-primary rounded-4 px-4"
+                                style={{ borderRadius: "20px" }}
+                            >
+                                {t("Modifier")}
+                            </Link>
+                        ) : (
+                            <Link
+                                to={`/${entreprise}/avance-et-pret-edit/${selectedItem?.id}`}
+                                className="btn btn-primary rounded-4 px-4"
+                                style={{ borderRadius: "20px" }}
+                            >
+                                {t("Modifier")}
+                            </Link>
+                        )}
                         <Button
                             color="secondary"
                             onClick={() => toggleViewModal()}
-                            className="rounded-3 px-4"
+                            className="rounded-4 px-4"
                         >
                             <i className="ri-close-line me-1"></i>
                             {t("Fermer")}
