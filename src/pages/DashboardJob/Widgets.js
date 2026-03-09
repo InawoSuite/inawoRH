@@ -8,13 +8,7 @@ const Widgets = () => {
   const { t } = useTranslation();
 
   const getWidgetLabel = (label) => {
-    if (label === "TOTAL JOBS") return t("Total postes");
-    if (label === "APPLY JOBS") return t("Candidatures");
-    if (label === "NEW JOBS") return t("Nouveaux postes");
-    if (label === "INTERVIEW") return t("Entretiens");
-    if (label === "HIRED") return t("Recrutes");
-    if (label === "REJECTED") return t("Rejetes");
-    return label;
+    return t(label);
   };
 
   return (

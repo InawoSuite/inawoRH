@@ -9,7 +9,7 @@ const Graphe = ({ dataColors = '["--vz-primary", "--vz-success", "--vz-danger", 
   var chartDonutBasicColors = getChartColorsArray(dataColors);
   const series = [44, 55, 41, 17, 15];
   var options = {
-    labels: ["Direct", "Reseaux sociaux", "E-mail", "Autres", "Recommandations"],
+    labels: [t("Direct"), t("Social"), t("Email"), t("Other"), t("Referrals")],
     chart: {
       height: 333,
       type: "donut",

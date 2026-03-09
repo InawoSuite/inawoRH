@@ -79,8 +79,8 @@ const FeaturedCompanies = () => {
             <div className="align-items-center mt-4 pt-2 justify-content-between d-flex">
               <div className="flex-shrink-0">
                 <div className="text-muted">
-                  {t("Affichage de")} <span className="fw-semibold">5</span> {t("sur")} {" "}
-                  <span className="fw-semibold">25</span> {t("résultats")}
+                  {t("Showing")} <span className="fw-semibold">5</span> {t("of")} {" "}
+                  <span className="fw-semibold">25</span> {t("Results")}
                 </div>
               </div>
               <ul className="pagination pagination-separated pagination-sm mb-0">
