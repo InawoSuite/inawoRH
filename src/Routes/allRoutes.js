@@ -279,7 +279,7 @@ import PresenceEtAbsence from "../pages/Pages/Rh/PresenceEtAbsence";
 import Poste from "../pages/Pages/Rh/postes/Poste";
 import PosteForm from "../pages/Pages/Rh/postes/PosteForm";
 import PosteAdd from "../pages/Pages/Rh/postes/PosteAdd";
-import PosteEdit from "../pages/Pages/Rh/postes/PosteEdit"; 
+import PosteEdit from "../pages/Pages/Rh/postes/PosteEdit";
 
 import AddContract from "../pages/Pages/Rh/Contrats/AddContract";
 import EditContract from "../pages/Pages/Rh/Contrats/EditContract";

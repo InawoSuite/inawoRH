@@ -15,7 +15,7 @@ import Tache from "./Tache";
 
 const DashboardRH = () => {
   const { t } = useTranslation();
-  document.title = "Dashboard | INAWO - Suite de Gestion";
+  document.title = "Tableau de bord RH | INAWO - Suite de Gestion";
 
   const [rightColumn, setRightColumn] = useState(true);
   const toggleRightColumn = () => {

@@ -452,6 +452,101 @@
   --vz-border-color: rgba(255, 255, 255, 0.1);
 }
 
+/* Cards et modales en bleu nuit (comme la maquette) */
+[data-bs-theme="dark"] .card,
+[data-layout-mode="dark"] .card,
+[data-bs-theme="dark"] .modal-content,
+[data-layout-mode="dark"] .modal-content,
+[data-bs-theme="dark"] .offcanvas,
+[data-layout-mode="dark"] .offcanvas {
+  background-color: #040840 !important;
+  border-color: #1c2a66 !important;
+}
+
+[data-bs-theme="dark"] .modal-header,
+[data-bs-theme="dark"] .modal-body,
+[data-bs-theme="dark"] .modal-footer,
+[data-layout-mode="dark"] .modal-header,
+[data-layout-mode="dark"] .modal-body,
+[data-layout-mode="dark"] .modal-footer,
+[data-bs-theme="dark"] .card-header,
+[data-bs-theme="dark"] .card-body,
+[data-bs-theme="dark"] .card-footer,
+[data-layout-mode="dark"] .card-header,
+[data-layout-mode="dark"] .card-body,
+[data-layout-mode="dark"] .card-footer {
+  background-color: #040840 !important;
+  border-color: #1c2a66 !important;
+}
+
+/* Titres blancs en mode sombre */
+[data-bs-theme="dark"] .card-title,
+[data-layout-mode="dark"] .card-title,
+[data-bs-theme="dark"] .modal-title,
+[data-layout-mode="dark"] .modal-title,
+[data-bs-theme="dark"] .form-label,
+[data-layout-mode="dark"] .form-label,
+[data-bs-theme="dark"] h1,
+[data-bs-theme="dark"] h2,
+[data-bs-theme="dark"] h3,
+[data-bs-theme="dark"] h4,
+[data-bs-theme="dark"] h5,
+[data-bs-theme="dark"] h6,
+[data-layout-mode="dark"] h1,
+[data-layout-mode="dark"] h2,
+[data-layout-mode="dark"] h3,
+[data-layout-mode="dark"] h4,
+[data-layout-mode="dark"] h5,
+[data-layout-mode="dark"] h6 {
+  color: #ffffff !important;
+}
+
+/* Formulaires en mode sombre: style bleu nuit */
+[data-bs-theme="dark"] .form-control,
+[data-bs-theme="dark"] .form-select,
+[data-bs-theme="dark"] textarea,
+[data-layout-mode="dark"] .form-control,
+[data-layout-mode="dark"] .form-select,
+[data-layout-mode="dark"] textarea,
+[data-bs-theme="dark"] .react-tel-input .form-control,
+[data-layout-mode="dark"] .react-tel-input .form-control {
+  background-color: #080d52 !important;
+  color: #e6ecff !important;
+  border-color: #22316b !important;
+}
+
+[data-bs-theme="dark"] .form-control::placeholder,
+[data-bs-theme="dark"] textarea::placeholder,
+[data-layout-mode="dark"] .form-control::placeholder,
+[data-layout-mode="dark"] textarea::placeholder {
+  color: #9aa7d3 !important;
+  opacity: 1;
+}
+
+[data-bs-theme="dark"] .form-control:focus,
+[data-bs-theme="dark"] .form-select:focus,
+[data-bs-theme="dark"] textarea:focus,
+[data-layout-mode="dark"] .form-control:focus,
+[data-layout-mode="dark"] .form-select:focus,
+[data-layout-mode="dark"] textarea:focus {
+  background-color: #0a0f5a !important;
+  color: #f0f4ff !important;
+  border-color: #4d63d6 !important;
+  box-shadow: 0 0 0 0.15rem rgba(77, 99, 214, 0.25) !important;
+}
+
+[data-bs-theme="dark"] .form-check-input,
+[data-layout-mode="dark"] .form-check-input {
+  background-color: #070b4a;
+  border-color: #2b3973;
+}
+
+[data-bs-theme="dark"] .form-check-input:checked,
+[data-layout-mode="dark"] .form-check-input:checked {
+  background-color: #4d63d6;
+  border-color: #4d63d6;
+}
+
 
 /* Style pour les en-têtes de groupe */
 .group-header {

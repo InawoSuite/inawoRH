@@ -940,7 +940,7 @@ const PaieEtAvances = () => {
                     </ModalHeader>
 
                     <ModalBody className="p-4">
-                         {selectedItem && activeTab === "1" && (
+                        {selectedItem && activeTab === "1" && (
                             <Row className="g-4">
                                 <Col md={6}>
                                     <div className="bg-light p-3 rounded-3">
@@ -1056,7 +1056,7 @@ const PaieEtAvances = () => {
                                 className="btn btn-primary rounded-4 px-4"
                                 style={{ borderRadius: "20px" }}
                             >
-                                Modifier
+                                {t("Modifier")}
                             </Link>
                         ) : (
                             <Link
@@ -1064,7 +1064,7 @@ const PaieEtAvances = () => {
                                 className="btn btn-primary rounded-4 px-4"
                                 style={{ borderRadius: "20px" }}
                             >
-                                Modifier
+                                {t("Modifier")}
                             </Link>
                         )}
                         <Button

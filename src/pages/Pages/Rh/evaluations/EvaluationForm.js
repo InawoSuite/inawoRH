@@ -20,6 +20,7 @@ import "quill/dist/quill.snow.css";
 import { useTranslation } from "react-i18next";
 
 const EvaluationForm = ({ mode = "add" }) => {
+<<<<<<< HEAD
   const { t } = useTranslation();
   const navigate = useNavigate();
   const { id } = useParams();
@@ -34,6 +35,11 @@ const EvaluationForm = ({ mode = "add" }) => {
     description: "",
     quizzes: [],
   });
+=======
+    const { t } = useTranslation();
+    const navigate = useNavigate();
+    const { id } = useParams();
+>>>>>>> origin/Darnel
 
   // États pour les selects
   const [selectedMode, setSelectedMode] = useState(null);
@@ -120,6 +126,7 @@ const EvaluationForm = ({ mode = "add" }) => {
           },
         });
 
+<<<<<<< HEAD
         setQuizQuills((prev) => ({ ...prev, [refKey]: quillInstance }));
 
         if (quiz.description) {
@@ -142,6 +149,33 @@ const EvaluationForm = ({ mode = "add" }) => {
         if (questionQuillRefs.current[refKey] && !questionQuills[refKey]) {
           const quillInstance = new Quill(questionQuillRefs.current[refKey], {
             placeholder: t("Énoncé de la question..."),
+=======
+    // Options pour les selects
+    const modeOptions = [
+        { value: "employe", label: t("Par employé") },
+        { value: "entreprise", label: t("Par entreprise") },
+        { value: "departement", label: t("Par département") }
+    ];
+
+    const modeEvaluationOptions = [
+        { value: "auto", label: t("Auto-évaluation") },
+        { value: "manager", label: t("Évaluation par manager") },
+        { value: "collaborateur", label: t("Évaluation par collaborateur") },
+        { value: "360", label: t("Évaluation 360°") }
+    ];
+
+    const typeQuestionOptions = [
+        { value: "choix_unique", label: t("Choix unique") },
+        { value: "choix_multiple", label: t("Choix multiple") }
+    ];
+
+    // Initialisation de Quill pour la description principale
+    useEffect(() => {
+        if (!quillRef.current) return;
+
+        const quillInstance = new Quill(quillRef.current, {
+            placeholder: t("Rédigez la description de la campagne ici..."),
+>>>>>>> origin/Darnel
             theme: "snow",
             modules: {
               toolbar: [
@@ -451,6 +485,7 @@ const EvaluationForm = ({ mode = "add" }) => {
     }));
   };
 
+<<<<<<< HEAD
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -477,6 +512,53 @@ const EvaluationForm = ({ mode = "add" }) => {
     background: "#fff",
     boxShadow: "0 0.125rem 0.25rem rgba(0, 0, 0, 0.075)",
   };
+=======
+    document.title = mode === "add" ? t("Ajouter une campagne d'évaluation") : t("Modifier la campagne d'évaluation");
+
+    return (
+        <div className="page-content">
+            <Container fluid>
+                <BreadCrumb
+                    title={mode === "add" ? t("Ajouter une campagne d'évaluation") : t("Modifier la campagne d'évaluation")}
+                    pageTitle={
+                        <>
+                            <i className="ri-bar-chart-grouped-line"></i>
+                            & nbsp;& gt;& nbsp; <Link to="/">{t("Tableau de Bord")}</Link>
+                            & nbsp;& gt;& nbsp; <Link to="/evaluation">{t("Évaluations")}</Link> & nbsp;& gt;& nbsp;
+                        </>
+                    }
+                />
+
+                < Row >
+                    <Col lg={12}>
+                        <Card className="border-0" style={cardStyle}>
+                            <CardBody className="p-4">
+                                <h5 className="mb-4">
+                                    {mode === "add" ? t("Nouvelle campagne d'évaluation") : t("Modification de la campagne")}
+                                </h5 >
+
+                                <Form onSubmit={handleSubmit}>
+                                    {/* ========== INFOS GÉNÉRALES ========== */}
+                                    <Row>
+                                        <Col md={12}>
+                                            <FormGroup className="mb-3">
+                                                <Label for="titre">
+                                                    {t("Titre de la campagne")} <span className="text-danger">*</span>
+                                                </Label>
+                                                <Input
+                                                    id="titre"
+                                                    className="rounded-4"
+                                                    name="titre"
+                                                    type="text"
+                                                    placeholder={t("Ex: Évaluation annuelle 2024")}
+                                                    value={formData.titre}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+>>>>>>> origin/Darnel
 
   useEffect(() => {
     document.title =
@@ -485,6 +567,7 @@ const EvaluationForm = ({ mode = "add" }) => {
         : t("Modifier la campagne d'évaluation");
   }, [mode, t]);
 
+<<<<<<< HEAD
   return (
     <div className="page-content">
       <Container fluid>
@@ -503,6 +586,26 @@ const EvaluationForm = ({ mode = "add" }) => {
             </>
           }
         />
+=======
+                                        <Col md={6}>
+                                            <FormGroup className="mb-3">
+                                                <Label for="responsable">
+                                                    {t("Responsable")} <span className="text-danger">*</span>
+                                                </Label>
+                                                <Input
+                                                    id="responsable"
+                                                    className="rounded-4"
+                                                    name="responsable"
+                                                    type="text"
+                                                    placeholder={t("Nom du responsable")}
+                                                    value={formData.responsable}
+                                                    onChange={handleChange}
+                                                    required
+                                                />
+                                            </FormGroup>
+                                        </Col>
+                                    </Row>
+>>>>>>> origin/Darnel
 
         <Row>
           <Col lg={12}>
@@ -915,6 +1018,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                             {t("Parcourir")}
                                           </Button>
 
+<<<<<<< HEAD
                                           {question.image && (
                                             <Button
                                               type="button"
@@ -1003,6 +1107,322 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                       optionIndex,
                                                     )
                                                   }
+=======
+                                                    {/* Description du quiz avec Quill */}
+                                                    <FormGroup className="mb-3">
+                                                        <Label>Description du quiz</Label>
+                                                        <div
+                                                            className="snow-editor"
+                                                            style={{
+                                                                border: '1px solid #ced4da',
+                                                                borderRadius: '20px',
+                                                                background: '#fff',
+                                                                overflow: 'hidden'
+                                                            }}
+                                                        >
+                                                            <div
+                                                                ref={el => quizQuillRefs.current[`quiz-${quizIndex}`] = el}
+                                                                style={{ minHeight: '100px' }}
+                                                            />
+                                                        </div>
+                                                    </FormGroup >
+
+                                                    {/* ========== QUESTIONS ========== */}
+                                                    < div className="mt-4" >
+                                                        <div className="d-flex justify-content-between align-items-center mb-3">
+                                                            <h6 className="mb-0">{t("Questions")}</h6>
+                                                            <Button color="success" size="sm" onClick={() => addQuestion(quizIndex)} className="rounded-4">
+                                                                {t("Ajouter une question")}
+                                                            </Button>
+                                                        </div>
+
+                                                        {
+                                                            quiz.questions.map((question, questionIndex) => (
+                                                                <Card key={questionIndex} className="mb-3 border-0 bg-light rounded-4">
+                                                                    <CardBody>
+                                                                        <div className="d-flex justify-content-between align-items-center mb-3">
+                                                                            <h6 className="mb-0">{t("Question")} {questionIndex + 1}</h6>
+                                                                            <Badge color="danger" pill style={{ cursor: "pointer" }} onClick={() => removeQuestion(quizIndex, questionIndex)}>
+                                                                                <i className="ri-delete-bin-line"></i>
+                                                                            </Badge>
+                                                                        </div>
+
+                                                                        <Row>
+                                                                            <Col md={12}>
+                                                                                <FormGroup className="mb-3">
+                                                                                    <Label>{t("Type de question")}</Label>
+                                                                                    <CustomSelect
+                                                                                        value={typeQuestionOptions.find(opt => opt.value === question.type)}
+                                                                                        onChange={(opt) => handleQuestionChange(quizIndex, questionIndex, "type", opt.value)}
+                                                                                        options={typeQuestionOptions}
+                                                                                        placeholder={t("Type de question")}
+                                                                                    />
+                                                                                </FormGroup>
+                                                                            </Col>
+                                                                        </Row>
+
+                                                                        {/* Énoncé de la question avec Quill */}
+                                                                        <FormGroup className="mb-3">
+                                                                            <Label>Énoncé de la question</Label>
+                                                                            <div
+                                                                                className="snow-editor"
+                                                                                style={{
+                                                                                    border: '1px solid #ced4da',
+                                                                                    borderRadius: '20px',
+                                                                                    background: '#fff',
+                                                                                    overflow: 'hidden'
+                                                                                }}
+                                                                            >
+                                                                                <div
+                                                                                    ref={el => questionQuillRefs.current[`question-${quizIndex}-${questionIndex}`] = el}
+                                                                                    style={{ minHeight: '100px' }}
+                                                                                />
+                                                                            </div>
+                                                                        </FormGroup >
+
+                                                                        {/* ========== CHAMP IMAGE ========== */}
+                                                                        < div className="mb-3" >
+                                                                            <Label>{t("Image (optionnel)")}</Label>
+                                                                            <div className="d-flex align-items-center gap-3">
+                                                                                <div
+                                                                                    className="border rounded-4 d-flex align-items-center justify-content-center bg-light"
+                                                                                    style={{
+                                                                                        width: '60px',
+                                                                                        height: '60px',
+                                                                                        border: '1px dashed #ced4da',
+                                                                                        cursor: 'pointer',
+                                                                                        overflow: 'hidden'
+                                                                                    }}
+                                                                                    onClick={() => document.getElementById(`image-upload-${quizIndex}-${questionIndex}`).click()}
+                                                                                >
+                                                                                    {question.image ? (
+                                                                                        <img
+                                                                                            src={question.image}
+                                                                                            alt="aperçu"
+                                                                                            style={{
+                                                                                                width: '100%',
+                                                                                                height: '100%',
+                                                                                                objectFit: 'cover'
+                                                                                            }}
+                                                                                        />
+                                                                                    ) : (
+                                                                                        <i className="ri-image-add-line fs-3 text-muted"></i>
+                                                                                    )}
+                                                                                </div>
+
+                                                                                <Input
+                                                                                    id={`image-upload-${quizIndex}-${questionIndex}`}
+                                                                                    type="file"
+                                                                                    accept="image/*"
+                                                                                    onChange={(e) => handleImageUpload(quizIndex, questionIndex, e)}
+                                                                                    className="d-none"
+                                                                                />
+
+                                                                                <div className="flex-grow-1">
+                                                                                    <div className="d-flex gap-2">
+                                                                                        <Button
+                                                                                            type="button"
+                                                                                            color="primary"
+                                                                                            outline
+                                                                                            size="sm"
+                                                                                            className="rounded-4"
+                                                                                            onClick={() => document.getElementById(`image-upload-${quizIndex}-${questionIndex}`).click()}
+                                                                                        >
+                                                                                            <i className="ri-upload-2-line me-1"></i>
+                                                                                            {t("Parcourir")}
+                                                                                        </Button>
+
+                                                                                        {question.image && (
+                                                                                            <Button
+                                                                                                type="button"
+                                                                                                color="danger"
+                                                                                                outline
+                                                                                                size="sm"
+                                                                                                className="rounded-4"
+                                                                                                onClick={() => handleQuestionChange(quizIndex, questionIndex, "image", null)}
+                                                                                            >
+                                                                                                <i className="ri-delete-bin-line me-1"></i>
+                                                                                                {t("Supprimer")}
+                                                                                            </Button>
+                                                                                        )}
+                                                                                    </div>
+                                                                                    <small className="text-muted d-block mt-1">
+                                                                                        {t("JPG, PNG ou GIF (max. 2MB)")}
+                                                                                    </small>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div >
+
+                                                                        {/* ========== OPTIONS ========== */}
+                                                                        < div className="mt-3" >
+                                                                            <div className="d-flex justify-content-between align-items-center mb-3">
+                                                                                <Label className="mb-0 fw-bold">Options</Label>
+                                                                                <Button
+                                                                                    color="primary"
+                                                                                    size="sm"
+                                                                                    onClick={() => addOption(quizIndex, questionIndex)}
+                                                                                    className="rounded-4 px-3"
+                                                                                    style={{ backgroundColor: '#405189', borderColor: '#405189' }}
+                                                                                >
+                                                                                    <i className="ri-add-line me-1"></i>
+                                                                                    {t("Ajouter une option")}
+                                                                                </Button>
+                                                                            </div >
+
+                                                                            <div className="options-container">
+                                                                                {question.options.map((option, optionIndex) => (
+                                                                                    <div
+                                                                                        key={optionIndex}
+                                                                                        className="d-flex align-items-center mb-4 pb-2"
+                                                                                        style={{
+                                                                                            borderBottom: '1px dashed #e0e0e0',
+                                                                                            transition: 'all 0.2s'
+                                                                                        }}
+                                                                                    >
+                                                                                        {/* Sélecteur : Radio pour choix unique, Checkbox pour choix multiple */}
+                                                                                        <div className="me-3">
+                                                                                            {question.type === 'choix_unique' ? (
+                                                                                                // Bouton radio pour choix unique
+                                                                                                <div
+                                                                                                    className="rounded-circle d-flex align-items-center justify-content-center"
+                                                                                                    style={{
+                                                                                                        width: '22px',
+                                                                                                        height: '22px',
+                                                                                                        border: `2px solid ${option.isCorrect ? '#405189' : '#adb5bd'}`,
+                                                                                                        backgroundColor: option.isCorrect ? '#405189' : 'transparent',
+                                                                                                        cursor: 'pointer',
+                                                                                                        transition: 'all 0.2s'
+                                                                                                    }}
+                                                                                                    onClick={() => setCorrectOption(quizIndex, questionIndex, optionIndex)}
+                                                                                                >
+                                                                                                    {option.isCorrect && (
+                                                                                                        <i className="ri-check-line text-white" style={{ fontSize: '14px' }}></i>
+                                                                                                    )}
+                                                                                                </div>
+                                                                                            ) : (
+                                                                                                // Checkbox pour choix multiple
+                                                                                                <div
+                                                                                                    className="rounded d-flex align-items-center justify-content-center"
+                                                                                                    style={{
+                                                                                                        width: '22px',
+                                                                                                        height: '22px',
+                                                                                                        border: `2px solid ${option.isCorrect ? '#405189' : '#adb5bd'}`,
+                                                                                                        backgroundColor: option.isCorrect ? '#405189' : 'transparent',
+                                                                                                        cursor: 'pointer',
+                                                                                                        transition: 'all 0.2s',
+                                                                                                        borderRadius: '4px'
+                                                                                                    }}
+                                                                                                    onClick={() => {
+                                                                                                        const updated = [...formData.quizzes];
+                                                                                                        updated[quizIndex].questions[questionIndex].options[optionIndex].isCorrect = !option.isCorrect;
+                                                                                                        setFormData(prev => ({
+                                                                                                            ...prev,
+                                                                                                            quizzes: updated
+                                                                                                        }));
+                                                                                                    }}
+                                                                                                >
+                                                                                                    {option.isCorrect && (
+                                                                                                        <i className="ri-check-line text-white" style={{ fontSize: '14px' }}></i>
+                                                                                                    )}
+                                                                                                </div>
+                                                                                            )}
+                                                                                        </div>
+
+                                                                                        {/* Champ de texte avec bordure inférieure seulement */}
+                                                                                        <div className="flex-grow-1 me-2 position-relative">
+                                                                                            <Input
+                                                                                                className="border-0 px-0 bg-transparent"
+                                                                                                value={option.texte}
+                                                                                                onChange={(e) => handleOptionChange(quizIndex, questionIndex, optionIndex, e.target.value)}
+                                                                                                placeholder={`Option ${optionIndex + 1}`}
+                                                                                                style={{
+                                                                                                    padding: '8px 0',
+                                                                                                    fontSize: '1rem',
+                                                                                                    boxShadow: 'none',
+                                                                                                    outline: 'none',
+                                                                                                    borderRadius: 0,
+                                                                                                    borderBottom: '1px solid #dee2e6'
+                                                                                                }}
+                                                                                                onFocus={(e) => e.target.style.borderBottomColor = '#405189'}
+                                                                                                onBlur={(e) => e.target.style.borderBottomColor = '#dee2e6'}
+                                                                                            />
+                                                                                        </div>
+
+                                                                                        {/* Bouton de suppression (si plus de 2 options) */}
+                                                                                        {question.options.length > 2 && (
+                                                                                            <div
+                                                                                                className="d-flex align-items-center justify-content-center text-danger"
+                                                                                                style={{
+                                                                                                    width: '32px',
+                                                                                                    height: '32px',
+                                                                                                    cursor: 'pointer',
+                                                                                                    transition: 'all 0.2s',
+                                                                                                    borderRadius: '50%'
+                                                                                                }}
+                                                                                                onClick={() => removeOption(quizIndex, questionIndex, optionIndex)}
+                                                                                                title={t("Supprimer cette option")}
+                                                                                            >
+                                                                                                <i className="ri-close-line" style={{ fontSize: '20px' }}></i>
+                                                                                            </div>
+                                                                                        )}
+                                                                                    </div>
+                                                                                ))}
+                                                                            </div>
+
+                                                                            {/* Indication visuelle */}
+                                                                            {
+                                                                                question.options.length === 2 && (
+                                                                                    <div className="text-muted small mt-2 d-flex align-items-center">
+                                                                                        <i className="ri-information-line me-1"></i>
+                                                                                        <span>
+                                                                                            {
+                                                                                                question.type === 'choix_unique'
+                                                                                                    ? "Cliquez sur le bouton radio pour définir la bonne réponse. Ajoutez plus d'options si nécessaire."
+                                                                                                    : "Cochez les cases pour définir les bonnes réponses. Ajoutez plus d'options si nécessaire."
+                                                                                            }
+                                                                                        </span >
+                                                                                    </div >
+                                                                                )
+                                                                            }
+                                                                        </div >
+
+                                                                        {/* ========== EXPLICATION ========== */}
+                                                                        < FormGroup className="mt-3" >
+                                                                            <Label>Explication (optionnel)</Label>
+                                                                            <div
+                                                                                className="snow-editor"
+                                                                                style={{
+                                                                                    border: '1px solid #ced4da',
+                                                                                    borderRadius: '20px',
+                                                                                    background: '#fff',
+                                                                                    overflow: 'hidden'
+                                                                                }}
+                                                                            >
+                                                                                <div
+                                                                                    ref={el => explicationQuillRefs.current[`explication-${quizIndex}-${questionIndex}`] = el}
+                                                                                    style={{ minHeight: '100px' }}
+                                                                                />
+                                                                            </div>
+                                                                        </FormGroup >
+                                                                    </CardBody >
+                                                                </Card >
+                                                            ))}
+                                                    </div >
+                                                </CardBody >
+                                            </Card >
+                                        ))}
+                                    </div >
+
+                                    {/* Boutons */}
+                                    < Row className="mt-4" >
+                                        <Col md={12}>
+                                            <div className="d-flex justify-content-end gap-2">
+                                                <Button
+                                                    className="btn btn-light rounded-4"
+                                                    type="button"
+                                                    style={{ borderRadius: "20px", padding: "10px 30px" }}
+                                                    onClick={() => navigate("/:entreprise/evaluation")}
+>>>>>>> origin/Darnel
                                                 >
                                                   {option.isCorrect && (
                                                     <i
@@ -1058,6 +1478,7 @@ const EvaluationForm = ({ mode = "add" }) => {
                                                 </div>
                                               )}
                                             </div>
+<<<<<<< HEAD
 
                                             {/* Champ de texte avec bordure inférieure seulement */}
                                             <div className="flex-grow-1 me-2 position-relative">
@@ -1208,6 +1629,18 @@ const EvaluationForm = ({ mode = "add" }) => {
       </Container>
     </div>
   );
+=======
+                                        </Col>
+                                    </Row >
+                                </Form >
+                            </CardBody >
+                        </Card >
+                    </Col >
+                </Row >
+            </Container >
+        </div >
+    );
+>>>>>>> origin/Darnel
 };
 
 export default EvaluationForm;

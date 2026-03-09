@@ -482,10 +482,10 @@ const PresenceEtAbsence = () => {
                             className="btn btn-primary rounded-4 px-4"
                             style={{ borderRadius: "20px" }}
                         >
-                            Modifier
+                            {t("Modifier")}
                         </Link>
-                        <Button 
-                            color="secondary" 
+                        <Button
+                            color="secondary"
                             onClick={() => toggleViewModal()}
                             className="rounded-4 px-4"
                         >

@@ -11,8 +11,7 @@ import { useTranslation } from "react-i18next";
 
 const Evaluation = () => {
     const { t } = useTranslation();
-
-    document.title = "Evaluation";
+    document.title = t("Evaluation");
 
     // États généraux
     const [isExportCSV, setIsExportCSV] = useState(false);
@@ -261,11 +260,11 @@ const Evaluation = () => {
         <div className="page-content">
             <Container fluid>
                 <BreadCrumb
-                    title={t("Évaluations")}
+                    title={`\u00a0${t("Évaluation")}`}
                     pageTitle={
                         <>
                             <i className="ri-bar-chart-grouped-line"></i>
-                            &nbsp;&gt;&nbsp;<Link to="/"> {t("Tableau de Bord")} </Link>&nbsp;&gt;
+                            &nbsp;&gt;&nbsp;<Link to="/">{t("Tableau de Bord")}</Link>&nbsp;&gt;
                         </>
                     }
                 />
@@ -465,8 +464,8 @@ const Evaluation = () => {
                                         <CustomSelect
                                             options={modeOptions}
                                             value={modeOptions.find(opt => opt.value === formData.mode)}
-                                            onChange={(opt) => setFormData({...formData, mode: opt.value})}
-                                            placeholder={t("Sélectionner un mode")}
+                                            onChange={(opt) => setFormData({ ...formData, mode: opt.value })}
+                                            placeholder="Sélectionner un mode"
                                         />
                                     </FormGroup>
                                 </Col>
@@ -491,8 +490,8 @@ const Evaluation = () => {
                                         <CustomSelect
                                             options={modeEvaluationOptions}
                                             value={modeEvaluationOptions.find(opt => opt.value === formData.modeEvaluation)}
-                                            onChange={(opt) => setFormData({...formData, modeEvaluation: opt.value})}
-                                            placeholder={t("Sélectionner un mode")}
+                                            onChange={(opt) => setFormData({ ...formData, modeEvaluation: opt.value })}
+                                            placeholder="Sélectionner le mode"
                                         />
                                     </FormGroup>
                                 </Col>
@@ -576,14 +575,14 @@ const Evaluation = () => {
                                 </div>
                                 <h4>{t("Prêt à commencer ?")}</h4>
                                 <p className="text-muted mb-4">
-                                    {t("Cette évaluation contient")} {quizQuestions.length} {t("questions").toLowerCase()}.<br />
+                                    {t("Cette évaluation contient")} {quizQuestions.length} {t("questions")}.<br />
                                     {t("Vous aurez 60 minutes pour la compléter.")}
-                                </p>
+                                </p >
                                 <Button color="primary" onClick={startQuiz} size="lg" className="rounded-pill px-5">
                                     <i className="ri-play-fill me-2"></i>
                                     {t("Commencer l'évaluation")}
                                 </Button>
-                            </div>
+                            </div >
                         ) : (
                             <div>
                                 <div className="mb-4">
@@ -653,11 +652,11 @@ const Evaluation = () => {
                                 </div>
                             </div>
                         )}
-                    </ModalBody>
-                </Modal>
+                    </ModalBody >
+                </Modal >
 
                 {/* MODAL VOIR DÉTAILS */}
-                <Modal
+                < Modal
                     isOpen={viewModal}
                     toggle={() => toggleViewModal()}
                     size="md"
@@ -687,31 +686,24 @@ const Evaluation = () => {
                         )}
                     </ModalBody>
                     <ModalFooter className="border-0 pb-4">
-                        <Link
-                            to="/:entreprise/evaluation-edit/:id"
-                            className="btn btn-primary rounded-4 px-4"
-                            style={{ borderRadius: "20px" }}
-                        >
-                            {t("Modifier")}
-                        </Link>
-                        <Button 
+                        <Button
                             className="rounded-4"
                             color="secondary"
                             onClick={() => toggleViewModal()}
                         >
                             {t("Fermer")}
                         </Button>
-                    </ModalFooter>
-                </Modal>
+                    </ModalFooter >
+                </Modal >
 
                 {/* MODAL DE SUPPRESSION */}
-                <DeleteModal
+                < DeleteModal
                     show={deleteModal}
                     onDeleteClick={handleDeleteConfirm}
                     onCloseClick={handleDeleteClose}
                 />
-            </Container>
-        </div>
+            </Container >
+        </div >
     );
 };
 
