@@ -26,6 +26,10 @@ const EditProfile = () => {
     const [personalQuill, setPersonalQuill] = useState(null);
     const [jobQuill, setJobQuill] = useState(null);
 
+    // Flag pour éviter les boucles infinies
+    const isPersonalUpdating = useRef(false);
+    const isJobUpdating = useRef(false);
+
     // États pour les selects
     const [selectedYears, setSelectedYears] = useState(null);
     const [selectedSkills, setSelectedSkills] = useState(null);
@@ -69,24 +73,31 @@ const EditProfile = () => {
         []
     );
 
+    // Initialiser les descriptions par défaut UNE SEULE FOIS au chargement initial
     useEffect(() => {
-        setPersonalDescription(
-            tr(
-                "Bonjour, je suis Anna Adame. Ce sera aussi simple que l'occidental ; en fait, ce sera occidental. Pour un Anglais, cela ressemblera à de l'anglais simplifié, comme me l'a dit un ami sceptique de Cambridge à propos de ce que l'occidental est : les langues européennes sont membres de la même famille.",
-                "Hello, I am Anna Adame. It will be as simple as Western; in fact, it will be Western. For an English speaker, it will look like simplified English, as a skeptical friend from Cambridge told me about what Western is: European languages are members of the same family."
-            )
-        );
-        setJobDescription(
-            tr(
-                "Vous voulez toujours vous assurer que vos polices fonctionnent bien ensemble et essayez de limiter le nombre de polices que vous utilisez à trois ou moins. Expérimentez et jouez avec les polices que vous avez déjà dans le logiciel avec lequel vous travaillez sur des sites Web de polices réputés.",
-                "You always want to make sure your fonts work well together and try to limit the number of fonts you use to three or fewer. Experiment and play with the fonts you already have in your software using reputable font websites."
-            )
-        );
-    }, [i18n.language]);
+        // Ne définir les descriptions que si elles sont vides (premier chargement)
+        if (!personalDescription) {
+            setPersonalDescription(
+                tr(
+                    "Bonjour, je suis Anna Adame. Ce sera aussi simple que l'occidental ; en fait, ce sera occidental. Pour un Anglais, cela ressemblera à de l'anglais simplifié, comme me l'a dit un ami sceptique de Cambridge à propos de ce que l'occidental est : les langues européennes sont membres de la même famille.",
+                    "Hello, I am Anna Adame. It will be as simple as Western; in fact, it will be Western. For an English speaker, it will look like simplified English, as a skeptical friend from Cambridge told me about what Western is: European languages are members of the same family."
+                )
+            );
+        }
+        
+        if (!jobDescription) {
+            setJobDescription(
+                tr(
+                    "Vous voulez toujours vous assurer que vos polices fonctionnent bien ensemble et essayez de limiter le nombre de polices que vous utilisez à trois ou moins. Expérimentez et jouez avec les polices que vous avez déjà dans le logiciel avec lequel vous travaillez sur des sites Web de polices réputés.",
+                    "You always want to make sure your fonts work well together and try to limit the number of fonts you use to three or fewer. Experiment and play with the fonts you already have in your software using reputable font websites."
+                )
+            );
+        }
+    }, []); // Dépendance vide = une seule fois
 
     // Initialisation de Quill pour la description personnelle
     useEffect(() => {
-        if (!personalQuillRef.current) return;
+        if (!personalQuillRef.current || personalQuill) return; // Éviter réinitialisation
 
         const quillInstance = new Quill(personalQuillRef.current, {
             placeholder: tr("Description personnelle...", "Personal description..."),
@@ -105,12 +116,18 @@ const EditProfile = () => {
 
         setPersonalQuill(quillInstance);
 
-        return () => { };
-    }, [i18n.language]);
+        // Nettoyage à la destruction du composant
+        return () => {
+            if (quillInstance) {
+                // Supprimer tous les écouteurs d'événements
+                quillInstance.off('text-change');
+            }
+        };
+    }, [i18n.language]); // Dépendance i18n.language pour mettre à jour le placeholder
 
     // Initialisation de Quill pour la description du poste
     useEffect(() => {
-        if (!jobQuillRef.current) return;
+        if (!jobQuillRef.current || jobQuill) return;
 
         const quillInstance = new Quill(jobQuillRef.current, {
             placeholder: tr("Description du poste...", "Job description..."),
@@ -129,53 +146,73 @@ const EditProfile = () => {
 
         setJobQuill(quillInstance);
 
-        return () => { };
+        return () => {
+            if (quillInstance) {
+                quillInstance.off('text-change');
+            }
+        };
     }, [i18n.language]);
 
-    // Mettre à jour le contenu de Quill personnel
+    // Mettre à jour le contenu de Quill personnel quand personalDescription change (depuis l'extérieur)
     useEffect(() => {
-        if (personalQuill && personalDescription && personalQuill.root.innerHTML !== personalDescription) {
-            personalQuill.clipboard.dangerouslyPasteHTML(personalDescription);
+        if (personalQuill && personalDescription && !isPersonalUpdating.current) {
+            isPersonalUpdating.current = true;
+            
+            if (personalQuill.root.innerHTML !== personalDescription) {
+                personalQuill.clipboard.dangerouslyPasteHTML(personalDescription);
+            }
+            
+            isPersonalUpdating.current = false;
         }
     }, [personalQuill, personalDescription]);
 
-    // Mettre à jour le contenu de Quill job
+    // Mettre à jour le contenu de Quill job quand jobDescription change
     useEffect(() => {
-        if (jobQuill && jobDescription && jobQuill.root.innerHTML !== jobDescription) {
-            jobQuill.clipboard.dangerouslyPasteHTML(jobDescription);
+        if (jobQuill && jobDescription && !isJobUpdating.current) {
+            isJobUpdating.current = true;
+            
+            if (jobQuill.root.innerHTML !== jobDescription) {
+                jobQuill.clipboard.dangerouslyPasteHTML(jobDescription);
+            }
+            
+            isJobUpdating.current = false;
         }
     }, [jobQuill, jobDescription]);
 
     // Gérer les changements de Quill personnel
     useEffect(() => {
-        if (personalQuill) {
-            const handleTextChange = () => {
+        if (!personalQuill) return;
+
+        const handleTextChange = () => {
+            if (!isPersonalUpdating.current) {
                 const html = personalQuill.root.innerHTML;
                 setPersonalDescription(html);
-            };
+            }
+        };
 
-            personalQuill.on('text-change', handleTextChange);
+        personalQuill.on('text-change', handleTextChange);
 
-            return () => {
-                personalQuill.off('text-change', handleTextChange);
-            };
-        }
+        return () => {
+            personalQuill.off('text-change', handleTextChange);
+        };
     }, [personalQuill]);
 
     // Gérer les changements de Quill job
     useEffect(() => {
-        if (jobQuill) {
-            const handleTextChange = () => {
+        if (!jobQuill) return;
+
+        const handleTextChange = () => {
+            if (!isJobUpdating.current) {
                 const html = jobQuill.root.innerHTML;
                 setJobDescription(html);
-            };
+            }
+        };
 
-            jobQuill.on('text-change', handleTextChange);
+        jobQuill.on('text-change', handleTextChange);
 
-            return () => {
-                jobQuill.off('text-change', handleTextChange);
-            };
-        }
+        return () => {
+            jobQuill.off('text-change', handleTextChange);
+        };
     }, [jobQuill]);
 
     const tabChange = (tab) => {

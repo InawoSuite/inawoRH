@@ -40,7 +40,7 @@ const Evaluation = () => {
 
     // États pour le quiz
     const [currentQuestion, setCurrentQuestion] = useState(0);
-    const [timer, setTimer] = useState(3600); // 60 minutes en secondes
+    const [timer, setTimer] = useState(3600);
     const [quizStarted, setQuizStarted] = useState(false);
     const [answers, setAnswers] = useState({});
 
@@ -63,7 +63,7 @@ const Evaluation = () => {
         {
             id: 1,
             numero: "EVAL-2024-001",
-            titre: "Évaluation annuelle 2024",
+            titre: t("Évaluation annuelle 2024"),
             mode: t("Par employé"),
             responsable: "Marie Martin",
             dateEvaluation: "2024-12-15",
@@ -73,7 +73,7 @@ const Evaluation = () => {
         {
             id: 2,
             numero: "EVAL-2024-002",
-            titre: "Évaluation des compétences",
+            titre: t("Évaluation des compétences"),
             mode: t("Par département"),
             responsable: "Jean Dupont",
             dateEvaluation: "2024-11-30",
@@ -83,7 +83,7 @@ const Evaluation = () => {
         {
             id: 3,
             numero: "EVAL-2024-003",
-            titre: "Feedback 360°",
+            titre: t("Feedback 360°"),
             mode: t("Par entreprise"),
             responsable: "Sophie Bernard",
             dateEvaluation: "2024-10-20",
@@ -96,20 +96,20 @@ const Evaluation = () => {
     const quizQuestions = [
         {
             id: 1,
-            question: "Comment évaluez-vous la communication de l'employé ?",
-            options: ["Excellent", "Bon", "Moyen", "À améliorer", "Insuffisant"],
+            question: t("Comment évaluez-vous la communication de l'employé ?"),
+            options: [t("Excellent"), t("Bon"), t("Moyen"), t("À améliorer"), t("Insuffisant")],
             type: "choix_unique"
         },
         {
             id: 2,
-            question: "L'employé atteint-il ses objectifs ?",
-            options: ["Toujours", "Souvent", "Parfois", "Rarement", "Jamais"],
+            question: t("L'employé atteint-il ses objectifs ?"),
+            options: [t("Toujours"), t("Souvent"), t("Parfois"), t("Rarement"), t("Jamais")],
             type: "choix_unique"
         },
         {
             id: 3,
-            question: "Compétences techniques à évaluer :",
-            options: ["Expert", "Avancé", "Intermédiaire", "Débutant", "Non applicable"],
+            question: t("Compétences techniques à évaluer :"),
+            options: [t("Expert"), t("Avancé"), t("Intermédiaire"), t("Débutant"), t("Non applicable")],
             type: "choix_unique"
         }
     ];
@@ -428,7 +428,7 @@ const Evaluation = () => {
                     </Col>
                 </Row>
 
-                {/* MODAL DE CRÉATION DE CAMPAGNE */}
+                {/* MODAL DE CRÉATION DE CAMPAGNE
                 <Modal
                     isOpen={createModal}
                     toggle={toggleCreateModal}
@@ -541,7 +541,7 @@ const Evaluation = () => {
                             </Button>
                         </ModalFooter>
                     </Form>
-                </Modal>
+                </Modal> */}
 
                 {/* MODAL QUIZ */}
                 <Modal
@@ -555,7 +555,7 @@ const Evaluation = () => {
                         <div className="d-flex align-items-center justify-content-between w-100">
                             <div>
                                 <i className="ri-questionnaire-line me-2"></i>
-                                {selectedItem?.titre}
+                                {t(selectedItem?.titre)}
                             </div>
                             {quizStarted && (
                                 <div className="ms-3 badge bg-warning rounded-pill p-2">

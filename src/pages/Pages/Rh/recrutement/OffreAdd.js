@@ -32,11 +32,13 @@ const OffreAdd = () => {
     const tagsQuillRef = useRef(null);
     const [tagsQuill, setTagsQuill] = useState(null);
     const [tags, setTags] = useState("");
+    const isTagsUpdating = useRef(false);
 
     // État pour la description avec Quill
     const [description, setDescription] = useState("");
     const quillRef = useRef(null);
     const [quill, setQuill] = useState(null);
+    const isDescriptionUpdating = useRef(false);
 
     // Options pour les selects (traduites en français)
     const jobCategoryOptions = useMemo(
@@ -74,9 +76,9 @@ const OffreAdd = () => {
         [t]
     );
 
-    // Initialisation de Quill
+    // Initialisation de Quill pour la description
     useEffect(() => {
-        if (!quillRef.current) return;
+        if (!quillRef.current || quill) return;
 
         const quillInstance = new Quill(quillRef.current, {
             placeholder: t("Description détaillée de l'offre d'emploi..."),
@@ -95,35 +97,22 @@ const OffreAdd = () => {
 
         setQuill(quillInstance);
 
-        return () => { };
+        return () => {
+            if (quillInstance) {
+                quillInstance.off('text-change');
+            }
+        };
     }, [t]);
-
-    // Gérer les changements de Quill
-    useEffect(() => {
-        if (quill) {
-            const handleTextChange = () => {
-                const html = quill.root.innerHTML;
-                setDescription(html);
-            };
-
-            quill.on('text-change', handleTextChange);
-
-            return () => {
-                quill.off('text-change', handleTextChange);
-            };
-        }
-    }, [quill]);
 
     // Initialisation de Quill pour les tags
     useEffect(() => {
-        if (!tagsQuillRef.current) return;
+        if (!tagsQuillRef.current || tagsQuill) return;
 
         const quillInstance = new Quill(tagsQuillRef.current, {
             placeholder: t("Ex: React, JavaScript, Senior"),
             theme: "snow",
             modules: {
                 toolbar: [
-                    // Toolbar simplifié pour les tags
                     ['bold', 'italic'],
                     [{ 'list': 'bullet' }],
                     ['clean']
@@ -133,23 +122,73 @@ const OffreAdd = () => {
 
         setTagsQuill(quillInstance);
 
-        return () => { };
+        return () => {
+            if (quillInstance) {
+                quillInstance.off('text-change');
+            }
+        };
     }, [t]);
 
-    // Gérer les changements de Quill pour les tags
+    // Mettre à jour le contenu de Quill description quand description change
     useEffect(() => {
-        if (tagsQuill) {
-            const handleTextChange = () => {
+        if (quill && description && !isDescriptionUpdating.current) {
+            isDescriptionUpdating.current = true;
+            
+            if (quill.root.innerHTML !== description) {
+                quill.clipboard.dangerouslyPasteHTML(description);
+            }
+            
+            isDescriptionUpdating.current = false;
+        }
+    }, [quill, description]);
+
+    // Mettre à jour le contenu de Quill tags quand tags change
+    useEffect(() => {
+        if (tagsQuill && tags && !isTagsUpdating.current) {
+            isTagsUpdating.current = true;
+            
+            if (tagsQuill.root.innerHTML !== tags) {
+                tagsQuill.clipboard.dangerouslyPasteHTML(tags);
+            }
+            
+            isTagsUpdating.current = false;
+        }
+    }, [tagsQuill, tags]);
+
+    // Gérer les changements de Quill description
+    useEffect(() => {
+        if (!quill) return;
+
+        const handleTextChange = () => {
+            if (!isDescriptionUpdating.current) {
+                const html = quill.root.innerHTML;
+                setDescription(html);
+            }
+        };
+
+        quill.on('text-change', handleTextChange);
+
+        return () => {
+            quill.off('text-change', handleTextChange);
+        };
+    }, [quill]);
+
+    // Gérer les changements de Quill tags
+    useEffect(() => {
+        if (!tagsQuill) return;
+
+        const handleTextChange = () => {
+            if (!isTagsUpdating.current) {
                 const html = tagsQuill.root.innerHTML;
                 setTags(html);
-            };
+            }
+        };
 
-            tagsQuill.on('text-change', handleTextChange);
+        tagsQuill.on('text-change', handleTextChange);
 
-            return () => {
-                tagsQuill.off('text-change', handleTextChange);
-            };
-        }
+        return () => {
+            tagsQuill.off('text-change', handleTextChange);
+        };
     }, [tagsQuill]);
 
     const handleSubmit = (e) => {
@@ -169,7 +208,7 @@ const OffreAdd = () => {
             lastSalary: formData.get('last-salary-Input'),
             country: formData.get('country-Input'),
             city: formData.get('city-Input'),
-            tags: formData.get('tags-field'),
+            tags: tags,
         };
         console.log("Données soumises:", data);
     };
@@ -369,7 +408,7 @@ const OffreAdd = () => {
                                             <Col md={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="start-salary-Input">
-                                                        {t("Salaire minimum (FCFA)")}
+                                                        {t("Salaire minimum")}
                                                     </Label>
                                                     <Input
                                                         className="rounded-4"
@@ -385,7 +424,7 @@ const OffreAdd = () => {
                                             <Col md={6}>
                                                 <FormGroup>
                                                     <Label htmlFor="last-salary-Input">
-                                                        {t("Salaire maximum (FCFA)")}
+                                                        {t("Salaire maximum")}
                                                     </Label>
                                                     <Input
                                                         className="rounded-4"
@@ -457,7 +496,7 @@ const OffreAdd = () => {
                                                 </FormGroup>
                                             </Col>
 
-                                            {/* Boutons */}
+                                            {/* Boutons - CORRECTION ICI */}
                                             <Col lg={12}>
                                                 <div className="hstack justify-content-end gap-2">
                                                     <Button
@@ -468,14 +507,13 @@ const OffreAdd = () => {
                                                     >
                                                         {t("Annuler")}
                                                     </Button>
-                                                    <Link
-                                                        to="#"
+                                                    <Button
                                                         type="submit"
                                                         className="btn btn-primary rounded-5"
                                                         style={{ borderRadius: "70px", padding: "10px 30px" }}
                                                     >
                                                         {t("Ajouter l'offre d'emploi")}
-                                                    </Link>
+                                                    </Button>
                                                 </div>
                                             </Col>
                                         </Row>
