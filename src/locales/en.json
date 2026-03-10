@@ -1081,6 +1081,7 @@
   "Présence": "Attendance",
   "Présence et Absences": "Attendance and Absences",
   "Mode": "Mode",
+  "vs. mois précédent": "vs. previous month",
   "Responsable": "Manager",
   "Progression": "Progress",
   "Commencez par créer une nouvelle campagne d'évaluation": "Start by creating a new evaluation campaign",
@@ -1432,5 +1433,8 @@
   "Referrals": "Referrals",
   "Showing": "Showing",
   "of": "of",
-  "Results": "Results"
+  "Results": "Results",
+  "Entretiens": "Interviews",
+  "Embauchés": "Hired",
+  "Rejetés": "Rejected"
 }
