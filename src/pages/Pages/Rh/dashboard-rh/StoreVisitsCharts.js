@@ -60,18 +60,18 @@ const StoreVisitsCharts = ({
     },
     xaxis: {
       categories: [
-        "Janv",
-        "Fevr",
-        "Mars",
-        "Avr",
-        "Mai",
-        "Juin",
-        "Juil",
-        "Aout",
-        "Sept",
-        "Oct",
-        "Nov",
-        "Dec",
+        t("Jan"),
+        t("Feb"),
+        t("Mar"),
+        t("Apr"),
+        t("May"),
+        t("Jun"),
+        t("Jul"),
+        t("Aug"),
+        t("Sep"),
+        t("Oct"),
+        t("Nov"),
+        t("Dec"),
       ],
       axisTicks: {
         show: false,
@@ -143,7 +143,7 @@ const StoreVisitsCharts = ({
         {
           formatter: function (y) {
             if (typeof y !== "undefined") {
-              return y.toFixed(0) + " ventes";
+              return y.toFixed(0) + " " + t("Sales");
             }
             return y;
           },
@@ -156,7 +156,7 @@ const StoreVisitsCharts = ({
     <Col xxl={xxl} xl={xl}>
       <Card className="card-height-100" style={cardStyle}>
         <CardHeader className="align-items-center d-flex"  >
-          <h4 className="card-title mb-0 flex-grow-1">{t("Chiffre d'affaires")}</h4>
+          <h4 className="card-title mb-0 flex-grow-1">{t("Revenue")}</h4>
           <div className="d-flex gap-1" >
             {["ALL", "1M", "6M", "1Y"].map((item) => (
               <Button
@@ -167,7 +167,7 @@ const StoreVisitsCharts = ({
                 onClick={() => setPeriod(item)}
                 style={{ borderRadius: "20px" }}
               >
-                {item === "ALL" ? t("Tout") : item === "1Y" ? t("1A") : item}
+                {t(item)}
               </Button>
             ))}
           </div>
@@ -192,15 +192,7 @@ const StoreVisitsCharts = ({
                     </span>
                   </h5>
                   <p className="text-muted mb-0">
-                    {item.label === "Orders"
-                      ? t("Commandes")
-                      : item.label === "Earnings"
-                        ? t("Gains")
-                        : item.label === "Refunds"
-                          ? t("Remboursements")
-                          : item.label === "Conversation Ratio"
-                            ? t("Taux de conversion")
-                            : item.label}
+                    {t(item.label)}
                   </p>
                 </div>
               </div>
