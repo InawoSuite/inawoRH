@@ -2239,7 +2239,7 @@ const Pointage = () => {
                     {/* Saisie manuelle */}
                     <div className="row justify-content-center">
                         <Col md={8}>
-                            <div className="input-group input-group-lg">
+                            <div className="input-group input-group-lg kiosk-badge-group">
                                 <span className="input-group-text">
                                     <i className="ri-id-card-line"></i>
                                 </span>
@@ -2257,6 +2257,7 @@ const Pointage = () => {
                                     disabled={loading}
                                 />
                                 <Button
+                                    className="kiosk-validate-btn"
                                     color="primary"
                                     onClick={() => {
                                         if (badgeNumber) {
@@ -2326,11 +2327,11 @@ const Pointage = () => {
                     )}
                 </ModalBody>
                 <ModalFooter className="justify-content-center">
-                    <Button color="light" onClick={() => setKioskModal(false)}>
+                    <Button color="light" className="rounded-pill px-4" onClick={() => setKioskModal(false)}>
                         <i className="ri-close-line me-1"></i>
                         {t('Fermer')}
                     </Button>
-                    <Button color="info" onClick={() => {
+                    <Button color="info" className="rounded-pill px-4" onClick={() => {
                         setBadgeNumber('');
                         setScanMessage({ show: false, type: '', title: '', message: '' });
                     }}>
@@ -2346,7 +2347,7 @@ const Pointage = () => {
                 toggle={() => setManualModal(false)}
                 size="lg"
                 centered
-                className="modal-dialog-centered"
+                className="modal-dialog-centered manual-pointage-modal"
                 contentClassName="rounded-4 border-0"
             >
                 <ModalHeader toggle={() => setManualModal(false)} className="border-0 pt-4 px-4">
@@ -2446,10 +2447,15 @@ const Pointage = () => {
 
             {/* Modal Détails */}
             {selectedRecord && (
-                <Modal isOpen={true} toggle={() => setSelectedRecord(null)} size="lg">
+                <Modal
+                    isOpen={true}
+                    toggle={() => setSelectedRecord(null)}
+                    size="lg"
+                    contentClassName="rounded-4 border-0"
+                >
                     <ModalHeader toggle={() => setSelectedRecord(null)}>
                         <i className="ri-information-line me-2"></i>
-                        {t('Détails du pointage')}
+                        {t('Détails du pointage')} v
                     </ModalHeader>
                     <ModalBody>
                         <Row>
@@ -2484,10 +2490,10 @@ const Pointage = () => {
                         </Row>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="secondary" onClick={() => setSelectedRecord(null)}>
+                        <Button color="secondary" className="rounded-pill px-4" onClick={() => setSelectedRecord(null)}>
                             {t('Fermer')}
                         </Button>
-                        <Button color="primary">
+                        <Button color="primary" className="rounded-pill px-4">
                             <i className="ri-printer-line me-2"></i>
                             {t('Imprimer')}
                         </Button>
@@ -2734,7 +2740,11 @@ const Pointage = () => {
             </Modal>
 
             {/* Modal Rapport */}
-            <Modal isOpen={reportModal} toggle={() => setReportModal(false)}>
+            <Modal
+                isOpen={reportModal}
+                toggle={() => setReportModal(false)}
+                contentClassName="rounded-4 border-0"
+            >
                 <ModalHeader toggle={() => setReportModal(false)}>
                     <i className="ri-file-chart-line me-2"></i>
                     {t('Générer un rapport')}
@@ -2768,15 +2778,15 @@ const Pointage = () => {
                     <div className="mb-3">
                         <label className="form-label">{t('Format')}</label>
                         <ButtonGroup>
-                            <Button color="light">
+                            <Button color="light" className="rounded-pill px-4">
                                 <i className="ri-file-pdf-line me-1"></i>
                                 PDF
                             </Button>
-                            <Button color="light">
+                            <Button color="light" className="rounded-pill px-4">
                                 <i className="ri-file-excel-line me-1"></i>
                                 Excel
                             </Button>
-                            <Button color="light">
+                            <Button color="light" className="rounded-pill px-4">
                                 <i className="ri-file-text-line me-1"></i>
                                 CSV
                             </Button>
@@ -2804,10 +2814,10 @@ const Pointage = () => {
                     </div>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="light" onClick={() => setReportModal(false)}>
+                    <Button color="light" className="rounded-pill px-4" onClick={() => setReportModal(false)}>
                         {t('Annuler')}
                     </Button>
-                    <Button color="primary" onClick={() => generateReport('pdf')}>
+                    <Button color="primary" className="rounded-pill px-4" onClick={() => generateReport('pdf')}>
                         {loading ? <Spinner size="sm" className="me-2" /> : null}
                         {t('Générer')}
                     </Button>
@@ -2843,6 +2853,35 @@ const Pointage = () => {
                     .kiosk-modal .modal-footer {
                         border-top: 2px solid #f0f0f0;
                         padding: 1.5rem;
+                    }
+
+                    .kiosk-modal .kiosk-badge-group .input-group-text {
+                        border-top-left-radius: 12px;
+                        border-bottom-left-radius: 12px;
+                    }
+
+                    .kiosk-modal .kiosk-badge-group .form-control {
+                        border-radius: 0;
+                    }
+
+                    .kiosk-modal .kiosk-badge-group .kiosk-validate-btn {
+                        border-top-right-radius: 12px;
+                        border-bottom-right-radius: 12px;
+                    }
+
+                    .manual-pointage-modal .form-control,
+                    .manual-pointage-modal .form-select {
+                        border-radius: 12px;
+                    }
+
+                    .manual-pointage-modal .react-select__control {
+                        border-radius: 12px;
+                        min-height: 46px;
+                    }
+
+                    .manual-pointage-modal .react-select__menu {
+                        border-radius: 12px;
+                        overflow: hidden;
                     }
                     
                     .scan-animation {
