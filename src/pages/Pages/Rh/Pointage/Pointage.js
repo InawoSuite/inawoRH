@@ -2446,7 +2446,12 @@ const Pointage = () => {
 
             {/* Modal Détails */}
             {selectedRecord && (
-                <Modal isOpen={true} toggle={() => setSelectedRecord(null)} size="lg">
+                <Modal
+                    isOpen={true}
+                    toggle={() => setSelectedRecord(null)}
+                    size="lg"
+                    contentClassName="rounded-4 border-0"
+                >
                     <ModalHeader toggle={() => setSelectedRecord(null)}>
                         <i className="ri-information-line me-2"></i>
                         {t('Détails du pointage')}
@@ -2484,10 +2489,10 @@ const Pointage = () => {
                         </Row>
                     </ModalBody>
                     <ModalFooter>
-                        <Button color="secondary" onClick={() => setSelectedRecord(null)}>
+                        <Button color="secondary" className="rounded-pill px-4" onClick={() => setSelectedRecord(null)}>
                             {t('Fermer')}
                         </Button>
-                        <Button color="primary">
+                        <Button color="primary" className="rounded-pill px-4">
                             <i className="ri-printer-line me-2"></i>
                             {t('Imprimer')}
                         </Button>
@@ -2734,7 +2739,11 @@ const Pointage = () => {
             </Modal>
 
             {/* Modal Rapport */}
-            <Modal isOpen={reportModal} toggle={() => setReportModal(false)}>
+            <Modal
+                isOpen={reportModal}
+                toggle={() => setReportModal(false)}
+                contentClassName="rounded-4 border-0"
+            >
                 <ModalHeader toggle={() => setReportModal(false)}>
                     <i className="ri-file-chart-line me-2"></i>
                     {t('Générer un rapport')}
@@ -2768,15 +2777,15 @@ const Pointage = () => {
                     <div className="mb-3">
                         <label className="form-label">{t('Format')}</label>
                         <ButtonGroup>
-                            <Button color="light">
+                            <Button color="light" className="rounded-pill px-4">
                                 <i className="ri-file-pdf-line me-1"></i>
                                 PDF
                             </Button>
-                            <Button color="light">
+                            <Button color="light" className="rounded-pill px-4">
                                 <i className="ri-file-excel-line me-1"></i>
                                 Excel
                             </Button>
-                            <Button color="light">
+                            <Button color="light" className="rounded-pill px-4">
                                 <i className="ri-file-text-line me-1"></i>
                                 CSV
                             </Button>
@@ -2804,10 +2813,10 @@ const Pointage = () => {
                     </div>
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="light" onClick={() => setReportModal(false)}>
+                    <Button color="light" className="rounded-pill px-4" onClick={() => setReportModal(false)}>
                         {t('Annuler')}
                     </Button>
-                    <Button color="primary" onClick={() => generateReport('pdf')}>
+                    <Button color="primary" className="rounded-pill px-4" onClick={() => generateReport('pdf')}>
                         {loading ? <Spinner size="sm" className="me-2" /> : null}
                         {t('Générer')}
                     </Button>

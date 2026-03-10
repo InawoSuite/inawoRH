@@ -15,7 +15,21 @@ const LanguageDropdown = () => {
     const userId = authUser ? authUser.user_id : null;
     const [selLang, setSelLang] = useState("");
     // Declare a new state variable, which we'll call "menu"
-    const [selectedLang, setSelectedLang] = useState("");
+    const [selectedLang, setSelectedLang] = useState(localStorage.getItem("I18N_LANGUAGE") || i18n.language || "fr");
+
+    const normalizeLanguage = (value) => {
+        const languageValue = String(value || "").trim().toLowerCase();
+
+        if (["eng", "english", "en", "en-us", "en_us"].includes(languageValue)) {
+            return "en";
+        }
+
+        if (["fr", "fre", "french", "français", "francais"].includes(languageValue)) {
+            return "fr";
+        }
+
+        return null;
+    };
     
     const axiosInstance = useMemo(() => {
         const instance = axios.create({
@@ -54,27 +68,28 @@ const LanguageDropdown = () => {
       }, [axiosInstance, userId]);
 
     useEffect(() => {
-        if (selLang === "Eng") {
-            localStorage.setItem("I18N_LANGUAGE", "en");
-            localStorage.setItem("i18nextLng", "en");
-            const currentLanguage = "en"
-            setSelectedLang(currentLanguage);
-            i18n.changeLanguage(currentLanguage)
-        } else {
-            localStorage.setItem("I18N_LANGUAGE", "fr");
-            localStorage.setItem("i18nextLng", "fr");
-            const currentLanguage = "fr"
-            setSelectedLang(currentLanguage);
-            i18n.changeLanguage(currentLanguage)
+        const normalizedLanguage = normalizeLanguage(selLang);
+
+        if (!normalizedLanguage) {
+            const persistedLanguage = localStorage.getItem("I18N_LANGUAGE") || i18n.language || "fr";
+            const safeLanguage = persistedLanguage.startsWith("en") ? "en" : "fr";
+            setSelectedLang(safeLanguage);
+            i18n.changeLanguage(safeLanguage);
+            return;
         }
-        
-    }, [selLang])
+
+        localStorage.setItem("I18N_LANGUAGE", normalizedLanguage);
+        localStorage.setItem("i18nextLng", normalizedLanguage);
+        setSelectedLang(normalizedLanguage);
+        i18n.changeLanguage(normalizedLanguage);
+    }, [selLang]);
     
 
     const changeLanguageAction = lang => {
         //set language as i18n
         i18n.changeLanguage(lang);
         localStorage.setItem("I18N_LANGUAGE", lang);
+        localStorage.setItem("i18nextLng", lang);
         setSelectedLang(lang);
     };
 

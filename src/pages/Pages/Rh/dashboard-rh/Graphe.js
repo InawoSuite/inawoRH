@@ -24,6 +24,7 @@ const Graphe = ({ dataColors = '["--vz-primary", "--vz-success", "--vz-danger", 
       dropShadow: {
         enabled: false,
       },
+
     },
     colors: chartDonutBasicColors,
   };
