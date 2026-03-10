@@ -2239,7 +2239,7 @@ const Pointage = () => {
                     {/* Saisie manuelle */}
                     <div className="row justify-content-center">
                         <Col md={8}>
-                            <div className="input-group input-group-lg">
+                            <div className="input-group input-group-lg kiosk-badge-group">
                                 <span className="input-group-text">
                                     <i className="ri-id-card-line"></i>
                                 </span>
@@ -2257,6 +2257,7 @@ const Pointage = () => {
                                     disabled={loading}
                                 />
                                 <Button
+                                    className="kiosk-validate-btn"
                                     color="primary"
                                     onClick={() => {
                                         if (badgeNumber) {
@@ -2326,11 +2327,11 @@ const Pointage = () => {
                     )}
                 </ModalBody>
                 <ModalFooter className="justify-content-center">
-                    <Button color="light" onClick={() => setKioskModal(false)}>
+                    <Button color="light" className="rounded-pill px-4" onClick={() => setKioskModal(false)}>
                         <i className="ri-close-line me-1"></i>
                         {t('Fermer')}
                     </Button>
-                    <Button color="info" onClick={() => {
+                    <Button color="info" className="rounded-pill px-4" onClick={() => {
                         setBadgeNumber('');
                         setScanMessage({ show: false, type: '', title: '', message: '' });
                     }}>
@@ -2346,7 +2347,7 @@ const Pointage = () => {
                 toggle={() => setManualModal(false)}
                 size="lg"
                 centered
-                className="modal-dialog-centered"
+                className="modal-dialog-centered manual-pointage-modal"
                 contentClassName="rounded-4 border-0"
             >
                 <ModalHeader toggle={() => setManualModal(false)} className="border-0 pt-4 px-4">
@@ -2454,7 +2455,7 @@ const Pointage = () => {
                 >
                     <ModalHeader toggle={() => setSelectedRecord(null)}>
                         <i className="ri-information-line me-2"></i>
-                        {t('Détails du pointage')}
+                        {t('Détails du pointage')} v
                     </ModalHeader>
                     <ModalBody>
                         <Row>
@@ -2852,6 +2853,35 @@ const Pointage = () => {
                     .kiosk-modal .modal-footer {
                         border-top: 2px solid #f0f0f0;
                         padding: 1.5rem;
+                    }
+
+                    .kiosk-modal .kiosk-badge-group .input-group-text {
+                        border-top-left-radius: 12px;
+                        border-bottom-left-radius: 12px;
+                    }
+
+                    .kiosk-modal .kiosk-badge-group .form-control {
+                        border-radius: 0;
+                    }
+
+                    .kiosk-modal .kiosk-badge-group .kiosk-validate-btn {
+                        border-top-right-radius: 12px;
+                        border-bottom-right-radius: 12px;
+                    }
+
+                    .manual-pointage-modal .form-control,
+                    .manual-pointage-modal .form-select {
+                        border-radius: 12px;
+                    }
+
+                    .manual-pointage-modal .react-select__control {
+                        border-radius: 12px;
+                        min-height: 46px;
+                    }
+
+                    .manual-pointage-modal .react-select__menu {
+                        border-radius: 12px;
+                        overflow: hidden;
                     }
                     
                     .scan-animation {
