@@ -87,39 +87,39 @@ const TwoColumnLayout = (props) => {
     });
 
   const handleUpgradeClick = () => {
-    navigate('/:entreprise/abonnement', { 
-      state: { openUpgradeModal: true } 
+    navigate('/:entreprise/abonnement', {
+      state: { openUpgradeModal: true }
     });
   };
 
   // Fonction pour calculer les jours d'essai restants
   const calculateTrialDays = useCallback(() => {
     if (!userProfile?.abonnement) return;
-    
+
     const abonnement = userProfile.abonnement;
     const module = abonnement.module;
     const categorie = abonnement.categorie_nom;
     const dateDebut = abonnement.date_debut;
     const montantPayer = abonnement.montant_payer;
-    
-    const isEligibleForTrial = 
-      categorie === "Essentiel" && 
+
+    const isEligibleForTrial =
+      categorie === "Essentiel" &&
       (module === "InawoSales" || module === "InawoStock") &&
       montantPayer === 0;
-    
+
     if (!isEligibleForTrial) {
       setTrialStatus('none');
       return;
     }
-    
+
     const startDate = new Date(dateDebut);
     const today = new Date();
     const endDate = new Date(startDate);
     endDate.setDate(startDate.getDate() + 21);
-    
+
     const timeDiff = endDate.getTime() - today.getTime();
     const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
-    
+
     if (daysDiff > 0) {
       setDaysRemaining(daysDiff);
       setTrialStatus('active');
@@ -146,7 +146,7 @@ const TwoColumnLayout = (props) => {
     const handleResize = () => {
       const mobile = window.innerWidth < 768;
       setIsMobile(mobile);
-      
+
       if (mobile) {
         document.documentElement.setAttribute("data-layout", "vertical");
       } else {
@@ -156,7 +156,7 @@ const TwoColumnLayout = (props) => {
 
     window.addEventListener('resize', handleResize);
     handleResize(); // Appel initial
-    
+
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
@@ -261,7 +261,7 @@ const TwoColumnLayout = (props) => {
 
   const activateParentDropdown = useCallback((item) => {
     if (!item) return;
-    
+
     item.classList.add("active");
     let parentCollapseDiv = item.closest(".collapse.menu-dropdown");
     if (parentCollapseDiv) {
@@ -313,12 +313,12 @@ const TwoColumnLayout = (props) => {
   const initMenu = useCallback(() => {
     const pathName = process.env.PUBLIC_URL + path;
     const ul = document.getElementById("navbar-nav");
-    
+
     if (!ul) {
       setTimeout(initMenu, 50);
       return;
     }
-    
+
     const items = ul.getElementsByTagName("a");
     let itemsArray = [...items];
     removeActivation(itemsArray);
@@ -328,6 +328,9 @@ const TwoColumnLayout = (props) => {
 
     const foundSubItem = findSubItemByLink(pathName);
     if (foundSubItem) {
+      if (foundSubItem.id === "Settings" || foundSubItem.id === "Dashboard") {
+        setSelectedMainMenu(foundSubItem.id);
+      }
       setActiveMenu(foundSubItem.label);
       setActiveMenuIcon(foundSubItem.icon);
       if (foundSubItem.click) {
@@ -376,7 +379,7 @@ const TwoColumnLayout = (props) => {
 
     const ul = document.getElementById("two-column-menu");
     if (!ul) return;
-    
+
     const iconItems = ul.getElementsByTagName("a");
     let itemsArray = [...iconItems];
     let activeIconItems = itemsArray.filter((x) =>
@@ -397,11 +400,11 @@ const TwoColumnLayout = (props) => {
       icon: "ri-dashboard-line",
       title: "Suite Inawo",
     },
-     {
-      id: "Paramètres",
-      label: "Paramètres",
+    {
+      id: "Settings",
+      label: props.t("Paramètres"),
       icon: "ri-settings-5-line",
-      title: "Paramètres",
+      title: props.t("Paramètres"),
     },
   ];
 
@@ -411,9 +414,9 @@ const TwoColumnLayout = (props) => {
         (menu) => menu.label === "Recrutement"
       );
       return recrutementMenu?.subItems || [];
-    } else if (menuId === "Paramètres") {
+    } else if (menuId === "Settings") {
       const settingsMenu = filteredMenu.find(
-        (menu) => menu.label === "Paramètres"
+        (menu) => menu.id === "Settings"
       );
       return settingsMenu?.subItems || [];
     } else if (menuId === "Documentations") {
@@ -443,7 +446,7 @@ const TwoColumnLayout = (props) => {
           modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOCRM"],
         },
       ];
-       } else if (menuId === "Discussion") {
+    } else if (menuId === "Discussion") {
       return [
         {
           id: "marie-dubois",
@@ -526,7 +529,7 @@ const TwoColumnLayout = (props) => {
       .filter(
         (item) =>
           item.label !== "Recrutement" &&
-          item.label !== "Paramètres" &&
+          item.id !== "Settings" &&
           item.label !== "Documentations" &&
           item.label !== "Discussion"
       )
@@ -557,8 +560,8 @@ const TwoColumnLayout = (props) => {
                   color: openMenus[item.id]
                     ? "#fff"
                     : theme === "light"
-                    ? "var(--vz-vertical-menu-sub-item-color)"
-                    : "#fff",
+                      ? "var(--vz-vertical-menu-sub-item-color)"
+                      : "#fff",
                   transition: "all 0.3s ease",
                 }}
               >
@@ -571,8 +574,8 @@ const TwoColumnLayout = (props) => {
                     color: openMenus[item.id]
                       ? "#fff"
                       : theme === "light"
-                      ? "var(--vz-vertical-menu-sub-item-color)"
-                      : "#fff",
+                        ? "var(--vz-vertical-menu-sub-item-color)"
+                        : "#fff",
                   }}
                 />
                 {props.t(item.label)}
@@ -598,8 +601,8 @@ const TwoColumnLayout = (props) => {
                           color: activeSubMenu === subItem.link
                             ? "#014a92"
                             : theme === "light"
-                            ? "var(--vz-vertical-menu-sub-item-color)"
-                            : "#fff",
+                              ? "var(--vz-vertical-menu-sub-item-color)"
+                              : "#fff",
                           transition: "all 0.3s ease",
                         }}
                         onClick={() => setActiveSubMenu(subItem.link)}
@@ -613,8 +616,8 @@ const TwoColumnLayout = (props) => {
                             color: activeSubMenu === subItem.link
                               ? "#014a92"
                               : theme === "light"
-                              ? "#62748e"
-                              : "#fff",
+                                ? "#62748e"
+                                : "#fff",
                           }}
                         />
                         {props.t(subItem.label)}
@@ -635,8 +638,8 @@ const TwoColumnLayout = (props) => {
                   display: "flex",
                   alignItems: "center",
                   padding: "10px 15px 10px 20px",
-                  color: theme === "light" 
-                    ? "var(--vz-vertical-menu-sub-item-color)" 
+                  color: theme === "light"
+                    ? "var(--vz-vertical-menu-sub-item-color)"
                     : "#fff",
                 }}
               >
@@ -721,7 +724,7 @@ const TwoColumnLayout = (props) => {
 
   // Rendu pour mobile
   const renderMobileMenu = () => (
-    <div style={{ 
+    <div style={{
       background: theme === "dark" ? "#090b31" : "white",
       color: theme === "dark" ? "white" : "#212529",
       height: "100vh",
@@ -743,15 +746,15 @@ const TwoColumnLayout = (props) => {
             alt="Logo Inawo"
             height="30"
           />
-          <h5 style={{ 
-            color: theme === "dark" ? "white" : "slategray", 
+          <h5 style={{
+            color: theme === "dark" ? "white" : "slategray",
             margin: 0,
             fontSize: "16px"
           }}>
             {activeMenu}
           </h5>
         </div>
-        
+
         {/* Menu hamburger pour mobile */}
         <div style={{
           display: "flex",
@@ -796,37 +799,37 @@ const TwoColumnLayout = (props) => {
           {selectedMainMenu === "Dashboard"
             ? renderDashboardMenuItems()
             : getSubMenusForMainMenu(selectedMainMenu).map((subItem, key) => (
-                <Link
-                  key={key}
-                  to={subItem.link ? subItem.link : "/#"}
+              <Link
+                key={key}
+                to={subItem.link ? subItem.link : "/#"}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "12px 15px",
+                  backgroundColor: activeSubMenu === subItem.link
+                    ? "#f3f6f9"
+                    : "transparent",
+                  color: activeSubMenu === subItem.link
+                    ? "#014a92"
+                    : theme === "dark" ? "#fff" : "#212529",
+                  borderRadius: "8px",
+                  textDecoration: "none",
+                  fontSize: "14px",
+                  marginBottom: "5px"
+                }}
+                onClick={() => setActiveSubMenu(subItem.link)}
+              >
+                <i
+                  className={subItem.icon}
                   style={{
-                    display: "flex",
-                    alignItems: "center",
-                    padding: "12px 15px",
-                    backgroundColor: activeSubMenu === subItem.link
-                      ? "#f3f6f9"
-                      : "transparent",
-                    color: activeSubMenu === subItem.link
-                      ? "#014a92"
-                      : theme === "dark" ? "#fff" : "#212529",
-                    borderRadius: "8px",
-                    textDecoration: "none",
-                    fontSize: "14px",
-                    marginBottom: "5px"
+                    marginRight: "10px",
+                    fontSize: "18px"
                   }}
-                  onClick={() => setActiveSubMenu(subItem.link)}
-                >
-                  <i 
-                    className={subItem.icon} 
-                    style={{ 
-                      marginRight: "10px",
-                      fontSize: "18px"
-                    }} 
-                  />
-                  {props.t(subItem.label)}
-                </Link>
-              ))}
-          
+                />
+                {props.t(subItem.label)}
+              </Link>
+            ))}
+
           {/* Carte upgrade mobile */}
           {showUpgradeCard && trialStatus !== 'none' && (
             <div style={{
@@ -863,7 +866,7 @@ const TwoColumnLayout = (props) => {
                 }}>
                   Passer au Premium
                 </h6>
-                
+
                 <div style={{ marginBottom: "12px" }}>
                   <p style={{
                     margin: "0",
@@ -873,10 +876,10 @@ const TwoColumnLayout = (props) => {
                   }}>
                     Débloquez toutes les fonctionnalités avancées
                   </p>
-                  
+
                   {renderTrialText()}
                 </div>
-                
+
                 <button
                   onClick={handleUpgradeClick}
                   style={{
@@ -1031,24 +1034,24 @@ const TwoColumnLayout = (props) => {
           {selectedMainMenu === "Dashboard"
             ? renderDashboardMenuItems()
             : getSubMenusForMainMenu(selectedMainMenu).map((subItem, key) => (
-                <li key={key} className="nav-item hov-mylink" style={{ paddingLeft: 13, WebkitPaddingStart: 0 }}>
-                  <Link
-                    to={subItem.link ? subItem.link : "/#"}
-                    className={`nav-link submenu-item-hover ${activeSubMenu === subItem.link ? "active" : ""}`}
-                    style={{
-                      backgroundColor: activeSubMenu === subItem.link ? "#f3f6f9" : "transparent",
-                      color: activeSubMenu === subItem.link ? "#014a92" : theme === "light" ? "var(--vz-vertical-menu-sub-item-color)" : "#fff",
-                    }}
-                    onClick={() => setActiveSubMenu(subItem.link)}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", paddingLeft: "20px" }}>
-                      <i className={subItem.icon} style={{ marginRight: "12px", width: "24px", textAlign: "center" }} />
-                      {props.t(subItem.label)}
-                    </div>
-                  </Link>
-                </li>
-              ))}
-          
+              <li key={key} className="nav-item hov-mylink" style={{ paddingLeft: 13, WebkitPaddingStart: 0 }}>
+                <Link
+                  to={subItem.link ? subItem.link : "/#"}
+                  className={`nav-link submenu-item-hover ${activeSubMenu === subItem.link ? "active" : ""}`}
+                  style={{
+                    backgroundColor: activeSubMenu === subItem.link ? "#f3f6f9" : "transparent",
+                    color: activeSubMenu === subItem.link ? "#014a92" : theme === "light" ? "var(--vz-vertical-menu-sub-item-color)" : "#fff",
+                  }}
+                  onClick={() => setActiveSubMenu(subItem.link)}
+                >
+                  <div style={{ display: "flex", alignItems: "center", paddingLeft: "20px" }}>
+                    <i className={subItem.icon} style={{ marginRight: "12px", width: "24px", textAlign: "center" }} />
+                    {props.t(subItem.label)}
+                  </div>
+                </Link>
+              </li>
+            ))}
+
           {/* Carte upgrade desktop */}
           {showUpgradeCard && trialStatus !== 'none' && (
             <div style={{
@@ -1085,7 +1088,7 @@ const TwoColumnLayout = (props) => {
                 }}>
                   Passer au Premium
                 </h6>
-                
+
                 <div style={{ marginBottom: "12px" }}>
                   <div style={{
                     margin: "0",
@@ -1095,10 +1098,10 @@ const TwoColumnLayout = (props) => {
                   }}>
                     Débloquez toutes les fonctionnalités avancées.
                   </div>
-                  
+
                   {renderTrialText()}
                 </div>
-                
+
                 <button
                   onClick={handleUpgradeClick}
                   style={{

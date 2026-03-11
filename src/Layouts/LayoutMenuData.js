@@ -48,7 +48,7 @@ const Navdata = () => {
     return tabMap[type] || '1';
   };
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const history = useNavigate();
   const { generatePath } = useMenuLinks();
   //state data
@@ -427,69 +427,65 @@ const Navdata = () => {
       ],
     },
 
-    ...(i18n.language?.startsWith("en")
-      ? []
-      : [
-        // Paramètres
-        {
-          id: "Settings",
-          label: t("Paramètres"),
-          icon: "ri-settings-5-line",
-          link: "/#",
-          img: "param_img.svg",
-          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-          stateVariables: isSettings,
-          click: handleMenuClick(function (e) {
-            e.preventDefault();
-            setIsSettings(true);
-            setIscurrentState("Settings");
-            updateIconSidebar(e);
-          }),
-          subItems: [
-            // {
-            //   id: "profil",
-            //   icon: "ri-user-settings-line",
-            //   label: "Profil",
-            //   link: generatePath("/profil"),
-            //   parentId: "Settings",
-            //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-            //   utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
-            //   onClick: handleMobileMenuClose,
-            // },
+    // Paramètres
+    {
+      id: "Settings",
+      label: t("Paramètres"),
+      icon: "ri-settings-5-line",
+      link: "/#",
+      img: "param_img.svg",
+      modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+      stateVariables: isSettings,
+      click: handleMenuClick(function (e) {
+        e.preventDefault();
+        setIsSettings(true);
+        setIscurrentState("Settings");
+        updateIconSidebar(e);
+      }),
+      subItems: [
+        // {
+        //   id: "profil",
+        //   icon: "ri-user-settings-line",
+        //   label: "Profil",
+        //   link: generatePath("/profil"),
+        //   parentId: "Settings",
+        //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+        //   utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+        //   onClick: handleMobileMenuClose,
+        // },
 
-            // {
-            //   id: "notification",
-            //   icon: "ri-notification-3-line",
-            //   label: "Notifications",
-            //   link: generatePath("/notification"),
-            //   parentId: "Settings",
-            //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-            //   utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
-            //   onClick: handleMobileMenuClose,
-            // },
-            // {
-            //   id: "preference",
-            //   icon: "ri-thumb-up-line",
-            //   label: "Préférences",
-            //   link: generatePath("/preference"),
-            //   parentId: "Settings",
-            //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-            //   utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
-            //   onClick: handleMobileMenuClose,
-            // },
-            {
-              id: "pointage",
-              icon: "ri-timer-line",
-              label: t("Pointage"),
-              link: generatePath("/pointage-param"),
-              parentId: "Settings",
-              modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
-              utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
-              onClick: handleMobileMenuClose,
-            },
-          ],
+        // {
+        //   id: "notification",
+        //   icon: "ri-notification-3-line",
+        //   label: "Notifications",
+        //   link: generatePath("/notification"),
+        //   parentId: "Settings",
+        //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+        //   utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+        //   onClick: handleMobileMenuClose,
+        // },
+        // {
+        //   id: "preference",
+        //   icon: "ri-thumb-up-line",
+        //   label: "Préférences",
+        //   link: generatePath("/preference"),
+        //   parentId: "Settings",
+        //   modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+        //   utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+        //   onClick: handleMobileMenuClose,
+        // },
+        {
+          id: "pointage",
+          icon: "ri-timer-line",
+          label: t("Pointage"),
+          link: generatePath("/pointage-param"),
+          parentId: "Settings",
+          modules: ["INAWOSTOCK", "INAWOGLOBAL", "INAWOSALES"],
+          utilisateur: ["Administrateur", "Collaborateur", "Observateur"],
+          onClick: handleMobileMenuClose,
         },
-      ]),
+      ],
+    },
 
     // Documents
     // {

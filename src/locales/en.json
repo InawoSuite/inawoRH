@@ -1129,6 +1129,8 @@
   "Notes": "Notes",
   "Aucune note": "No note",
   "Imprimer": "Print",
+  "Paramètres de Pointage": "Attendance Settings",
+  "Configuration du pointage automatique": "Automatic attendance configuration",
   "Paramètres d'automatisation": "Automation settings",
   "Méthodes de détection": "Detection methods",
   "Détection automatique par position GPS": "Automatic detection by GPS position",
